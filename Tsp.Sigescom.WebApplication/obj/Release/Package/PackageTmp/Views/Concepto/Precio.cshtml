@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "Precios de concepto";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/concepto/precioConceptoController.js")></script>
+    <script src=@Url.Content("~/Scripts/code39/jquery-barcode.min.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/selectorConceptoComercial/selectorConceptoComercial.js")></script>
+
+    <script>
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+        var mostrarBuscadorCodigoBarra = @ViewBag.mostrarBuscadorCodigoBarra.ToString().ToLower();
+        var modoSeleccionConcepto = @ViewBag.modoDeSeleccionDeConcepto;
+        var modoSeleccionTipoFamilia = @ViewBag.modoSeleccionTipoFamilia;
+        var minimoCaracteresBuscarConcepto = @ViewBag.minimoCaracteresBuscarConcepto;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var informacionSelectorConcepto = @ViewBag.informacionSelectorConcepto;
+        var idTarifaPorDefecto = @ViewBag.idTarifaPorDefecto;
+        var etiquetaSeleccionadaPorDefecto = @ViewBag.etiquetaSeleccionadaPorDefecto;
+        var altoEtiqueta3 = @ViewBag.altoEtiqueta3;
+        var anchoEtiqueta3 = @ViewBag.anchoEtiqueta3;
+        var filasEtiqueta3 = @ViewBag.filasEtiqueta3;
+        var columnasEtiqueta3 = @ViewBag.columnasEtiqueta3;
+        var fuenteEtiqueta3 = @ViewBag.fuenteEtiqueta3;
+        var altoEtiqueta4 = @ViewBag.altoEtiqueta4;
+        var anchoEtiqueta4 = @ViewBag.anchoEtiqueta4;
+        var filasEtiqueta4 = @ViewBag.filasEtiqueta4;
+        var columnasEtiqueta4 = @ViewBag.columnasEtiqueta4;
+        var fuenteEtiqueta4 = @ViewBag.fuenteEtiqueta4;
+    </script>
+}
+<div class="col-md-12" id="modelo-mercaderia" ng-controller="precioConceptoController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">PRECIO DE CONCEPTO</div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-12 form-horizontal">
+
+            <div class="row">
+
+                <div class="col-md-8">
+
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">FILTROS</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <selector-concepto-comercial id="sc2" concepto-comercial="conceptoComercial" api="selectorConceptoComercialAPI" modo-seleccion-tipo-familia="modoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="mostrarBuscadorCodigoBarra" modo-seleccion-concepto="modoSeleccionConcepto" complemento-stock="false" complemento-precio="true" minimo-caracteres-buscar-concepto="minimoCaracteresBuscarConcepto" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" informacion-a-mostrar="informacionSelectorConcepto" changed="seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-body text-center titulo-negrita-centrado">
+                            <p>{{concepto.NombreConPrecio}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-primary">
+                        <div class="box-header with-border p-5">
+                            <div class="radio-toolbar-btn">
+                                <h3 class="box-title">ETIQUETA&nbsp;&nbsp;</h3>
+                                <input type="radio" id="etiqueta-1" name="etiqueta" value="1" ng-click="seleccionarEtiqueta(1)">
+                                <label id="labeletiqueta-1" for="etiqueta-1" title="Nombre y precio">E1</label>
+                                <input type="radio" id="etiqueta-2" name="etiqueta" value="2" ng-click="seleccionarEtiqueta(2)">
+                                <label id="labeletiqueta-2" for="etiqueta-2" title="Código de barra">E2</label>
+                                <input type="radio" id="etiqueta-3" name="etiqueta" value="3" ng-click="seleccionarEtiqueta(3)">
+                                <label id="labeletiqueta-3" for="etiqueta-3" title="Código de barra, nombre, precio y características">E3</label>
+                                <input type="radio" id="etiqueta-4" name="etiqueta" value="4" ng-click="seleccionarEtiqueta(4)">
+                                <label id="labeletiqueta-4" for="etiqueta-4" title="Código de barra, nombre, precio">E4</label>
+                            </div>
+                            <div class="box-tools pull-right" style="top:4px">
+                                <a title="IMPRIMIR ETIQUETA" class="btn btn-md btn-primary" ng-click="imprimirEtiqueta(nombreEtiquetaSeleccionada)"><span class="glyphicon glyphicon-print"></span></a>
+                            </div>
+                        </div>
+                        <div class="box-header with-border" ng-show="etiquetaImpresion == 3 || etiquetaImpresion == 4">
+                            <div class="col-xs-2 no-padding">
+                                <label style="font-size: 15px; margin-bottom: 0px; color: var(--color-primario);">Alto</label>
+                                <input type="number" style="width:50px; border: solid 0.5px var(--color-primario); border-radius: 5px; display:block;" min="1" ng-model="altoImpresion" ng-change="cargarVistaEtiquetaImpresion()">
+                            </div>
+                            <div class="col-xs-2 no-padding">
+                                <label style="font-size: 15px; margin-bottom: 0px; color: var(--color-primario);">Ancho</label>
+                                <input type="number" style="width: 50px; border: solid 0.5px var(--color-primario); border-radius: 5px; display: block;" min="1" ng-model="anchoImpresion" ng-change="cargarVistaEtiquetaImpresion()">
+                            </div>
+
+                            <div class="col-xs-2 no-padding">
+                                <label style="font-size: 15px; margin-bottom: 0px; color: var(--color-primario);">Fila</label>
+                                <input type="number" style="width: 50px; border: solid 0.5px var(--color-primario); border-radius: 5px; display: block;" min="1" ng-model="filasImpresion" ng-change="cargarVistaEtiquetaImpresion()">
+                            </div>
+                            <div class="col-xs-2 no-padding">
+                                <label style="font-size: 15px; margin-bottom: 0px; color: var(--color-primario);">Col</label>
+                                <input type="number" style="width: 50px; border: solid 0.5px var(--color-primario); border-radius: 5px; display: block;" min="1" ng-model="columnasImpresion" ng-change="cargarVistaEtiquetaImpresion()">
+                            </div>
+                            <div class="col-xs-2 no-padding">
+                                <label style="font-size: 15px; margin-bottom: 0px; color: var(--color-primario);">Fuente</label>
+                                <input type="number" style="width: 50px; border: solid 0.5px var(--color-primario); border-radius: 5px; display: block;" min="1" ng-model="fuenteImpresion" ng-change="cargarVistaEtiquetaImpresion()">
+                                @*<input type="number" style="width:20px; border: solid 0.5px var(--color-primario);" ng-model="fuenteImpresion">*@
+                            </div>
+                        </div>
+                        <div class="box-body" id="etiqueta-nombre-precio" ng-show="etiquetaImpresion == 1">
+                            <style>
+                                @@page {
+                                    size: 80mm 100mm;
+                                }
+
+                                @@media print {
+                                    .receipt {
+                                        width: 80mm
+                                    }
+                                }
+                            </style>
+                            <div class="centrar-contenido imprimir-contenido receipt" style="width:80mm; text-align:center">
+                                <p style="font-family: Arial; font-size: 25px; font-weight: 600;">{{concepto.NombreEtiqueta}}</p>
+                                <hr style="font-size:5px; margin:0px" />
+                                <p style="font-family: Arial; font-size: 50px; font-weight: bold; text-align: center; margin:0px" ng-repeat="precio in listaPrecios">{{precio}}</p>
+                                <p style="font-size: 5px;">.</p>
+                            </div>
+                        </div>
+                        <div class="box-body" id="etiqueta-codigo-barra" ng-show="etiquetaImpresion == 2">
+                            <style>
+                                @@page {
+                                    size: 52mm 100mm;
+                                }
+
+                                @@media print {
+                                    .recipiente {
+                                        width: 52mm
+                                    }
+                                }
+                            </style>
+                            <div class="centrar-contenido imprimir-contenido recipiente" style="width:52mm; text-align:center">
+                                <div id="codigoBarra"></div>
+                            </div>
+                        </div>
+                        <div class="box-body" id="etiqueta-nombre-precio-caracteristica-codigo-barra" ng-show="etiquetaImpresion == 3">
+                        </div>
+                        <div class="box-body" id="etiqueta-nombre-precio-codigo-barra" ng-show="etiquetaImpresion == 4">
+                        </div>
+                        @*<div class="box-body" id="etiqueta-nombre-precio-caracteristica-codigo-barra" ng-show="etiquetaImpresion == 3">
+                                <style>
+                                    @@page {
+                                        size: 60mm 30mm;
+                                    }
+
+                                    @@media print {
+                                        .receipt {
+                                            width: 30mm;
+                                        }
+                                    }
+                                </style>
+                                <div class="centrar-contenido imprimir-contenido receipt borde-delgado" style="width:30mm; text-align:center; font-size: 12px;">
+                                    <p style="font-family: Consolas; margin: 0; font-weight:bold; white-space: nowrap; overflow: hidden; ">{{concepto.NombreEtiqueta}}</p>
+                                    <p style="font-family: Consolas; margin: 0; text-transform: capitalize; white-space: nowrap; overflow: hidden;" ng-repeat="caracteristica in concepto.Caracteristicas">{{caracteristica.Nombre}}: {{caracteristica.Valor}}</p>
+                                    <p style="font-family: Consolas; margin: 2px 0px;">Precio: S/ {{concepto.PrecioPorDefecto}}</p>
+                                    <div id="codigoBarraCaracteristica" style="font-family: Consolas;"></div>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">PRECIOS</h3>
+                        </div>
+                        <div class="box-body">
+                            @Html.Partial("../Precio/_RegistroPrecioPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:15px">
+            <div class="pull-right">
+                <a ng-disabled="precioForm.$invalid" ng-click="guardarPrecio()" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+            </div>
+        </div>
+    </div>
+</div>

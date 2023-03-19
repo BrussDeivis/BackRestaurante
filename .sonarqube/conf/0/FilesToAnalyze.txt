@@ -1,0 +1,2 @@
+﻿D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\Properties\AssemblyInfo.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\Configuracion_.tt

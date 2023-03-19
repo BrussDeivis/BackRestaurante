@@ -1,0 +1,38 @@
+﻿<div id="pago">
+    <div class="col-md-12 p-0">
+        <div class="box box-primary">
+            <!--style="margin-bottom:0px; border: none !important; box-shadow:none"-->
+            <div class="box-body pt-5">
+                <!--style="padding: 5px; background-color:white; color:#333;"-->
+                <label class="box-title">PAGO</label>
+                <div class="pull-right">
+                    <div class="radio radio-primary radio-inline pt-2">
+                        <input type="radio" id="radio1" name="modoPago" value="1" ng-model="$ctrl.pago.ModoDePago" ng-checked="$ctrl.pago.ModoDePago == $ctrl.parametros.ModoPagoContado" ng-click="$ctrl.seleccionarContado()">
+                        <label for="radio1" title="Contado" style="font-weight: bold; font-size:14px;">CO</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline pt-2" ng-show="$ctrl.permitirVentaAlCredito">
+                        <input type="radio" id="radio2" name="modoPago" value="2" ng-model="$ctrl.pago.ModoDePago" ng-checked="$ctrl.pago.ModoDePago == $ctrl.parametros.ModoPagoCreditoRapido" ng-disabled="$ctrl.pago.Total == null || $ctrl.pago.Total == 0" ng-click="$ctrl.seleccionarCreditoRapido()">
+                        <label for="radio2" title="Crédito Rápido" style="font-weight: bold; font-size:14px;">CR</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline pt-2" ng-show="$ctrl.permitirVentaAlCredito">
+                        <input type="radio" id="radio3" name="modoPago" value="3" ng-model="$ctrl.pago.ModoDePago" ng-checked="$ctrl.pago.ModoDePago == $ctrl.parametros.ModoPagoCreditoConfigurado" ng-disabled="$ctrl.pago.Total == null || $ctrl.pago.Total == 0" ng-click="$ctrl.seleccionarCreditoConfigurado()">
+                        <label for="radio3" title="Crédito Configurado" style="font-weight: bold; font-size:14px;">CC</label>
+                    </div>
+                </div>
+                <div class="box box-primary box-solid" ng-show="$ctrl.pago.ModoDePago == 2" style="margin-top:0px; margin-bottom:10px">
+                    <div class="box-body no-padding-top no-padding-bottom">
+                        <label class="col-md-12 col-xs-12 no-padding" style="color:var(--color-secundario)">CRÉDITO RÁPIDO</label>
+                        <label class="col-md-5 col-xs-5 label-model">TOTAL S/</label>
+                        <label class="col-md-7 col-xs-7 label-model value-model">{{$ctrl.pago.Total|number:2}}</label>
+                        <label class="col-md-5 col-xs-5 label-model" title="PAGO A CUENTA">PAGO S/</label>
+                        <input class="col-md-7 col-xs-7 input-model numero-derecha font-size-15" ng-model="$ctrl.pago.Inicial" ng-change="$ctrl.resolverPagoInicialCredito(); $ctrl.pagoChanged()" ng-blur="$ctrl.formatoDosDecimales($event)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();" />
+                        <label class="col-md-5 col-xs-5 label-model">DEUDA S/</label>
+                        <label class="col-md-7 col-xs-7 label-model value-model">{{$ctrl.pago.Total - $ctrl.pago.Inicial|number:2}}</label>
+                    </div>
+                </div>
+                <editor-traza-pago ng-show="$ctrl.pago.ModoDePago == 1 || $ctrl.pago.Inicial > 0" external-id="$ctrl.externalId" traza-pago="$ctrl.pago.Traza" api="$ctrl.editorTrazaPagoAPI" id-medio-pago-default="$ctrl.idMedioPagoDefault" id-cliente="$ctrl.idCliente" traza-pago-changed="$ctrl.cambioTrazaPago()" inicio-realizado="$ctrl.inicioRealizadoTrazaPago()"></editor-traza-pago>
+            </div>
+        </div>
+    </div>
+</div>
+<registrador-financiamiento name="RegistradorFinanciamiento" id="RegistradorFinanciamiento" api="$ctrl.registradorFinanciamientoAPI" changed="$ctrl.cambioFinanciamiento(financiamiento)" external-id="$ctrl.externalId" fecha-actual="$ctrl.parametros.FechaActual"></registrador-financiamiento>

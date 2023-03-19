@@ -1,0 +1,20 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "REPORTES";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ReportViewerForMvc;
+@model Microsoft.Reporting.WebForms.ReportViewer
+
+<h4>Reporte</h4>
+@if (Model!= null)
+{
+    <div id="reportView" class="table-responsive">
+        @Html.ReportViewer(Model as Microsoft.Reporting.WebForms.ReportViewer, new { scrolling = "yes", width = "100%" })
+    </div>
+
+}
+

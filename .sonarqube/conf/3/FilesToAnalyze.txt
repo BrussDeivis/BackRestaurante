@@ -1,0 +1,10 @@
+﻿D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\PdfUtil.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\Mailer.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\NumerosALetras.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\RestHelper.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\TextManager.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\FileManager.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\BarCodeUtil.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\Properties\AssemblyInfo.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\app.config
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\packages.config

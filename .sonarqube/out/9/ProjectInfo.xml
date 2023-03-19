@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Tsp.Sigescom.WebApplication</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>bc083b3f-9840-4fbb-9770-3c52e652e787</ProjectGuid>
+  <FullPath>D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.WebApplication\Tsp.Sigescom.WebApplication.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="D:\Tsp.Sigescom2.3-Back\.sonarqube\conf\9\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePaths">D:\Tsp.Sigescom2.3-Back\.sonarqube\out\9\Issues.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">D:\Tsp.Sigescom2.3-Back\.sonarqube\out\9</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+</ProjectInfo>

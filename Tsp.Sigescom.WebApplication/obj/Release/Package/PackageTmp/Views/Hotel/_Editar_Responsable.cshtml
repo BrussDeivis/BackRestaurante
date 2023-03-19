@@ -1,0 +1,30 @@
+﻿<div id="modal-editar-responsable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form name="formularioEditarResponsable" id="formularioEditarResponsable">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">EDITAR RESPONSABLE</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Responsable actual: </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p>{{respaldoResponsable.NombreORazonSocial}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <selector-actor-comercial ng-if="inicializacionRealizada" id="SelectorResponsable" actor-comercial="atencionMacro.Responsable" rol="rolCliente" etiqueta-rol="'RESPONSABLE'" api="$parent.selectorResponsableAPI" changed="cambioResponsable(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="-2" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroCliente"></selector-actor-comercial>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a title="Guardar" ng-click="guardarResponsable()" ng-disabled="respaldoResponsable.Id == atencionMacro.Responsable.Id || atencionMacro.Responsable.Id == idClienteGenerico" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                    <a title="Cerrar" ng-click="cerrarResponsable()" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

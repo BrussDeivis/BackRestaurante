@@ -1,0 +1,15 @@
+W
+ND:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\RestauranteDatosUnitTest.csutf-8Q
+HD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\ActorDatosUnitTest.csutf-8b
+YD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Dominio\Sigescom\ConceptoDatosTests.csutf-8e
+\D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Dominio\Sigescom\TransaccionDatosTests.csutf-8N
+ED:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\MaestroUnitTest.csutf-8V
+MD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Properties\AssemblyInfo.csutf-8W
+ND:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Sigescom\HotelDatosTests.csutf-8e
+\D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Sigescom\Hotel\HotelReporte_DatosTests.csutf-8r
+iD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Sigescom\Transaccion\ConsultaTransaccion_DatosTests.csutf-8Q
+HD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\TestClassAttribute.csutf-8U
+LD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\ReportesVentasUnitTest.csutf-8W
+ND:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\TransaccionDatosUnitTest.csutf-8R
+ID:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\PrecioDatosUnitTest.csutf-8x
+mD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.csutf-8

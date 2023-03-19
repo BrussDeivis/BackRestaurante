@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "RegistroDeTipoDeTransaccion";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/tipoCambio/tipoCambio.js")></script>
+} 
+<div class="col-md-12" ng-controller="tipoCambioController"  ng-init="obtenerTipoCambio()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">TIPOS DE CAMBIO</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="dia">Dia: </label>
+                                <input id="dia" placeholder="Ingrese dia" class="form-control" uppercase-only ng-model="tipoCambio.Dia"  />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="mes">Mes: </label>
+                                <input id="mes" placeholder="Ingrese mes" class="form-control" uppercase-only ng-model="tipoCambio.Mes" required />
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <div class="form-group">
+                                <label for="anho">Año: </label>
+                                <input id="anho" placeholder="Ingrese año" class="form-control" uppercase-only ng-model="tipoCambio.Anho" required />
+                            </div>
+                        </div>
+                        <div class="col-md-3 form-group mt-20">
+                            <a title="Consultar tipo de cambio" class="btn btn-primary btn-flat" ng-click="obtenerTipoCambio()"><span class="glyphicon glyphicon-plus "></span>CONSULTAR</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive ng-cloak">
+                            <table id="tabla-tipo-de-cambio" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>DIA</th>
+                                        <th>PRECIO VENTA</th>
+                                        <th>PRECIO COMPRA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaTipoCambio" ng-cloak>
+                                        <td>{{item.Dia}}</td>
+                                        <td>{{item.Venta}}</td>
+                                        <td>{{item.Compra}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

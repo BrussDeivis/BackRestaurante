@@ -1,0 +1,74 @@
+﻿<div class="col-md-12 padding-5">
+    <table class="table table-bordered table-height-small padding-5">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>P/U</th>
+                <th>Cantidad</th>
+                <th>Importe</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <td class="col-md-6"><select class="select2" ng-model="detalle.IdProducto" ng-change="cargarProducto()" ng-options="item.Id as item.Nombre for item in productos track by item.Id"></select></td>
+                <td class="col-md-2"><input ng-model="detalle.PrecioUnitario" ng-blur="detalle.PrecioUnitario=formatNumber(detalle.PrecioUnitario,numeroDecimalesEnPrecio)" class="form-control" /></td>
+                <td class="col-md-2"><input ng-model="detalle.Cantidad" ng-blur="detalle.Cantidad=formatNumber(detalle.Cantidad,numeroDecimalesEnCantidad)" class="form-control" /></td>
+                <td class="col-md-2">{{detalle.Importe=detalle.PrecioUnitario*detalle.Cantidad|number:numeroDecimalesEnCantidad}}</td>
+                <td class="width-30">
+                    <button class="btn btn-xs btn-success" ng-click="agregarDetalle(detalle)"><span class="glyphicon glyphicon-plus"></span></button>
+                </td>
+            </tr>
+            <tr ng-repeat="item in model.Detalles">
+                <td class="col-md-6">{{item.NombreProducto}}</td>
+                <td class="col-md-2">{{item.PrecioUnitario}}</td>
+                <td class="col-md-2">{{item.Cantidad}}</td>
+                <td class="col-md-2">{{item.Importe}}</td>
+                <td class="width-30">
+                    <button class="btn btn-xs btn-danger" ng-click="quitarDetalle($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="col-md-7 float-right table-height-small" cellpadding="4" cellspacing="6">
+        <tr>
+            <td colspan="2">
+                <b> SubTotal:</b>
+            </td>
+            <td>
+                <label class="form-control padding-lef-right-3">{{model.SubTotal|number:2}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b> IGV:</b>
+            </td>
+            <td>
+                <input type="checkbox" ng-model="model.HayIGV" ng-click="calcularTotalConIgv()" />
+            </td>
+            <td>
+                <label class="form-control padding-lef-right-3">{{model.IGV|number:2}}</label>
+            </td>
+        </tr>
+        @*<tr>
+            <td >
+                <b>Descuento:</b>
+            </td>
+            <td>
+                <input class="form-control padding-lef-right-3" ng-model="model.Descuento"/>
+            </td>
+            <td>
+                <input class="form-control padding-lef-right-3" ng-model="model.Descuento" />
+            </td>
+        </tr>*@
+        <tr>
+            <td colspan="2">
+                <b> Total:</b>
+            </td>
+            <td>
+                <label class="form-control padding-lef-right-3">{{model.Total|number:2}}</label>
+            </td>
+        </tr>
+    </table>
+</div>

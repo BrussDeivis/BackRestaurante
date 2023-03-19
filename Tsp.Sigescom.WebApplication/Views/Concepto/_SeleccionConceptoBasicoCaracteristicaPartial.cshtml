@@ -1,0 +1,50 @@
+﻿<div class="row">
+    <div class="col-xs-12 ">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>FAMILIA</label>
+                    <select tabindex=1 id="nombre-basico" class="select2 form-control" ng-model="conceptoBasicoSeleccionado" ng-options="item as item.Nombre for item in conceptos track by item.Id" required></select>
+                </div>
+                <div class="form-group">
+                    <label>CATEGORIA</label>
+                    <select tabindex=1 id="categoria-seleccionada" class="select2 form-control" ng-model="categoriaSeleccionada" ng-options="item as item.Nombre for item in categorias track by item.Id" required></select>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div ng-repeat="item in caracteristicasTodas" class="col-md-4 ng-cloak" ng-model="caracteristica" style="margin-left:-12px">
+                    <div class="form-group">
+                        <label class="ng-cloak">{{item.Nombre}}</label>
+                        <select class="select2 form-control caracteristica" ng-model="valoresSeleccionadosCaracteristicasFiltro[$index]" ng-options="objeto.Id as objeto.Nombre for objeto in item.Valores"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button title="Limpiar filtros" class="btn btn-primary btn-danger" ng-click="limpiarFiltros()">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button title="DESCARGAR" ng-click="export('tabla-mercaderia')" class="btn btn-primary">
+                        <span class="fa fa-file-excel-o"></span>
+                    </button>
+                </div>
+
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <a title="Registrar una Nueva Mercaderia" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-mercaderia" ng-click="nuevoRegistroMercaderiaEnConsultarMercaderia()">
+                        <span class="glyphicon glyphicon-plus"></span>NUEVA
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-7">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F90161C-AB4D-42F9-B175-E5A6909C8F21}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTestGastoLogica</RootNamespace>
+    <AssemblyName>UnitTestGastoLogica</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="ReporteUnitTest.cs" />
+    <Compile Include="CompraEMEUnitTest.cs" />
+    <Compile Include="GastoCostoIndirectoUnitTest.cs" />
+    <Compile Include="GastoPersonalUnitTest.cs" />
+    <Compile Include="GastoServicioImpuestoUnitTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tsp.Sigescom.AccesoDatos\Tsp.Sigescom.AccesoDatos.csproj">
+      <Project>{54e31278-1436-4edd-a91a-e575c3197fd1}</Project>
+      <Name>Tsp.Sigescom.AccesoDatos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.GeneradorCodigo\Tsp.Sigescom.GeneradorCodigo.csproj">
+      <Project>{1913af93-78a9-4d95-9b12-3a5adb6b8395}</Project>
+      <Name>Tsp.Sigescom.GeneradorCodigo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.Inyeccion\Tsp.Sigescom.Inyeccion.csproj">
+      <Project>{95cdc696-dfae-46d3-a815-56ce4cdbbe1e}</Project>
+      <Name>Tsp.Sigescom.Inyeccion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.Logica\Tsp.Sigescom.Logica.csproj">
+      <Project>{3d79d0f4-d85f-4325-a777-4c355f3a2963}</Project>
+      <Name>Tsp.Sigescom.Logica</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.Modelo\Tsp.Sigescom.Modelo.csproj">
+      <Project>{23c28715-fe7f-4718-82a9-b4b49ef1eec4}</Project>
+      <Name>Tsp.Sigescom.Modelo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.UnitTestDatos\Tsp.Sigescom.UnitTestDatos.csproj">
+      <Project>{3d63ca7b-a60b-4e8e-aa1f-688006fed516}</Project>
+      <Name>Tsp.Sigescom.UnitTestDatos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.UnitTestLogica\Tsp.Sigescom.UnitTestLogica.csproj">
+      <Project>{5c7b7a4d-bc0b-4b9b-8cab-7ed234c30b40}</Project>
+      <Name>Tsp.Sigescom.UnitTestLogica</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.Utilitarios\Tsp.Sigescom.Utilitarios.csproj">
+      <Project>{43f33046-0fc1-4f0d-9ff4-afad4104b0d6}</Project>
+      <Name>Tsp.Sigescom.Utilitarios</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.WebApplication\Tsp.Sigescom.WebApplication.csproj">
+      <Project>{bc083b3f-9840-4fbb-9770-3c52e652e787}</Project>
+      <Name>Tsp.Sigescom.WebApplication</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

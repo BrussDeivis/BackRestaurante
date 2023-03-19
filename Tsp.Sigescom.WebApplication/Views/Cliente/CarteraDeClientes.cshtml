@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "RegistroDeCarteraDeClientes";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/cliente/carteraDeClientesController.js")></script>
+} 
+<div class="col-md-12" ng-controller="carteraDeClientesController"  ng-init="obtenerCarterasDeClientesBandeja()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CARTERA DE CLIENTES DE LOS CENTROS DE ATENCIÓN</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <a title="Nueva cartera de clientes" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-cartera-de-cliente" ng-click="nuevaCarteraDeClientes()"><span class="glyphicon glyphicon-plus"></span> NUEVO CARTERA DE CLIENTES</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-cartera-de-cliente" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Establecimiento comercial</th>
+                                        <th>Centro de atención</th>
+                                        <th>Clientes</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaCarterasDeClientes" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.EstablecimientoComercial}}</td>
+                                        <td>{{item.CentroDeAtencion}}</td>
+                                        <td>{{item.CantidadClientes}}</td>
+                                        <td>
+                                            <a title="Editar cartera de clientes" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-registro-cartera-de-cliente" ng-click="editarCarteraDeClientes(item.IdCartera)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a title="Ver cartera de clientes" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-cartera-de-cliente" ng-click="verCarteraDeClientes(item.IdCartera)"><span class="glyphicon glyphicon-search"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroCarteraDeCliente")
+        @Html.Partial("_ModalVerCarteraDeCliente")
+    </div>
+</div>

@@ -1,0 +1,201 @@
+﻿@model Tsp.Sigescom.Modelo.Custom.SigesParking.TicketSalidaCochera
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+        .texto {
+            font-size: 3.06mm !important;
+        }
+
+        .texto8mm {
+            font-size: 7.2mm !important;
+        }
+
+        .texto3mm {
+            font-size: 2.7mm !important;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios {
+            margin: 0;
+            padding: 0;
+        }
+
+        .titulo .centrado .importe .texto {
+            font-family: Arial !important;
+            font-weight: normal !important;
+        }
+
+        .lineaHorizontal {
+            margin: 0 !important;
+        }
+
+        .resaltado {
+            font-weight: bold !important;
+        }
+
+        .resaltado5mm {
+            font-weight: bold !important;
+            font-size: 4.5mm !important;
+        }
+
+        .resaltado6mm {
+            font-weight: bold !important;
+            font-size: 5.4mm !important;
+        }
+
+        .sinResaltado {
+            font-size: 3.06mm !important;
+            font-weight: normal !important;
+        }
+
+        body.receipt .sheet {
+            width: 60mm !important;
+            height: 100mm;
+        }
+        /*  sheet size */
+        @@page {
+            size: 60mm 100mm;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 60mm
+            }
+        }
+        /* fix for Chro */
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+    </style>
+
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet ">
+        <div class="texto">
+            <div class="@(@Model.EsInvalidada ? "contenedor-comprobante" : "")">
+
+                @* Datos Emisor *@
+                @if (Model.MostrarLogo)
+                {
+                    <div class="centrado">
+                        <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Logo Siges Facturación Electrónica" />
+                    </div>
+                }
+                <div class="centrado">
+                    <div class="titulo">@Model.Emisor.NombreComercial </div>
+                    <div class="texto3mm">
+                        <div>@Model.Emisor.RazonSocial</div>
+                        <div>RUC: @Model.Emisor.NumeroDocumentoIdentidad</div>
+                        <div>@Model.Emisor.Direccion</div>
+                        @if (Model.Emisor.EsSucursal)
+                        {
+                            <div class="negrita">SUC: @Model.Emisor.NombreSucursal</div>
+                            <div>@Model.Emisor.DireccionSucursal</div>
+                        }
+                        <div>@Model.Emisor.OtrosDatosContacto</div>
+                        <div>@Model.Emisor.Publicidad</div>
+                    </div>
+                </div>
+                @* Comprobante *@
+                <div class="centrado">
+                    <div>@Model.NombreTipo </div>
+                    <div class="resaltado5mm">@(Model.Serie + "-" + Model.Numero)</div>
+                    @*<div>Salida: @Model.FechaEmision.ToString("dd/MM/yyyy hh:mm tt")</div>*@
+                </div>
+                <hr class="lineaHorizontal">
+                @* Receptor *@
+                <div>
+
+                    <div>
+                        <span class="texto3mm">Usuario:</span> @(Model.Salida.Cliente.NombreORazonSocial + " (" + Model.Salida.Cliente.TipoDocumentoIdentidad.Nombre + " " + Model.Salida.Cliente.NumeroDocumentoIdentidad + ")")
+                    </div>
+                </div>
+                <hr class="lineaHorizontal">
+                <hr class="lineaHorizontal">
+
+                @* Salida *@
+                <div class="centrado">
+
+                    <div class="centrado">@(Model.Salida.Vehiculo.NombreCompleto)</div>
+                    <div class="texto8mm centrado">@(Model.Salida.Vehiculo.Placa)</div>
+                </div>
+
+                <div>
+                    <div>Salida: @(Model.Salida.Salida.ToString("dd/MM/yyyy"))</div>
+                    <div class=" texto8mm">@(Model.Salida.Salida.ToString("h:mm tt"))</div>
+                </div>
+
+                <div>Tarifa: @Model.Salida.SistemaDePago.Nombre</div>
+
+                <div>Observación: @Model.Observacion</div>
+                <div class="centrado">
+                    <img height="70mm" src=@Model.CodigoBarraSrc alt="codigo Barras Siges Cochera" />
+                </div>
+            </div>
+
+
+            <hr class="lineaHorizontal">
+            @* Mensajes *@
+            <div class="centrado">
+                @if (Model.MostrarMensajeNegocio)
+                {
+                    <div>@Model.MensajeNegocio</div>
+                }
+            </div>
+
+            @if (Model.EsInvalidada)
+            {
+                <div class="marca-agua">
+                    <p class="texto-marca-agua">INVALIDADO</p>
+                </div>
+            }
+        </div>
+    </section>
+</body>
+</html>

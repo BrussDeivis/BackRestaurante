@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Bandeja de Ingresos y Egresos Varios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/finanza/ingresosYEgresosVariosController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+
+    <script>
+    var nombreCajero = '@ViewBag.nombreCajero';
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idTipoActorPersonaJuridica = @ViewBag.idTipoActorPersonaJuridica;
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idTipoPersonaSeleccionadaPorDefecto = @ViewBag.idTipoPersonaSeleccionadaPorDefecto;
+        var idUbigeoSeleccionadoPorDefecto = @ViewBag.idUbigeoSeleccionadoPorDefecto;
+        var idTipoDocumentoSeleccionadaConTipoPersonaNatural = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaNatural;
+        var idTipoDocumentoSeleccionadaConTipoPersonaJuridica = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaJuridica;
+        var idTipoDocumentoIdentidadDni = @ViewBag.idTipoDocumentoIdentidadDni;
+        var idTipoDocumentoIdentidadRuc = @ViewBag.idTipoDocumentoIdentidadRuc;
+        var idProveedorGenerico = @ViewBag.idProveedorGenerico;
+        var IdTipoActorPersonaNarural =@ViewBag.IdTipoActorPersonaNatural;
+        var idComprobantePredeterminadoPorDefecto = @ViewBag.idComprobantePredeterminadoPorDefecto;
+        var idRolCliente = @ViewBag.idRolCliente;
+        var idRolProveedor = @ViewBag.idRolProveedor;
+        var idRolEmpleado = @ViewBag.idRolEmpleado;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var minimoCaracteresBuscarActorComercial = @ViewBag.minimoCaracteresBuscarActorComercial;
+        var mascaraDeVisualizacionValidacionRegistroCliente = '@ViewBag.mascaraDeVisualizacionValidacionRegistroCliente';
+        var mascaraDeVisualizacionValidacionRegistroProveedor = '@ViewBag.mascaraDeVisualizacionValidacionRegistroProveedor';
+        var mascaraDeVisualizacionValidacionRegistroEmpleado = '@ViewBag.mascaraDeVisualizacionValidacionRegistroEmpleado';
+
+    </script>
+}
+
+<div class="col-md-12" id="modelo" ng-controller="ingresosYEgresosVariosController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">INGRESOS Y EGRESOS VARIOS</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <button title="Registrar ingreso varios" class="btn btn-success btn-md" data-toggle="modal" data-target="#modal-registro-ingreso-egreso-varios" ng-click="inicioIngresoVarios()"><span class="glyphicon glyphicon-usd"></span> INGRESO VARIOS</button>
+                </div>
+                <div class="col-md-2">
+                    <button title="Regitrar egreso varios" class="btn btn-danger btn-md" data-toggle="modal" data-target="#modal-registro-ingreso-egreso-varios" ng-click="inicioEgresoVarios()"><span class="glyphicon glyphicon-usd"></span> EGRESO VARIOS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroIngresoEgresosVarios")
+</div>

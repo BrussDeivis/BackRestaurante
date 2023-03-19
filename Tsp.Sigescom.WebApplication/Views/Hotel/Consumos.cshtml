@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "Consumos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/hotel/consumosController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorConsumos/registradorConsumos.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/registradorDetalles/registradorDetalles.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/selectorConceptoComercial/selectorConceptoComercial.js")></script>
+
+    <script>
+
+        var fechaActual = '@ViewBag.fechaActual';
+        var UsuarioTieneRolAdministradorDeNegocio = @ViewBag.UsuarioTieneRolAdministradorDeNegocio.ToString().ToLower();
+        var EstablecimientoSesion = @(Html.Raw(Json.Encode(ViewBag.EstablecimientoSesion)));
+        var Establecimientos = @(Html.Raw(Json.Encode(ViewBag.Establecimientos)));
+        var modoSeleccionTipoFamilia = @ViewBag.modoSeleccionTipoFamilia;
+        var permitirIngresarCantidad = @ViewBag.permitirIngresarCantidad.ToString().ToLower();
+         var cursorPorDefectoCodigoBarra = @ViewBag.cursorPorDefectoCodigoBarraEnVenta;
+        var tasaIGV = @ViewBag.tasaIGV;
+        var flujoDespuesDeCodigoBarraEnVenta = @ViewBag.flujoDespuesDeCodigoBarraEnVenta;
+        var aplicaLeyAmazonia = @ViewBag.aplicaLeyAmazonia.ToString().ToLower();
+        var mascaraDeCalculoPorDefecto = '@ViewBag.mascaraDeCalculoPorDefecto';
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+        var idConceptoBasicoBolsaPlastica = @ViewBag.idConceptoBasicoBolsaPlastica;
+        var cantidadPorDefectoEnVentas = '@ViewBag.cantidadPorDefectoEnVentas';
+        var ventasSujetasADisponibilidadStock = @ViewBag.ventasSujetasADisponibilidadStock.ToString().ToLower();
+        var aplicarCantidadPorDefectoEnVentas = @ViewBag.aplicarCantidadPorDefectoEnVentas.ToString().ToLower();
+        var checketDetalleUnificado  = @ViewBag.checketDetalleUnificado.ToString().ToLower();
+        var modoIngresoCodigoBarra = @ViewBag.modoIngresoCodigoBarraEnVenta;
+        var modoSeleccionConcepto = @ViewBag.modoDeSeleccionDeConcepto;
+        var minimoCaracteresBuscarConcepto = @ViewBag.minimoCaracteresBuscarConcepto;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+    </script>
+}
+<div class="col-md-12" id="Consumos" ng-controller="consumosController" ng-init="inicializar()">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CONSUMOS ASOCIADOS A RESERVAS</div>
+            </div>
+        </div>
+        <!--Busqueda Reserva por fecha-->
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="col-md-8">
+                        <div class="row" style="padding-left:15px">
+                            <div class="col-sm-4 px-5" ng-if="usuarioTieneRolAdministradorDeNegocio">
+                                <div class="form-group">
+                                    <label>Local*:</label>
+                                    <select class="select2 input-sm" ng-model="establecimiento" ng-options="item as item.Nombre for item in establecimientos track by item.Id" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 px-5">
+                                <div class="form-group">
+                                    <label for="fechaDesde">Desde*:</label>
+                                    <input id="fechaDesde" ng-model="fechaDesde" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4 px-5">
+                                <div class="form-group">
+                                    <label for="fechaHasta">Hasta*:</label>
+                                    <input id="fechaHasta" ng-model="fechaHasta" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding-top:20px">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <button class="btn btn-primary btn-block" ng-click="obtenerConsumos()" style="margin-top:3px" ng-disabled="!establecimiento || !fechaDesde || !fechaHasta">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary btn-block" style="margin-top: 3px" title="DESCARGAR" ng-click="export('accordion')">
+                                    <span class="fa fa-file-excel-o"></span>
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-primary btn-block" ng-click="nuevoConsumo()" style="margin-top:3px" ng-disabled="!establecimiento || !fechaDesde || !fechaHasta">
+                                    <span class="glyphicon glyphicon-plus"></span> Consumo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="col-md-12 box-header with-border">
+
+                    <div class="col-xs-8 col-md-4 pull-right">
+                        <label for="inputEmail3" class="col-xs-4 col-sm-2 control-label" style="margin-top:0.8rem">Buscar:</label>
+                        <div class="col-xs-8 col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail3" ng-model="buscarEnTabla" ng-keyup="filtrarTabla()">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="box-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 tabla-accordion table-responsive">
+                                <table id="accordion" class="table tabla-acordion">
+                                    <thead class="cabecera-tabla-acordion">
+                                        <tr>
+                                            <th class="prioridad-1">#</th>
+                                            <th class="prioridad-2">FECHA</th>
+                                            <th class="prioridad-3">HABITACIÓN</th>
+                                            <th class="prioridad-4">HUÉSPED</th>
+                                            <th class="prioridad-5">IMPORTE</th>
+                                            <th class="prioridad-6">FACTURADO</th>
+                                            <th class="prioridad-7">OPCIÓN</th>
+                                            <th class="prioridad-8"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="consumo in consumosEnTabla">
+                                        <tr class="fila-tabla-acordion">
+
+                                            <td class="prioridad-1" ng-class="consumo.EstaInvalidado ? 'text-red' : ''">{{$index+1}}</td>
+                                            <td class="prioridad-2" ng-class="consumo.EstaInvalidado ? 'text-red' : ''">{{consumo.FechaString}}</td>
+                                            <td class="prioridad-3" ng-class="consumo.EstaInvalidado ? 'text-red' : ''">{{consumo.TipoHabitacion}} - {{consumo.CodigoHabitacion}}</td>
+                                            <td class="prioridad-4" ng-class="consumo.EstaInvalidado ? 'text-red' : ''">{{consumo.Huesped}}</td>
+                                            <td class="prioridad-5" ng-class="consumo.EstaInvalidado ? 'text-red' : ''">S/. {{consumo.Importe|number:2}}</td>
+                                            <td class="prioridad-6"><span class="label" ng-class="consumo.Facturado ? 'label-success' : 'label-danger'" style="font-size: 15px;color:black">{{consumo.Facturado ? 'SI': 'NO'}}</span></td>
+                                            <td class="prioridad-7">
+                                                <div ng-if="consumo.Facturado === false">
+                                                    <button ng-if="consumo.EstaInvalidado === false" title="invaliar consumo" class="btn btn-warning " ng-click="invalidarConsumo(consumo)">Invalidar</button>
+                                                    <span ng-if="consumo.EstaInvalidado" class="text-red">Invalidado</span>
+                                                </div>
+                                            </td>
+                                            <td class="prioridad-8">
+                                                <a title="Ver detalle de Consumos" class="btn btn-default btn-block btn-collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse{{consumo.Id}}"><span class="fa fa-sort-down"></span></a>
+                                            </td>
+                                        </tr>
+                                        <tr id="collapse{{consumo.Id}}" class="collapse" ng-repeat-end>
+                                            <td colspan="9" class="acordion-contenido" style="text-align:left">
+                                                <div class="col-md-12">
+                                                    <table class="table table-striped mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Nombre</th>
+                                                                <th>Cantidad</th>
+                                                                <th>P. Unitario</th>
+                                                                <th>Importe</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="detalleConsumo in consumo.DetallesConsumo">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{detalleConsumo.Nombre}}</td>
+                                                                <td>{{detalleConsumo.Cantidad|number:2}}</td>
+                                                                <td>{{detalleConsumo.PrecioUnitario|number:2}}</td>
+                                                                <td>{{detalleConsumo.Importe|number:2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <registrador-consumos id-establecimiento="establecimiento.Id" api="$parent.registradorConsumoAPI" consumo-guardado="consumoGuardado()"></registrador-consumos>
+</div>
+
+

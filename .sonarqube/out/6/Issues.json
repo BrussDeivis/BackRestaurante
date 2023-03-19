@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "4.5.0.0",
+        "fileVersion": "4.5.0-6.23123.11 (271ccd71)",
+        "semanticVersion": "4.5.0",
+        "language": "es-ES"
+      },
+      "results": [
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'a' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/Dominio/Sigescom/TransaccionDatosTests.cs",
+                "region": {
+                  "startLine": 22,
+                  "startColumn": 17,
+                  "endLine": 22,
+                  "endColumn": 18
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "S3433",
+          "level": "warning",
+          "message": "Make this test method non-'async' or return 'Task'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/RestauranteDatosUnitTest.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 27,
+                  "endLine": 23,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3433",
+          "level": "warning",
+          "message": "Make this test method non-'async' or return 'Task'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/RestauranteDatosUnitTest.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 27,
+                  "endLine": 34,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/Sigescom/HotelDatosTests.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 21,
+                  "endLine": 23,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/ActorDatosUnitTest.cs",
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 21,
+                  "endLine": 58,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/Dominio/Sigescom/TransaccionDatosTests.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 21,
+                  "endLine": 49,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestDatos/MaestroUnitTest.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 21,
+                  "endLine": 43,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CS0219": {
+          "id": "CS0219",
+          "shortDescription": "La variable está asignada pero nunca se usa su valor",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0219)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "S2699": {
+          "id": "S2699",
+          "shortDescription": "Tests should include assertions",
+          "fullDescription": "A test case without assertions ensures only that no exceptions are thrown. Beyond basic runnability, it ensures nothing about the behavior of the code under test.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2699",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S3433": {
+          "id": "S3433",
+          "shortDescription": "Test method signatures should be correct",
+          "fullDescription": "A method is detected as test method if marked with one of the following attributes [TestMethod] or [DataTestMethod] (for mstest), [Fact] or [Theory] (for xunit) or [Test], [TestCase], [TestCaseSource] or [Theory] (for nunit). However, whether or not they have a test attribute, non-public methods are not recognized as tests, and therefore not executed. Neither are async void methods, or methods with generics anywhere in their signatures.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3433",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

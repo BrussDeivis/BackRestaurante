@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "REPORTES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/reporte/reporteController.js")></script>
+
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+}
+
+    <div class="box-body" ng-controller="reporteController" ng-init="inicializarReporteGerente()">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">REPORTE DE CUENTAS POR PAGAR Y COBRAR</div>
+                </div>
+            </div>
+        </div>
+        <!-------------------------------------------------- REPORTE DE DEUDAS A PROVEEDOR ----------------------------------------------------------->
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Deuda al Proveedor </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a title="Muestra Reporte de compra " class="btn btn-primary btn-flat" ng-href="@Url.Action("ReporteDeDeudasAProveedor", "reporte")">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!------------------------------------------------------- Reporte de Deuda a Proveedor por Cuotas -------------------------------------------->
+        @*<div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Deuda al Proveedor por Cuotas[FALTA TERMINAR]</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a title="Muestra Reporte de compra " class="btn btn-primary btn-flat" ng-href="@Url.Action("ReporteDeDeudaAProveedorPorCuotas", "reporte")">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Deuda de Cliente </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-2 col-md-offset-10">
+                            <div class="form-group">
+                                <a title="Muestra el reporte de deudas de cliente " class="btn btn-primary btn-flat" ng-href="@Url.Action("ReporteDeDeudasDeCliente", "Reporte")">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

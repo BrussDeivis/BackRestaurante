@@ -1,0 +1,59 @@
+﻿<div id="modal-ver-cuota" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">DETALLE DE LA CUOTA : {{verCuota.Codigo}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><b>EMISIÓN: </b>{{verCuota.Emision}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><b>VENCIMIENTO: </b>{{verCuota.Vencimiento}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p><b>CAPITAL: </b>{{verCuota.Capital|number:2}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><b>INTERÉS: </b>{{verCuota.Interes|number:2}}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><b>TOTAL: </b>{{verCuota.Total|number:2}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 style="text-align:center">OPERACIÓN DE REFERENCIA</h4>
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form name="comprobante" class="form-horizontal">
+                                            <div class="col-md-12 table-responsive" style="padding-left:0">
+                                                <div id="pdfDocumento" style="width:210mm; border:solid; border-width: thin; margin:auto; margin-top:20px"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="ACEPTAR" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-check"></span> ACEPTAR</button>
+                <button data-dismiss="modal" title="CANCELAR" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+ 

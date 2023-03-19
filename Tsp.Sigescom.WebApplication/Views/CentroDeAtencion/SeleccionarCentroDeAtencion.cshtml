@@ -1,0 +1,53 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.Sesion.UserProfileSessionData
+@{
+    ViewBag.Title = "LOG IN";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+<div class="login-box login-confirm">
+
+ 
+
+        <div class="box box-info">
+            <div class="box-header bg-blue with-border">
+                <div class="text-center">
+                    <h3 class="box-title">EN HORA BUENA...</h3>
+                </div>  
+            </div>
+            <div class="box-body">
+                <h4 style="text-align:center">@Model.Empleado.NombresYApellidos </h4>
+
+
+                <p>Has iniciado sesión correctamente en Siges</p>
+                @if (Model.CentrosDeAtencionProgramados.Count > 1)
+                {
+                    <div>
+                        @Html.DropDownListFor(model => model.IdCentroDeAtencionInicioSesion, new SelectList(Model.CentrosDeAtencionProgramados, "Id", "Nombre"), new { @class = "form-control" })
+                    </div>
+
+                    <p>Todas las acciones que realice en el sistema serán asociadas al área de trabajo seleccionada</p>
+
+                }
+                else if (Model.CentrosDeAtencionProgramados.Count > 0)
+                {
+                    //Model.IdCentroDeAtencionInicioSesion = Model.CentrosDeAtencionProgramados[0].Id;
+                    <p>Actualmente usted ha sido asignado(a) a:</p>
+                    <p><strong style="margin-bottom:">@Model.NombreCentroDeAtencionSeleccionado</strong></p>
+                    <p>Todas las acciones que realice en el sistema serán asociadas al área asignada</p>
+
+                }
+                else
+                {
+                    <p>Usted no ha sido asignado(a) algún area de trabajo. Por lo que no podra realizar ninguna accion de negocio</p>
+                }
+                <label class="alert-danger">@(Model.MensajeError)</label>
+                <button type="submit" class="btn btn-primary btn-block btn-iniciar" value="Submit Form">Aceptar</button>
+            </div>
+        </div>
+
+</div>
+
+    }

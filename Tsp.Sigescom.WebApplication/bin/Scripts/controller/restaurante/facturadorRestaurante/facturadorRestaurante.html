@@ -1,0 +1,210 @@
+﻿<div id="modal-facturador-restaurante" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-esc="$ctrl.closeFacturacion(false)">
+    <div class="modal-dialog" style="width: 90%;">
+        <div class="modal-content">
+            <div class="modal-header bg-primary" style="border-bottom-width:0;">
+                <div class="col-xs-5 col-md-5 ">
+
+                    <h4 class="modal-title">REGISTRAR FACTURACION</h4>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary" ng-click="$ctrl.seleccionarFacturacionSimple()">
+                            <input type="radio" name="options" id="option1" autocomplete="off" ng-model="$ctrl.atencion.TipoDePago" value="{{$ctrl.parametros.TipoDePagoSimple}}"> Simple
+                        </label>
+                        <label class="btn btn-primary" ng-click="$ctrl.seleccionarFacturacionDividido()">
+                            <input type="radio" name="options" id="option2" autocomplete="off" ng-model="$ctrl.atencion.TipoDePago" value="{{$ctrl.parametros.TipoDePagoCuentaDividida}}"> Dividido
+                        </label>
+                        <label class="btn btn-primary" ng-click="$ctrl.seleccionarFacturacionDiferenciado()">
+                            <input type="radio" name="options" id="option3" autocomplete="off" ng-model="$ctrl.atencion.TipoDePago" value="{{$ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada}}"> Diferenciado
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-1 col-md-1">
+                    <button type="button" class="close" style="opacity:1; color:white" ng-click="$ctrl.closeFacturacion(false)">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="padding-top:0">
+                <div class="row contenedor-facturarRestaurante">
+                    <div class="col-sm-3 col-md-3 panel-ordenes">
+                        <div class="row" style="margin-bottom:10px;">
+                            <div class="col-md-12" style="padding-top:5px; padding-bottom:0px">
+
+                                <div class="cabecera-de-ordenes">
+                                    <div class="col-xs-3 col-md-3">
+                                        <span class="fa fa-book"></span>
+                                    </div>
+                                    <div class="col-xs-9 col-md-9">
+                                        <h3>ORDENES </h3>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--ESTATICO, PARA SIMPLE Y DIVIDIDO-->
+                        <div ng-if="!($ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada)" class="row contenedor-comandas">
+                            <div class="col-md-12" ng-repeat="orden in $ctrl.atencion.Ordenes" ng-init="ordenIndex = $index">
+                                <div class="box box-primary box-solid ng-scope">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title ng-binding titulo-negrita-blanco">{{orden.Codigo}}</h3>
+                                        <h3 class="box-title pull-right ng-binding titulo-negrita-blanco">S/. {{orden.ImporteOrden.toFixed(2)}}</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div id="contenedor-detalleOrdenes{{ordenIndex}}" class="contenedor-detalleOrdenes">
+                                            <div id="detalleOrden*{{ordenIndex}}+{{detalleOrdenIndex}}_{{detalleOrden.Id}}" class="btn btn-default btn-block detalle-orden" ng-repeat="detalleOrden in orden.DetallesFacturacionDiferenciada" ng-init="detalleOrdenIndex = $index" draggable="true" ondragstart="angular.element(this).scope().$ctrl.drag(event)">
+                                                <span class="nombre-detalleOrden">{{detalleOrden.NombreItem}}</span>
+                                                <span class="pull-right-container">
+                                                    <small class="label pull-right bg-primary">S/. <label style="margin:0">{{detalleOrden.Precio.toFixed(2)}}</label></small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--DINAMICO PARA DIFERENCIADO-->
+                        <div ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada" class="row contenedor-comandas">
+                            <div class="col-md-12" ng-repeat="orden in $ctrl.atencion.Ordenes" ng-init="ordenIndex = $index">
+                                <div class="box box-primary box-solid ng-scope">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title ng-binding titulo-negrita-blanco">{{orden.Codigo}}</h3>
+                                        <h3 class="box-title pull-right ng-binding titulo-negrita-blanco">S/. {{orden.ImporteOrden.toFixed(2)}}</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div id="contenedor-detalleOrdenes{{ordenIndex}}" class="contenedor-detalleOrdenes">
+                                            <div id="detalleOrden*{{ordenIndex}}+{{detalleOrdenIndex}}_{{detalleOrden.Id}}" class="btn btn-default btn-block detalle-orden"  ng-repeat="detalleOrden in orden.DetallesFacturacionDiferenciada" ng-init="detalleOrdenIndex = $index" draggable="true" ondragstart="angular.element(this).scope().$ctrl.drag(event)" ng-mousedown="$ctrl.pasarDetalleOrden(detalleOrden,$event)" >
+                                                <button type="button" class="btn btn-danger btn-sm" ng-click="$ctrl.quitarDetalleOrden(ordenIndex,detalleOrdenIndex,detalleOrden.Id)"><i class="fa fa-times"></i></button>
+                                                <span class="nombre-detalleOrden">{{detalleOrden.NombreItem}}</span>
+                                                <span class="pull-right-container">
+                                                    <small class="label pull-right bg-primary">S/. <label style="margin:0">{{detalleOrden.Precio.toFixed(2)}}</label></small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-sm-9 col-md-9 panel-facturar" style="padding-top:10px">
+                        <div class="row" style="display:flex; justify-content:center">
+                            <div class="col-md-12 filtro-pagos">
+                                <div class="col-md-3">
+                                    <label>Tipo:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="$ctrl.atencion.TipoDePago" ng-value="$ctrl.parametros.TipoDePagoSimple" ng-click="$ctrl.seleccionarFacturacionSimple()" checked> Simple
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="$ctrl.atencion.TipoDePago" ng-value="$ctrl.parametros.TipoDePagoCuentaDividida" ng-click="$ctrl.seleccionarFacturacionDividido()"> Cuenta Dividida
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" ng-model="$ctrl.atencion.TipoDePago" ng-value="$ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada" ng-click="$ctrl.seleccionarFacturacionDiferenciado()"> Diferenciado
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 cabecera-pagos">
+                                <div class="col-xs-3 col-md-2" style="align-self:center">
+                                    <label style="margin:0">MESA: {{$ctrl.atencion.Mesa.Nombre}}</label>
+                                </div>
+                                <div class="col-xs-4 col-md-3" style="display:flex;">
+                                    <label style="margin:0; align-self:center">S/. {{$ctrl.atencion.ImporteAtencion.toFixed(2)}}</label>
+                                    <button title="Dividir Monto" ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDividida" type="button" class="btn btn-default btn-sm" ng-click="$ctrl.dividirPrecio()"><span class="fa fa-th-large"></span> </button>
+                                </div>
+                                <div ng-if="!$ctrl.seFacturo" class="col-xs-3 col-lg-4 pull-right">
+                                    <!--<button class="btn btn-success btn-block" ng-click="$ctrl.facturarAtencion()"><span class="glyphicon glyphicon-check"></span> FACTURAR</button>-->
+                                    <button ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoSimple" type="button" class="btn btn-success btn-block" ng-click="$ctrl.facturarAtencion()" ng-disabled="!$ctrl.atencion.Comprobantes[0].esValido"">FACTURAR</button>
+                                    <button ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada " type="button" class="btn btn-success btn-block" ng-disabled="$ctrl.deshabilitarFacutarDiferenciado()" ng-click="$ctrl.facturarAtencion()">FACTURAR</button>
+                                    <button ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDividida" type="button" class="btn btn-success btn-block" ng-disabled="$ctrl.deshabilitarFacutarDividido()" ng-click="$ctrl.facturarAtencion()">FACTURAR</button>
+                                </div>
+                                <div ng-if="($ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada)&&!$ctrl.seFacturo" class="col-xs-2 col-md-2">
+                                    <button title="Quitar todo los detalles de los carriles" type="button" class="btn btn-info btn-block" ng-click="$ctrl.actualizarCarrilDiferenciado()"><span class="fa fa-refresh"></span> </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="overflow-x:auto; display:flex;">
+                            <!--FACTURACION SIMPLE-->
+                            <div class="col-md-5 pt-10 facturacion-simple" ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoSimple" style="padding:0; width:{{$ctrl.tamanioComprobante+9}} !important;">
+                                <div ng-if="!$ctrl.seFacturo" class="col-xs-12 px-10" id="idComprobantesVenta-0">
+                                </div>
+                            </div>
+                            <!--FACTURACION DIVIDIDO-->
+                            <div ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDividida " class="col-md-12 facturacion-dividido" style="width: auto !important; padding-bottom:20px;">
+                                <div>
+                                    <div class="contenedor-card-pagos">
+                                        <div class="card-pagos" ng-repeat="carril in $ctrl.arrayDeCarrilesDividido" ng-init="carrilIndex = $index">
+                                            <!--header-->
+                                            <div class="col-xs-12 cabecera-card-pagos">
+                                                <div class="col-xs-12" style="display:flex; justify-content:center">
+                                                    <div id="bandeja-detalle-ordenes{{carrilIndex}}" class="card-pagos-header">
+                                                        <label style="margin:0">S/. </label>
+                                                        <input type="number" min="0" step="0.01" value="{{carril.monto}}" ng-model="carril.monto" ng-change="$ctrl.actualizarTotalDeComprobante(carrilIndex,carril.monto)" />
+                                                    </div>
+                                                </div>
+                                                <div ng-if="!$ctrl.seFacturo&& ($ctrl.arrayDeCarrilesDividido.length >2) && (carrilIndex===($ctrl.arrayDeCarrilesDividido.length-1))" class="col-xs-12" style="height:1px">
+                                                    <button type="button" class="close" aria-label="Close" ng-click="$ctrl.eliminarCarrilDividido(carril)">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div ng-if="$ctrl.seFacturo" class=" col-xs-12 col-md-12 pdf-imprimir-factura">
+                                                    <button title="PDF" class="btn btn-default" ng-click="$ctrl.pdfFactura()"><span class="fa fa-file-pdf-o"></span> </button>
+                                                    <button title="Imprimir factura" class="btn btn-default" ng-click="$ctrl.imprimirFactura()"><span class="glyphicon glyphicon-print"></span> </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-pagos-facturacion">
+                                                <div class="col-xs-12 px-10" id="idComprobantesVenta-{{carrilIndex}}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="agregar-card-pagos" ng-click="$ctrl.agregarCarrilDividido()">
+                                            <span class="fa fa-plus"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--FACTURACION DIFERENCIADO-->
+                            <div ng-if="$ctrl.atencion.TipoDePago == $ctrl.parametros.TipoDePagoCuentaDiferenciadaDetallada " class="col-md-12 facturacion-diferenciado" style="width: auto !important; padding-bottom:20px; padding-left:10px;">
+                                <div>
+                                    <div class="contenedor-card-pagos" ng-init="carrilIndex = 0" >
+                                        <div class="card-pagos" ng-repeat="carril in $ctrl.arrayDeCarrilesDiferenciado" ng-init="carrilIndex = $index">
+                                            <!--header-->
+                                            <div class="col-xs-12 col-md-12 card-pagos-delete">
+                                                <div class="col-xs-5 col-md-5 card-pagos-total">
+                                                    <label>S/. {{carril.monto.toFixed(2)}} </label>
+                                                </div>
+                                                <div class="col-xs-7 col-md-7">
+                                                    <div ng-if="$ctrl.seFacturo" class=" col-xs-12 col-md-12 pdf-imprimir-factura">
+                                                        <button title="PDF" class="btn btn-default" ng-click="$ctrl.pdfFactura()"><span class="fa fa-file-pdf-o"></span> </button>
+                                                        <button title="Imprimir factura" class="btn btn-default" ng-click="$ctrl.imprimirFactura()"><span class="glyphicon glyphicon-print"></span> </button>
+                                                    </div>
+                                                    <button ng-if="!$ctrl.seFacturo&& ($ctrl.arrayDeCarrilesDiferenciado.length >2) && (carrilIndex===($ctrl.arrayDeCarrilesDiferenciado.length-1))" type="button" class="btn btn-box-tool pull-right" ng-click="$ctrl.eliminarCarrilDiferenciado(carril,$index)"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="card-pagos-header card-drop">
+                                                <span class="card-icono fa fa-cart-arrow-down disabled">
+                                                </span>
+                                                <div id="bandeja-detalle-ordenes{{$index}}" class="carril-detalleOrden">
+                                                </div>
+                                            </div>
+                                            <div class="card-pagos-facturacion">
+                                                <div class="col-xs-12 px-10" id="idComprobantesVenta-{{$index}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="agregar-card-pagos" ng-click="$ctrl.agregarCarrilDiferenciado()">
+                                            <span class="fa fa-plus"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

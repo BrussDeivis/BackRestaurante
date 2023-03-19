@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Habitaciones";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/hotel/habitacionesController.js")></script>
+    <script type="text/javascript">
+        var idEstablecimientoPorDefecto = @ViewBag.idEstablecimientoPorDefecto;
+    </script>
+}
+
+<div class="col-md-12 no-padding" id="habitacion" ng-controller="habitacionesController" ng-init="inicializar()">
+    <div class="col-md-12">
+        <div class="color-palette-set">
+            <div class="bg-green color-palette">Habitaciones</div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="col-md-8">
+                    <div class="row" style="padding-left:15px">
+                        <div class="col-sm-4 px-5">
+                            <div class="form-group">
+                                <label>Establecimiento:</label>
+                                <select class="select2 input-sm" ng-model="establecimiento" ng-change="obtenerHabitaciones()" ng-options="item as item.Nombre for item in establecimientos track by item.Id" required>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="padding-top:20px">
+                    <div class="row">
+                        <div class=" col-md-3">
+                            <button class="btn btn-primary btn-block" ng-click="obtenerHabitaciones()" style="margin-top:3px">
+                                <span class="fa fa-search"></span>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-block" style="margin-top: 3px" title="DESCARGAR" ng-click="export('tabla-habitaciones')">
+                                <span class="fa fa-file-excel-o"></span>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary btn-block" style="margin-top:3px" ng-click="abrirRegistroHabitacion()">
+                                <span class="glyphicon glyphicon-plus"></span> Habitación
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="row">
+                    <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive principal-tablaResponsiva">
+                        <table id="tabla-habitaciones" datatable="ng" dt-options="dtOptions" dt-column-defs="habitaciones.dtColumnDefs" class="table table-stripped table-bordered dateTable tabla-responsiva">
+                            <thead>
+                                <tr class="filters">
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Ambiente</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Camas</th>
+                                    <th scope="col">Anexo</th>
+                                    <th scope="col">Vigente</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="habitacion in habitaciones" ng-cloak>
+                                    <td scope="row" data-label="Item">{{$index+1}}</td>
+                                    <td scope="row" data-label="Codigo" class="width-100">{{habitacion.CodigoHabitacion}}</td>
+                                    <td scope="row" data-label="Ambiente">{{habitacion.Ambiente}}</td>
+                                    <td scope="row" data-label="Tipo">{{habitacion.TipoHabitacion}}</td>
+                                    <td scope="row" data-label="Camas">{{habitacion.CamasInformacion}}</td>
+                                    <td scope="row" data-label="Anexo">{{habitacion.AnexoTelefono}}</td>
+                                    <td scope="row" data-label="Vigente"><div class="hide">{{habitacion.EsVigente ? 'SI' : 'NO'}}</div>
+                                        <i title="{{habitacion.EsVigente ? 'SI' : 'NO'}}" class="fa fa-toggle-on" ng-model="habitacion.EsVigente" ng-class="habitacion.EsVigente ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="cambiarEstadoHabitacion(habitacion.Id)" />
+                                    </td>
+                                    <td scope="row" data-label="Acciones">
+                                        <button title="Editar" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" ng-click="editarHabitacion(habitacion.Id)" style="background-color: #EB5C24"><span class="fa fa-pencil"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_Nueva_Habitacion")
+</div>
+

@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Bandeja de cuentas por cobrar y pagar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/finanza/cobrarYPagarController.js")></script>
+    <script>
+
+        var idDetalleMaestroMedioDePagoEfectivo = @ViewBag.idDetalleMaestroMedioDePagoEfectivo;
+        var idDetalleMaestroEntidadBancariaNinguna = @ViewBag.idDetalleMaestroEntidadBancariaNinguna;
+        var idDetalleMaestroMedioDePagoDepositoCuenta = @ViewBag.idDetalleMaestroMedioDePagoDepositoCuenta;
+        var idDetalleMaestroMedioDePagoTransferenciaDeFondos = @ViewBag.idDetalleMaestroMedioDePagoTransferenciaDeFondos;
+        var nombreCajero = '@ViewBag.nombreCajero';
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+        var permitirGruposEnCuentasPorCobrarPagar = @ViewBag.permitirGruposEnCuentasPorCobrarPagar.ToString().ToLower();
+    </script>
+    @Html.Raw(ViewBag.WCPScript);
+}
+
+
+<div class="col-md-12" ng-controller="cobrarYPagarController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CUENTAS POR COBRAR Y PAGAR</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="panel panel-primary" style="margin-bottom:0px;">
+                        <div class="panel-heading">TIPO DE CUOTA</div>
+                        <div class="panel-body" style="padding:5px;">
+                            <div class="radio radio-primary radio-inline" style="margin-left: 10px;">
+                                <input type="radio" id="radio1" name="cuenta" value="true" ng-model="porCobrar" ng-checked="porCobrar=='true'" ng-click="obtenerCuentasPorCobrarPagar()">
+                                <label for="radio1">Por Cobrar</label>
+                            </div>
+                            <div class="radio radio-primary radio-inline">
+                                <input type="radio" id="radio2" name="cuenta" value="false" ng-model="porCobrar" ng-checked="porCobrar=='false'" ng-click="obtenerCuentasPorCobrarPagar()">
+                                <label for="radio2">Por Pagar</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" ng-if="permitirGruposEnCuentasPorCobrarPagar">
+                    <div class="panel panel-primary" style="margin-bottom:0px;">
+                        <div class="panel-heading">GRUPOS<span class="pull-right">SALDO TOTAL: S/ {{grupos.SaldoTotalGrupo|number:2}}</span></div>
+                        <div class="panel-body" style="padding:10px;">
+                            <div class="col-md-12">
+                                <div class="form-group mb-0">
+                                    <div>
+                                        <label class="col-md-6 no-padding">Seleccionar Grupos</label>
+                                        <div class="checkbox checkbox-primary col-md-6 no-margin checkbox-form">
+                                            <input id="todoslosgrupos" type="checkbox" class="styled" ng-model="grupos.TodosLosGrupos" ng-change="todosLosGruposChanged()" />
+                                            <label for="todoslosgrupos" class="negrita">Todos</label>
+                                        </div>
+                                    </div>
+                                    <select id="gruposseleccionados" class="select2 form-control" ng-model="grupos.GruposSeleccionados" ng-change="gruposChanged()" ng-options="item as item.Nombre for item in gruposActoresComerciales  track by item.Id" multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding" style="margin-top:25px;">
+                    <button title="Consultar" class="btn btn-primary btn-md" ng-click="obtenerCuentasPorCobrarPagar()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="Descargar" ng-click="export('tabla-cuentas')" class="btn btn-primary btn-md"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+                <div class="col-md-5 no-padding-left" style="margin-top:25px;">
+                    <button title="Cobrar" ng-show="porCobrar == true || porCobrar == 'true'" class="btn btn-primary btn-md" ng-disabled="cuotasSeleccionadas<1" ng-click="validarCuotasAPagar(cuotasSeleccionadas)"><span class="glyphicon glyphicon-usd"></span> COBRAR CUOTA</button>
+                    <button title="Pagar" ng-show="porCobrar == false || porCobrar == 'false'" class="btn btn-danger btn-md" ng-disabled="cuotasSeleccionadas<1" ng-click="validarCuotasAPagar(cuotasSeleccionadas)"><span class="glyphicon glyphicon-usd"></span> PAGAR CUOTA</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 table-responsive" style="margin-top:10px;">
+            <table id="tabla-cuentas" datatable="ng" dt-options="dtOptions" dt-column-defs="cuotas.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="noExport not-search">Sel</th>
+                        <th>N°</th>
+                        <th>T/C</th>
+                        <th>N° Comprobante</th>
+                        <th>Cuota</th>
+                        <th>Doc. Identidad</th>
+                        <th>Razón Social</th>
+                        <th ng-if="permitirGruposEnCuentasPorCobrarPagar">Grupo</th>
+                        <th>Transacción</th>
+                        <th>Saldo</th>
+                        <th>Fec. Emisión</th>
+                        <th>Fec. Venc.</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in cuotas" class="ng-cloak">
+                        <td><div class="checkbox checkbox-primary" style="padding-left: 0px !important;"><input style="height: 20px; width: 20px;" type="checkbox" form="check-{{$index}}" class="styled" value="{{item}}" ng-checked="cuotasSeleccionadas.indexOf(item)>-1" ng-click="seleccionarCuota(item)" /><label style="margin-top: -11px; margin-left: 1px;" id="check-{{$index}}"></label></div>  </td>
+                        <td style="width:20px" class="number">{{$index+1}}</td>
+                        <td style="width:20px" title="{{item.TipoComprobante}}">{{item.CodigoTipoComprobante}}</td>
+                        <td style="width:60px">{{item.Comprobante}}</td>
+                        <td>{{item.CodigoCuota}}</td>
+                        <td>{{item.DocumentoActorComercial}}</td>
+                        <td class="left">{{item.NombreActorComercial}}</td>
+                        <td class="left" ng-if="permitirGruposEnCuentasPorCobrarPagar">{{item.NombreGrupo}}</td>
+                        <td>{{item.TipoTransaccion}}</td>
+                        <td class="number" style="width:60px"><span>{{item.Saldo|number:2}}</span></td>
+                        <td style="width:60px">{{item.FechaEmision}}</td>
+                        <td style="width:60px">{{item.FechaVencimiento}}</td>
+                        <td class="col-md-1">
+                            <a title="Ver detalle de cuota" class="btn btn-primary btn-xs btn-flat" data-toggle="modal" data-target="#modal-ver-cuota" ng-click="verDetalleCuota(item)"><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalVerDetalleCuota")
+    @Html.Partial("_ModalCobrarPagarCuota")
+</div>

@@ -1,0 +1,90 @@
+﻿<!-- Navbar Right Menu -->
+
+@using Microsoft.AspNet.Identity
+<div class="navbar-custom-menu">
+    @if (Request.IsAuthenticated)
+    {
+
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <ul class="nav navbar-nav">
+                <li class="dropdown notifications-menu" style="background-color: #367faa; opacity: 1;">
+                    <a class="dropdown-toggle" data-toggle="dropdown" title="TIPO DE CAMBIO SUNAT" aria-expanded="false" style="border-left: 1px solid #ecf0f5; border-right: 1px solid #ecf0f5;">
+                        <i class="fa fa-dollar" style="font-size: 17px;"></i>
+                    </a>
+                    <ul class="dropdown-menu" style="width: 200px;">
+                        <li class="header" style="font-weight: bold; font-size: 16px;">Fecha: @((((Tsp.Sigescom.Modelo.Entidades.Sesion.UserProfileSessionData)HttpContext.Current.Session["UserProfile"]).TipoDeCambio.FechaString))</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <a style="font-weight: bold; color: green; font-size: 16px; padding:5px;">
+                                        <i class="fa fa-shopping-cart text-green"></i> Compra: @((((Tsp.Sigescom.Modelo.Entidades.Sesion.UserProfileSessionData)HttpContext.Current.Session["UserProfile"]).TipoDeCambio.ValorCompra))
+                                    </a>
+                                </li>
+                                <li>
+                                    <a style="font-weight: bold; color: #0173b7; font-size: 16px; padding:5px;">
+                                        <i class="fa fa-shopping-cart text-blue"></i> Venta: @((((Tsp.Sigescom.Modelo.Entidades.Sesion.UserProfileSessionData)HttpContext.Current.Session["UserProfile"]).TipoDeCambio.ValorVenta))
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="https://e-consulta.sunat.gob.pe/cl-at-ittipcam/tcS01Alias" target="_blank" rel="noopener noreferrer" style="font-weight: bold; font-size: 12px;">Ver más</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown notifications-menu" style="background-color: #367faa;">
+                    <a href="https://soportesiges.tsolperu.com/" title="SIGES AYUDA" target="_blank" rel="noopener noreferrer" style="border-right: 1px solid #ecf0f5;">
+                        <i class="fa fa-question"></i>
+                    </a>
+                </li>
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="@Url.Content("~/Content/images/avatar5.png")" class="user-image" alt="User Image">
+                        <span class="hidden-xs">&nbsp; @((((Tsp.Sigescom.Modelo.Entidades.Sesion.UserProfileSessionData)HttpContext.Current.Session["UserProfile"]).Empleado.NombreCorto)) </span>
+
+
+
+
+
+                    </a>
+                    <ul class="dropdown-menu panel-menu-user">
+                        <!-- User image -->
+                        <li class="user-header">
+                            <img src="@Url.Content("~/Content/images/avatar5.png")" class="img-circle" alt="User Image">
+                            <p>
+                                @User.Identity.GetUserName()
+                            </p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            @*@*<div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                </div>*@
+                            <div class="text-center">
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Cerrar sesión</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        }
+    }
+</div>
+@*else
+    {
+        <ul class="nav navbar-top-links navbar-right">
+
+            <li>
+                <a href="@Url.Action("Login", "Account")">
+                    <i class="glyphicon glyphicon-log-in"></i> Iniciar sesi&oacute;n
+                </a>
+            </li>
+        </ul>
+
+    }*@
+
+

@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-top-links navbar-right">
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i>  <span>@User.Identity.GetUserName()</span>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    @*<li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>*@
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+        </ul>
+
+            <!-- /.dropdown -->
+            @*<ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <p>@User.Identity.GetUserName()</p>
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
+                </ul>*@
+    }
+}
+else
+{
+    <ul class="nav navbar-top-links navbar-right">
+
+        <li>
+            <a href="@Url.Action("Login", "Account")">
+                <i class="glyphicon glyphicon-log-in"></i> Iniciar sesi&oacute;n
+            </a>
+        </li>
+    </ul>
+
+}

@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Bandeja de Clientes";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/cliente/clientesController.js")></script>
+}
+@section MenuLeft{
+    <div class="col-md-1 center">
+        <div class="nav-left">
+            <a class="" href="@Url.Action("Index", "Cliente")"><i class="mdi mdi-account-circle"></i>Cliente</a>
+            <a class="active" href="#"><i class="mdi mdi-account-network"></i>Proveedor</a>
+        </div>
+    </div>
+}
+<div class="col-md-11 padding-right-10" ng-controller="clienteController">
+
+    <h3 class="titulo1">Bandeja de Clientes</h3>
+    <div><a id="editar" style="display:none" class="new-tab-btn btn btn-info" title="Registro Proveedor" href="#">Editar</a></div>
+
+    <div class="col-md-7 padding-0 table-options">
+        <div class="col-md-3 padding-0 ">
+            <a class="new-tab-btn btn btn-info btn-xs" title="Registro Cliente" href="@Url.Action("Formulario", "Cliente")"><span class="glyphicon glyphicon-plus"></span></a>
+            <button class="btn btn-info btn-xs" title="Actualizar Bandeja" ng-click="listarElementos()"> <span class="glyphicon glyphicon-refresh"></span> </button>
+            @*<button class="btn btn-success btn-xs" title="Descargar Excel" ng-click="export('tabla-clientes')"> <span class="glyphicon glyphicon-save"></span> </button>*@
+        </div>
+    </div>
+    <table id="tabla-clientes" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="row-border hover table table-stripped tabla-bandeja table-bordered">
+
+        <thead>
+            <tr>
+                @*<th></th>*@
+                @*<th>Id</th>*@
+                <th>N°</th>
+                <th>C&oacute;digo</th>
+                <th>Tip.Persona</th>
+                <th>Razon Social</th>
+                <th>Direcci&oacute;n</th>
+                <th>Tip.Doc.</th>
+                <th>Doc.Identidad</th>
+                <th class="noExport">Acci&oacute;n</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in elementos.lista" ng-cloak>
+                @*<td><input type="checkbox" /></td>*@
+                @*<td>{{item.Id}}</td>*@
+                <td>{{$index+1}}</td>
+                <td>{{item.Codigo}}</td>
+                <td class="width-100">{{item.TipoPersona.Nombre}}</td>
+                <td class="left width-150"><span class="width-nowrap" title="{{item.RazonSocial}}">{{item.RazonSocial}}</span></td>
+                <td class="left width-300"><span class="width-nowrap" title="{{item.DetalleDireccion}}">{{item.DetalleDireccion}}</span></td>
+                <td>{{item.TipoDocumentoIdentidad.Nombre}}</td>
+                <td>{{item.NumeroDocumentoIdentidad}}</td>
+                <td class="col-md-1">
+                    <a title="Editar Cliente" class="btn btn-success btn-xs" ng-click="newTab('@Url.Action("Formulario", "Cliente")',item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                    <button title="Dar de Baja al Cliente" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#pregunta-eliminar" ng-click="cargar(item)"><span class="glyphicon glyphicon-trash"></span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- PREGUNTA ELIMINAR CLIENTE -->
+    <div id="pregunta-eliminar" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title center"> DAR DE BAJA CLIENTE</h4>
+                </div>
+                <div class="modal-body">
+                    <p> Dara de baja el registro "{{modelo.Id}}" ?</p>
+                    <button class="btn btn-info" data-dismiss="modal" ng-click="eliminar()">Confirmar</button>
+                    <button class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

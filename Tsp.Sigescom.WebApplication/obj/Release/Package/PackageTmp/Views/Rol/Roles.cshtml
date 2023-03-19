@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "RegistroDeTipoDeTransaccion";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/rol/rolController.js")></script>
+} 
+<div class="col-md-12" ng-controller="rolController"  @*ng-init="obtenerTiposDeTransaccionBandeja()"*@>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">ROLES</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <a title="Nuevo Rol" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-rol" ng-click="nuevoRegistroRolDeNegocio()"><span class="glyphicon glyphicon-plus"></span>NUEVO ROL</a>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="tabla-tipo-de-transaccion" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>th
+                                        <th>ID</th>
+                                        <th>NOMBRE</th>
+                                        <th>DESCRIPCIÓN</th>
+                                        <th>ROL PADRE</th>
+                                        <th>ACCION DE NEGOCIO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaTiposDeTransaccionBandeja" ng-cloak>
+                                        <td>{{item.Id}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>{{item.Descripcion}}</td>
+                                        <td>{{item.TransaccionMaestro}}</td>
+                                        <td>{{item.AccionesDeNegocioPorTipoDeTransaccion}}</td>
+                                        <td>
+                                            <a title="Editar Tipo De Transacción" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-tipo-de-transaccion" ng-click="editarTipoDeTransaccion(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroRolPartial")
+    </div>
+</div>

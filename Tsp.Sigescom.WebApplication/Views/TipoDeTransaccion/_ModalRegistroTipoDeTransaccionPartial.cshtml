@@ -1,0 +1,88 @@
+﻿<div id="modal-registro-tipo-de-transaccion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE TIPO DE TRANSACCIÓN</h4>
+            </div>
+            <div class="modal-body">
+                <form name="tipoDeTransaccionForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="nombre">NOMBRE:</label>
+                                <input type="text" name="nombre" id="nombre" value="" placeholder="Nombre" class="form-control" ng-model="tipoDeTransaccion.Nombre" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="descripcion">DESCRIPCIÓN:</label>
+                                <input type="text" name="descripcion" id="descripcion" value="" placeholder="Descripción" class="form-control" ng-model="tipoDeTransaccion.Descripcion" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="transaccionMestro">TRANSACCIÓN MAESTRO:</label>
+                                <select id="transaccionMestro" class="select2 form-control" ng-model="tipoDeTransaccion.TransaccionMaestro"  ng-options="item as item.Nombre for item in listaTiposDeTransaccionGenerico track by item.Id" @*required*@></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label>ACCIÓN DE NEGOCIO:</label>
+                            </div>
+                        </div>
+                        <div ng-repeat="item in listaAccionesDeNegocioPorTipoDeTransaccion">
+
+                            <div class="col-xs-12 col-sm-5 col-md-5 ">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="accionDeNegocio{{item.IdAccionDeNegocio}}" type="checkbox" ng-change="habilitarDeshabilitarRadio(item.IdAccionDeNegocio)" data-checklist-model="tipoDeTransaccion.AccionesDeNegocioPorTipoDeTransaccion" data-checklist-value="item">
+                                        <label for="accionDeNegocio{{item.IdAccionDeNegocio}}">{{item.NombreAccionDeNegocio}}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-2 ">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="checkbox-entrada-{{item.IdAccionDeNegocio}}" type="checkbox" class="styled" ng-model="item.Entrada" ng-disabled="item.IdEntrada == 0 && item.IdSalida == 0"/>
+                                        <label for="checkbox-entrada-{{item.IdAccionDeNegocio}}">Entrada</label>
+                                    </div>
+                                    @*<div class="radio radio-primary">
+                                        <input type="radio" id="radio-entrada-{{item.IdAccionDeNegocio}}" ng-model="item.Valor" ng-value="true" name="valor-{{item.IdAccionDeNegocio}}" ng-disabled="item.Id == 0">
+                                        <label for="radio-entrada-{{item.IdAccionDeNegocio}}">
+                                            Entrada
+                                        </label>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-2 ">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="checkbox-salida-{{item.IdAccionDeNegocio}}" type="checkbox" class="styled" ng-model="item.Salida" ng-disabled="item.IdEntrada == 0 && item.IdSalida == 0"/>
+                                        <label for="checkbox-salida-{{item.IdAccionDeNegocio}}">Salida</label>
+                                    </div>
+                                    <!--<div class="radio radio-primary">
+                                        <input type="radio" id="radio-salida-{{item.IdAccionDeNegocio}}" ng-model="item.Valor" ng-value="false" name="valor-{{item.IdAccionDeNegocio}}"--> @*ng-checked="item.Valor == false"*@ <!--ng-disabled="item.Id == 0">
+                                        <label for="radio-salida-{{item.IdAccionDeNegocio}}">
+                                            Salida
+                                        </label>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a id="btn-guardar" ng-disabled="tipoDeTransaccionForm.$invalid" ng-click="crearTipoDeTransaccion()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-tipo-de-transaccion')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

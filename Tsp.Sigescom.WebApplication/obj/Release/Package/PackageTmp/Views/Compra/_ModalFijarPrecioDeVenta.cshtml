@@ -1,0 +1,31 @@
+﻿<div id="modal-fijar-precio-venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">PRECIO DE VENTA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 style="text-align:center">{{nombreMercaderia}} <span class="label label-primary"> S/. {{precioUnitario}}</span></h3>
+                                        @Html.Partial("../Precio/_RegistroPrecioPartial")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="GUARDAR" ng-disabled="" class="btn btn-md btn-primary" ng-click="guardarPrecioDeVenta()"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="modal-precio-venta" data-toggle="modal" data-target="#modal-fijar-precio-venta" style="display:none"></a>

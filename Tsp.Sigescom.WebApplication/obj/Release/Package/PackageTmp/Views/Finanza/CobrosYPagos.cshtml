@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Consulta de cobros y pagos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/finanza/cobrosYPagosController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/ingresosYEgresosVariosController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+
+        var nombreCajero = '@ViewBag.nombreCajero';
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idTipoActorPersonaJuridica = @ViewBag.idTipoActorPersonaJuridica;
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idTipoPersonaSeleccionadaPorDefecto = @ViewBag.idTipoPersonaSeleccionadaPorDefecto;
+        var idUbigeoSeleccionadoPorDefecto = @ViewBag.idUbigeoSeleccionadoPorDefecto;
+        var idTipoDocumentoSeleccionadaConTipoPersonaNatural = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaNatural;
+        var idTipoDocumentoSeleccionadaConTipoPersonaJuridica = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaJuridica;
+        var idTipoDocumentoIdentidadDni = @ViewBag.idTipoDocumentoIdentidadDni;
+        var idTipoDocumentoIdentidadRuc = @ViewBag.idTipoDocumentoIdentidadRuc;
+        var idProveedorGenerico = @ViewBag.idProveedorGenerico;
+        var IdTipoActorPersonaNarural =@ViewBag.IdTipoActorPersonaNatural;
+        var idComprobantePredeterminadoPorDefecto = @ViewBag.idComprobantePredeterminadoPorDefecto;
+        var idRolCliente = @ViewBag.idRolCliente;
+        var idRolProveedor = @ViewBag.idRolProveedor;
+        var idRolEmpleado = @ViewBag.idRolEmpleado;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var minimoCaracteresBuscarActorComercial = @ViewBag.minimoCaracteresBuscarActorComercial;
+        var mascaraDeVisualizacionValidacionRegistroCliente = '@ViewBag.mascaraDeVisualizacionValidacionRegistroCliente';
+        var mascaraDeVisualizacionValidacionRegistroProveedor = '@ViewBag.mascaraDeVisualizacionValidacionRegistroProveedor';
+        var mascaraDeVisualizacionValidacionRegistroEmpleado = '@ViewBag.mascaraDeVisualizacionValidacionRegistroEmpleado';
+    </script>
+}
+
+<div class="col-md-12" ng-controller="cobrosYPagosController" ng-init="inicializarBandeja()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">INGRESOS Y EGRESOS</div>
+            </div>
+        </div>
+        <div class=" col-md-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="bandeja-cabecera">
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            <div class="row">
+                                <div class="col-sx-12 col-sm-3 col-md-3 col-lg-3">
+                                    <label for="dateStart">Fecha Inicial</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStar" ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                                    </div>
+                                </div>
+                                <div class="col-sx-12 col-sm-6 col-sm-3 col-md-3 col-lg-3">
+                                    <label for="dateEnd">Fecha Final</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="padding-top:3rem">
+                                    <div class="radio radio-primary radio-inline" style="margin-left: 10px;">
+                                        <input type="radio" id="radio1" name="movimiento" value="true" ng-model="esIngreso" ng-checked="esIngreso==true">
+                                        <label for="radio1">Cobros</label>
+                                    </div>
+                                    <div class="radio radio-primary radio-inline">
+                                        <input type="radio" id="radio2" name="movimiento" value="false" ng-model="esIngreso" ng-checked="esIngreso==false">
+                                        <label for="radio2">Pagos</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="padding-top:2.6rem">
+                                    <button title="Consultar" ng-disabled="!fechaInicio || !fechaFin || !esIngreso" class="btn btn-primary btn-md" ng-click="listarBandeja()"><span class="glyphicon glyphicon-search"></span></button>
+                                    <button title="Descargar" ng-click="export('tabla-cobros-pagos')" class="btn btn-primary btn-md"><span class="fa fa-file-excel-o"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3 form-horizontal" style="padding-top:2.6rem">
+                            <div class="row" style="display:flex; justify-content:space-between">
+
+                                <button title="Registrar ingreso varios" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-registro-ingreso-egreso-varios" ng-click="inicioIngresoVarios()"><span class="glyphicon glyphicon-usd"></span> INGRESO</button>
+
+
+                                <button title="Regitrar egreso varios" class="btn btn-danger btn-md" data-toggle="modal" data-target="#modal-registro-ingreso-egreso-varios" ng-click="inicioEgresoVarios()"><span class="glyphicon glyphicon-usd"></span> EGRESO</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bandeja-cuerpo">
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive principal-tablaResponsiva p-0">
+                            <table id="tabla-cobros-pagos" datatable="ng" dt-options="dtOptions" dt-column-defs="pagos.dtColumnDefs" class="table table-stripped table-bordered dateTable tabla-responsiva">
+                                <thead>
+                                    <tr class="filters">
+                                        <th scope="col">N°</th>
+                                        <th scope="col">Fecha y hora</th>
+                                        <th scope="col">Documento</th>
+                                        <th scope="col">Pagador</th>
+                                        <th scope="col">Recibidor</th>
+                                        <th scope="col">Tipo Ope.</th>
+                                        <th scope="col">Med.Pago</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Opciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in cobrosPagos" ng-cloak>
+                                        <td scope="row" data-label="N°" class="number">{{$index+1}}</td>
+                                        <td scope="row" data-label="Fecha y hora">{{item.Fecha}}</td>
+                                        <td scope="row" data-label="Documento" title="{{item.TipoDocumento}}">{{item.SerieNumeroDocumento}}</td>
+                                        <td scope="row" data-label="Pagador">{{item.Pagador}}</td>
+                                        <td scope="row" data-label="Recibidor">{{item.Recibidor}}</td>
+                                        <td scope="row" data-label="Tipo Ope.">{{item.TipoDeOperacion}}</td>
+                                        <td scope="row" data-label="Med. Pago">{{item.MedioDePago}}</td>
+                                        <td scope="row" data-label="Total">{{item.Total|number:'2'}}</td>
+                                        <td scope="row" data-label="Opciones">
+                                            <a title="Ver detalle de cobro/pago" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-ingreso-egreso" ng-click="inicializarVerDocumento(item)"><span class="glyphicon glyphicon-search"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalVerIngresoEgreso")
+    @Html.Partial("_ModalRegistroIngresoEgresosVarios")
+</div>

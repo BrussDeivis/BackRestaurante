@@ -1,0 +1,178 @@
+﻿@model Tsp.Sigescom.Modelo.ClasesNegocio.SigesRestaurant.Comprobantes.ComprobanteOrden
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        .texto {
+            font-size: 3.1mm !important;
+        }
+
+        .texto3mm {
+            font-size: 2.7mm !important;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios {
+            margin: 0;
+            padding: 0;
+        }
+
+        .devuelto {
+            text-decoration: overline line-through underline;
+        }
+
+        .anulado {
+            text-decoration: line-through;
+        }
+
+        .lineaHorizontal {
+            margin: 0;
+        }
+
+        .resaltado {
+            font-weight: bold;
+        }
+
+        .resaltado5mm {
+            font-weight: bold;
+            font-size: 4.5mm !important;
+        }
+
+        .resaltado6mm {
+            font-weight: bold;
+            font-size: 5.4mm !important;
+        }
+
+        .sinResaltado {
+            font-size: 3.1mm !important;
+            font-weight: normal !important;
+        }
+
+        body.receipt .sheet {
+            width: 70.5mm;
+            height: auto;
+        }
+        /*  sheet size */
+        @@page {
+            size: 70.5mm auto;
+            margin: 0mm;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 70.5mm;
+                height: auto;
+            }
+        }
+        /* fix for Chro */
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+    </style>
+
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="texto">
+            <div class="">
+                <div class="centrado">
+                    <div class="resaltado">@Model.NombreRestaurant</div>
+                </div>
+                @* Comprobante *@
+                <div class="centrado">
+                    <div class="titulo">@(Model.Orden.Codigo) </div>
+                    <div class="resaltado"> @(Model.Orden.Mesa.Nombre +" - " + Model.Orden.Mesa.NombreAmbiente) </div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Receptor *@
+                <div>
+                    <div class="resaltado">@("Mozo: "+ Model.Orden.Mozo.Nombre) </div>
+                    <div>@(Model.Orden.FechaHoraRegistro)</div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Detalles *@
+                <div width="100%">
+
+                    <table width="100%">
+                        @foreach (var detalle in Model.Orden.DetallesDeOrden)
+                        {
+                            <tr>
+                                <td class="texto @(detalle.EtiquetaEstado)">➜ @(detalle.Cantidad.ToString("0.00")) -> @(detalle.NombreItem)</td>
+                            </tr>
+                            foreach (var valorComplemento in detalle.ValoresComplementos)
+                            {
+                                <tr width="100%">
+                                    <td width="100%" class="texto3mm @(detalle.EtiquetaEstado)">- @(valorComplemento) </td>
+                                </tr>
+                            }
+                            if (!string.IsNullOrEmpty(detalle.DetalleItemRestaurante.AnotacionIndicacion))
+                            {
+                                <tr width="100%">
+                                    <td width="100%" class="texto3mm">IND: @(detalle.DetalleItemRestaurante.AnotacionIndicacion)</td>
+                                </tr>
+                            }
+                            if (!string.IsNullOrEmpty(detalle.DetalleItemRestaurante.AnotacionObservacion))
+                            {
+                                <tr width="100%">
+                                    <td width="100%" class="texto3mm">OBS: @(detalle.DetalleItemRestaurante.AnotacionObservacion)</td>
+                                </tr>
+                            }
+
+                        }
+                    </table>
+                </div>
+                <hr class="lineaHorizontal">
+                <hr class="lineaHorizontal">
+                @* Mensajes *@
+                @*<div class="centrado texto3mm">Siges-Restaurant</div>
+                        <div class="centrado texto3mm">Siges|www.siges.tsolperu.com|</div>
+                    <div class="centrado texto3mm"> - </div>*@
+            </div>
+        </div>
+    </section>
+</body>
+</html>

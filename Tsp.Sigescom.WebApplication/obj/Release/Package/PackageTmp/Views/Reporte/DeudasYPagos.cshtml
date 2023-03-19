@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Reporte de deudas y pagos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/reporte/reporteController.js")></script>
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+}
+<div class="col-md-12" ng-controller="reporteController" ng-init="inicializadorReporteDeudaYPago()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTE DE DEUDAS Y PAGOS</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">REPORTE DE PAGO </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateStart">Fecha y Hora Inicial: </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStart" ng-model="reportePago.FechaInicio" ng-change="actualizarURLReporteDePago()" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reportePago.HoraInicio" ng-change="actualizarURLReporteDePago()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateEnd">Fecha y Hora Final: </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="reportePago.FechaFinal" ng-change="actualizarURLReporteDePago()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="reportePago.HoraFinal" ng-change="actualizarURLReporteDePago()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />  
+                        
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-puntos-venta-reporte-pago-cliente">
+                                <div class="form-group">
+                                    <label class="control-label">PUNTOS DE VENTA:</label>
+                                    <select class="select2 form-control" ng-model="reportePago.PuntoDeVentaParaReporteDePagoDeCliente" ng-change="actualizarURLReporteDePagoDeCliente()" ng-options="item as item.Nombre for item in listaPuntosDeVenta track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-clientes-reporte-pago-cliente">
+                                <div class="form-group">
+                                    <label class="control-label">CLIENTES:</label>
+                                    <select class="select2 form-control" ng-model="reportePago.ClienteParaReporteDePago" ng-change="actualizarURLReporteDePagoDeCliente()" ng-options="item as item.Nombre for item in listaClientes track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a id="btn-see-in-reporte-pago-cliente" title="Reporte de pagos de clientes " class="btn btn-primary btn-flat mt-20" ng-href="{{URLReporteDePagoDeCliente}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-puntos-compra-reporte-pago-proveedor">
+                                <div class="form-group">
+                                    <label class="control-label">PUNTOS DE COMPRA:</label>
+                                    <select class="select2 form-control" ng-model="reportePago.PuntoDeVentaParaReporteDePagoAProveedor" ng-change="actualizarURLReporteDePagoAProveedor()" ng-options="item as item.Nombre for item in listaPuntosDeCompra track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-proveedores-reporte-pago-proveedor">
+                                <div class="form-group">
+                                    <label class="control-label">PROVEEDORES:</label>
+                                    <select class="select2 form-control" ng-model="reportePago.ProveedorParaReporteDePago" ng-change="actualizarURLReporteDePagoAProveedor()" ng-options="item as item.Nombre for item in listaProveedores track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a id="btn-see-in-reporte-pago-proveedor" title="Reporte de pagos a proveedores " class="btn btn-primary btn-flat mt-20" ng-href="{{URLReporteDePagoAProveedor}}">VER</a>
+                            </div>
+                        </div>
+                    </div>.
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">REPORTE DE DEUDA</h3>
+                </div>
+                <div class="box-body">
+
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-puntos-venta-reporte-deuda-cliente">
+                                <div class="form-group">
+                                    <label class="control-label">PUNTOS DE VENTA:</label>
+                                    <select class="select2 form-control" ng-model="reporteDeuda.PuntoDeVentaParaReporteDeDeudaDeCliente" ng-change="actualizarURLReporteDeDeudaDeCliente()" ng-options="item as item.Nombre for item in listaPuntosDeVenta track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-clientes-reporte-deuda-cliente">
+                                <div class="form-group">
+                                    <label class="control-label">CLIENTES:</label>
+                                    <select class="select2 form-control" ng-model="reporteDeuda.ClienteParaReporteDeDeuda" ng-change="actualizarURLReporteDeDeudaDeCliente()" ng-options="item as item.Nombre for item in listaClientes track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a id="btn-see-in-reporte-deuda-cliente"  title="Reporte de deudas de clientes " class="btn btn-primary btn-flat mt-20" ng-href="{{URLReporteDeDeudaDeCliente}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-puntos-compra-reporte-deuda-proveedor">
+                                <div class="form-group">
+                                    <label class="control-label">PUNTOS DE COMPRA:</label>
+                                    <select class="select2 form-control" ng-model="reporteDeuda.PuntoDeVentaParaReporteDeDeudaAProveedor" ng-change="actualizarURLReporteDeDeudaAProveedor()" ng-options="item as item.Nombre for item in listaPuntosDeCompra track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12" id="input-proveedores-reporte-deuda-proveedor">
+                                <div class="form-group">
+                                    <label class="control-label">PROVEEDORES:</label>
+                                    <select class="select2 form-control" ng-model="reporteDeuda.ProveedorParaReporteDeDeuda" ng-change="actualizarURLReporteDeDeudaAProveedor()" ng-options="item as item.Nombre for item in listaProveedores track by item.Id" required multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a  id="btn-see-in-reporte-deuda-proveedor"  title="Reporte de deuda a proveedor " class="btn btn-primary btn-flat mt-20" ng-href="{{URLReporteDeDeudaAProveedor}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

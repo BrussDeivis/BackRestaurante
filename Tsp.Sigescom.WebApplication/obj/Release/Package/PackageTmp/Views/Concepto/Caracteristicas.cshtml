@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Caracteristicas";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/caracteristica/caracteristicaController.js")></script>
+}
+<div class="col-md-12" ng-controller="caracteristicaController" ng-init="verCaracteristicas()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">CARACTERISTICAS</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button title="DESCARGAR" ng-click="export('tabla-caracteristicas')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                            <a title="Nueva caracteristica" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-caracteristica" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVA CARACTERISTICA</a>
+                        </div>
+                        <div class="col-xs-12">
+                            <table id="tabla-caracteristicas" datatable="ng" dt-options="dtOptions" dt-column-defs="caracteristicas.dtColumnDefs" class="table table-stripped table-bordered dateTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>NOMBRE</th>
+                                        <th>DESCRIPCIÓN</th>
+                                        <th>ESTADO</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in caracteristicas" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>{{item.Descripcion}}</td>
+                                        <td>
+                                            <i class="fa fa-toggle-on" ng-model="item.EsVigente" ng-class="item.EsVigente ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="cambiarEstadoCaracteristica(item)" />
+                                        </td>
+                                        <td>
+                                            <a title="Editar caracteristica" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-caracteristica" ng-click="editarCaracteristica(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroCaracteristica")
+    </div>
+</div>
+
+
+

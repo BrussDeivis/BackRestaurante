@@ -1,0 +1,56 @@
+﻿@model Tsp.Sigescom.WebApplication.Models.UserAndRolesDTO
+@using Tsp.Sigescom.WebApplication.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+    @Html.ValidationSummary(true,
+    "",
+    new { @class = "text-danger" })
+    <div>
+        @Html.ActionLink("Atras",
+       "EditUser",
+       new { UserName = Model.UserName },
+       new { @class = "btn btn-default" })
+        <input type="submit" value="Agregar Rol" class="btn btn-default" />
+        @Html.DropDownList("AddRole")
+    </div>
+    <br />
+
+    <table class="table">
+        <tr>
+            <th>
+                Roles Existentes:
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.colUserRoleDTO)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td>
+                    @if (!((Model.UserName.ToLower() ==
+                        this.User.Identity.Name.ToLower()) &&
+                        item.RoleName == "Administrator") &&
+                        item.RoleName != "No hay Roles")
+                    {
+                        @Html.ActionLink("Eliminar", "DeleteRole",
+                       new { UserName = item.UserName, RoleName = item.RoleName },
+                        new
+                        {
+                            onclick =
+                        "return confirm('Seguro de eliminar este Rol?');"
+                        })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

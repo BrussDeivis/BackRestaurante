@@ -1,0 +1,66 @@
+﻿<div id="modal-registro-salida-mercaderia" class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE SALIDA DE MERCADERIA</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8;">
+                <form class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="col-md-4">
+                                    <label class="control-label">ESTABLECIMIENTO COMERCIAL:</label>
+                                    <select id="establecimientoComercialSalidaDeMercaderia" class="select2 form-control" ng-model="movimiento.EstablecimientoComercial" ng-change="obtenerCentrosAtencionDeAlmacenero(movimiento.EstablecimientoComercial.Id); verificarInconsistenciasMovimientoMercaderia()" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">CENTRO DE ATENCIÓN:</label>
+                                    <select id="centroDeAtencionSalidaDeMercaderia" class="select2 form-control" ng-model="movimiento.CentroDeAtencion" ng-change="verificarInconsistenciasMovimientoMercaderia()" ng-options="item as item.Nombre for item in listaCentrosDeAtencionDeAlmacenero track by item.Id" required></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">ALMACENERO:</label>
+                                    <select id="almacenero" class="select2 form-control" ng-model="movimiento.Almacenero" ng-change="verificarInconsistenciasMovimientoMercaderia()" ng-options="item as item.Nombre for item in listaAlmaceneros track by item.Id" required></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Partial("../Almacen/_ModalMovimientoMercaderiaPartial")
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="col-md-6">
+                                    <div class=" checkbox checkbox-primary checkbox-inline">
+                                        <input id="realizaelingresomercaderia" type="checkbox" ng-model="venta.HayRegistroSalidaDeMercaderia" ng-click="accionSalidaDeMercaderia()" />
+                                        <label for="realizaelingresomercaderia">REALIZA LA SALIDA DE MERCADERIA</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" checkbox checkbox-primary checkbox-inline">
+                                        <input id="usarcomprobante" type="checkbox" ng-model="venta.UsaComprobanteOrden" ng-click="accionUsaComprobanteOrden()" ng-disabled="!venta.HayRegistroSalidaDeMercaderia" />
+                                        <label for="usarcomprobante">USAR COMPROBANTE DE ORDEN</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box box-danger" ng-show="hayInconsistenciasSalidaDeMercaderia && inconsistenciasSalidaDeMercaderia.length > 0">
+                            <div class="box-body">
+                                <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                <table>
+                                    <tr ng-repeat="item in inconsistenciasSalidaDeMercaderia">
+                                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button title="ATRAS" class="btn btn-md btn-danger" ng-click="limpiarRegistroSalidaDeMercaderia();" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span> ATRAS</button>
+                <button title="GUARDAR" class="btn btn-primary btn-md" ng-click="resolverGuardarCompraCorporativa()" ng-disabled="hayInconsistenciasSalidaDeMercaderia"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+            </div>
+        </div>
+    </div>
+</div>

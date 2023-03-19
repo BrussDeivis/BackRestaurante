@@ -1,0 +1,109 @@
+﻿<div id="modal-ver-orden-compra" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <div class="col-md-12">
+                    <h4 class="modal-title">DETALLE DE COMPRA</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button ng-show="verCompra.AccionInvalidar" title="ANULAR INTERNAMENTE" ng-init="EsAnuladoConNotaInterna=false" ng-click="limpiarObservacion()" data-toggle="modal" data-target="#modal-anulacion-interna" class="btn btn-md btn-primary">INVALIDAR</button>
+                        <button ng-show="verCompra.AccionAnular" title="ANULAR CON NOTA DE CREDITO" ng-init="EsAnuladoConNotaDeCredito=false" ng-click="cargarDatosParaAnulacionCompra()" data-toggle="modal" data-target="#modal-anulacion-nota-credito" class="btn btn-smd btn-primary">ANULAR</button>
+                    </div>
+                    <div class="col-md-12" style="padding-top:15px">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="box">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <label class="col-md-12">{{verCompra.EtiquetaDocumentoIdentidad}} : {{verCompra.DocumentoIdentidadProveedor}}</label>
+                                                    <label class="col-md-12">RAZON SOCIAL : {{verCompra.Proveedor}}</label>
+                                                    <label class="col-md-12">{{verCompra.DireccionProveedor}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="box">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <label class="col-md-12">{{verCompra.EtiquetaNombreDocumento}}</label>
+                                                    <label class="col-md-12">{{verCompra.SerieNumeroDocumento}}</label>
+                                                    <label class="col-md-12">FECHA : {{verCompra.Fecha}}</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="box">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <table id="tabla-ver-compras" class="table table-stripped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Concepto</th>
+                                                                <th>Cantidad</th>
+                                                                <th>Precio</th>
+                                                                <th>Igv</th>
+                                                                <th>Descuento</th>
+                                                                <th>Importe</th>
+                                                                <th ng-show="mostrarTrazabilidadDeConcepto">Lote</th>
+                                                                <th ng-show="mostrarTrazabilidadDeConcepto">Venc.</th>
+                                                                <th ng-show="mostrarTrazabilidadDeConcepto">Reg. San.</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in verCompra.Detalles" ng-cloak>
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{item.Concepto}}</td>
+                                                                <td>{{item.Cantidad|number:numeroDecimalesEnCantidad}}</td>
+                                                                <td class="money">S/. {{item.Precio|number:numeroDecimalesEnPrecio}}</td>
+                                                                <td class="money">S/. {{item.Igv|number:2}}</td>
+                                                                <td class="money">S/. {{item.Descuento|number:2}}</td>
+                                                                <td class="money">S/. {{item.Importe|number:2}}</td>
+                                                                <td ng-show="mostrarTrazabilidadDeConcepto">{{item.Lote}}</td>
+                                                                <td ng-show="mostrarTrazabilidadDeConcepto">{{item.Vencimiento}}</td>
+                                                                <td ng-show="mostrarTrazabilidadDeConcepto">{{item.Registro}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-5">
+                                                            <label class="col-md-6">Flete : </label>
+                                                            <label class="col-md-6">{{verCompra.Flete|number:2}}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5 col-md-offset-7">
+                                                        <label class="col-md-6">Sub Total : </label>
+                                                        <label class="col-md-6">{{verCompra.SubTotal|number:2}}</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-md-offset-7">
+                                                        <label class="col-md-6">Total Igv : </label>
+                                                        <label class="col-md-6">{{verCompra.Igv|number:2}}</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-md-offset-7">
+                                                        <label class="col-md-6">Importe Total : </label>
+                                                        <label class="col-md-6">{{verCompra.Total|number:2}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="cerrar()" data-dismiss="modal" title="Cerrar" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

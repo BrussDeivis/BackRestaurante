@@ -1,0 +1,231 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.ComprobantesModel.ReciboDeIngresoEgreso
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        .texto {
+            font-size: 3.1mm !important;
+        }
+
+        .texto3mm {
+            font-size: 2.7mm !important;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios {
+            margin: 0;
+            padding: 0;
+        }
+
+        .titulo .centrado .importe .texto {
+            font-family: MS Gothic;
+            font-weight: lighter;
+        }
+
+        .lineaHorizontal {
+            margin: 0;
+        }
+
+        .resaltado {
+            font-weight: bold;
+        }
+
+        .resaltado5mm {
+            font-weight: bold;
+            font-size: 4.5mm !important;
+        }
+
+        .resaltado6mm {
+            font-weight: bold;
+            font-size: 5.4mm !important;
+        }
+
+        .sinResaltado {
+            font-size: 3.1mm !important;
+            font-weight: normal !important;
+        }
+
+        body.receipt .sheet {
+            width: 70.5mm;
+            height: auto;
+        }
+        /*  sheet size */
+        @@page {
+            size: 70.5mm auto;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 70.5mm;
+                height: auto;
+            }
+        }
+        /* fix for Chro */
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+    </style>
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="texto">
+            <div class="@(@Model.EsInvalidada ? "contenedor-comprobante" : "")">
+                @* Datos Emisor *@
+                @if (Model.MostrarTestigo)
+                {
+                    <div class="centrado">
+                        <div class="titulo">@(Model.Serie + "-" + Model.Numero)</div>
+                    </div>
+                }
+                @* Datos Emisor *@
+                @if (Model.MostrarLogo)
+                {
+                    <div class="centrado">
+                        <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Logo Siges Facturación Electrónica" />
+                    </div>
+                }
+                <div class="centrado">
+                    <div class="titulo">@Model.Emisor.NombreComercial </div>
+                    <div class="texto3mm">
+                        <div>@Model.Emisor.RazonSocial</div>
+                        <div>RUC: @Model.Emisor.NumeroDocumentoIdentidad</div>
+                        <div>@Model.Emisor.Direccion</div>
+                        @if (Model.Emisor.EsSucursal)
+                        {
+                            <div class="negrita">SUC: @Model.Emisor.NombreSucursal</div>
+                            <div>@Model.Emisor.DireccionSucursal</div>
+                        }
+                        <div>@Model.Emisor.OtrosDatosContacto</div>
+                        <div>@Model.Emisor.Publicidad</div>
+                    </div>
+                </div>
+                @* Comprobante *@
+                <div class="centrado">
+                    <div class="texto3mm">@Model.NombreTipo </div>
+                    <div>@(Model.Serie + "-" + Model.Numero)</div>
+                    <div>Emisión: @Model.FechaEmision.ToString("dd/MM/yyyy hh:mm tt")</div>
+
+                </div>
+                <hr class="lineaHorizontal">
+                @* Caja *@
+                <div>
+                    <div class="resaltado"><span class="sinResaltado">CAJA:</span> @Model.Caja </div>
+                    <div class="resaltado"><span class="sinResaltado">CAJERO:</span> @Model.Cajero </div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Cuerpo del recibo *@
+                <div>
+                    <div class="resaltado"><span class="sinResaltado">@Model.TipoPagadorRecibidor:</span> @Model.Receptor.RazonSocial </div>
+                    @if (!Model.Receptor.TipoDocumentoIdentidad.IsEmpty())
+                    {
+                        <div class="resaltado"><span class="sinResaltado">@Model.Receptor.TipoDocumentoIdentidad: </span> @Model.Receptor.DocumentoIdentidad </div>
+                    }
+                    <div class="resaltado"><span class="sinResaltado">MONTO: </span> @string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteTotal) </div>
+                    <div class="resaltado"><span class="sinResaltado">Medio de pago: </span> @Model.MedioDePago </div>
+                    <div class="resaltado"><span class="sinResaltado">Entidad bancaria: </span> @Model.EntidadBancaria </div>
+                    <div class="resaltado"><span class="sinResaltado">Informacion: </span> @Model.InformacionDePago </div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Detalles *@
+                <div width="100%">
+                    <table width="100%">
+                        <tr>
+                            <th>Comprobante</th>
+                            <th>Cuota</th>
+                            <th>Importe</th>
+
+                        </tr>
+                        @foreach (var item in Model.DetallesDeIngresoEgreso)
+                        {
+                            <tr width="100%">
+                                <td width="40%"> @item.Comprobante</td>
+                                <td width="40%"> @item.CodigoCuota</td>
+                                <td width="20%" class="importe">@string.Format("{0:0.00}", item.Importe)</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Resumen *@
+                <div>
+                    <table width="100%" style="table-layout:fixed">
+                        <tr width="100%">
+                            <td width="60%">
+                                <div class="importe resaltado5mm">Importe Total S/</div>
+                            </td>
+                            <td width="40%">
+                                <div class="importe resaltado6mm">@string.Format("{0:0.00}", Model.ImporteTotal)</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div>Son: @Model.ImporteTotalEnLetras</div>
+                    <div>Observación: @Model.Observacion</div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Mensajes *@
+                <div class="centrado">
+                    <div>Representación impresa de un recibo, verificar cuidadosamente los datos y conserve esta informacion</div>
+                    @if (Model.MostrarMensajeNegocio)
+                    {
+                        <div>@Model.MensajeNegocio</div>
+                    }
+                </div>
+                @if (Model.EsInvalidada)
+                {
+                    <div class="marca-agua">
+                        <p class="texto-marca-agua">INVALIDADO</p>
+                    </div>
+                }
+                <div class="centrado texto3mm">Sistema de Gestión Comercial</div>
+                <div class="centrado texto3mm">Siges|www.siges.tsolperu.com|📞 945994581 </div>
+                <div class="centrado texto3mm"> - </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>

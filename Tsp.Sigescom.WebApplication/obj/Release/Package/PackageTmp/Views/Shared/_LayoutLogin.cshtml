@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>@ViewBag.Title - SiGesCom</title>
+    <!--styles bootstrap -->
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <!--styles tema-->
+    <link href="~/Content/style.css" type="text/css" rel="stylesheet" />
+    <!--styles font-awesome-->
+    <link href="~/Content/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <!--script jquery-->
+    <script src="~/Scripts/generico/jquery/jquery-3.1.1.min.js"></script>
+    <!--script bootstrap-->
+    <script src="~/Scripts/generico/bootstrap/bootstrap.min.js"></script>
+</head>
+<body class="">
+    @*<div class="carousel-inner" style="height:100%; width:100%">
+        <div class="item active" style="height:100%; width:100%">
+            <img style="height:100%; width:100%" src="https://www.docuclass-la.com/wp-content/uploads/2020/10/emision-facturacion-electronica.png" alt="First slide">
+
+            <div class="carousel-caption">
+                First Slide
+            </div>
+        </div>
+        <div class="item" style="height:100%; width:100%">
+            <img style="height:100%; width:100%" src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2021/06/12/000781509W.jpg" alt="Second slide">
+
+            <div class="carousel-caption">
+                Second Slide
+            </div>
+        </div>
+        <div class="item" style="height:100%; width:100%">
+            <img style="height:100%; width:100%" src="https://www.ntxpro.net/wp-content/uploads/2021/02/facturacion-electronica.png" alt="Third slide">
+
+            <div class="carousel-caption">
+                Third Slide
+            </div>
+        </div>
+    </div>*@
+    <div class="w3layouts-main">
+        <div class="bg-layer">
+            @RenderBody()
+        </div>
+        
+    </div>
+        
+    
+   
+   
+    <footer>
+        <div class="footer-login" style="position: absolute;bottom: 0;left: 0;right: 0;margin: auto">
+            <p>&copy; @DateTime.Now.Year Todos los derechos reservados | Diseñado por <a style="color: red;" href="https://www.tsolperu.com">Tech Solutions Perú</a></p>
+        </div>
+    </footer>
+</body>
+
+</html>

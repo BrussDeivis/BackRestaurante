@@ -1,0 +1,103 @@
+﻿<div id="modal-registo-orden-de-almacen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> REGISTRO DE ORDEN DE ALMACEN</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <div class="row">
+                    <form class="formulario form-horizontal">
+                        <div class="col-md-4">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">TIPO COMPROBANTE: </label>
+                                            <select id="documento" class="select2 form-control tipoDocumento" ng-model="ordenDeAlmacen.TipoDeComprobante" ng-change="cargarSeriesOrdenDeAlmacen(ordenDeAlmacen.TipoDeComprobante); verificarInconsistenciasOrdenDeAlmacen();" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantesMasSeriesOrdenDeAlmacen track by item.TipoComprobante.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12" ng-show="ordenDeAlmacen.TipoDeComprobante.MostrarSelectorSerie && ordenDeAlmacen.TipoDeComprobante.EsPropio">
+                                            <label class="control-label">SERIE: </label>
+                                            <select id="serie" class="select2 form-control" ng-model="ordenDeAlmacen.TipoDeComprobante.SerieSeleccionada" ng-options="item.Id as item.Nombre for item in seriesOrdenDeAlmacen" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">FECHA TRASLADO: </label>
+                                            <input id="fechaInicioTraslado" class="form-control datepicker-yyyy" ng-model="ordenDeAlmacen.FechaTraslado" ng-change="verificarInconsistenciasOrdenDeAlmacen()" placeholder="dd/mm/aaaa" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">OBSERVACION: </label><br>
+                                            <textarea id="observacionOrdenDeAlmacen" style="resize:none; overflow-y:scroll; width:100%" ng-model="ordenDeAlmacen.Observacion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="box box-primary">
+                                <div class="panel-body" style="padding:5px">
+                                    <div class="col-md-6">
+                                        <label class="control-label">ESTABLECIMIENTO COMERCIAL:</label>
+                                        <select id="establecimientoComercial" class="select2 form-control" ng-model="ordenDeAlmacen.EstablecimientoComercial" ng-change="obtenerCentrosAtencionDeAlmacenero(ordenDeAlmacen.EstablecimientoComercial.Id); verificarInconsistenciasOrdenDeAlmacen()" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id"></select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">CENTRO DE ATENCIÓN:</label>
+                                        <select id="centroDeAtencion" class="select2 form-control" ng-model="ordenDeAlmacen.CentroDeAtencion" ng-options="item as item.Nombre for item in listaCentrosDeAtencionDeAlmacenero track by item.Id" ng-change="verificarInconsistenciasOrdenDeAlmacen()"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                        <table id="table-rolAcciones" class="table table-stripped table-height-small table-bordered">
+                                            <tr>
+                                                <th class="col-md-1">N°</th>
+                                                <th class="col-md-6">DESCRIPCION</th>
+                                                <th class="col-md-1">ORDENADO</th>
+                                                <th class="col-md-1">{{labelRecibidoEntregado}}</th>
+                                                <th class="col-md-2">{{labelEntradaSalida}} ACTUAL</th>
+                                                <th class="col-md-1">PENDIENTE</th>
+                                            </tr>
+                                            <tr ng-repeat="item in ordenDeAlmacen.Detalles">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <label for="decripcion">{{item.Descripcion}}</label>
+                                                </td>
+                                                <td>
+                                                    <label class="numero-derecha">{{item.Ordenado|number:2}}</label>
+                                                </td>
+                                                <td>
+                                                    <label class="numero-derecha">{{item.RecibidoEntregado|number:2}}</label>
+                                                </td>
+                                                <td style="vertical-align:initial">
+                                                    <input class="form-control numero-derecha" onClick="this.select();" style="height:34px" ng-change="verificarInconsistenciasOrdenDeAlmacen()" ng-model="item.EntradaSalidaActual" ng-blur="item.EntradaSalidaActual=formatNumber(item.EntradaSalidaActual,2)" />
+                                                </td>
+                                                <td>
+                                                    <label class="numero-derecha">{{(item.Ordenado - item.RecibidoEntregado - item.EntradaSalidaActual)|number:2}}</label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-danger" ng-show="hayInconsistenciasOrdenDeAlmacen && inconsistenciasOrdenDeAlmacen.length > 0">
+                                <div class="box-body">
+                                    <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                    <table>
+                                        <tr ng-repeat="item in inconsistenciasOrdenDeAlmacen">
+                                            <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button title="GUARDAR" class="btn btn-primary btn-md" ng-disabled="hayInconsistenciasOrdenDeAlmacen" ng-click="guardarOrdenDeAlmacen()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button title="CERRAR" ng-click="cerrarRegistroOrdenDeAlmacen()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

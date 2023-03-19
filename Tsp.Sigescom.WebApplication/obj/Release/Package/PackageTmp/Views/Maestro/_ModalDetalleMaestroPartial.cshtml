@@ -1,0 +1,45 @@
+﻿<div id="modal-detalle-maestro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{maestro_.Nombre}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <a title="Descargar" class="btn btn-flat btn-success"><span class="fa fa-file-excel-o"></span> DESCARGAR</a>
+                        <a title="Nuevo detalle maestro" class="btn btn-flat btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-detalle" ng-click="nuevoRegistroDetalle()"><span class="glyphicon glyphicon-plus"></span> NUEVO DETALLE</a>
+                    </div>
+                    <div class="col-xs-12">
+                        <table id="tabla-detalle-maestros" datatable="ng" dt-options="dtOptions" dt-column-defs="detalles.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>CÓDIGO</th>
+                                    <th>NOMBRE</th>
+                                    <th>VALOR</th>
+                                    <th class="noExport not-search">OPCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in detalles.Lista" ng-cloak>
+                                    <td>{{item.Id}}</td>
+                                    <td class="left">{{item.Codigo}}</td>
+                                    <td class="left width-300"><span class="width-nowrap" title="{{item.Nombre}}">{{item.Nombre}}</span></td>
+                                    <td class="left width-300"><span class="width-nowrap" title="{{item.Valor}}">{{item.Valor}}</span></td>
+                                    <td>
+                                        <a title="Editar detalle Maestro" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-detalle" ng-click="editarDetalle(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" title="Cerrar" class="btn btn-flat btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

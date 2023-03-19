@@ -1,0 +1,70 @@
+﻿<div id="modal-ver-venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="col-xs-12 col-md-11" style=" padding: 0; float: none; margin:auto; margin-top:10px;">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <label class="modal-title no-bold fs-17">DOCUMENTO {{verDocumento.SerieNumeroDocumento}} (S/ {{verDocumento.Total|number:2}})</label>
+                <div class="col-xs-1 col-md-1 col-lg-1 pull-right btn-close">
+                    <button type="button" class="close" style="opacity: 1; color: white; margin-top: 0px !important;" ng-click="cerrarVerDocumento()">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="col-md-12 ">Acciones :</label>
+                        <button ng-show="verDocumento.AccionInvalidar" title="INVALIDA LA NUMERACIÓN, PERO NO SE GENERA NOTA DE CREDITO" ng-click="iniciarInvalidacion()" data-toggle="modal" data-target="#modal-invalidar-documento" class="btn btn-md btn-warning" ng-disabled="hayRegistroDeNota == true">INVALIDAR &nbsp;&nbsp;<span class="fa fa-info-circle" style="color:white" title="Utilice esta opción en caso no haya entregado el comprobante al cliente" ng-show="!comprobante.EsComprobanteInterno"></span></button>
+
+                        <button ng-show="verDocumento.AccionEmitirNota" title="EMITIR NOTA DE DÉBITO" ng-disabled="hayRegistroDeNota == true" ng-click="iniciarEmisionDeNotaDeDebito()" class="btn btn-md btn-primary">NOTA DE DÉBITO</button>
+                        <button ng-show="verDocumento.AccionEmitirNota" title="EMITIR NOTA DE CRÉDITO" ng-disabled="hayRegistroDeNota == true" ng-click="iniciarEmisionDeNotaDeCredito()" class="btn btn-md btn-primary">NOTA DE CRÉDITO</button>
+                        <a ng-show="verDocumento.EsOrden && permitirClonarVenta" title="CLONAR VENTA" class="btn btn-md btn-info" href="@Url.Action("PregeneracionVenta", "Venta")?idOrden={{verDocumento.IdOrden}}&&tipoOperacion=2">CLONAR</a>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="col-md-12 ">Formato :</label>
+                        <div class="col-md-12">
+                            <select class="select2 form-control" id="comboFormato" ng-model="formato" ng-change="cargarDocumento(); cargarGuiaDeRemision();" ng-options="item as item.Nombre for item in formatosDeImpresion track by item.Id" ng-disabled="hayRegistroDeNota == true"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="col-md-12 ">Acciones :</label>
+                        <button title="IMPRIMIR EL DOCUMENTO" class="btn btn-md btn-primary" ng-click="imprimirDocumento()" ng-disabled="hayRegistroDeNota == true"><span class="fa fa-print"></span></button>
+                        <div class="btn-group">
+                            <a title="DESCARGAR EN PDF" class="btn btn-md btn-primary" href="@Url.Action("DescargarDocumentoPdf", "Venta")?idOrdenDeVenta={{verDocumento.IdOrden}}&&formato={{formato.Id}}" ng-disabled="hayRegistroDeNota == true"><span class="fa fa-file-pdf-o"></span></a>
+                            <a class="btn btn-primary dropdown-toggle grupo-boton" data-toggle="dropdown" aria-expanded="false" ng-disabled="hayRegistroDeNota == true">
+                                <span class="caret"></span>
+                                <span class="sr-only"></span>
+                            </a>
+                            <div class="dropdown-menu" role="menu" style="min-width:85px">
+                                <a title="DESCARGAR EN XML" class="btn btn-md btn-primary" href="@Url.Action("DescargarDocumentoXml", "Venta")?idOrdenDeVenta={{verDocumento.IdOrden}}" ng-disabled="hayRegistroDeNota == true"><span class="fa fa-file-code-o"></span></a>
+                                <a title="DESCARGAR EN ZIP" class="btn btn-md btn-primary" href="@Url.Action("DescargarDocumento", "Venta")?idOrdenDeVenta={{verDocumento.IdOrden}}&&formato={{formato.Id}}" ng-disabled="hayRegistroDeNota == true"><span class="fa fa-file-zip-o"></span></a>
+                            </div>
+                        </div>
+                        <button title="ENVIAR POR DOCUMENTO" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-envio-documento" ng-click="inicializarEnvioDocumento()" ng-disabled="hayRegistroDeNota == true"><span class="fa fa-send-o"></span></button>
+                    </div>
+                    <div class="col-md-12" ng-hide="hayRegistroDeNota" style="padding-top:15px">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form name="comprobante" class="form-horizontal">
+                                            <div class="col-md-12 table-responsive" style="padding-left:0">
+                                                <div id="pdfDocumento" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; margin:auto; margin-top:10px"></div>
+                                            </div>
+                                            <div id="pdfGuia" class="col-md-12">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0" ng-show="hayRegistroDeNota" style="padding-top:15px">
+                        <registrador-nota api="registroNotaAPI" operacion="verDocumento" es-propio="true" id-medio-pago-efectivo="idMedioDePagoEfectivo" permitir-venta-credito="permitirVentaAlCredito" cancelar-registro-nota="cancelarRegistroNota()" guardado-registro-nota="guardadoRegistroNota(idOrdenNota)"></registrador-nota>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalInvalidarDocumento")
+    @Html.Partial("_ModalEnvioDeDocumento")
+</div>

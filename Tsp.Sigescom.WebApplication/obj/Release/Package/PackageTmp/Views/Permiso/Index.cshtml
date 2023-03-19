@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Estados y Acciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/maestro/permiso/permisoController.js")></script>
+}
+<div ng-controller="permisoController">
+    @*<div class="input-small">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 style="text-align:center">Registro de Roles y Accion</h3>*@
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REGISTRO DE ROLES Y ACCIONES</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading"><label form="transacciones"><strong>Transacciones</strong></label></div>
+                                <form name="transaccion">
+                                    <div class="panel-body">
+                                        <div class="col-md-2"><label for="Estados">Tipo:</label></div>
+                                        <div class="col-md-10">
+                                            <select id="operacion" class="select2 form-control" ng-model="operacionGenerica" ng-change="cargarCombos(); validarSeleccion()"
+                                                    ng-options="item as item.Nombre for item in operacionesGenericas track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <br />
+                            <br />
+                            <div class="modal-footer">
+                                <a ng-disabled="!accionesEdicion" ng-click="guardarAcciones()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                                <a ng-disabled="!accionesEdicion" ng-click="AccionesEdicion=false; limpiarTodo(); cargarRolAccion();cargarEstadoAccion()" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><strong>Roles por Accion</strong></div>
+                                <form name="fromAccion">
+                                    <div class="panel-body">
+                                        <div class="col-md-2"><label for="Roles">Roles:</label></div>
+                                        <div class="col-md-8">
+                                            <select id="rol" class="select2 form-control" ng-model="rol.Id" ng-change="cargarRolAccion()"
+                                                    ng-options="item.Id as item.Nombre for item in roles track by item.Id"></select>
+                                        </div>
+
+                                    </div>
+                                    <br/>
+                                    <div class="panel-body" ng-show="rol.Id">
+
+                                        <table id="table-rolAcciones" class="table table-stripped table-height-small table-bordered">
+                                            <tr>
+                                                <th>Accion</th>
+                                                <th>Unidad de Negocio</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-8">
+                                                    <select id="rolAccion" ng-model="rolAccion.Accion" class="select2 form-control" ng-change="cargarAccion()"
+                                                            ng-options="item as item.Nombre for item in accionesEstadoEnVista track by item.Id"></select>
+                                                </td>
+                                                <td class="col-md-3">
+                                                    <select id="unidadNegocio" ng-model="rolAccion.UnidadNegocio" class="select2 form-control"
+                                                            ng-options="item as item.Nombre for item in unidadesDeNegocio track by item.Id"></select>
+                                                </td>
+                                                <td class="col-md-1"> <a ng-click="nuevoRolAccion()" ng-disabled="!rolAccion.Accion||!rolAccion.UnidadNegocio" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span></a>  </td>
+                                            </tr>
+                                            <tr ng-repeat="item in rolAcciones">
+                                                <td class="col-md-8">
+                                                    {{item.Accion.Nombre}}
+                                                </td>
+                                                <td class="col-md-3">
+                                                    {{item.UnidadNegocio.Nombre}}
+                                                </td>
+                                                <td class="col-md-1">
+                                                    <a ng-click="eliminarRolAccion(item)" class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove"></span> </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><strong>Acciones por Estados</strong></div>
+                                <form name="fromAccion">
+                                    <div class="panel-body">
+                                        <div class="col-md-3"><label for="Estados">Estados:</label></div>
+                                        <div class="col-md-8">
+                                            <select id="estado" class="select2 form-control" ng-model="estado" ng-change="cargarEstadoAccion()"
+                                                    ng-options="item as item.Nombre for item in estados track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="panel-body" ng-show="estado.Id">
+                                        <div class="col-md-3">
+                                            <label for="cliente">Acciones:</label>
+                                        </div>
+                                        <div class="col-md-12" ng-repeat="item in accionesEstadoEnVista" ">
+                                            <div class="form-group">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox{{$index+1}}" type="checkbox" class="styled"
+                                                           value="{{item.Id}}" ng-checked="accionesSeleccionadas.indexOf(item.Id)>-1" ng-click="seleccion(item)">
+                                                    <label for="checkbox{{$index+1}}">{{item.Nombre}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,54 @@
+﻿<div id="modal-establecer-centro-de-atencion-para-obtencion-precios-stock" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-init="inicializadorCentroDeAtencion()">
+    <div class="modal-dialog " style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header bg-blue">
+                <h4 class="modal-title">ESTABLECER CENTROS DE ATENCIÓN PARA LA OBTENCION DE PRECIOS Y STOCK</h4>
+            </div>
+            <div class="modal-body">
+                <form name="centroDeAtencionParaPreciosYStockForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <label class="col-md-12">SELECCIONAR CENTRO DE ATENCION DEL QUIEN SE OBTENDRA LOS PRECIOS </label>
+                                        <div class="col-md-12" style="margin-top:15px">
+                                            <div class="radio radio-primary radio-inline col-md-12" style="margin-left: 10px; margin-top:10px" ng-repeat="item in centrosDeAtencion">
+                                                <input type="radio" id="radioPrecio-{{$index}}" name="centroDeAtencionParaPrecios" ng-model="centroDeAtencionParaPrecios.Id" value="{{item.Id}}" ng-checked="centroDeAtencionParaPrecios.Id==item.Id" required>
+                                                <label for="radioPrecio-{{$index}}">{{item.Nombre}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box box-success">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <label class="col-md-12">SELECCIONAR CENTRO DE ATENCION DEL QUIEN SE OBTENDRA EL STOCK </label>
+                                        <div class="col-md-12" style="margin-top:15px">
+                                            <div class="radio radio-primary radio-inline col-md-12" style="margin-left: 10px; margin-top:10px" ng-repeat="item in centrosDeAtencion">
+                                                <input type="radio" id="radioStock-{{$index}}" name="centroDeAtencionParaStock" ng-model="centroDeAtencionParaStock.Id" value="{{item.Id}}" ng-checked="centroDeAtencionParaStock.Id==item.Id" required>
+                                                <label for="radioStock-{{$index}}">{{item.Nombre}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button ng-click="establecerCentroDeAtencionParaPreciosYStock()" @*ng-disabled="centroDeAtencionParaPreciosYStockForm.$invalid"*@ class="btn btn-sm btn-primary pull-left">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    GUARDAR
+                </button>
+                <button data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    CERRAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

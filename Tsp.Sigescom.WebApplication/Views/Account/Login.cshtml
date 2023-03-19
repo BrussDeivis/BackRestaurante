@@ -1,0 +1,53 @@
+﻿@model Tsp.Sigescom.WebApplication.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Iniciar sesión en Sigescom";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="login-box">
+    <div class="login-box-body">
+        <!-- /.login-logo -->
+        <div class="row">
+            <div class="col-xs-12" style="margin-bottom:3rem">
+                <img src="@Url.Content("~/Content/images/logo-login.png")" class="center-block" style="max-width:70%">
+            </div>
+        </div>
+        <p class="login-box-msg" style="text-transform:uppercase">Iniciar sesión</p>
+        <!-- /.login-form -->
+        <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", autocomplete = "on" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true,"",new { @class="text-danger"})
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control lowercase", placeholder = "Correo", autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.Email,"", new { @class = "text-danger" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control lowercase", placeholder = "Contraseña", autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.Password,"", new { @class = "text-danger" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(m=>m.RememberMe)
+                            Recordarme
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <button type="submit" style="word-wrap:break-word !important;background-color: #0422d8;border-color: #0422d8;" class="btn btn-primary btn-block btn-flat btn-iniciar">Iniciar</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        }
+        </section>
+    </div>
+    <!-- /.login-box-body -->
+</div>

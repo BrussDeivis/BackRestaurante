@@ -1,0 +1,24 @@
+﻿<div id="modal-valorCaracteristica" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title ng-cloak">REGISTRO @ViewBag.nombre  {{nombre}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form name="valorCaracteristicaForm" class="form-horizontal">
+                        <div class="col-md-12">
+                                <label for="nombre">Nombre: </label>
+                                <input class="form-control" id="nombre" uppercase-only ng-model="valorCaracteristica.Nombre" placeholder="Nombre" required />
+                        </div>
+                    </form>  
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="valorCaracteristicaForm.$invalid" ng-click="guardarValorCaracteristica(valorCaracteristica)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR @ViewBag.nombre</a>
+                <a data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

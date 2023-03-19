@@ -1,0 +1,33 @@
+﻿ <div id="modal-ver-atencion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+     <div class="col-xs-12 col-md-10" style=" padding: 0; float: none; margin:auto; margin-top:10px;">
+         <div class="modal-content">
+             <div class="modal-header bg-primary">
+                 <h4 class="modal-title">DOCUMENTO {{verDocumento.SerieNumeroDocumento}} (S/ {{verDocumento.Total}})</h4>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+                     <div class="col-md-12">
+                         <div class="box box-primary">
+                             <div class="box-body">
+                                 <div class="row">
+                                     <div class="col-md-12" ng-hide="hayRegistroDeNota">
+                                         <form name="comprobante" class="form-horizontal">
+                                             <div class="col-md-12 table-responsive" style="padding-left:0">
+                                                 <div id="htmlAtencion" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; margin:auto; margin-top:20px"></div>
+                                             </div>
+                                         </form>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarVerDocumento()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+             </div>
+         </div>
+     </div>
+    @*@Html.Partial("_ModalInvalidarDocumento")
+    @Html.Partial("_ModalEnvioDeDocumento")*@
+</div>

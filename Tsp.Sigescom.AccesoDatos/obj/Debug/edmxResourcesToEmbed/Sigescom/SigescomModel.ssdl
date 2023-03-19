@@ -1,0 +1,3499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SIGESCOMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accion_de_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accion_de_negocio_por_tipo_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_tipo_transaccion" Type="int" Nullable="false" />
+    <Property Name="id_accion_de_negocio" Type="int" Nullable="false" />
+    <Property Name="valor" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accion_por_estado">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_tipo_transaccion" Type="int" Nullable="false" />
+    <Property Name="id_estado_actual" Type="int" Nullable="false" />
+    <Property Name="id_accion_posible" Type="int" Nullable="false" />
+    <Property Name="id_siguiente_estado" Type="int" />
+  </EntityType>
+  <EntityType Name="Accion_por_rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_tipo_transaccion" Type="int" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="id_accion_posible" Type="int" Nullable="false" />
+    <Property Name="id_unidad_negocio" Type="int" Nullable="false" />
+    <Property Name="es_individual" Type="bit" />
+  </EntityType>
+  <EntityType Name="Actor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_documento_identidad" Type="int" Nullable="false" />
+    <Property Name="numero_documento_identidad" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="primer_nombre" Type="varchar" MaxLength="1500" Nullable="false" />
+    <Property Name="segundo_nombre" Type="varchar" MaxLength="1500" Nullable="false" />
+    <Property Name="fecha_nacimiento" Type="datetime" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_tipo_actor" Type="int" Nullable="false" />
+    <Property Name="id_foto" Type="bigint" Nullable="false" />
+    <Property Name="id_clase_actor" Type="int" Nullable="false" />
+    <Property Name="id_estado_legal" Type="int" Nullable="false" />
+    <Property Name="correo" Type="varchar" MaxLength="50" />
+    <Property Name="tercer_nombre" Type="varchar" MaxLength="1500" />
+    <Property Name="pagina_web" Type="varchar" MaxLength="50" />
+    <Property Name="informacion_multiproposito" Type="varchar(max)" />
+    <Property Name="id_detalle_multiproposito" Type="int" />
+    <Property Name="id_detalle_multiproposito1" Type="int" />
+  </EntityType>
+  <EntityType Name="Actor_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor" Type="int" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+    <Property Name="fecha_fin" Type="datetime" Nullable="false" />
+    <Property Name="codigo_negocio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+    <Property Name="id_usuario" Type="nvarchar" MaxLength="128" />
+    <Property Name="id_actor_negocio_padre" Type="int" />
+    <Property Name="extension_json" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="id_detalle_maestro_multiproposito" Type="int" />
+    <Property Name="indicador1" Type="bit" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" />
+  </EntityType>
+  <EntityType Name="Actor_negocio_por_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="id_actor_negocio" Type="int" Nullable="false" />
+    <Property Name="id_detalle_maestro" Type="int" />
+    <Property Name="extension_json" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Actor_negocio_rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor_negocio" Type="int" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Atributo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="regexp" Type="varchar" MaxLength="50" />
+    <Property Name="id_rol" Type="int" />
+  </EntityType>
+  <EntityType Name="Atributo_actor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor" Type="int" Nullable="false" />
+    <Property Name="id_atributo" Type="int" Nullable="false" />
+    <Property Name="valor" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Caracteristica_concepto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_concepto" Type="int" Nullable="false" />
+    <Property Name="id_caracteristica" Type="int" Nullable="false" />
+    <Property Name="es_requerido" Type="bit" Nullable="false" />
+    <Property Name="maximo" Type="int" />
+    <Property Name="es_multiple" Type="bit" Nullable="false" />
+    <Property Name="indicador" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categoria_concepto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_concepto" Type="int" Nullable="false" />
+    <Property Name="id_categoria" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clase_actor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="id_tipo_actor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comprobante">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_tipo_comprobante" Type="int" Nullable="false" />
+    <Property Name="id_serie_comprobante" Type="int" />
+    <Property Name="numero" Type="int" Nullable="false" />
+    <Property Name="es_valido" Type="bit" Nullable="false" />
+    <Property Name="numero_serie" Type="varchar" MaxLength="4" />
+  </EntityType>
+  <EntityType Name="Concepto_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="codigo_barra" Type="varchar" MaxLength="50" />
+    <Property Name="nombre" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="sufijo" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="propiedades" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="id_unidad_medida_primaria" Type="int" Nullable="false" />
+    <Property Name="id_presentacion" Type="int" />
+    <Property Name="contenido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="id_unidad_medida_contenido" Type="int" />
+    <Property Name="id_sub_contenido" Type="int" />
+    <Property Name="id_foto" Type="bigint" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+    <Property Name="id_unidad_medida_secundaria" Type="int" Nullable="false" />
+    <Property Name="codigo_barra_imagen" Type="image" />
+    <Property Name="id_concepto_basico" Type="int" Nullable="false" />
+    <Property Name="stock_minimo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="fecha_baja" Type="datetime" />
+    <Property Name="codigo_negocio1" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Concepto_negocio_rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Configuracion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Cuenta_contable">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_plan" Type="int" Nullable="false" />
+    <Property Name="codigo" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="tipo_cuenta" Type="char" MaxLength="1" />
+    <Property Name="nivel_saldo" Type="int" />
+    <Property Name="id_tipo_anexo" Type="int" />
+    <Property Name="id_tipo_anexo_referencia" Type="int" />
+    <Property Name="tasa" Type="int" />
+    <Property Name="requiere_centro_costo" Type="bit" />
+    <Property Name="requiere_documento_referencia" Type="bit" />
+    <Property Name="requiere_fecha_vencimiento" Type="bit" />
+    <Property Name="requiere_area" Type="bit" />
+    <Property Name="requiere_cuenta_ajuste" Type="bit" />
+    <Property Name="requiere_conciliacion_bancos" Type="bit" />
+    <Property Name="requiere_documento_referencia2" Type="bit" />
+    <Property Name="requiere_tipo_medio_pago" Type="bit" />
+    <Property Name="registro_manual" Type="bit" />
+    <Property Name="id_moneda_referencia" Type="int" />
+    <Property Name="id_cuenta_cargo" Type="int" />
+    <Property Name="id_cuenta_abono" Type="int" />
+  </EntityType>
+  <EntityType Name="Cuota">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="codigo_unico_banco" Type="varchar" MaxLength="50" />
+    <Property Name="fecha_emision" Type="datetime" Nullable="false" />
+    <Property Name="fecha_vencimiento" Type="datetime" Nullable="false" />
+    <Property Name="total" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="capital" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="interes" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="letra_cambio" Type="bit" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="cuota_inicial" Type="bit" Nullable="false" />
+    <Property Name="id_comprobante" Type="bigint" />
+    <Property Name="id_banco" Type="int" />
+    <Property Name="por_cobrar" Type="bit" Nullable="false" />
+    <Property Name="pago_a_cuenta" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="revocado" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="saldo" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Detalle_detalle_maestro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_detalle_maestro_principal" Type="int" Nullable="false" />
+    <Property Name="id_detalle_maestro_secundario" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Detalle_maestro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_maestro" Type="int" Nullable="false" />
+    <Property Name="codigo" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="valor" Type="varchar(max)" Nullable="false" />
+    <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+    <Property Name="id_foto" Type="bigint" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Detalle_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="detalle" Type="varchar" MaxLength="1500" />
+    <Property Name="precio_unitario" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="total" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="id_precio" Type="int" />
+    <Property Name="cantidad_secundaria" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="indicadorMultiproposito" Type="int" />
+    <Property Name="id_cuenta_contable" Type="int" />
+    <Property Name="isc" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="igv" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="descuento" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="lote" Type="varchar" MaxLength="50" />
+    <Property Name="vencimiento" Type="datetime" />
+    <Property Name="registro" Type="varchar" MaxLength="50" />
+    <Property Name="version_fila" Type="timestamp" StoreGeneratedPattern="Computed" />
+    <Property Name="cantidad_1" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Direccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_tipo_direccion" Type="int" Nullable="false" />
+    <Property Name="id_nacion" Type="int" Nullable="false" />
+    <Property Name="id_ubigeo" Type="int" Nullable="false" />
+    <Property Name="detalle" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="id_actor" Type="int" Nullable="false" />
+    <Property Name="id_tipo_via" Type="int" />
+    <Property Name="id_tipo_zona" Type="int" />
+    <Property Name="es_principal" Type="bit" Nullable="false" />
+    <Property Name="es_activo" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Documento_identidad">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_corto" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="nombre_largo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="longitud" Type="int" Nullable="false" />
+    <Property Name="mascara" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="detalle_legal" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="es_primario" Type="bit" Nullable="false" />
+    <Property Name="es_para_negocio" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Documento_identidad_por_tipo_actor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="identityDocumentId" Type="int" Nullable="false" />
+    <Property Name="actorTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Estado_cuota">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_cuota" Type="int" Nullable="false" />
+    <Property Name="id_empleado" Type="int" Nullable="false" />
+    <Property Name="id_estado" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Estado_legal">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="descripcion" Type="varchar" MaxLength="500" />
+    <Property Name="id_tipo_actor" Type="int" />
+  </EntityType>
+  <EntityType Name="Estado_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="id_empleado" Type="int" />
+    <Property Name="id_estado" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Evento_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="id_empleado" Type="int" />
+    <Property Name="id_evento" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Existencia">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_punto_atencion" Type="int" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="existencia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="version_fila" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Foto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="imagen" Type="image" />
+  </EntityType>
+  <EntityType Name="Maestro">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codigo" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="idTipo" Type="int" />
+  </EntityType>
+  <EntityType Name="Mapeo_cuenta_contable_concepto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="id_cuenta_contable" Type="int" Nullable="false" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Marca_concepto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_marca" Type="int" Nullable="false" />
+    <Property Name="id_concepto" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Menu_aplicacion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="controller" Type="varchar" MaxLength="100" />
+    <Property Name="accion" Type="varchar" MaxLength="100" />
+    <Property Name="icono" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="estado" Type="bit" />
+    <Property Name="id_padre" Type="int" />
+    <Property Name="es_padre" Type="bit" />
+  </EntityType>
+  <EntityType Name="Modo_pago">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="mascara" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'tsolperu_siges_principal_desarrolloferreteria.dbo.new_table' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="new_table">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pago_cuota">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_cuota" Type="int" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="importe" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parametro_actor_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor_negocio" Type="int" Nullable="false" />
+    <Property Name="id_parametro" Type="int" Nullable="false" />
+    <Property Name="id_valor_parametro" Type="int" />
+    <Property Name="valor" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Parametro_concepto_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="id_parametro" Type="int" Nullable="false" />
+    <Property Name="id_valor_parametro" Type="int" />
+    <Property Name="valor" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Parametro_de_configuracion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_configuracion" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="tipo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="valor" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parametro_por_rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="id_parametro" Type="int" Nullable="false" />
+    <Property Name="numero_orden" Type="int" Nullable="false" />
+    <Property Name="tipo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parametro_por_unidad_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_unidad_negocio" Type="int" Nullable="false" />
+    <Property Name="id_parametro" Type="int" Nullable="false" />
+    <Property Name="numero_orden" Type="int" Nullable="false" />
+    <Property Name="tipo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parametro_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="id_parametro" Type="int" Nullable="false" />
+    <Property Name="id_valor_parametro" Type="int" />
+    <Property Name="valor" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Parentesco">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor_principal" Type="int" Nullable="false" />
+    <Property Name="id_parentesco" Type="int" Nullable="false" />
+    <Property Name="id_tipo_parentesco" Type="int" Nullable="false" />
+    <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+    <Property Name="fecha_fin" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Periodo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="anio" Type="nchar" MaxLength="4" Nullable="false" />
+    <Property Name="mes" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="nombre" Type="nchar" MaxLength="6" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Plan_contable">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+    <Property Name="fecha_fin" Type="datetime" Nullable="false" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Precio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor_negocio" Type="int" Nullable="false" />
+    <Property Name="id_unidad_negocio" Type="int" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="id_tarifa_d" Type="int" Nullable="false" />
+    <Property Name="id_moneda" Type="int" Nullable="false" />
+    <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+    <Property Name="fecha_fin" Type="datetime" Nullable="false" />
+    <Property Name="fecha_modificacion" Type="datetime" Nullable="false" />
+    <Property Name="indicador_multiproposito" Type="bit" Nullable="false" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+    <Property Name="porcentaje" Type="bit" />
+    <Property Name="cantidad_minima" Type="int" />
+    <Property Name="cantidad_maxima" Type="int" />
+    <Property Name="id_tipo" Type="int" />
+    <Property Name="id_concepto_negocio_referencial" Type="int" />
+    <Property Name="id_responsable" Type="int" />
+    <Property Name="descripcion" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Referencia_detalle_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_detalle" Type="bigint" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Registro_sucesos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario" Type="varchar" MaxLength="25" />
+    <Property Name="ubicacion" Type="varchar" MaxLength="50" />
+    <Property Name="suceso" Type="varchar" MaxLength="100" />
+    <Property Name="nivel" Type="int" />
+    <Property Name="id_destinatario" Type="int" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" />
+    <Property Name="es_predeterminado" Type="bit" />
+    <Property Name="id_rol_padre" Type="int" />
+    <Property Name="aplica_a" Type="int" />
+  </EntityType>
+  <EntityType Name="Rol_por_tipo_actor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="id_tipo_actor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rol_por_unidad_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="id_unidad_negocio" Type="int" Nullable="false" />
+    <Property Name="numero_orden" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Serie_comprobante">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="numero" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="id_propietario" Type="int" Nullable="false" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+    <Property Name="id_tipo_comprobante" Type="int" Nullable="false" />
+    <Property Name="proximo_numero" Type="int" Nullable="false" />
+    <Property Name="es_autonumerable" Type="bit" Nullable="false" />
+    <Property Name="id_modelo_comprobante" Type="int" Nullable="false" />
+    <Property Name="version_fila" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Tipo_actor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="primera_denominacion" Type="varchar" MaxLength="20" />
+    <Property Name="segunda_denominacion" Type="varchar" MaxLength="20" />
+    <Property Name="denominacion_de_clase" Type="varchar" MaxLength="50" />
+    <Property Name="tercera_denominacion" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tipo_cambio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idMoneda" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="date" Nullable="false" />
+    <Property Name="valorCompra" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="valorVenta" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tipo_parentesco">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tipo_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="acciones_de_entrada_o_salida" Type="int" Nullable="false" />
+    <Property Name="id_tipo_transaccion_padre" Type="int" />
+    <Property Name="cuenta" Type="varchar" MaxLength="8" />
+    <Property Name="id_tipo_comprobante_defecto" Type="int" />
+    <Property Name="nombre_corto" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tipo_transaccion_tipo_comprobante">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_tipo_transaccion" Type="int" Nullable="false" />
+    <Property Name="id_tipo_comprobante" Type="int" Nullable="false" />
+    <Property Name="es_propio" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_transaccion_padre" Type="bigint" />
+    <Property Name="fecha_registro_sistema" Type="datetime" Nullable="false" />
+    <Property Name="id_tipo_transaccion" Type="int" Nullable="false" />
+    <Property Name="id_unidad_negocio" Type="int" Nullable="false" />
+    <Property Name="es_concreta" Type="bit" Nullable="false" />
+    <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+    <Property Name="fecha_fin" Type="datetime" Nullable="false" />
+    <Property Name="id_comprobante" Type="bigint" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="500" />
+    <Property Name="fecha_registro_contable" Type="datetime" Nullable="false" />
+    <Property Name="id_empleado" Type="int" Nullable="false" />
+    <Property Name="importe_total" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="id_actor_negocio_interno" Type="int" Nullable="false" />
+    <Property Name="id_moneda" Type="int" Nullable="false" />
+    <Property Name="tipo_cambio" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="id_transaccion_referencia" Type="bigint" />
+    <Property Name="id_actor_negocio_externo" Type="int" Nullable="false" />
+    <Property Name="id_estado_actual" Type="int" />
+    <Property Name="id_actor_negocio_externo1" Type="int" />
+    <Property Name="enum1" Type="int" Nullable="false" />
+    <Property Name="indicador1" Type="bit" Nullable="false" />
+    <Property Name="indicador2" Type="bit" Nullable="false" />
+    <Property Name="importe1" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe2" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe3" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe4" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe5" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe6" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe7" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe8" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe9" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe10" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe11" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="importe12" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="id_actor_negocio_interno1" Type="int" />
+    <Property Name="cantidad1" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="cantidad2" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="cantidad3" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="cantidad4" Type="decimal" Precision="22" Scale="10" Nullable="false" />
+    <Property Name="informacion" Type="varchar" MaxLength="500" />
+    <Property Name="id_evento_referencia" Type="int" />
+    <Property Name="id_estado_actual_1" Type="int" />
+  </EntityType>
+  <EntityType Name="Traza_pago">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="id_medio_pago" Type="int" Nullable="false" />
+    <Property Name="traza" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="id_entidad_bancaria" Type="int" Nullable="false" />
+    <Property Name="id_tipo_operador" Type="int" />
+    <Property Name="extension_json" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Turno">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="hora_inicio" Type="time" Precision="7" Nullable="false" />
+    <Property Name="duracion_horas" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="id_tipo" Type="int" Nullable="false" />
+    <Property Name="extension_json" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ubigeo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_region" Type="int" Nullable="false" />
+    <Property Name="id_provincia" Type="int" Nullable="false" />
+    <Property Name="id_distrito" Type="int" Nullable="false" />
+    <Property Name="descripcion_larga" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="descripcion_corta" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="id_pais" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Valor_caracteristica">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_caracteristica" Type="int" Nullable="false" />
+    <Property Name="valor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="valor_1" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Valor_caracteristica_concepto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_concepto" Type="int" Nullable="false" />
+    <Property Name="id_valor_caracteristica" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Valor_caracteristica_concepto_negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_concepto_negocio" Type="int" Nullable="false" />
+    <Property Name="id_valor_caracteristica" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Valor_detalle_maestro_detalle_transaccion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_detalle_transaccion" Type="bigint" Nullable="false" />
+    <Property Name="numero" Type="int" Nullable="false" />
+    <Property Name="id_detalle_maestro" Type="int" Nullable="false" />
+    <Property Name="id_valor_detalle_maestro" Type="int" />
+    <Property Name="valor" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vinculo_Actor_Negocio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_actor_negocio_principal" Type="int" Nullable="false" />
+    <Property Name="id_actor_negocio_vinculado" Type="int" Nullable="false" />
+    <Property Name="desde" Type="datetime" Nullable="false" />
+    <Property Name="hasta" Type="datetime" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="tipo_vinculo" Type="int" Nullable="false" />
+    <Property Name="es_vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VoucherModel">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="description" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="linesNumber" Type="int" Nullable="false" />
+    <Property Name="lineWidth" Type="int" Nullable="false" />
+    <Property Name="lineHeight" Type="int" Nullable="false" />
+    <Property Name="amountDetailWidth" Type="int" Nullable="false" />
+    <Property Name="unitPriceDetailWidth" Type="int" Nullable="false" />
+    <Property Name="totalMoneyDetailWidth" Type="int" Nullable="false" />
+    <Property Name="headerLinesNumber" Type="int" Nullable="false" />
+    <Property Name="detailLinesNumber" Type="int" Nullable="false" />
+    <Property Name="resumeLinesNumber" Type="int" Nullable="false" />
+    <Property Name="footerLinesNumber" Type="int" Nullable="false" />
+    <Property Name="fontType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="fontSize" Type="int" Nullable="false" />
+    <Property Name="columnPadding" Type="int" Nullable="false" />
+    <Property Name="leftMargin" Type="int" Nullable="false" />
+    <Property Name="upMargin" Type="int" Nullable="false" />
+    <Property Name="pageHeight" Type="int" Nullable="false" />
+    <Property Name="pageWidth" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Turno__id_tipo__4830B400">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Turno" Type="Self.Turno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Turno">
+        <PropertyRef Name="id_tipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_estado_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Accion_por_estado" Type="Self.Accion_por_estado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_estado">
+        <PropertyRef Name="id_estado_actual" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_estado_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Accion_por_estado" Type="Self.Accion_por_estado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_estado">
+        <PropertyRef Name="id_accion_posible" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_estado_Tipo_transaccion">
+    <End Role="Tipo_transaccion" Type="Self.Tipo_transaccion" Multiplicity="1" />
+    <End Role="Accion_por_estado" Type="Self.Accion_por_estado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_estado">
+        <PropertyRef Name="id_tipo_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_rol_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Accion_por_rol" Type="Self.Accion_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_rol">
+        <PropertyRef Name="id_accion_posible" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_rol_Detalle_maestro_UnidadNegocio">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Accion_por_rol" Type="Self.Accion_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_rol">
+        <PropertyRef Name="id_unidad_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_rol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Accion_por_rol" Type="Self.Accion_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_rol">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accion_por_rol_Tipo_transaccion">
+    <End Role="Tipo_transaccion" Type="Self.Tipo_transaccion" Multiplicity="1" />
+    <End Role="Accion_por_rol" Type="Self.Accion_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_por_rol">
+        <PropertyRef Name="id_tipo_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_documento_identidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_Detalle_maestro_detalle_multiproposito">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_detalle_multiproposito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_detalle_multiproposito1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_detalle_multiproposito1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="0..1" />
+    <End Role="Actor_negocio1" Type="Self.Actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio1">
+        <PropertyRef Name="id_actor_negocio_padre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_Concepto_negocio">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="0..1" />
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_actor_negocio_detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio">
+        <PropertyRef Name="id_detalle_maestro_multiproposito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_por_super_transaccion_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Actor_negocio_por_transaccion" Type="Self.Actor_negocio_por_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio_por_transaccion">
+        <PropertyRef Name="id_actor_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_por_super_transaccion_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Actor_negocio_por_transaccion" Type="Self.Actor_negocio_por_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio_por_transaccion">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_por_transaccion_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Actor_negocio_por_transaccion" Type="Self.Actor_negocio_por_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio_por_transaccion">
+        <PropertyRef Name="id_detalle_maestro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_por_transaccion_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+    <End Role="Actor_negocio_por_transaccion" Type="Self.Actor_negocio_por_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio_por_transaccion">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_rol_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Actor_negocio_rol" Type="Self.Actor_negocio_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio_rol">
+        <PropertyRef Name="id_actor_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_negocio_rol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Actor_negocio_rol" Type="Self.Actor_negocio_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio_rol">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Address_BusinessActor">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+    <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Direccion">
+        <PropertyRef Name="id_actor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_basicObjectPropertyValue_propertyValue">
+    <End Role="Valor_caracteristica" Type="Self.Valor_caracteristica" Multiplicity="1" />
+    <End Role="Valor_caracteristica_concepto" Type="Self.Valor_caracteristica_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Valor_caracteristica">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_caracteristica_concepto">
+        <PropertyRef Name="id_valor_caracteristica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessActor_ActorClass">
+    <End Role="Clase_actor" Type="Self.Clase_actor" Multiplicity="1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clase_actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_clase_actor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessActor_ActorType">
+    <End Role="Tipo_actor" Type="Self.Tipo_actor" Multiplicity="1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_tipo_actor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessActor_LegalStatus">
+    <End Role="Estado_legal" Type="Self.Estado_legal" Multiplicity="1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado_legal">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_estado_legal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessActor_photo">
+    <End Role="Foto" Type="Self.Foto" Multiplicity="1" />
+    <End Role="Actor" Type="Self.Actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Foto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor">
+        <PropertyRef Name="id_foto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessActorExtraAttribute_BusinessActor">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+    <End Role="Atributo_actor" Type="Self.Atributo_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Atributo_actor">
+        <PropertyRef Name="id_actor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessActorExtraAttribute_RoleAtribute">
+    <End Role="Atributo" Type="Self.Atributo" Multiplicity="1" />
+    <End Role="Atributo_actor" Type="Self.Atributo_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Atributo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Atributo_actor">
+        <PropertyRef Name="id_atributo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_businessObject_businessObject">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="0..1" />
+    <End Role="Concepto_negocio1" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio1">
+        <PropertyRef Name="id_sub_contenido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_businessObject_photo">
+    <End Role="Foto" Type="Self.Foto" Multiplicity="0..1" />
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Foto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio">
+        <PropertyRef Name="id_foto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_businessObjectPropertyValue_businessObject">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Valor_caracteristica_concepto_negocio" Type="Self.Valor_caracteristica_concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_caracteristica_concepto_negocio">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_businessObjectPropertyValue_propertyValue">
+    <End Role="Valor_caracteristica" Type="Self.Valor_caracteristica" Multiplicity="1" />
+    <End Role="Valor_caracteristica_concepto_negocio" Type="Self.Valor_caracteristica_concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Valor_caracteristica">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_caracteristica_concepto_negocio">
+        <PropertyRef Name="id_valor_caracteristica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_businessSubjectRol_businessSubject1">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio">
+        <PropertyRef Name="id_actor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_businessSubjectRol_rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Actor_negocio">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Caracteristica_concepto_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Caracteristica_concepto" Type="Self.Caracteristica_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Caracteristica_concepto">
+        <PropertyRef Name="id_concepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Caracteristica_concepto_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Caracteristica_concepto" Type="Self.Caracteristica_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Caracteristica_concepto">
+        <PropertyRef Name="id_caracteristica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_categoria_concepto_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Categoria_concepto" Type="Self.Categoria_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Categoria_concepto">
+        <PropertyRef Name="id_concepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categoria_concepto_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Categoria_concepto" Type="Self.Categoria_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Categoria_concepto">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comprobante_Detalle_maestro_TipoComprobante">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comprobante">
+        <PropertyRef Name="id_tipo_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio">
+        <PropertyRef Name="id_unidad_medida_primaria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio">
+        <PropertyRef Name="id_unidad_medida_contenido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_Detalle_maestro2">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio">
+        <PropertyRef Name="id_unidad_medida_secundaria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_Detalle_maestro3">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio">
+        <PropertyRef Name="id_presentacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_Detalle_maestro4">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio">
+        <PropertyRef Name="id_concepto_basico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_rol_Concepto_negocio">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Concepto_negocio_rol" Type="Self.Concepto_negocio_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio_rol">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepto_negocio_rol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Concepto_negocio_rol" Type="Self.Concepto_negocio_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Concepto_negocio_rol">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cuenta_contable_Plan_contable">
+    <End Role="Plan_contable" Type="Self.Plan_contable" Multiplicity="1" />
+    <End Role="Cuenta_contable" Type="Self.Cuenta_contable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plan_contable">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cuenta_contable">
+        <PropertyRef Name="id_plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cuota_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cuota">
+        <PropertyRef Name="id_banco" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cuota_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cuota">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_detalle_maestro_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Detalle_detalle_maestro" Type="Self.Detalle_detalle_maestro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_detalle_maestro">
+        <PropertyRef Name="id_detalle_maestro_principal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_detalle_maestro_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Detalle_detalle_maestro" Type="Self.Detalle_detalle_maestro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_detalle_maestro">
+        <PropertyRef Name="id_detalle_maestro_secundario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_maestro_Foto">
+    <End Role="Foto" Type="Self.Foto" Multiplicity="0..1" />
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Foto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_maestro">
+        <PropertyRef Name="id_foto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_sub_transaccion_Cuenta_contable">
+    <End Role="Cuenta_contable" Type="Self.Cuenta_contable" Multiplicity="0..1" />
+    <End Role="Detalle_transaccion" Type="Self.Detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuenta_contable">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_transaccion">
+        <PropertyRef Name="id_cuenta_contable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_transaccion_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Detalle_transaccion" Type="Self.Detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_transaccion">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Direccion">
+        <PropertyRef Name="id_tipo_direccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Detalle_maestro_Nacion">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Direccion">
+        <PropertyRef Name="id_nacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Detalle_maestro_Tipo_via">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Direccion">
+        <PropertyRef Name="id_tipo_via" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Detalle_maestro_Tipo_zona">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Direccion">
+        <PropertyRef Name="id_tipo_zona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Ubigeo">
+    <End Role="Ubigeo" Type="Self.Ubigeo" Multiplicity="1" />
+    <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ubigeo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Direccion">
+        <PropertyRef Name="id_ubigeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estado_cuota_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Estado_cuota" Type="Self.Estado_cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Estado_cuota">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estado_cuota_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Estado_cuota" Type="Self.Estado_cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Estado_cuota">
+        <PropertyRef Name="id_estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estado_transaccion_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="0..1" />
+    <End Role="Estado_transaccion" Type="Self.Estado_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Estado_transaccion">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estado_transaccion_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Estado_transaccion" Type="Self.Estado_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Estado_transaccion">
+        <PropertyRef Name="id_estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estado_transaccion_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Estado_transaccion" Type="Self.Estado_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Estado_transaccion">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Evento_transaccion_Actor_negocio1">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="0..1" />
+    <End Role="Evento_transaccion" Type="Self.Evento_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Evento_transaccion">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Evento_transaccion_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Evento_transaccion" Type="Self.Evento_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Evento_transaccion">
+        <PropertyRef Name="id_evento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Evento_transaccion_Transaccion1">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Evento_transaccion" Type="Self.Evento_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Evento_transaccion">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Existencia_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Existencia" Type="Self.Existencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Existencia">
+        <PropertyRef Name="id_punto_atencion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Existencia_Concepto_negocio">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Existencia" Type="Self.Existencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Existencia">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_fee_voucher">
+    <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="0..1" />
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comprobante">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Cuota">
+        <PropertyRef Name="id_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_feePayment_fee">
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="1" />
+    <End Role="Pago_cuota" Type="Self.Pago_cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuota">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Pago_cuota">
+        <PropertyRef Name="id_cuota" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_feeState_fee">
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="1" />
+    <End Role="Estado_cuota" Type="Self.Estado_cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuota">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Estado_cuota">
+        <PropertyRef Name="id_cuota" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_identityDocumentForSubjectType_identityDocument">
+    <End Role="Documento_identidad" Type="Self.Documento_identidad" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Documento_identidad_por_tipo_actor" Type="Self.Documento_identidad_por_tipo_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Documento_identidad">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Documento_identidad_por_tipo_actor">
+        <PropertyRef Name="identityDocumentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_identityDocumentForSubjectType_subjectType">
+    <End Role="Tipo_actor" Type="Self.Tipo_actor" Multiplicity="1" />
+    <End Role="Documento_identidad_por_tipo_actor" Type="Self.Documento_identidad_por_tipo_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Documento_identidad_por_tipo_actor">
+        <PropertyRef Name="actorTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kinship_BusinessActor">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+    <End Role="Parentesco" Type="Self.Parentesco" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parentesco">
+        <PropertyRef Name="id_actor_principal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kinship_BusinessActor1">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+    <End Role="Parentesco" Type="Self.Parentesco" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parentesco">
+        <PropertyRef Name="id_parentesco" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kinship_KinshipType1">
+    <End Role="Tipo_parentesco" Type="Self.Tipo_parentesco" Multiplicity="1" />
+    <End Role="Parentesco" Type="Self.Parentesco" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_parentesco">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parentesco">
+        <PropertyRef Name="id_tipo_parentesco" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Mapeo_cuenta_contable_concepto_Concepto_negocio">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Mapeo_cuenta_contable_concepto" Type="Self.Mapeo_cuenta_contable_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Mapeo_cuenta_contable_concepto">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Mapeo_cuenta_contable_concepto_Cuenta_contable">
+    <End Role="Cuenta_contable" Type="Self.Cuenta_contable" Multiplicity="1" />
+    <End Role="Mapeo_cuenta_contable_concepto" Type="Self.Mapeo_cuenta_contable_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuenta_contable">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Mapeo_cuenta_contable_concepto">
+        <PropertyRef Name="id_cuenta_contable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Marca_concepto_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Marca_concepto" Type="Self.Marca_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Marca_concepto">
+        <PropertyRef Name="id_concepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Marca_concepto_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Marca_concepto" Type="Self.Marca_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Marca_concepto">
+        <PropertyRef Name="id_marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pago_cuota_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Pago_cuota" Type="Self.Pago_cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Pago_cuota">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_actor_negocio_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Parametro_actor_negocio" Type="Self.Parametro_actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_actor_negocio">
+        <PropertyRef Name="id_actor_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_actor_negocio_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Parametro_actor_negocio" Type="Self.Parametro_actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_actor_negocio">
+        <PropertyRef Name="id_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_actor_negocio_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Parametro_actor_negocio" Type="Self.Parametro_actor_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_actor_negocio">
+        <PropertyRef Name="id_valor_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_concepto_negocio_Concepto_negocio">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Parametro_concepto_negocio" Type="Self.Parametro_concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_concepto_negocio">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_concepto_negocio_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Parametro_concepto_negocio" Type="Self.Parametro_concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_concepto_negocio">
+        <PropertyRef Name="id_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_concepto_negocio_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Parametro_concepto_negocio" Type="Self.Parametro_concepto_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_concepto_negocio">
+        <PropertyRef Name="id_valor_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_de_configuracion_Configuracion">
+    <End Role="Configuracion" Type="Self.Configuracion" Multiplicity="1" />
+    <End Role="Parametro_de_configuracion" Type="Self.Parametro_de_configuracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Configuracion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_de_configuracion">
+        <PropertyRef Name="id_configuracion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_transaccion_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Parametro_transaccion" Type="Self.Parametro_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_transaccion">
+        <PropertyRef Name="id_valor_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametro_transaccion_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Parametro_transaccion" Type="Self.Parametro_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_transaccion">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametros_por_rol_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Parametro_por_rol" Type="Self.Parametro_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_por_rol">
+        <PropertyRef Name="id_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametros_por_rol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Parametro_por_rol" Type="Self.Parametro_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_por_rol">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametros_por_tipo_de_operacion_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Parametro_por_unidad_negocio" Type="Self.Parametro_por_unidad_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_por_unidad_negocio">
+        <PropertyRef Name="id_unidad_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parametros_por_unidad_negocio_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Parametro_por_unidad_negocio" Type="Self.Parametro_por_unidad_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parametro_por_unidad_negocio">
+        <PropertyRef Name="id_parametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Actor_negocio">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_actor_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Actor_negocio1">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="0..1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_responsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Concepto_negocio">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="0..1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_concepto_negocio_referencial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_unidad_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Detalle_maestro_moneda">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_moneda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Detalle_maestro1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_tipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Precio_Detalle_maestro2">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_tarifa_d" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_price_businessObject">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Precio" Type="Self.Precio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Precio">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Proveedores_por_tipo_de_operacion_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Rol_por_unidad_negocio" Type="Self.Rol_por_unidad_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rol_por_unidad_negocio">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Referencia_detalle_transaccion_Detalle_transaccion">
+    <End Role="Detalle_transaccion" Type="Self.Detalle_transaccion" Multiplicity="1" />
+    <End Role="Referencia_detalle_transaccion" Type="Self.Referencia_detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Referencia_detalle_transaccion">
+        <PropertyRef Name="id_detalle" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Referencia_detalle_transaccion_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Referencia_detalle_transaccion" Type="Self.Referencia_detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Referencia_detalle_transaccion">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Registro_sucesos_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+    <End Role="Registro_sucesos" Type="Self.Registro_sucesos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Registro_sucesos">
+        <PropertyRef Name="id_destinatario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rol_por_unidad_negocio_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Rol_por_unidad_negocio" Type="Self.Rol_por_unidad_negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rol_por_unidad_negocio">
+        <PropertyRef Name="id_unidad_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rolCategorySubjectType_subjectType">
+    <End Role="Tipo_actor" Type="Self.Tipo_actor" Multiplicity="1" />
+    <End Role="Rol_por_tipo_actor" Type="Self.Rol_por_tipo_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_actor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rol_por_tipo_actor">
+        <PropertyRef Name="id_tipo_actor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Role">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+    <End Role="Rol1" Type="Self.Rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rol1">
+        <PropertyRef Name="id_rol_padre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleAtribute_Role">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+    <End Role="Atributo" Type="Self.Atributo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Atributo">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleByActorType_Role1">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Rol_por_tipo_actor" Type="Self.Rol_por_tipo_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Rol_por_tipo_actor">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Serie_comprobante_Detalle_maestro_TipoComprobante">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Serie_comprobante" Type="Self.Serie_comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Serie_comprobante">
+        <PropertyRef Name="id_tipo_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_subTransactionDetail_businessObject">
+    <End Role="Concepto_negocio" Type="Self.Concepto_negocio" Multiplicity="1" />
+    <End Role="Detalle_transaccion" Type="Self.Detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepto_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_transaccion">
+        <PropertyRef Name="id_concepto_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_subTransactionDetail_valuedBusinessObject">
+    <End Role="Precio" Type="Self.Precio" Multiplicity="0..1" />
+    <End Role="Detalle_transaccion" Type="Self.Detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Precio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_transaccion">
+        <PropertyRef Name="id_precio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tipo_cambio_Detalle_maestro_Moneda">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Tipo_cambio" Type="Self.Tipo_cambio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tipo_cambio">
+        <PropertyRef Name="idMoneda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tipo_transaccion_tipo_comprobante_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Tipo_transaccion_tipo_comprobante" Type="Self.Tipo_transaccion_tipo_comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tipo_transaccion_tipo_comprobante">
+        <PropertyRef Name="id_tipo_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Actor_negocio_empleado">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Actor_negocio_externo">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_actor_negocio_externo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Actor_negocio_interno">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_actor_negocio_interno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_actor_neogocio_externo1">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_actor_negocio_externo1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_actor_neogocio_interno1">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_actor_negocio_interno1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Comprobante">
+    <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comprobante">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Detalle_maestro_estado_actual">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_estado_actual" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Detalle_maestro_Estado_actual_1">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_estado_actual_1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Detalle_maestro_moneda">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_moneda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_id_evento_referencia">
+    <End Role="Evento_transaccion" Type="Self.Evento_transaccion" Multiplicity="0..1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Evento_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_evento_referencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Tipo_transaccion">
+    <End Role="Tipo_transaccion" Type="Self.Tipo_transaccion" Multiplicity="1" />
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion">
+        <PropertyRef Name="id_tipo_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+    <End Role="Transaccion1" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion1">
+        <PropertyRef Name="id_transaccion_padre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaccion_Transaccion1">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="0..1" />
+    <End Role="Transaccion1" Type="Self.Transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Transaccion1">
+        <PropertyRef Name="id_transaccion_referencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_transactionType_transactionType">
+    <End Role="Tipo_transaccion" Type="Self.Tipo_transaccion" Multiplicity="0..1" />
+    <End Role="Tipo_transaccion1" Type="Self.Tipo_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tipo_transaccion1">
+        <PropertyRef Name="id_tipo_transaccion_padre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_transactionTypeBusinessAction_businessAction">
+    <End Role="Accion_de_negocio" Type="Self.Accion_de_negocio" Multiplicity="1" />
+    <End Role="Accion_de_negocio_por_tipo_transaccion" Type="Self.Accion_de_negocio_por_tipo_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accion_de_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_de_negocio_por_tipo_transaccion">
+        <PropertyRef Name="id_accion_de_negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_transactionTypeBusinessAction_transactionType">
+    <End Role="Tipo_transaccion" Type="Self.Tipo_transaccion" Multiplicity="1" />
+    <End Role="Accion_de_negocio_por_tipo_transaccion" Type="Self.Accion_de_negocio_por_tipo_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Accion_de_negocio_por_tipo_transaccion">
+        <PropertyRef Name="id_tipo_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traza_pago_Detalle_maestro_EntidadBancaria">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Traza_pago" Type="Self.Traza_pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Traza_pago">
+        <PropertyRef Name="id_entidad_bancaria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traza_pago_Detalle_maestro_MedioDePago">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Traza_pago" Type="Self.Traza_pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Traza_pago">
+        <PropertyRef Name="id_medio_pago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traza_pago_Detalle_maestro_TipoOperador">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="0..1" />
+    <End Role="Traza_pago" Type="Self.Traza_pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Traza_pago">
+        <PropertyRef Name="id_tipo_operador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traza_pago_Transaccion">
+    <End Role="Transaccion" Type="Self.Transaccion" Multiplicity="1" />
+    <End Role="Traza_pago" Type="Self.Traza_pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Traza_pago">
+        <PropertyRef Name="id_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Valor_caracteristica_concepto_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Valor_caracteristica_concepto" Type="Self.Valor_caracteristica_concepto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_caracteristica_concepto">
+        <PropertyRef Name="id_concepto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Valor_caracteristica_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Valor_caracteristica" Type="Self.Valor_caracteristica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_caracteristica">
+        <PropertyRef Name="id_caracteristica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Valor_detalle_maestro_detalle_transaccion_Detalle_maestro">
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="1" />
+    <End Role="Valor_detalle_maestro_detalle_transaccion" Type="Self.Valor_detalle_maestro_detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_detalle_maestro_detalle_transaccion">
+        <PropertyRef Name="id_detalle_maestro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Valor_detalle_maestro_detalle_transaccion_Detalle_transaccion">
+    <End Role="Detalle_transaccion" Type="Self.Detalle_transaccion" Multiplicity="1" />
+    <End Role="Valor_detalle_maestro_detalle_transaccion" Type="Self.Valor_detalle_maestro_detalle_transaccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valor_detalle_maestro_detalle_transaccion">
+        <PropertyRef Name="id_detalle_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vinculo_Actor_Negocio_Actor_negocio_a">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Vinculo_Actor_Negocio" Type="Self.Vinculo_Actor_Negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Vinculo_Actor_Negocio">
+        <PropertyRef Name="id_actor_negocio_principal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vinculo_Actor_Negocio_Actor_Negocio_b">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Vinculo_Actor_Negocio" Type="Self.Vinculo_Actor_Negocio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Vinculo_Actor_Negocio">
+        <PropertyRef Name="id_actor_negocio_vinculado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_voucher_voucherSerial">
+    <End Role="Serie_comprobante" Type="Self.Serie_comprobante" Multiplicity="0..1" />
+    <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Serie_comprobante">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comprobante">
+        <PropertyRef Name="id_serie_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoucherSerial_BusinessActorRole">
+    <End Role="Actor_negocio" Type="Self.Actor_negocio" Multiplicity="1" />
+    <End Role="Serie_comprobante" Type="Self.Serie_comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor_negocio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Serie_comprobante">
+        <PropertyRef Name="id_propietario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_voucherSerial_voucherModel">
+    <End Role="VoucherModel" Type="Self.VoucherModel" Multiplicity="1" />
+    <End Role="Serie_comprobante" Type="Self.Serie_comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VoucherModel">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Serie_comprobante">
+        <PropertyRef Name="id_modelo_comprobante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_voucherTypeTransactionType_transactionType">
+    <End Role="Tipo_transaccion" Type="Self.Tipo_transaccion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tipo_transaccion_tipo_comprobante" Type="Self.Tipo_transaccion_tipo_comprobante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_transaccion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tipo_transaccion_tipo_comprobante">
+        <PropertyRef Name="id_tipo_transaccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="R_72">
+    <End Role="Maestro" Type="Self.Maestro" Multiplicity="1" />
+    <End Role="Detalle_maestro" Type="Self.Detalle_maestro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Maestro">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Detalle_maestro">
+        <PropertyRef Name="id_maestro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="BuscaValorEnBBDD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StrValorBusqueda" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="businessObjectStockAt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AtTime" Type="datetime" Mode="In" />
+    <Parameter Name="systemStockTransactionTypeId" Type="int" Mode="In" />
+    <Parameter Name="businessObjectId" Type="int" Mode="In" />
+    <Parameter Name="subtransactionInternalSubjectId" Type="int" Mode="In" />
+    <Parameter Name="activeSubtransactionStateId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fechaActual" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
+  <Function Name="feePayedAmount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+    <Parameter Name="feeId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="feesInBusinessActionTransactionType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="businessAction" Type="int" Mode="In" />
+    <Parameter Name="businessActionValue" Type="bit" Mode="In" />
+    <Parameter Name="from" Type="datetime" Mode="In" />
+    <Parameter Name="to" Type="datetime" Mode="In" />
+    <Parameter Name="greaterEqualThan" Type="decimal" Mode="In" />
+    <Parameter Name="lessEqualThan" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="kardexReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fromTime" Type="datetime" Mode="In" />
+    <Parameter Name="toTime" Type="datetime" Mode="In" />
+    <Parameter Name="systemStockTransactionTypeId" Type="int" Mode="In" />
+    <Parameter Name="subtransactionInternalSubjectId" Type="int" Mode="In" />
+    <Parameter Name="activeSubtransactionStateId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdRol" Type="int" Mode="In" />
+    <Parameter Name="IdTransaccionInventario" Type="bigint" Mode="In" />
+    <Parameter Name="IdActorNegocioPrecio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConcepto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdRol" Type="int" Mode="In" />
+    <Parameter Name="IdTransaccionInventario" Type="bigint" Mode="In" />
+    <Parameter Name="IdActorNegocioPrecio" Type="int" Mode="In" />
+    <Parameter Name="CadenaBusqueda" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConceptoYTipoFamilia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdRol" Type="int" Mode="In" />
+    <Parameter Name="IdTransaccionInventario" Type="bigint" Mode="In" />
+    <Parameter Name="IdActorNegocioPrecio" Type="int" Mode="In" />
+    <Parameter Name="CadenaBusqueda" Type="varchar" Mode="In" />
+    <Parameter Name="ValorTipoFamilia" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYFamilia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdRol" Type="int" Mode="In" />
+    <Parameter Name="IdTransaccionInventario" Type="bigint" Mode="In" />
+    <Parameter Name="IdActorNegocioPrecio" Type="int" Mode="In" />
+    <Parameter Name="IdFamilia" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYTipoFamilia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdRol" Type="int" Mode="In" />
+    <Parameter Name="IdTransaccionInventario" Type="bigint" Mode="In" />
+    <Parameter Name="IdActorNegocioPrecio" Type="int" Mode="In" />
+    <Parameter Name="ValorTipoFamilia" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="stockAtReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AtTime" Type="datetime" Mode="In" />
+    <Parameter Name="systemStockTransactionTypeId" Type="int" Mode="In" />
+    <Parameter Name="subtransactionInternalSubjectId" Type="int" Mode="In" />
+    <Parameter Name="activeSubtransactionStateId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="subtransaction_GetLastState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="subtransactionId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="voucherDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="voucherId" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="SIGESCOMModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Accion_de_negocio" EntityType="Self.Accion_de_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Accion_de_negocio_por_tipo_transaccion" EntityType="Self.Accion_de_negocio_por_tipo_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Accion_por_estado" EntityType="Self.Accion_por_estado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Accion_por_rol" EntityType="Self.Accion_por_rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Actor" EntityType="Self.Actor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Actor_negocio" EntityType="Self.Actor_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Actor_negocio_por_transaccion" EntityType="Self.Actor_negocio_por_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Actor_negocio_rol" EntityType="Self.Actor_negocio_rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Atributo" EntityType="Self.Atributo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Atributo_actor" EntityType="Self.Atributo_actor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Caracteristica_concepto" EntityType="Self.Caracteristica_concepto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categoria_concepto" EntityType="Self.Categoria_concepto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clase_actor" EntityType="Self.Clase_actor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comprobante" EntityType="Self.Comprobante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Concepto_negocio" EntityType="Self.Concepto_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Concepto_negocio_rol" EntityType="Self.Concepto_negocio_rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Configuracion" EntityType="Self.Configuracion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cuenta_contable" EntityType="Self.Cuenta_contable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cuota" EntityType="Self.Cuota" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Detalle_detalle_maestro" EntityType="Self.Detalle_detalle_maestro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Detalle_maestro" EntityType="Self.Detalle_maestro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Detalle_transaccion" EntityType="Self.Detalle_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Direccion" EntityType="Self.Direccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Documento_identidad" EntityType="Self.Documento_identidad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Documento_identidad_por_tipo_actor" EntityType="Self.Documento_identidad_por_tipo_actor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estado_cuota" EntityType="Self.Estado_cuota" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estado_legal" EntityType="Self.Estado_legal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estado_transaccion" EntityType="Self.Estado_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Evento_transaccion" EntityType="Self.Evento_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Existencia" EntityType="Self.Existencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Foto" EntityType="Self.Foto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Maestro" EntityType="Self.Maestro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mapeo_cuenta_contable_concepto" EntityType="Self.Mapeo_cuenta_contable_concepto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Marca_concepto" EntityType="Self.Marca_concepto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu_aplicacion" EntityType="Self.Menu_aplicacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Modo_pago" EntityType="Self.Modo_pago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pago_cuota" EntityType="Self.Pago_cuota" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro_actor_negocio" EntityType="Self.Parametro_actor_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro_concepto_negocio" EntityType="Self.Parametro_concepto_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro_de_configuracion" EntityType="Self.Parametro_de_configuracion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro_por_rol" EntityType="Self.Parametro_por_rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro_por_unidad_negocio" EntityType="Self.Parametro_por_unidad_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro_transaccion" EntityType="Self.Parametro_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parentesco" EntityType="Self.Parentesco" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Periodo" EntityType="Self.Periodo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Plan_contable" EntityType="Self.Plan_contable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Precio" EntityType="Self.Precio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Referencia_detalle_transaccion" EntityType="Self.Referencia_detalle_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Registro_sucesos" EntityType="Self.Registro_sucesos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol_por_tipo_actor" EntityType="Self.Rol_por_tipo_actor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol_por_unidad_negocio" EntityType="Self.Rol_por_unidad_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Serie_comprobante" EntityType="Self.Serie_comprobante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_actor" EntityType="Self.Tipo_actor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_cambio" EntityType="Self.Tipo_cambio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_parentesco" EntityType="Self.Tipo_parentesco" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_transaccion" EntityType="Self.Tipo_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_transaccion_tipo_comprobante" EntityType="Self.Tipo_transaccion_tipo_comprobante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transaccion" EntityType="Self.Transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Traza_pago" EntityType="Self.Traza_pago" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ubigeo" EntityType="Self.Ubigeo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Valor_caracteristica" EntityType="Self.Valor_caracteristica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Valor_caracteristica_concepto" EntityType="Self.Valor_caracteristica_concepto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Valor_caracteristica_concepto_negocio" EntityType="Self.Valor_caracteristica_concepto_negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Valor_detalle_maestro_detalle_transaccion" EntityType="Self.Valor_detalle_maestro_detalle_transaccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vinculo_Actor_Negocio" EntityType="Self.Vinculo_Actor_Negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VoucherModel" EntityType="Self.VoucherModel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="new_table" EntityType="Self.new_table" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [new_table].[id] AS [id]
+    FROM [dbo].[new_table] AS [new_table]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Turno__id_tipo__4830B400" Association="Self.FK__Turno__id_tipo__4830B400">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Turno" EntitySet="Turno" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_estado_Detalle_maestro" Association="Self.FK_Accion_por_estado_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Accion_por_estado" EntitySet="Accion_por_estado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_estado_Detalle_maestro1" Association="Self.FK_Accion_por_estado_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Accion_por_estado" EntitySet="Accion_por_estado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_estado_Tipo_transaccion" Association="Self.FK_Accion_por_estado_Tipo_transaccion">
+      <End Role="Tipo_transaccion" EntitySet="Tipo_transaccion" />
+      <End Role="Accion_por_estado" EntitySet="Accion_por_estado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_rol_Detalle_maestro" Association="Self.FK_Accion_por_rol_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Accion_por_rol" EntitySet="Accion_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_rol_Detalle_maestro_UnidadNegocio" Association="Self.FK_Accion_por_rol_Detalle_maestro_UnidadNegocio">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Accion_por_rol" EntitySet="Accion_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_rol_Rol" Association="Self.FK_Accion_por_rol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Accion_por_rol" EntitySet="Accion_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accion_por_rol_Tipo_transaccion" Association="Self.FK_Accion_por_rol_Tipo_transaccion">
+      <End Role="Tipo_transaccion" EntitySet="Tipo_transaccion" />
+      <End Role="Accion_por_rol" EntitySet="Accion_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_Detalle_maestro" Association="Self.FK_Actor_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_Detalle_maestro_detalle_multiproposito" Association="Self.FK_Actor_Detalle_maestro_detalle_multiproposito">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_detalle_multiproposito1" Association="Self.FK_Actor_detalle_multiproposito1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_Actor_negocio" Association="Self.FK_Actor_negocio_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Actor_negocio1" EntitySet="Actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_Concepto_negocio" Association="Self.FK_Actor_negocio_Concepto_negocio">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="fk_actor_negocio_detalle_maestro" Association="Self.fk_actor_negocio_detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_por_super_transaccion_Actor_negocio" Association="Self.FK_Actor_negocio_por_super_transaccion_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Actor_negocio_por_transaccion" EntitySet="Actor_negocio_por_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_por_super_transaccion_Rol" Association="Self.FK_Actor_negocio_por_super_transaccion_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Actor_negocio_por_transaccion" EntitySet="Actor_negocio_por_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_por_transaccion_Detalle_maestro" Association="Self.FK_Actor_negocio_por_transaccion_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Actor_negocio_por_transaccion" EntitySet="Actor_negocio_por_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_por_transaccion_Transaccion" Association="Self.FK_Actor_negocio_por_transaccion_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Actor_negocio_por_transaccion" EntitySet="Actor_negocio_por_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_rol_Actor_negocio" Association="Self.FK_Actor_negocio_rol_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Actor_negocio_rol" EntitySet="Actor_negocio_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_negocio_rol_Rol" Association="Self.FK_Actor_negocio_rol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Actor_negocio_rol" EntitySet="Actor_negocio_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Address_BusinessActor" Association="Self.FK_Address_BusinessActor">
+      <End Role="Actor" EntitySet="Actor" />
+      <End Role="Direccion" EntitySet="Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_basicObjectPropertyValue_propertyValue" Association="Self.FK_basicObjectPropertyValue_propertyValue">
+      <End Role="Valor_caracteristica" EntitySet="Valor_caracteristica" />
+      <End Role="Valor_caracteristica_concepto" EntitySet="Valor_caracteristica_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessActor_ActorClass" Association="Self.FK_BusinessActor_ActorClass">
+      <End Role="Clase_actor" EntitySet="Clase_actor" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessActor_ActorType" Association="Self.FK_BusinessActor_ActorType">
+      <End Role="Tipo_actor" EntitySet="Tipo_actor" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessActor_LegalStatus" Association="Self.FK_BusinessActor_LegalStatus">
+      <End Role="Estado_legal" EntitySet="Estado_legal" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessActor_photo" Association="Self.FK_BusinessActor_photo">
+      <End Role="Foto" EntitySet="Foto" />
+      <End Role="Actor" EntitySet="Actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessActorExtraAttribute_BusinessActor" Association="Self.FK_BusinessActorExtraAttribute_BusinessActor">
+      <End Role="Actor" EntitySet="Actor" />
+      <End Role="Atributo_actor" EntitySet="Atributo_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessActorExtraAttribute_RoleAtribute" Association="Self.FK_BusinessActorExtraAttribute_RoleAtribute">
+      <End Role="Atributo" EntitySet="Atributo" />
+      <End Role="Atributo_actor" EntitySet="Atributo_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_businessObject_businessObject" Association="Self.FK_businessObject_businessObject">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Concepto_negocio1" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_businessObject_photo" Association="Self.FK_businessObject_photo">
+      <End Role="Foto" EntitySet="Foto" />
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_businessObjectPropertyValue_businessObject" Association="Self.FK_businessObjectPropertyValue_businessObject">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Valor_caracteristica_concepto_negocio" EntitySet="Valor_caracteristica_concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_businessObjectPropertyValue_propertyValue" Association="Self.FK_businessObjectPropertyValue_propertyValue">
+      <End Role="Valor_caracteristica" EntitySet="Valor_caracteristica" />
+      <End Role="Valor_caracteristica_concepto_negocio" EntitySet="Valor_caracteristica_concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_businessSubjectRol_businessSubject1" Association="Self.FK_businessSubjectRol_businessSubject1">
+      <End Role="Actor" EntitySet="Actor" />
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_businessSubjectRol_rol" Association="Self.FK_businessSubjectRol_rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Caracteristica_concepto_Detalle_maestro" Association="Self.FK_Caracteristica_concepto_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Caracteristica_concepto" EntitySet="Caracteristica_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Caracteristica_concepto_Detalle_maestro1" Association="Self.FK_Caracteristica_concepto_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Caracteristica_concepto" EntitySet="Caracteristica_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_categoria_concepto_Detalle_maestro" Association="Self.FK_categoria_concepto_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Categoria_concepto" EntitySet="Categoria_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categoria_concepto_Detalle_maestro1" Association="Self.FK_Categoria_concepto_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Categoria_concepto" EntitySet="Categoria_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comprobante_Detalle_maestro_TipoComprobante" Association="Self.FK_Comprobante_Detalle_maestro_TipoComprobante">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Comprobante" EntitySet="Comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_Detalle_maestro" Association="Self.FK_Concepto_negocio_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_Detalle_maestro1" Association="Self.FK_Concepto_negocio_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_Detalle_maestro2" Association="Self.FK_Concepto_negocio_Detalle_maestro2">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_Detalle_maestro3" Association="Self.FK_Concepto_negocio_Detalle_maestro3">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_Detalle_maestro4" Association="Self.FK_Concepto_negocio_Detalle_maestro4">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_rol_Concepto_negocio" Association="Self.FK_Concepto_negocio_rol_Concepto_negocio">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Concepto_negocio_rol" EntitySet="Concepto_negocio_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepto_negocio_rol_Rol" Association="Self.FK_Concepto_negocio_rol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Concepto_negocio_rol" EntitySet="Concepto_negocio_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cuenta_contable_Plan_contable" Association="Self.FK_Cuenta_contable_Plan_contable">
+      <End Role="Plan_contable" EntitySet="Plan_contable" />
+      <End Role="Cuenta_contable" EntitySet="Cuenta_contable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cuota_Detalle_maestro" Association="Self.FK_Cuota_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Cuota" EntitySet="Cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cuota_Transaccion" Association="Self.FK_Cuota_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Cuota" EntitySet="Cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_detalle_maestro_Detalle_maestro" Association="Self.FK_Detalle_detalle_maestro_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Detalle_detalle_maestro" EntitySet="Detalle_detalle_maestro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_detalle_maestro_Detalle_maestro1" Association="Self.FK_Detalle_detalle_maestro_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Detalle_detalle_maestro" EntitySet="Detalle_detalle_maestro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_maestro_Foto" Association="Self.FK_Detalle_maestro_Foto">
+      <End Role="Foto" EntitySet="Foto" />
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_sub_transaccion_Cuenta_contable" Association="Self.FK_Detalle_sub_transaccion_Cuenta_contable">
+      <End Role="Cuenta_contable" EntitySet="Cuenta_contable" />
+      <End Role="Detalle_transaccion" EntitySet="Detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_transaccion_Transaccion" Association="Self.FK_Detalle_transaccion_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Detalle_transaccion" EntitySet="Detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Detalle_maestro" Association="Self.FK_Direccion_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Direccion" EntitySet="Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Detalle_maestro_Nacion" Association="Self.FK_Direccion_Detalle_maestro_Nacion">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Direccion" EntitySet="Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Detalle_maestro_Tipo_via" Association="Self.FK_Direccion_Detalle_maestro_Tipo_via">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Direccion" EntitySet="Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Detalle_maestro_Tipo_zona" Association="Self.FK_Direccion_Detalle_maestro_Tipo_zona">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Direccion" EntitySet="Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Ubigeo" Association="Self.FK_Direccion_Ubigeo">
+      <End Role="Ubigeo" EntitySet="Ubigeo" />
+      <End Role="Direccion" EntitySet="Direccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estado_cuota_Actor_negocio" Association="Self.FK_Estado_cuota_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Estado_cuota" EntitySet="Estado_cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estado_cuota_Detalle_maestro" Association="Self.FK_Estado_cuota_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Estado_cuota" EntitySet="Estado_cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estado_transaccion_Actor_negocio" Association="Self.FK_Estado_transaccion_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Estado_transaccion" EntitySet="Estado_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estado_transaccion_Detalle_maestro" Association="Self.FK_Estado_transaccion_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Estado_transaccion" EntitySet="Estado_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estado_transaccion_Transaccion" Association="Self.FK_Estado_transaccion_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Estado_transaccion" EntitySet="Estado_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Evento_transaccion_Actor_negocio1" Association="Self.FK_Evento_transaccion_Actor_negocio1">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Evento_transaccion" EntitySet="Evento_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Evento_transaccion_Detalle_maestro1" Association="Self.FK_Evento_transaccion_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Evento_transaccion" EntitySet="Evento_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Evento_transaccion_Transaccion1" Association="Self.FK_Evento_transaccion_Transaccion1">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Evento_transaccion" EntitySet="Evento_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Existencia_Actor_negocio" Association="Self.FK_Existencia_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Existencia" EntitySet="Existencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Existencia_Concepto_negocio" Association="Self.FK_Existencia_Concepto_negocio">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Existencia" EntitySet="Existencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_fee_voucher" Association="Self.FK_fee_voucher">
+      <End Role="Comprobante" EntitySet="Comprobante" />
+      <End Role="Cuota" EntitySet="Cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_feePayment_fee" Association="Self.FK_feePayment_fee">
+      <End Role="Cuota" EntitySet="Cuota" />
+      <End Role="Pago_cuota" EntitySet="Pago_cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_feeState_fee" Association="Self.FK_feeState_fee">
+      <End Role="Cuota" EntitySet="Cuota" />
+      <End Role="Estado_cuota" EntitySet="Estado_cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_identityDocumentForSubjectType_identityDocument" Association="Self.FK_identityDocumentForSubjectType_identityDocument">
+      <End Role="Documento_identidad" EntitySet="Documento_identidad" />
+      <End Role="Documento_identidad_por_tipo_actor" EntitySet="Documento_identidad_por_tipo_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_identityDocumentForSubjectType_subjectType" Association="Self.FK_identityDocumentForSubjectType_subjectType">
+      <End Role="Tipo_actor" EntitySet="Tipo_actor" />
+      <End Role="Documento_identidad_por_tipo_actor" EntitySet="Documento_identidad_por_tipo_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kinship_BusinessActor" Association="Self.FK_Kinship_BusinessActor">
+      <End Role="Actor" EntitySet="Actor" />
+      <End Role="Parentesco" EntitySet="Parentesco" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kinship_BusinessActor1" Association="Self.FK_Kinship_BusinessActor1">
+      <End Role="Actor" EntitySet="Actor" />
+      <End Role="Parentesco" EntitySet="Parentesco" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kinship_KinshipType1" Association="Self.FK_Kinship_KinshipType1">
+      <End Role="Tipo_parentesco" EntitySet="Tipo_parentesco" />
+      <End Role="Parentesco" EntitySet="Parentesco" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Mapeo_cuenta_contable_concepto_Concepto_negocio" Association="Self.FK_Mapeo_cuenta_contable_concepto_Concepto_negocio">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Mapeo_cuenta_contable_concepto" EntitySet="Mapeo_cuenta_contable_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Mapeo_cuenta_contable_concepto_Cuenta_contable" Association="Self.FK_Mapeo_cuenta_contable_concepto_Cuenta_contable">
+      <End Role="Cuenta_contable" EntitySet="Cuenta_contable" />
+      <End Role="Mapeo_cuenta_contable_concepto" EntitySet="Mapeo_cuenta_contable_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Marca_concepto_Detalle_maestro" Association="Self.FK_Marca_concepto_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Marca_concepto" EntitySet="Marca_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Marca_concepto_Detalle_maestro1" Association="Self.FK_Marca_concepto_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Marca_concepto" EntitySet="Marca_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pago_cuota_Transaccion" Association="Self.FK_Pago_cuota_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Pago_cuota" EntitySet="Pago_cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_actor_negocio_Actor_negocio" Association="Self.FK_Parametro_actor_negocio_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Parametro_actor_negocio" EntitySet="Parametro_actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_actor_negocio_Detalle_maestro" Association="Self.FK_Parametro_actor_negocio_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_actor_negocio" EntitySet="Parametro_actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_actor_negocio_Detalle_maestro1" Association="Self.FK_Parametro_actor_negocio_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_actor_negocio" EntitySet="Parametro_actor_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_concepto_negocio_Concepto_negocio" Association="Self.FK_Parametro_concepto_negocio_Concepto_negocio">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Parametro_concepto_negocio" EntitySet="Parametro_concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_concepto_negocio_Detalle_maestro" Association="Self.FK_Parametro_concepto_negocio_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_concepto_negocio" EntitySet="Parametro_concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_concepto_negocio_Detalle_maestro1" Association="Self.FK_Parametro_concepto_negocio_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_concepto_negocio" EntitySet="Parametro_concepto_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_de_configuracion_Configuracion" Association="Self.FK_Parametro_de_configuracion_Configuracion">
+      <End Role="Configuracion" EntitySet="Configuracion" />
+      <End Role="Parametro_de_configuracion" EntitySet="Parametro_de_configuracion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_transaccion_Detalle_maestro" Association="Self.FK_Parametro_transaccion_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_transaccion" EntitySet="Parametro_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametro_transaccion_Transaccion" Association="Self.FK_Parametro_transaccion_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Parametro_transaccion" EntitySet="Parametro_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametros_por_rol_Detalle_maestro" Association="Self.FK_Parametros_por_rol_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_por_rol" EntitySet="Parametro_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametros_por_rol_Rol" Association="Self.FK_Parametros_por_rol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Parametro_por_rol" EntitySet="Parametro_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametros_por_tipo_de_operacion_Detalle_maestro" Association="Self.FK_Parametros_por_tipo_de_operacion_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_por_unidad_negocio" EntitySet="Parametro_por_unidad_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parametros_por_unidad_negocio_Detalle_maestro" Association="Self.FK_Parametros_por_unidad_negocio_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Parametro_por_unidad_negocio" EntitySet="Parametro_por_unidad_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Actor_negocio" Association="Self.FK_Precio_Actor_negocio">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Actor_negocio1" Association="Self.FK_Precio_Actor_negocio1">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Concepto_negocio" Association="Self.FK_Precio_Concepto_negocio">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Detalle_maestro" Association="Self.FK_Precio_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Detalle_maestro_moneda" Association="Self.FK_Precio_Detalle_maestro_moneda">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Detalle_maestro1" Association="Self.FK_Precio_Detalle_maestro1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Precio_Detalle_maestro2" Association="Self.FK_Precio_Detalle_maestro2">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_price_businessObject" Association="Self.FK_price_businessObject">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Precio" EntitySet="Precio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Proveedores_por_tipo_de_operacion_Rol" Association="Self.FK_Proveedores_por_tipo_de_operacion_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Rol_por_unidad_negocio" EntitySet="Rol_por_unidad_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Referencia_detalle_transaccion_Detalle_transaccion" Association="Self.FK_Referencia_detalle_transaccion_Detalle_transaccion">
+      <End Role="Detalle_transaccion" EntitySet="Detalle_transaccion" />
+      <End Role="Referencia_detalle_transaccion" EntitySet="Referencia_detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Referencia_detalle_transaccion_Transaccion" Association="Self.FK_Referencia_detalle_transaccion_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Referencia_detalle_transaccion" EntitySet="Referencia_detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Registro_sucesos_Rol" Association="Self.FK_Registro_sucesos_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Registro_sucesos" EntitySet="Registro_sucesos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rol_por_unidad_negocio_Detalle_maestro" Association="Self.FK_Rol_por_unidad_negocio_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Rol_por_unidad_negocio" EntitySet="Rol_por_unidad_negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rolCategorySubjectType_subjectType" Association="Self.FK_rolCategorySubjectType_subjectType">
+      <End Role="Tipo_actor" EntitySet="Tipo_actor" />
+      <End Role="Rol_por_tipo_actor" EntitySet="Rol_por_tipo_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Role" Association="Self.FK_Role_Role">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Rol1" EntitySet="Rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleAtribute_Role" Association="Self.FK_RoleAtribute_Role">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Atributo" EntitySet="Atributo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleByActorType_Role1" Association="Self.FK_RoleByActorType_Role1">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Rol_por_tipo_actor" EntitySet="Rol_por_tipo_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Serie_comprobante_Detalle_maestro_TipoComprobante" Association="Self.FK_Serie_comprobante_Detalle_maestro_TipoComprobante">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Serie_comprobante" EntitySet="Serie_comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_subTransactionDetail_businessObject" Association="Self.FK_subTransactionDetail_businessObject">
+      <End Role="Concepto_negocio" EntitySet="Concepto_negocio" />
+      <End Role="Detalle_transaccion" EntitySet="Detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_subTransactionDetail_valuedBusinessObject" Association="Self.FK_subTransactionDetail_valuedBusinessObject">
+      <End Role="Precio" EntitySet="Precio" />
+      <End Role="Detalle_transaccion" EntitySet="Detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tipo_cambio_Detalle_maestro_Moneda" Association="Self.FK_Tipo_cambio_Detalle_maestro_Moneda">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Tipo_cambio" EntitySet="Tipo_cambio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tipo_transaccion_tipo_comprobante_Detalle_maestro" Association="Self.FK_Tipo_transaccion_tipo_comprobante_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Tipo_transaccion_tipo_comprobante" EntitySet="Tipo_transaccion_tipo_comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Actor_negocio_empleado" Association="Self.FK_Transaccion_Actor_negocio_empleado">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Actor_negocio_externo" Association="Self.FK_Transaccion_Actor_negocio_externo">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Actor_negocio_interno" Association="Self.FK_Transaccion_Actor_negocio_interno">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_actor_neogocio_externo1" Association="Self.FK_Transaccion_actor_neogocio_externo1">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_actor_neogocio_interno1" Association="Self.FK_Transaccion_actor_neogocio_interno1">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Comprobante" Association="Self.FK_Transaccion_Comprobante">
+      <End Role="Comprobante" EntitySet="Comprobante" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Detalle_maestro_estado_actual" Association="Self.FK_Transaccion_Detalle_maestro_estado_actual">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Detalle_maestro_Estado_actual_1" Association="Self.FK_Transaccion_Detalle_maestro_Estado_actual_1">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Detalle_maestro_moneda" Association="Self.FK_Transaccion_Detalle_maestro_moneda">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_id_evento_referencia" Association="Self.FK_Transaccion_id_evento_referencia">
+      <End Role="Evento_transaccion" EntitySet="Evento_transaccion" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Tipo_transaccion" Association="Self.FK_Transaccion_Tipo_transaccion">
+      <End Role="Tipo_transaccion" EntitySet="Tipo_transaccion" />
+      <End Role="Transaccion" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Transaccion" Association="Self.FK_Transaccion_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Transaccion1" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaccion_Transaccion1" Association="Self.FK_Transaccion_Transaccion1">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Transaccion1" EntitySet="Transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_transactionType_transactionType" Association="Self.FK_transactionType_transactionType">
+      <End Role="Tipo_transaccion" EntitySet="Tipo_transaccion" />
+      <End Role="Tipo_transaccion1" EntitySet="Tipo_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_transactionTypeBusinessAction_businessAction" Association="Self.FK_transactionTypeBusinessAction_businessAction">
+      <End Role="Accion_de_negocio" EntitySet="Accion_de_negocio" />
+      <End Role="Accion_de_negocio_por_tipo_transaccion" EntitySet="Accion_de_negocio_por_tipo_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_transactionTypeBusinessAction_transactionType" Association="Self.FK_transactionTypeBusinessAction_transactionType">
+      <End Role="Tipo_transaccion" EntitySet="Tipo_transaccion" />
+      <End Role="Accion_de_negocio_por_tipo_transaccion" EntitySet="Accion_de_negocio_por_tipo_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traza_pago_Detalle_maestro_EntidadBancaria" Association="Self.FK_Traza_pago_Detalle_maestro_EntidadBancaria">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Traza_pago" EntitySet="Traza_pago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traza_pago_Detalle_maestro_MedioDePago" Association="Self.FK_Traza_pago_Detalle_maestro_MedioDePago">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Traza_pago" EntitySet="Traza_pago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traza_pago_Detalle_maestro_TipoOperador" Association="Self.FK_Traza_pago_Detalle_maestro_TipoOperador">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Traza_pago" EntitySet="Traza_pago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traza_pago_Transaccion" Association="Self.FK_Traza_pago_Transaccion">
+      <End Role="Transaccion" EntitySet="Transaccion" />
+      <End Role="Traza_pago" EntitySet="Traza_pago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Valor_caracteristica_concepto_Detalle_maestro" Association="Self.FK_Valor_caracteristica_concepto_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Valor_caracteristica_concepto" EntitySet="Valor_caracteristica_concepto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Valor_caracteristica_Detalle_maestro" Association="Self.FK_Valor_caracteristica_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Valor_caracteristica" EntitySet="Valor_caracteristica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Valor_detalle_maestro_detalle_transaccion_Detalle_maestro" Association="Self.FK_Valor_detalle_maestro_detalle_transaccion_Detalle_maestro">
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+      <End Role="Valor_detalle_maestro_detalle_transaccion" EntitySet="Valor_detalle_maestro_detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Valor_detalle_maestro_detalle_transaccion_Detalle_transaccion" Association="Self.FK_Valor_detalle_maestro_detalle_transaccion_Detalle_transaccion">
+      <End Role="Detalle_transaccion" EntitySet="Detalle_transaccion" />
+      <End Role="Valor_detalle_maestro_detalle_transaccion" EntitySet="Valor_detalle_maestro_detalle_transaccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vinculo_Actor_Negocio_Actor_negocio_a" Association="Self.FK_vinculo_Actor_Negocio_Actor_negocio_a">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Vinculo_Actor_Negocio" EntitySet="Vinculo_Actor_Negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vinculo_Actor_Negocio_Actor_Negocio_b" Association="Self.FK_vinculo_Actor_Negocio_Actor_Negocio_b">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Vinculo_Actor_Negocio" EntitySet="Vinculo_Actor_Negocio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_voucher_voucherSerial" Association="Self.FK_voucher_voucherSerial">
+      <End Role="Serie_comprobante" EntitySet="Serie_comprobante" />
+      <End Role="Comprobante" EntitySet="Comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoucherSerial_BusinessActorRole" Association="Self.FK_VoucherSerial_BusinessActorRole">
+      <End Role="Actor_negocio" EntitySet="Actor_negocio" />
+      <End Role="Serie_comprobante" EntitySet="Serie_comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_voucherSerial_voucherModel" Association="Self.FK_voucherSerial_voucherModel">
+      <End Role="VoucherModel" EntitySet="VoucherModel" />
+      <End Role="Serie_comprobante" EntitySet="Serie_comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_voucherTypeTransactionType_transactionType" Association="Self.FK_voucherTypeTransactionType_transactionType">
+      <End Role="Tipo_transaccion" EntitySet="Tipo_transaccion" />
+      <End Role="Tipo_transaccion_tipo_comprobante" EntitySet="Tipo_transaccion_tipo_comprobante" />
+    </AssociationSet>
+    <AssociationSet Name="R_72" Association="Self.R_72">
+      <End Role="Maestro" EntitySet="Maestro" />
+      <End Role="Detalle_maestro" EntitySet="Detalle_maestro" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

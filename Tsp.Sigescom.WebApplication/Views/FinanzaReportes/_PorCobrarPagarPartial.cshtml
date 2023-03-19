@@ -1,0 +1,157 @@
+﻿@*POR COBRAR Y PAGAR*@
+<div ng-show="reporteador.SeccionSeleccionada=='seccion3'">
+    <div class="contenedor-reportes">
+        <div class="col-md-12 col-xs-12 p-0">
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Por Cobrar Clientes General</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <br />
+                                    <a title="Por Cobrar Clientes General" class="btn btn-primary btn-flat" ng-href="@Url.Action("PorCobrarPagar_PorCobrarClientes", "FinanzaReportes_PorCobrarPagar")">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Por Pagar Proveedores General</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <br />
+                                    <a title="Por Pagar Proveedores General" class="btn btn-primary btn-flat" ng-href="@Url.Action("PorCobrarPagar_PorPagarProveedores", "FinanzaReportes_PorCobrarPagar")">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 p-0">
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Por Cobrar Agrupadas por Cliente</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6" id="input-cliente-por-cobror-por-clientes">
+                                <div class="form-group">
+                                    <div>
+                                        <label class="col-md-6">Clientes</label>
+                                        <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                            <input id="PorCobrarPagar_todosclientes_PorCobrarPorCliente" type="checkbox" class="styled" ng-model="reporteador.PorCobrarPagar.PorCobrarPorCliente.SeleccionarTodosLosClientes" ng-change="PorCobrarPagar_TodosLosClientesPorCobrarPorClienteChanged()" />
+                                            <label class="negrita">Todos</label>
+                                        </div>
+                                    </div>
+                                    <select id="PorCobrarPagar_clientes_PorCobrarPorCliente" class="select2 form-control" ng-model="reporteador.PorCobrarPagar.PorCobrarPorCliente.ClientesSeleccionados" ng-change="PorCobrarPagar_ClientesPorCobrarPorClienteChanged()" ng-options="item as item.Nombre for item in clientes track by item.Id" multiple="multiple"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <br />
+                                    <a title="Por Cobrar Agrupadas por Cliente" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorCobrarPagar.PorCobrarPorCliente.ActivarBotonVer" ng-href="{{URLPorCobrarPagar_PorCobrarPorCliente}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Por Pagar Agrupadas por Proveedor</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6" id="input-proveedor-por-pagar-por-proveedor">
+                                <div class="form-group">
+                                    <div>
+                                        <label class="col-md-6">Proveedores</label>
+                                        <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                            <input id="PorCobrarPagar_todosproveedores_PorPagarPorProveedor" type="checkbox" class="styled" ng-model="reporteador.PorCobrarPagar.PorPagarPorProveedor.SeleccionarTodosLosProveedores" ng-change="PorCobrarPagar_TodosLosProveedoresPorPagarPorProveedorChanged()" />
+                                            <label class="negrita">Todos</label>
+                                        </div>
+                                    </div>
+                                    <select id="PorCobrarPagar_proveedores_PorPagarPorProveedor" class="select2 form-control" ng-model="reporteador.PorCobrarPagar.PorPagarPorProveedor.ProveedoresSeleccionados" ng-change="PorCobrarPagar_ProveedoresPorPagarPorProveedorChanged()" ng-options="item as item.Nombre for item in proveedores track by item.Id" multiple="multiple"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <br />
+                                    <a title="Por Pagar Agrupadas por Proveedor" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorCobrarPagar.PorPagarPorProveedor.ActivarBotonVer" ng-href="{{URLPorCobrarPagar_PorPagarPorProveedor}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 p-0">
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Por Cobrar Grupos</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-6" id="input-grupo-por-cobrar-grupo">
+                                <div class="form-group">
+                                    <div>
+                                        <label class="col-md-6">Grupos</label>
+                                        <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                            <input id="PorCobrarPagar_todosclientes_PorCobrarGrupos" type="checkbox" class="styled" ng-model="reporteador.PorCobrarPagar.PorCobrarGrupos.SeleccionarTodosLosGrupos" ng-change="PorCobrarPagar_TodosLosGruposPorCobrarGruposChanged();" />
+                                            <label class="negrita">Todos</label>
+                                        </div>
+                                    </div>
+                                    <select id="PorCobrarPagar_grupos_PorCobrarGrupos" class="select2 form-control" ng-model="reporteador.PorCobrarPagar.PorCobrarGrupos.GruposSeleccionados" ng-change="PorCobrarPagar_GruposPorCobrarGruposChanged()" ng-options="item as item.Nombre for item in grupos track by item.Id" multiple="multiple"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <br />
+                                    <a title="Por Cobrar Grupos" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorCobrarPagar.PorCobrarGrupos.ActivarBotonVer" ng-href="{{URLPorCobrarPagar_PorCobrarGrupos}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Por Cobrar Grupo Detallado</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-6" id="input-grupo-por-cobrar-grupo-detallado">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="title-report">Grupo</label>
+                                        <select class="select2 form-control" ng-model="reporteador.PorCobrarPagar.PorCobrarGrupoDetallado.GrupoSeleccionado" ng-change="PorCobrarPagar_GrupoPorCobrarGrupoDetalladoChanged()" ng-options="item as item.Nombre for item in grupos track by item.Id"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <br />
+                                    <a title="Por Cobrar Grupo Detallado" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorCobrarPagar.PorCobrarGrupoDetallado.ActivarBotonVer" ng-href="{{URLPorCobrarPagar_PorCobrarGrupoDetallado}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

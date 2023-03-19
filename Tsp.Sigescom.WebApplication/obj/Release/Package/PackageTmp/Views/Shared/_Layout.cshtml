@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>@ViewBag.Title - SiGesCom</title>
+    <style>
+        :root {
+        --color-nav:@Tsp.Sigescom.WebApplication.Properties.Settings.Default.color_navsidebar;
+        --color-body:@Tsp.Sigescom.WebApplication.Properties.Settings.Default.color_body;
+        --color-titulo:@Tsp.Sigescom.WebApplication.Properties.Settings.Default.color_titulo;
+    }
+    </style>
+
+    @* ui-select *@
+    <link href="~/Scripts/ui-select/select.css" type="text/css" rel="stylesheet" />
+    @* select2 *@
+    <link href="~/Scripts/select2/css/select2.css" type="text/css" rel="stylesheet" />
+    @* selectize *@
+    <link href="~/Content/selectize.css" type="text/css" rel="stylesheet" />
+    @* bootstrap *@
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+
+    <!--styles select-->
+    @*<link href="~/Content/select2.png" type="text/css" rel="stylesheet" />*@
+    <!--end styles select -->
+    <link href="~/Content/sweet-alert/sweet-alert.css" type="text/css" rel="stylesheet" />
+    <!--styles bootstrap -->
+    @*<link href="~/Content/bootstrap-modal.css" type="text/css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap-notify.css" type="text/css" rel="stylesheet" />
+    <!--end styles bootstrap -->
+    <link href="~/Content/jquery.mCustomScrollbar.css" type="text/css" rel="stylesheet" />
+    <!--icheck-->
+    <link href="~/Content/build/build.css" type="text/css" rel="stylesheet" />
+    <!--end styles icheck -->
+    <!--styles datatables-->
+    <link href="~/Scripts/datatable/bootstrap/datatables.bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Scripts/datatable/css/angular-datatables.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/angucomplete.css" type="text/css" rel="stylesheet" />
+    <link href="~/Scripts/datatable/css/colReorder.dataTables.min.css" type="text/css" rel="stylesheet" />
+    @*<link href="~/Scripts/datatable/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />*@
+    <link href="~/Content/scroller.dataTables.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/fixedColumns.dataTables.min.css" type="text/css" rel="stylesheet" />
+    <!--end styles datatables-->
+    <link href="~/Scripts/jquery/jquery-ui.css" type="text/css" rel="stylesheet" />
+    <!--styles datepicker-->
+    <link href="~/Content/bootstrap-datepicker.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/daterangepicker.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />
+    <!--end styles datepicker-->
+    <!--styles datepicker-->
+    <link href="~/Content/bootstrap-timepicker.min.css" type="text/css" rel="stylesheet" />
+    @*<link href="~/Content/daterangepicker.css" type="text/css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap-timepicker.css" type="text/css" rel="stylesheet" />
+    <!--end styles datepicker-->
+    <!--styles angular-->
+    <link href="~/Content/angular-block-ui.min.css" type="text/css" rel="stylesheet" />
+    <!--end styles angular-->
+    <!--styles thema-->
+    @*<link href="~/Content/admin-panel.css" type="text/css" rel="stylesheet" />*@
+    <link href="~/Content/general.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/style.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/skins/_all-skins.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/datatables.css" type="text/css" rel="stylesheet" />
+    @*<link href="~/Scripts/admin-panel/metisMenu/dist/metisMenu.min.css" type="text/css" rel="stylesheet" />*@
+    <link href="~/Content/materialdesignicons.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/default.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/images/flaticon/font/flaticon.css" type="text/css" rel="stylesheet" />
+
+    <link href="~/Content/print.min.css" type="text/css" rel="stylesheet" />
+
+
+
+    @*<script src="~/Scripts/generico/jquery/jquery-3.1.1.min.js"></script>*@
+    <script src="~/Scripts/generico/jquery/jquery-3.2.1.min.js"></script>
+
+    <script src="~/Scripts/jquery/jquery-ui.min.js"></script>
+
+    <script src="~/Scripts/file-export/base64.js"></script>
+    <script src="~/Scripts/linq.js"></script>
+    <script src='~/Scripts/jsPDF/jspdf.min.js'></script>
+    <script src="~/Scripts/html2canvas.js"></script>
+    @*<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>*@
+
+
+    <script src="~/Scripts/file-export/sprintf.js"></script>
+    <script src="~/Scripts/file-export/tableExport.js"></script>
+    <script src="~/Scripts/file-export/jquery.base64.js"></script>
+
+    <script src="~/Scripts/datatable/jquery.dataTables.min.js"></script>
+
+    <script src="~/Scripts/flow/flow.min.js"></script>
+    <script src="~/Scripts/select2/js/select2.full.min.js"></script>
+
+    <!--end script jquery-->
+    <!--script bootstrap-->
+    <script src="~/Scripts/generico/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Scripts/generico/respond/respond.js"></script>
+    <!--script bootstrap-->
+    <!-- SlimScroll -->
+    <script src="~/Scripts/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Fullcalendar-Calendar -->
+    <link href="~/Scripts/fullcalendar/css/scheduler.min.css" rel="stylesheet" />
+    <link href="~/Scripts/fullcalendar/css/fullcalendar.css" rel="stylesheet" />
+    <script src="~/Scripts/fullcalendar/js/moment.min.js"></script>
+    <script src="~/Scripts/fullcalendar/js/fullcalendar.js"></script>
+    @*<script src="~/Scripts/fullcalendar/js/scheduler.min.js"></script>*@
+    <script src="~/Scripts/fullcalendar/js/scheduler.js"></script>
+    <script src="~/Scripts/fullcalendar/js/es.js"></script>
+
+    <!-- Loadsh -->
+    <script src="~/Scripts/loadsh/lodash.js"></script>
+
+    <script src="~/Scripts/print.min.js"></script>
+
+
+    <style type="text/css">
+        .css-form input.ng-invalid.ng-touched {
+            /*background-color: #eea7a7;*/
+            border-color: #ff1f05;
+        }
+
+        .css-form input.ng-valid.ng-touched {
+            /*border-color: #0026ff;*/
+            /*border-color: #008000;*/
+        }
+    </style>
+    <script>
+        var AplicacionDesplegadaLocalmente = @(Tsp.Sigescom.Config.AplicacionSettings.Default.AplicacionDesplegadaLocalmente.ToString().ToLower());
+        var TiempoEnMinutosDeVerificacionDeAccesoAInternet = @(Tsp.Sigescom.Config.AplicacionSettings.Default.TiempoEnMinutosDeVerificacionDeAccesoAInternet);
+        var PermitirMenuDinamico = @(Tsp.Sigescom.Config.AplicacionSettings.Default.PermitirMenuDinamico.ToString().ToLower());
+        var PermitirTiempoSesionIlimitado = @(Tsp.Sigescom.Config.AplicacionSettings.Default.PermitirTiempoSesionIlimitado.ToString().ToLower());
+    </script>
+</head>
+
+<body id="id-menu-sidebar-principal" class="hold-transition skin-blue fixed" ng-app="app">
+    <div id="wrapper">
+        <!--navigation-->
+        @Html.Action("NavSidebar", "Maestro")
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+           
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </section>
+        </div>
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.4.1.1
+            </div>
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="http://tsolperu.com">tsolperu.com</a>.</strong> Todos los derechos reservados.
+        </footer>
+        @*<footer>
+                <div class="col-md-12">
+                    <p class="float-right">&copy; @DateTime.Now.Year - Desarrollado por <a href="http://www.tsolperu.com">TSolPeru</a></p>
+                </div>
+            </footer>*@
+    </div>
+
+    <script src="~/Scripts/angular/angular.js"></script>
+
+
+    <script src="~/Scripts/ngStorage.js"></script>
+
+    <script src="~/Scripts/ui-select/select.js"></script>
+    <script src="~/Scripts/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular/angular-animate.min.js"></script>
+
+    @*<script src="~/Scripts/angular/angular-animate.js"></script>*@
+    <script src="~/Scripts/angular-block-ui.min.js"></script>
+
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+   
+
+    <script src="~/Scripts/generico/moment/moment.min.js"></script>
+    <script src="~/Scripts/generico/bootstrap/moment-with-locales.min.js"></script>
+    @*<script src="~/Scripts/checklist-model.js"></script>*@
+    <script src="~/Scripts/sweet-alert/sweet-alert.min.js"></script>
+    <script src="~/Scripts/sweet-alert/SweetAlert.js"></script>
+    <script src="~/Scripts/bootstrap-notify.js"></script>
+
+    <script src="~/Scripts/ng-flow/ng-flow.min.js"></script>
+
+
+    @*<script src="~/Scripts/generico/respond/respond.min.js"></script>*@
+
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/service.js"></script>
+    <script src="~/Scripts/controlVisitasService.js"></script>
+    <script src="~/Scripts/admin-panel/adminlte.min.js"></script>
+    <script src="~/Scripts/admin-panel/demo.js"></script>
+
+    @*<script src="~/Scripts/admin-panel/admin-panel.js"></script>
+        <script src="~/Scripts/admin-panel/metisMenu/dist/metisMenu.min.js"></script>*@
+    <script src="~/Scripts/angular/angucomplete.js"></script>
+    <!--scrip datepicker-->
+    <script src="~/Scripts/generico/bootstrap/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/generico/bootstrap/daterangepicker.js"></script>
+    <script src="~/Scripts/generico/bootstrap/bootstrap-datepicker.es.js" charset="UTF-8"></script>
+    <script src="~/Scripts/generico/bootstrap/bootstrap-datetimepicker.min.js"></script>
+    <!--scrip timepicker-->
+    <script src="~/Scripts/bootstrap-timepicker.js"></script>
+    <script src="~/Scripts/bootstrap-timepicker.min.js"></script>
+
+    <!--scrip datepicker-->
+    <script src="~/Scripts/generico/bootstrap/bootstrap-typeahead.js"></script>
+    <script src="~/Scripts/generico/bootstrap/jasny-bootstrap.min.js"></script>
+    <script src="~/Scripts/generico/bootstrap/bootstrap-modal.js"></script>
+    <script src="~/Scripts/generico/bootstrap/bootstrap-modalmanager.js"></script>
+    <script src="~/Scripts/generico/bootstrap/bootsnipp-treed.js"></script>
+    <script src="~/Scripts/generico/jquery/placeholders.jquery.min.js"></script>
+    <script src="~/Scripts/select2/js/i18n/es.js"></script>
+
+    <!--scrip datatables-->
+    <script src="~/Scripts/datatable/angular-datatables.min.js"></script>
+    <script src="~/Scripts/datatable/bootstrap/angular-datatables.bootstrap.min.js"></script>
+    <script src="~/Scripts/datatable/dataTables.lightColumnFilter.min.js"></script>
+    <script src="~/Scripts/datatable/dataTables.scroller.min.js"></script>
+    <script src="~/Scripts/datatable/dataTables.fixedColumns.min.js"></script>
+    <script src="~/Scripts/datatable/angular-datatables.colreorder.js"></script>
+    <script src="~/Scripts/datatable/plugins/buttons/angular-datatables.buttons.min.js"></script>
+    <script src="~/Scripts/datatable/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+    <script src="~/Scripts/datatable/plugins/light-columnfilter/angular-datatables.light-columnfilter.min.js"></script>
+    <script src="~/Scripts/datatable/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
+    <script src="~/Scripts/datatable/plugins/scroller/angular-datatables.scroller.min.js"></script>
+
+    <script src="~/Scripts/jqwidget/jquery.mCustomScrollbar.min.js"></script>
+
+
+    <script src="~/Scripts/datatable/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/datatable/dataTables.colReorder.min.js"></script>
+    <script src="~/Scripts/datatable/buttons.colVis.min.js"></script>
+    <script src="~/Scripts/datatable/buttons.flash.js"></script>
+    <script src="~/Scripts/datetime.js"></script>
+    <script src="~/Scripts/ng-pattern-restrict.min.js"></script>
+    <script src="~/Scripts/onlineDetection/online_offline_detection.js"></script>
+    <!--end scrip datatables-->
+    <!--angular-fileUpload-->
+    <script src="~/Scripts/ng-file-upload-shim.js"></script>
+    <script src="~/Scripts/ng-file-upload.js"></script>
+
+    <!--Angular CLI 6 -->
+    @*<script type="text/javascript" src="~/Scripts/angularCLI/runtime.js"></script>
+        <script type="text/javascript" src="~/Scripts/angularCLI/polyfills.js"></script>
+        <script type="text/javascript" src="~/Scripts/angularCLI/styles.js"></script>
+        <script type="text/javascript" src="~/Scripts/angularCLI/vendor.js"></script>
+        <script type="text/javascript" src="~/Scripts/angularCLI/main.js"></script>*@
+
+    @*<script src="~/Scripts/js-print-manager/zip.js"></script>
+        <script src="~/Scripts/js-print-manager/zip-ext.js"></script>
+        <script src="~/Scripts/js-print-manager/deflate.js"></script>
+        <script src="~/Scripts/js-print-manager/JSPrintManager.js"></script>
+
+        <script src="~/Scripts/js-print-manager/bluebird.min.js"></script>*@
+    @*<script src="~/Scripts/js-print-manager/html2canvas.min.js"></script>*@
+
+    <!-- Select UI -->
+
+    <script>
+
+        if (PermitirMenuDinamico) {
+            $('#id-menu-sidebar-principal').addClass("sidebar-mini sidebar-collapse");
+        }
+
+        var URL_ = "@this.Request.Url.GetLeftPart( UriPartial.Authority )";
+        URL_ = URL_ + "@Request.ApplicationPath";
+        $(document).ready(function () {
+            var url_ = window.location;
+            var element = $('ul.sidebar-menu a').filter(function () {
+                return this.href == url_ || url_.href.indexOf(this.href) == 0;
+            }).parent().addClass('active').parent().parent();
+            if (element.is('li')) {
+                element.addClass('active');
+            }
+
+            $(".select2-selection").on("focus", function () {
+                $(this).parent().parent().prev().select2("open");
+            });
+
+            /*$(".angucomplete-dropdown").mCustomScrollbar({
+                setHeight: 240,
+                theme: "minimal-dark"
+            });*/
+
+            $(".select2").select2({
+                language: "es"
+            });
+
+            $('.select2-min').select2({
+                language: "es",
+                minimumInputLength: 3,
+                allowClear: true
+            });
+
+            //$(".select2-dropdow").append('<div><input type="text" style="width: 75%; margin:0 5px 5px 5px;"name="lname"><input class="PrimaryBtn" type="submit" value="Add"></div>');
+        /*$(".modal-body").mCustomScrollbar({
+            setHeight: 340,
+            theme: "minimal-dark"
+        });*/
+
+            $('.timepickerIndividual').timepicker({
+                showInputs: false,
+                showSeconds: true,
+            });
+
+            $('.timepickerResumen').timepicker({
+                showInputs: false
+            });
+
+            $('input.number').attr('placeholder', '0.00');
+            $('.form-horizontal').on('click', 'input.number', function (data) {
+                $(this).attr('placeholder', '0.00');
+                if ($(this).val() == '0.00' || $(this).val() == '0') {
+                    $(this).val('');
+                }
+            });
+
+            $(".datepicker").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            });
+
+            $(".datepicker-yyyy").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            });
+
+            $(".datepicker-bottom").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es',
+                orientation: 'bottom'
+            });
+
+            $(".datetimepicker").datetimepicker({
+                format: 'DD/MM/YYYY hh:mm:ss a',
+                locale: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datetimepicker").datetimepicker('getDate');
+                $(".datetimepicker").datetimepicker('setStartDate', date);
+            }).on('clearDate', function () {
+                $('.datetimepicker').datetimepicker('setDate', null);
+            });
+
+            $(".datetimepicker1").datetimepicker({
+                format: 'LT',
+                language: 'es'
+            });
+
+            $(".datepicker-start").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-start").datepicker('getDate');
+                $(".datepicker-end").datepicker('setStartDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-start').datepicker('setDate', null);
+            });
+
+            $(".datepicker-end").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-end").datepicker('getDate');
+                $(".datepicker-start").datepicker('setEndDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-end').datepicker('setDate', null);
+                });
+
+
+            $(".datepicker-start1").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-start1").datepicker('getDate');
+                $(".datepicker-end1").datepicker('setStartDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-start1').datepicker('setDate', null);
+            });
+
+            $(".datepicker-end1").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-end1").datepicker('getDate');
+                $(".datepicker-start1").datepicker('setEndDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-end1').datepicker('setDate', null);
+                });
+
+            $(".datepicker-start2").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-start2").datepicker('getDate');
+                $(".datepicker-end2").datepicker('setStartDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-start2').datepicker('setDate', null);
+            });
+
+            $(".datepicker-end2").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-end2").datepicker('getDate');
+                $(".datepicker-start2").datepicker('setEndDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-end2').datepicker('setDate', null);
+            });
+
+            $(".datepicker-start3").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-start3").datepicker('getDate');
+                $(".datepicker-end3").datepicker('setStartDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-start3').datepicker('setDate', null);
+            });
+
+            $(".datepicker-end3").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-end3").datepicker('getDate');
+                $(".datepicker-start3").datepicker('setEndDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-end3').datepicker('setDate', null);
+            });
+
+            $(".datepicker-start4").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-start4").datepicker('getDate');
+                $(".datepicker-end4").datepicker('setStartDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-start4').datepicker('setDate', null);
+            });
+
+            $(".datepicker-end4").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            }).on("changeDate", function (data) {
+                var date = $(".datepicker-end4").datepicker('getDate');
+                $(".datepicker-start4").datepicker('setEndDate', date);
+            }).on('clearDate', function () {
+                $('.datepicker-end4').datepicker('setDate', null);
+            });
+
+            //$(".bottom-full-screen").on("click", function (data) {
+            //    if ($('.view-full-screen').length) {
+            //        $('.modal-dialog').css({
+            //            width: '100%',
+            //            margin:'0',
+            //        });
+            //        $(".bottom-full-screen span").removeClass("view-full-screen").addClass("view-full-screen-exit");
+            //        $(".bottom-full-screen").prop('title', 'Salir de pantalla completa');
+            //    }
+            //    else {
+            //        $('.modal-dialog').css({
+            //            width: '1000px',
+            //            margin: '60px auto',
+            //        });
+            //        $(".bottom-full-screen span").removeClass("view-full-screen-exit").addClass("view-full-screen");
+            //        $(".bottom-full-screen").prop('title', 'Pantalla completa');
+            //    }
+            //});
+
+            //$('.table ').DataTable({
+            //    "language": {
+            //        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            //    }
+            //});
+
+        });
+    </script>
+    <script type="text/javascript">
+    var loginUrl='@Url.Action("Login", "Account")';
+    var extendMethodUrl = '@Url.Action("ExtendSession","Account")';
+
+        $(document).ready(function ()
+        {
+            if ('@User.Identity.IsAuthenticated' == 'True')
+            {
+                SessionTimeout.schedulePopup();
+            };
+
+        });
+
+    window.SessionTimeout = (function() {
+            var _timeLeft, _popupTimer, _countDownTimer;
+            var stopTimers = function() {
+                window.clearTimeout(_popupTimer);
+                window.clearTimeout(_countDownTimer);
+            };
+            var updateCountDown = function() {
+                var min = Math.floor(_timeLeft / 60);
+                var sec = _timeLeft % 60;
+                if(sec < 10)
+                    sec = "0" + sec;
+
+                document.getElementById("CountDownHolder").innerHTML = min + ":" + sec;
+
+                if(_timeLeft > 0) {
+                    _timeLeft--;
+                    _countDownTimer = window.setTimeout(updateCountDown, 1000);
+                } else  {
+                    document.location = loginUrl;
+                }
+            };
+            var showPopup = function() {
+            $("#divPopupTimeOut").show();
+                _timeLeft = 120;
+                updateCountDown();
+                if (PermitirTiempoSesionIlimitado) {
+                    sendKeepAlive();
+                }
+            };
+            var schedulePopup = function() {
+            $("#divPopupTimeOut").hide();
+                stopTimers();
+                _popupTimer = window.setTimeout(showPopup, @PopupShowDelay);
+            };
+            var hidePopup=function(){
+            $("#divPopupTimeOut").hide();
+            };
+            var sendKeepAlive = function() {
+                stopTimers();
+                $("#divPopupTimeOut").hide();
+                $.ajax({
+                    type: "GET",
+                    url: extendMethodUrl,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function successFunc(response) {
+                        SessionTimeout.schedulePopup();
+                    },
+                    error:function(){
+                    }
+                });
+            };
+            return {
+                schedulePopup: schedulePopup,
+                sendKeepAlive: sendKeepAlive,
+                hidePopup:hidePopup,
+                stopTimers:stopTimers,
+            };
+
+        })();
+
+    </script>
+    @*@Scripts.Render("~/bundles/scripts")*@
+    @RenderSection("scripts", required: false)
+</body>
+
+
+</html>
+<div id="divPopupTimeOut" style="display:none; text-align: left; margin-top:15px; width:280px !important; position:fixed; top:40px; right:0px; z-index:9999; height:165px;" class="alert alert-warning">
+    <div class="row" style="margin-top:10px; margin-left:10px;">
+        Su sesión de trabajo está a punto de terminar!
+        <br />
+        <span id="CountDownHolder"></span>
+        <br />
+        Click en OK para continuar trabajando.
+    </div>
+    <div class="row">
+        <div class="text-center button-block" style="text-align:center; margin-top:22px;">
+            <button type="button" class="btn btn-default btn-sm" onclick="SessionTimeout.sendKeepAlive();">OK</button>
+            <button type="button" class="btn btn-default btn-sm" onclick="SessionTimeout.hidePopup();">Cancel</button>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public int PopupShowDelay
+    {
+        get
+        {
+
+            return 1000 * (Convert.ToInt32(FormsAuthentication.Timeout.TotalSeconds) - 130);
+        }
+    }
+}

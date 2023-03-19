@@ -1,0 +1,183 @@
+﻿<div id="modal-ver-orden-almacen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog {{verOrdenAlmacen.ClassParaModal}}">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <label class="modal-title no-bold fs-17">ORDEN DE {{principal.SeleccionadoPorIngresar ? 'ENTRADA' : 'SALIDA'}} DE ALMACÉN - {{verOrdenAlmacen.TipoDocumento}} ({{verOrdenAlmacen.SerieNumeroDocumento}})</label>
+                <span class="label label-warning no-bold fs-15" ng-show="verOrdenAlmacen.EstaPendiente">Pendiente</span>
+                <span class="label label-info no-bold fs-15" ng-show="verOrdenAlmacen.EstaParcial">Parcial</span>
+                <span class="label label-success no-bold fs-15" ng-show="verOrdenAlmacen.EstaCompletada">Completada</span>
+                <div class="col-xs-1 col-md-1 col-lg-1 pull-right btn-close">
+                    <button type="button" class="close" style="opacity: 1; color: white; margin-top: 0px !important;" ng-click="cerrarVerOrdenAlmacen()">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="col-xs-1 col-md-1 col-lg-1 pull-right">
+                    <button title="IMPRIMIR" class="btn btn-md btn-success pull-right" ng-click="imprimirVerOrdenAlmacen()"><span class="glyphicon glyphicon-print"></span></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form name="verOrdenAlmacen">
+                    <div class="row">
+                        <div class="{{verOrdenAlmacen.ClassParaInformacion}} p-0" id="verOrdenAlmacen">
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-body pt-5">
+                                        <div class="box-title">ORDEN Y SUS MODIFICACIONES</div>
+                                        <div class="col-md-6 p-0">
+                                            <div class="row">
+                                                <div class="col-md-12 pt-5">
+                                                    <div class="row">
+                                                        <label class="col-md-5">OPERACIÓN</label>
+                                                        <label class="col-md-7 no-padding no-bold">{{verOrdenAlmacen.TipoOperacion}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 pt-5">
+                                                    <div class="row">
+                                                        <label class="col-md-5">EMISIÓN</label>
+                                                        <label class="col-md-7 no-padding no-bold">{{verOrdenAlmacen.FechaEmision}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 p-0">
+                                            <div class="row">
+                                                <div class="col-md-12 pt-5">
+                                                    <div class="row">
+                                                        <label class="col-md-5">ORDENANTE</label>
+                                                        <label class="col-md-7 no-padding no-bold">{{verOrdenAlmacen.Ordenante}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 pt-5">
+                                                    <div class="row">
+                                                        <label class="col-md-5">ALMACÉN</label>
+                                                        <label class="col-md-7 no-padding no-bold">{{verOrdenAlmacen.Almacen}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-5">
+                                            <div class="row">
+                                                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                    <table id="tabla-detalle" class="table table-bordered mb-5">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th>FECHA</th>
+                                                                <th>OPERACIÓN</th>
+                                                                <th>TIPO DOC.</th>
+                                                                <th>DOCUMENTO</th>
+                                                                <th>OPCIÓN</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="orden in verOrdenAlmacen.Ordenes" ng-cloak>
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{orden.FechaEmision}}</td>
+                                                                <td>{{orden.TipoOperacion}}</td>
+                                                                <td>{{orden.TipoDocumento}}</td>
+                                                                <td>{{orden.SerieNumeroDocumento}}</td>
+                                                                <td>
+                                                                    <a title="Ver Orden" class="btn btn-primary btn-xs" ng-click="cargarVerOrden(orden.Id)"><span class="glyphicon glyphicon-search"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-body pt-5">
+                                        <div class="box-title">SITUACIÓN ACTUAL</div>
+                                        <div class="pt-5">
+                                            <div class="row">
+                                                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                    <table id="tabla-situacion-actual" class="table table-bordered mb-5">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th>CONCEPTO</th>
+                                                                <th>ORDENADO</th>
+                                                                <th>REVOCADO</th>
+                                                                <th>{{principal.SeleccionadoPorIngresar ? 'RECIBIDO' : 'ENTREGADO'}}</th>
+                                                                <th>PENDIENTE</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="detalle in verOrdenAlmacen.Detalles" ng-cloak ng-class="detalle.Pendiente > 0 ? 'fondo-color-trigo' : ''">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{detalle.Concepto}}</td>
+                                                                <td style="background-color:lightgray">{{detalle.Ordenado}}</td>
+                                                                <td>{{detalle.Revocado}}</td>
+                                                                <td>{{detalle.Entregado}}</td>
+                                                                <td>{{detalle.Pendiente}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-body pt-5">
+                                        <div class="box-title">HISTORIAL DE MOVIMIENTOS</div>
+                                        <div class="pt-5">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                    <table id="tabla-movimiento" class="table table-bordered mb-5">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th>FECHA</th>
+                                                                <th>{{principal.SeleccionadoPorIngresar ? 'REMITENTE' : 'DESTINATARIO'}}</th>
+                                                                <th>DOC</th>
+                                                                <th>VIGENTE</th>
+                                                                <th>OPCIÓN</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="movimiento in verOrdenAlmacen.Movimientos" ng-cloak>
+                                                                <td ng-class="movimiento.EsVigente ? '' : 'tachado'">{{$index+1}}</td>
+                                                                <td ng-class="movimiento.EsVigente ? '' : 'tachado'">{{movimiento.FechaEmision}}</td>
+                                                                <td ng-class="movimiento.EsVigente ? '' : 'tachado'">{{movimiento.Destinatario}}</td>
+                                                                <td ng-class="movimiento.EsVigente ? '' : 'tachado'">{{movimiento.SerieNumeroDocumento}}</td>
+                                                                <td>{{movimiento.EsVigente ? 'SI': 'NO'}}</td>
+                                                                <td>
+                                                                    <a title="Ver Orden" class="btn btn-primary btn-xs" ng-click="cargarVerMovimiento(movimiento.Id)"><span class="glyphicon glyphicon-search"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{verOrdenAlmacen.ClassParaComprobante}}" ng-show="verOrdenAlmacen.MostrarComprobante">
+                            <div class="box box-primary">
+                                <div class="box-body pt-5">
+                                    <div class="box-title pull-right">
+                                        <button type="button" class="close boton-cerrar" ng-click="cerrarVerComprobante()">
+                                            <span aria-hidden="true">x</span>
+                                        </button>
+                                    </div>
+                                    <div class="pt-5">
+                                        <visualizador-comprobante style="margin-bottom: 10px;" id="visualizadorComprobante" api="visualizadorComprobanteAPI" comprobante="verOrdenAlmacen.Comprobante" permitir-invalidar-documento="true" invalidar-documento="invalidarMovimientoOrdenAlmacen(id, observacion)"></visualizador-comprobante>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

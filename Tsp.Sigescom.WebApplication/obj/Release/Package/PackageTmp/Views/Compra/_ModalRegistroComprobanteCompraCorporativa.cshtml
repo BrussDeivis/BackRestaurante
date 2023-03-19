@@ -1,0 +1,33 @@
+﻿<div id="modal-registro-comprobante-compra-corporativa" class="modal fade" data-keyboard="false" role="dialog" data-backdrop-limit="1" aria-labelledby="information" data-backdrop="static" aria-hidden="true" data-focus-on="input:first">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRAR COMPROBANTE DE LA COMPRA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>DOCUMENTO</label>
+                        <select class="select2 form-control tipoDocumentoCompra" ng-model="comprobanteCompra.TipoDeComprobante" ng-change="cargarSeriesCompra(comprobanteCompra.TipoDeComprobante)" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantesMasSeriesCompra  track by item.TipoComprobante.Id" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show=" comprobanteCompra.TipoDeComprobante.MostrarSelectorSerie && modelo.TipoDeComprobante.EsPropio ">
+                        <label>SERIE</label>
+                        <select id="serie" class="select2 form-control" ng-model="comprobanteCompra.TipoDeComprobante.SerieSeleccionada" ng-options="item.Id as item.Nombre for item in seriesCompra" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show="comprobanteCompra.TipoDeComprobante.MostrarEntradaSerie">
+                        <label>SERIE</label>
+                        <input class="form-control" uppercase-only ng-model="comprobanteCompra.TipoDeComprobante.SerieIngresada" ng-pattern="/^[a-zA-Z0-9]{0,4}$/" maxlength="4" ng-minlength="3" required />
+                    </div>
+                    <div class="col-md-12" ng-show="comprobanteCompra.TipoDeComprobante.MostrarEntradaNumero">
+                        <label>N° DOCUMENTO</label>
+                        <input class="form-control" ng-model="comprobanteCompra.TipoDeComprobante.NumeroIngresado" maxlength="8" ng-pattern="/^[0-9]{0,8}$/" required />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="guardarComprobanteCompra()" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-check"></span>ACEPTAR</button>
+                <button data-dismiss="modal" title="cancelar" class="btn btn-danger btn-md"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>

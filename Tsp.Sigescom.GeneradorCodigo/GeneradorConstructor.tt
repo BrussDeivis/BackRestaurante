@@ -1,0 +1,152 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"#>
+<#@ assembly name="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral,PublicKeyToken=89845dcd8080cc91" #>
+<#@ assembly name="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0,Culture=neutral, PublicKeyToken=89845dcd8080cc91" #>
+<#@ assembly name="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" #>
+<#@ import namespace="System" #>
+<#@ import namespace="Microsoft.SqlServer.Management.Smo" #>
+<#@ import namespace="Microsoft.SqlServer.Management.Common" #>
+<#@ import namespace="Microsoft.SqlServer" #>
+<#
+	
+	ServerConnection conn = new ServerConnection("200.37.39.229" , "sa", "marline16");
+    Server server = new Server(conn);
+	Database database = new Database(server, "sigescom");
+    database.Refresh();
+#>
+using Tsp.Sigescom.Modelo.Entidades.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+ namespace Tsp.Sigescom.Modelo.Entidades
+{
+<#  
+    foreach (Table table in database.Tables)
+    {    table.Refresh();
+ #>
+
+    public partial class <#= table.Name #>
+    {
+<#  
+			table.Refresh();
+			String atributos="";
+			String parametrosSetData="";
+			String parametrosConstructor="";
+            String parametrosAsignacion = "";
+			String llavesForaneas="";
+			String parametrosValidarId="";
+			String parametrosValidar="";
+			String validarId="";
+			if (table.Columns.Count > 1)
+			{
+				foreach (Column column in table.Columns)
+				{
+					column.Refresh();
+                    String CSType = getCStype(column);
+					if(column.Name!="id")
+                    {
+						atributos += CSType + " " + getSinGuion(column.Name)+","; 
+						parametrosSetData += getSinGuion(column.Name)+",";
+						parametrosAsignacion += "this." + column.Name + " = " + getSinGuion(column.Name)+ ";\n\t\t\t";
+					}
+				}
+				foreach (ForeignKey key in table.ForeignKeys)
+				{
+					foreach (ForeignKeyColumn columna in key.Columns)
+					{
+						llavesForaneas += "int "+getSinGuion(columna.Name)+", ";
+						parametrosValidarId += "if("+getSinGuion(columna.Name)+"< 1){ throw new IdNoValidoException("+getSinGuion(columna.Name)+" , \""+reemplazarGuiones(columna.Name.Substring(3))+"\"); }\n\t\t\t";
+						parametrosValidar += getSinGuion(columna.Name)+", ";
+					}
+				}
+				if(llavesForaneas!="")
+                {
+					llavesForaneas=llavesForaneas.Substring(0,llavesForaneas.Length-2);
+					parametrosValidar = parametrosValidar.Substring(0,parametrosValidar.Length-2);
+					validarId += "protected void validarId("+llavesForaneas+")\n\t\t{\n\t\t\t"+parametrosValidarId+"\n\t\t}";
+					parametrosConstructor +="validarId("+parametrosValidar+");";
+                }
+				atributos = atributos.Substring(0,atributos.Length-1);
+				parametrosSetData = parametrosSetData.Substring(0,parametrosSetData.Length-1);
+			}   
+		 
+		#>
+		public <#= table.Name #>()
+		{
+		}
+		public <#= table.Name #>(<#= atributos #>)
+		{
+			setData(<#= parametrosSetData #>);
+			<#= parametrosConstructor #>
+		}
+		
+		public void setData(<#= atributos #>)
+		{
+			<#= parametrosAsignacion #>
+		}
+		<#= validarId #>
+	}
+<#
+    }
+#>
+}
+<#+	
+    public String getCStype(Column column)
+    {
+        String CSType="String";
+        if(column.DataType.Name=="varchar"||column.DataType.Name=="nchar" || column.DataType.Name=="char")
+        {
+            CSType= "string";
+        }
+        else if(column.DataType.Name=="int")
+        {
+            CSType= "int";
+        }
+		else if(column.DataType.Name=="bigint")
+        {
+            CSType= "long";
+        }
+        else if(column.DataType.Name=="datetime")
+        {
+            CSType= "DateTime";            
+        }
+        else if(column.DataType.Name=="bit")
+        {
+            CSType= "bool";            
+        }
+		else if(column.DataType.Name=="image")
+        {
+            CSType= "byte[]";            
+        }
+        else if(column.DataType.Name=="decimal")
+        {
+            CSType= "decimal";            
+        }
+        return CSType;
+    }
+#>
+<#+	
+   public String getSinGuion(String cadena)
+        {
+            while (cadena.IndexOf("_")>=0)
+            {
+                int position = cadena.IndexOf("_");
+                String cad = cadena.Substring(position+1,1);
+                cadena = cadena.Remove(position + 1, 1);
+                cadena = cadena.Insert(position + 1, cad.ToUpper());
+                cadena = cadena.Remove(position, 1);
+            }
+            return cadena;
+        }
+#>
+<#+	
+		public String reemplazarGuiones(String cadena)
+        {
+            cadena = cadena.Replace("_"," ");
+            return cadena;
+        }
+#>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Registro de Concepto Basico";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/concepto/conceptoController.js")></script>
+
+    <script>
+        var modoDeSeleccionTipoFamiliaEnRegistroFamilia = @ViewBag.modoDeSeleccionTipoFamiliaEnRegistroFamilia;
+    </script>
+}
+<div class="col-md-12" ng-controller="conceptoController" ng-init="inicializarRegistroConcepto()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">REGISTRO DE FAMILIA</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            @Html.Partial("_RegistroConceptoBasicoPartial")
+        </div>
+        <div class="col-md-12">
+            <div style="margin-top:15px;">
+                <a ng-disabled="conceptoForm.$invalid" ng-click="guardarConcepto(concepto)" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR FAMILIA</a>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroCategoria")
+</div>

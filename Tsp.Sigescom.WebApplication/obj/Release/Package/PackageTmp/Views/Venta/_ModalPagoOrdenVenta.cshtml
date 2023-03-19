@@ -1,0 +1,91 @@
+﻿<div id="modal-pago-orden-venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">PAGO DE ORDEN DE VENTA</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="pagoOrdenVentaForm" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12 padding-5">
+                                <div class="col-md-12 padding-0">
+                                    <div class="col-md-12 padding-0">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-md-5">MEDIO PAGO</label>
+                                                <div class="radio radio-primary radio-inline col-md-3" ng-repeat="item in mediosDePago">
+                                                    <input type="radio" id="radio-{{item.Id}}" ng-model="caja.IdMedioDePago" ng-change="ver(caja.IdMedioDePago)" value="{{item.Id}}" ng-checked="caja.IdMedioDePago==item.Id">
+                                                    <label for="radio-{{item.Id}}">{{item.Nombre}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-show="caja.IdMedioDePago==IdMedioDePagoEfectivo">
+                                            <label>MONTO RECIBIDO</label>
+                                            <input ng-model="caja.MontoRecibido" ng-blur="caja.MontoRecibido=formatNumber(caja.MontoRecibido,2)" class="form-control number" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>OBSERVACION</label>
+                                            <input class="form-control" id="nombre" uppercase-only value="Observacion" ng-model="caja.Observacion" required />
+                                        </div>
+                                        <div class="col-md-12" ng-hide="caja.IdMedioDePago==IdMedioDePagoEfectivo">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label>BANCO</label>
+                                                    <select class="select2 form-control" ng-model="caja.EntidadFinanciera" ng-options="item as item.Nombre for item in entidadesFinancieras track by item.Id"></select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>TARJETA</label>
+                                                    <select class="select2 form-control" ng-model="caja.TipoTarjeta" ng-options="item as item.Nombre for item in tiposDeTarjeta track by item.Id"></select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>INFORMACIÓN</label>
+                                                    <textarea id="informacion" ng-model="caja.InformacionDeMedioPago" class="form-control" placeholder="N° Operación, tarjeta"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 " style="margin-top:15px" ng-show="caja.MontoRecibido>0">
+                                            <div class="col-md-12 padding-0">
+                                                <div class="col-md-6 padding-0">
+                                                    <label>TOTAL A PAGAR</label>
+                                                </div>
+                                                <div class="col-md-6 padding-0">
+                                                    <label class="form-control">
+                                                        S/. {{caja.Total!=null?caja.Total:0.00|number:2}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 padding-0" style="margin-top:5px">
+                                                <div class="col-md-6 padding-0">
+                                                    <label>IMPORTE RECIBIDO</label>
+                                                </div>
+                                                <div class="col-md-6 padding-0">
+                                                    <label class="form-control">
+                                                        S/. {{caja.MontoRecibido|number:2}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 padding-0" style="margin-top:10px">
+                                                <div class="col-md-6 padding-0">
+                                                    <label>CAMBIO</label>
+                                                </div>
+                                                <div class="col-md-6 padding-0">
+                                                    <label class="form-control">
+                                                        S/. {{caja.MontoRecibido-caja.Total|number:2}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="guardarConfirmado()" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span>GUARDAR</button>
+                    <button ng-click="cancelarConfirmado()" data-dismiss="modal" title="Cancelar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>

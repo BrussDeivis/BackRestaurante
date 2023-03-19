@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Inventario Lógico";
+
+    @section scripts{
+
+        <script src=@Url.Content("~/Scripts/controller/almacen/inventarioLogicoController.js")></script>
+        <script src=@Url.Content("~/Scripts/code39/jquery-barcode.min.js")></script>
+        <script>
+                 var fechaDesde = '@ViewBag.fechaInicio';
+                 var fechaHasta = '@ViewBag.fechaFin';
+        </script>
+    }
+}
+
+<div class="col-xs-12" ng-controller="inventarioLogicoController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">
+           INVENTARIO LÓGICO
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <form name="formKardex">
+
+                            <div class="col-xs-12">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="ng-cloak">FECHA DEL ULTIMO INVENTARIO : <strong> {{fechaUltimoInventarioLogico}} </strong> </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>GENERAR INVENTARIO LÓGICO</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <a title="Generar Inventario Lógico" class="btn btn-primary btn-flat" ng-click="generarInventarioLogico()">GENERAR</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

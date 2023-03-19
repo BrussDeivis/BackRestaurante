@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "4.5.0.0",
+        "fileVersion": "4.5.0-6.23123.11 (271ccd71)",
+        "semanticVersion": "4.5.0",
+        "language": "es-ES"
+      },
+      "results": [
+        {
+          "ruleId": "S1104",
+          "level": "warning",
+          "message": "Make this field 'private' and encapsulate it in a 'public' property.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 33,
+                  "endLine": 15,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1104",
+          "level": "warning",
+          "message": "Make this field 'private' and encapsulate it in a 'public' property.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 23,
+                  "endLine": 18,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 9,
+                  "endLine": 14,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 13,
+                  "endLine": 19,
+                  "endColumn": 276
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 13,
+                  "endLine": 24,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1854",
+          "level": "warning",
+          "message": "Remove this useless assignment to local variable 'con'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 13,
+                  "endLine": 23,
+                  "endColumn": 353
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2068",
+          "level": "warning",
+          "message": "\"password\" detected here, make sure this is not a hard-coded credential.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.GeneradorCodigo/Class1.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 13,
+                  "endLine": 23,
+                  "endColumn": 353
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "S1104": {
+          "id": "S1104",
+          "shortDescription": "Fields should not have public accessibility",
+          "fullDescription": "Public fields in public classes do not respect the encapsulation principle and has three main disadvantages:",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1104",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S125": {
+          "id": "S125",
+          "shortDescription": "Sections of code should not be commented out",
+          "fullDescription": "Programmers should not comment out code as it bloats programs and reduces readability.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-125",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S1854": {
+          "id": "S1854",
+          "shortDescription": "Unused assignments should be removed",
+          "fullDescription": "A dead store happens when a local variable is assigned a value that is not read by any subsequent instruction. Calculating or retrieving a value only to then overwrite it or throw it away, could indicate a serious error in the code. Even if it’s not an error, it is at best a waste of resources. Therefore all calculated values should be used.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1854",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S2068": {
+          "id": "S2068",
+          "shortDescription": "Hard-coded credentials are security-sensitive",
+          "fullDescription": "Because it is easy to extract strings from an application source code or binary, credentials should not be hard-coded. This is particularly true for applications that are distributed or that are open-source.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2068",
+          "properties": {
+            "category": "Blocker Security Hotspot",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

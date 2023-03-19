@@ -1,0 +1,86 @@
+﻿<div id="modal-registro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE PRECIO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="precioForm" class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label>Mercaderia:</label>
+                                        <select id="producto" class="select2 form-control" ng-model="precio.Mercaderia" @*ng-change="cargarPrecios()"*@ ng-options="item as item.Nombre for item in productos track by item.Id" required></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Precio:</label>
+                                        <input class="form-control" ng-model="precio.Valor" ng-blur="precio.Valor=formatNumber(precio.Valor,2)" required />
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-md-12 padding-bottom-15" ng-show="mostrarBloque">
+                                <uib-accordion close-others="oneAtATime">
+                                    <div uib-accordion-group class="panel-primary" is-open="VerDetalleProducto">
+                                        <uib-accordion-heading>
+                                            Ver ultimos precios de Compra y Venta del Producto <i class="pull-right glyphicon" ng-class="{'glyphicon-minus-sign': VerDetalleProducto, 'glyphicon-plus-sign': !VerDetalleProducto}"></i>
+                                        </uib-accordion-heading>
+                                        <div class="col-md-6 padding-0">
+                                            <div class="col-md-12">Compra</div>
+                                            <div class="col-md-12" ng-repeat="item in productoPrecio.PreciosCompra">
+                                                <div class="col-md-5 padding-0">Precio {{$index+1}}:  {{item.Precio}}</div>
+                                                <div class="col-md-7 padding-0">Fecha:  {{item.Fecha}}</div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="col-md-12">Precio Promedio:  {{productoPrecio.PromedioPrecioCompra}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 padding-0">
+                                            <div class="col-md-12">Venta</div>
+                                            <div class="col-md-12" ng-repeat="item in productoPrecio.PreciosVenta">
+                                                <div class="col-md-5 padding-0">Precio {{$index+1}}:  {{item.Precio}}</div>
+                                                <div class="col-md-7 padding-0">Fecha:  {{item.Fecha}}</div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="col-md-12">Precio Promedio:  {{productoPrecio.PromedioPrecioVenta}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-accordion>
+                            </div>*@
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Tarifa:</label>
+                                        <select id="tarifa" class="select2 form-control" ng-model="precio.Tarifa"
+                                            ng-options="item as item.Nombre for item in tarifas track by item.Id" required></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Desde:</label>
+                                        <input class="datepicker-start form-control center" ng-model="precio.FechaDesde" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Hasta:</label>
+                                        <input class="datepicker-end form-control center" ng-model="precio.FechaHasta" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="descripcion">Descripción:</label>
+                                <textarea id="descipcion" class="form-control" ng-model="precio.Descripcion" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="precioForm.$invalid" ng-click="guardarPrecio(precio)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR PRECIO</a>
+                <a title="Cerrar" ng-click="close()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

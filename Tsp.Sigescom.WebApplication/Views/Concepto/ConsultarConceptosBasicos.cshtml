@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Consulta de Conceptos";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/concepto/conceptoController.js")></script>
+
+    <script>
+        var modoDeSeleccionTipoFamiliaEnRegistroFamilia = @ViewBag.modoDeSeleccionTipoFamiliaEnRegistroFamilia;
+    </script>
+}
+<div class="col-md-12" ng-controller="conceptoController" ng-init="inicializarBandejaConcepto()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">FAMILIA</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button title="DESCARGAR" ng-click="export('tabla-conceptos')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                            <a title="Nueva Familia" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-concepto" ng-click="nuevoRegistroConcepto()"><span class="glyphicon glyphicon-plus"></span> NUEVA FAMILIA</a>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="tabla-conceptos" datatable="ng" dt-options="dtOptions" dt-column-defs="conceptos.dtColumnDefs" class="table table-stripped table-bordered dateTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>NOMBRE</th>
+                                        <th>CATEGORIAS</th>
+                                        <th>ESTADO</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in conceptos.Lista" ng-cloak>
+                                        <td class="left">{{$index+1}}</td>
+                                        <td class="left">{{item.Nombre}}</td>
+                                        <td class="left">{{item.Categorias}}</td>
+                                        <td class="left" data-label="Estado">
+                                            <i class="fa fa-toggle-on" ng-model="item.EsVigente" ng-class="item.EsVigente ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="cambiarEstadoFamilia(item)"  />
+                                        </td>
+                                        <td class="left">
+                                            <a title="Editar Familia" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-concepto" ng-click="editarConcepto(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            @*<button title="Dar de bajar a familia" class="btn btn-danger btn-xs btn-flat" data-toggle="modal" data-target="#pregunta-eliminar" ng-click="cargarConcepto(item)"><span class="glyphicon glyphicon-trash"></span></button>*@
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroConceptoBasico")
+        <!-- PREGUNTA ELIMINAR MERCADERIA -->
+        <div id="pregunta-eliminar" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title center"> DAR DE BAJA FAMILIA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p> DARÁ DE BAJA A "{{conceptoAEliminar.Nombre}}" ?</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-flat pull-left" data-dismiss="modal" ><span class="glyphicon glyphicon-check"></span> CONFIRMAR</button>
+                        <button class="btn btn-danger btn-flat" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> CANCELAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

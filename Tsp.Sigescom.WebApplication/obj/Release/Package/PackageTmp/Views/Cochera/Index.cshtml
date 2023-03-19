@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Bandeja de cochera";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <script src=@Url.Content("~/Scripts/controller/cochera/cocheraController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/cochera/data.json")></script>
+    <script src=@Url.Content("~/Scripts/controller/cochera/data1.json")></script>
+
+
+    <script src=@Url.Content("~/Scripts/controller/cochera/selectorVehiculo/selectorVehiculo.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorPago/editorPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/registradorFinanciamiento/registradorFinanciamiento.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+
+    @*<script src=@Url.Content("~/Scripts/js-print-manager/JSPrintManager.js")></script>
+
+    <script src=@Url.Content("~/Scripts/js-print-manager/zip.js")></script>
+    <script src=@Url.Content("~/Scripts/js-print-manager/zip-ext.js")></script>
+    <script src=@Url.Content("~/Scripts/js-print-manager/deflate.js")></script>*@
+
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+        var IdSistemDePagoPlanaPorTurnos = @ViewBag.IdSistemDePagoPlanaPorTurnos;
+        var IdSistemDePagoPorHora = @ViewBag.IdSistemDePagoPorHora;
+        var IdSistemDePagoAbonados = @ViewBag.IdSistemDePagoAbonados;
+        var IdEstadoIngresado = @ViewBag.IdEstadoIngresado;
+        var IdEstadoFinalizado = @ViewBag.IdEstadoFinalizado;
+        var PrecioPerdidaTicket = @ViewBag.PrecioPerdidaTicket;
+        var IdMedioPagoDefault = @ViewBag.IdMedioPagoDefault;
+        var IdRolCliente = @ViewBag.IdRolCliente;
+        var NombreRolCliente = '@ViewBag.NombreRolCliente';
+        var AplicaLeyAmazonia = @ViewBag.AplicaLeyAmazonia.ToString().ToLower();
+        var TasaIGV = @ViewBag.TasaIGV;
+        var TiempoEsperaBusquedaSelector = @ViewBag.TiempoEsperaBusquedaSelector;
+        var MinimoCaracteresBuscarActorComercial = @ViewBag.MinimoCaracteresBuscarActorComercial;
+        var MascaraDeVisualizacionValidacionRegistroCliente = '@ViewBag.MascaraDeVisualizacionValidacionRegistroCliente';
+    </script>
+}
+<div class="col-md-12" id="modelo" ng-controller="cocheraController" ng-init="iniciarBandejaDeCochera()">
+    <div class="row">
+        @* Cabecera de la cochera, "falta incluir la fecha y hora" *@
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">COCHERA</div>
+            </div>
+        </div>
+        @* Botones de INGRESO y SALIDA *@
+        <div class="col-md-12 no-padding">
+            <div class="col-md-4 no-padding">
+                @Html.Partial("_Ingreso_Cochera")
+            </div>
+            <div class="col-md-8 no-padding">
+                @Html.Partial("_Salida_Cochera")
+            </div>
+        </div>
+        @* Bandeja de COCHERA *@
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label>  Fecha Inicial:  </label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label> Fecha Final:  </label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="listarBandejaCochera()"><span class="glyphicon glyphicon-search"></span></button>
+                        <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-cochera')" class="btn btn-md btn-success"><span class="fa fa-file-excel-o"></span></button>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table id="tabla-cochera" datatable="ng" dt-options="dtOptions" dt-column-defs="exoneraciones.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>PLACA</th>
+                        <th>VEHICULO</th>
+                        <th>ESTADO</th>
+                        <th>INGRESO</th>
+                        <th>SALIDA</th>
+                        <th>TARIFA</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in movimientosCochera" ng-cloak>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.Vehiculo.Placa}}</td>
+                        <td>{{item.Vehiculo.NombreCompleto}}</td>
+                        <td>{{item.Estado.Nombre}}</td>
+                        <td>{{item.IngresoString}}</td>
+                        <td>{{item.Estado.Id== IdEstadoFinalizado? item.SalidaString:""}}</td>
+                        <td>{{item.SistemaDePago.Nombre}}</td>
+                        <td>
+                            <a ng-if="item.PuedeVer" title="Ver detalles de vehiculo" class="btn btn-info btn-xs" data-toggle="modal" data-target="" ng-click=""><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

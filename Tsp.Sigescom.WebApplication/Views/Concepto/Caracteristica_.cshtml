@@ -1,0 +1,55 @@
+﻿@{
+
+    ViewBag.Title = ViewBag.nombre;
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/caracteristica/caracteristica_Controller.js")></script>
+    <script>
+        var idCaracteristica=@ViewBag.id;
+    </script>
+}
+<div class="col-md-12" ng-controller="caracteristica_Controller" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green ng-cloak">@ViewBag.nombre  </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button title="DESCARGAR" ng-click="export('tabla-@ViewBag.nombre')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                            <a title="Nueva caracteristica" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-valorCaracteristica" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVO REGISTRO</a>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="tabla-@ViewBag.nombre" datatable="ng" dt-options="dtOptions" dt-column-defs="valores.dtColumnDefs" class="table table-stripped table-bordered dateTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>NOMBRE</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in valores.Lista" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>
+                                            <a title="Editar @ViewBag.nombre" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-valorCaracteristica" ng-click="editarValorCaracteristica(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroValorCaracteristica")
+    </div>
+</div>
+
+

@@ -1,0 +1,45 @@
+﻿
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/insumoControlado/insumosControladosController.js")></script>
+}
+
+<div class="box-body" ng-controller="insumosControladosController">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">Insumos Controlados</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Reporte de Insumos Controlados </h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row ">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="documento">Periodo</label>
+                            <select class="select2 form-control" ng-model="periodoSeleccionado" ng-change="actualizarURLReporteDeVentaEIngresos()" ng-options=" item as item.Nombre for item in listaDePeriodos track by item.Id" required" title="Es necesario seleccionar un periodo."></select>
+
+                        </div>
+                    </div>
+
+                    <!--Aqui estara el boton de generar reportes de ventas e ingresos con concepto-->
+                    <div class="col-md-2" style="margin-top: 25px;" ng-show="periodoSeleccionado.Id > 0">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de Ventas e Ingresos con Concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaEIngresos}}">REPORTE VENTAS CON CONCEPTOS</a>
+                        </div>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

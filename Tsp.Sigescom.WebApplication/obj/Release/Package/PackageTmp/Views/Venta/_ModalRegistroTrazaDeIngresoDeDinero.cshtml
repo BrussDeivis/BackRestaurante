@@ -1,0 +1,58 @@
+﻿<div id="modal-registro-traza-ingreso-dinero" class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE TRAZA DE INGRESO DE DINERO</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <form class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-12">
+                                            <label class="control-label">ESTABLECIMIENTO COMERCIAL:</label>
+                                            <select id="establecimientoComercialTrazaDePago" class="select2 form-control" ng-model="trazaDePago.EstablecimientoComercial" ng-change="verificarInconsistenciasTrazaDePago(); obtenerCentrosAtencionDeCajero(trazaDePago.EstablecimientoComercial.Id)" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">CENTRO DE ATENCIÓN:</label>
+                                            <select id="centroDeAtencionTrazaDePago" class="select2 form-control" ng-model="trazaDePago.CentroDeAtencion" ng-change="verificarInconsistenciasTrazaDePago();" ng-options="item as item.Nombre for item in listaCentrosDeAtencionDeCajero track by item.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">CAJERO:</label>
+                                            <select id="cajero" class="select2 form-control" ng-model="trazaDePago.Cajero" ng-change="verificarInconsistenciasTrazaDePago();" ng-options="item as item.Nombre for item in listaCajeros track by item.Id" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Partial("../Finanza/_ModalTrazaDePagoPartial")
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top:10px">
+                                    <div class=" checkbox checkbox-primary checkbox-inline">
+                                        <input id="realizaelpago" type="checkbox" ng-disabled="desabilitarCheckboxTrazaPago" ng-model="venta.HayRegistroTrazaDePago" ng-click="accionTrazaDePago()" />
+                                        <label for="realizaelpago">REALIZA EL PAGO</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box box-danger" ng-show="hayInconsistenciasTrazaDePago && inconsistenciasTrazaDePago.length > 0">
+                            <div class="box-body">
+                                <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                <table>
+                                    <tr ng-repeat="item in inconsistenciasTrazaDePago">
+                                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button title="ATRAS" class="btn btn-md btn-danger" ng-click="limpiarTrazaDePago()" data-dismiss="modal"><span class="glyphicon glyphicon-arrow-left"></span> ATRAS</button>
+                <button title="SIGUIENTE" class="btn btn-md btn-primary" ng-disabled="hayInconsistenciasTrazaDePago" ng-click="inicializarSalidaDeMercaderia()" data-toggle="modal" data-target="#modal-registro-salida-mercaderia">SIGUIENTE <span class="glyphicon glyphicon-arrow-right"></span></button>
+            </div>
+        </div>
+    </div>
+</div>

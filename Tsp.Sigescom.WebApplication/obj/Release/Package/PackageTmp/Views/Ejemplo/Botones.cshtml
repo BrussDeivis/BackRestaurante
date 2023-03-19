@@ -1,0 +1,366 @@
+﻿@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/ejemplo/ejemploController.js")></script>  
+}
+
+
+    <div class="container" ng-controller="ejemploController" ng-init="inicializar()">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="bold" style="text-align:center; font-size:20px; font-weight:bold">
+                    BOTONES
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-2 col-xs-6 col-sm-3 col-12">
+                <label>AGREGAR</label><br />
+                <a class="btn btn-success btn-sm"
+                   ng-click="agregarItemVenta()"
+                   ng-disabled="!itemVenta.Concepto||(itemVenta.Cantidad<0)||(itemVenta.PrecioUnitario<0)||(itemVenta.Importe<0)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <a class="btn btn-primary btn-sm"
+                   ng-click="agregarItemVenta()"
+                   ng-disabled="!itemVenta.Concepto||(itemVenta.Cantidad<0)||(itemVenta.PrecioUnitario<0)||(itemVenta.Importe<0)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3 col-12">
+                <label>LIMPIAR FILTROS</label><br />
+                <button title="LIMPIAR FILTROS" class="btn btn-primary btn-danger" ng-click="limpiarFiltros()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button title="LIMPIAR FILTROS" class="btn btn-info" ng-click="limpiarFiltros()">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>	
+                <button title="LIMPIAR FILTROS" class="btn btn-info" ng-click="limpiarFiltros()">
+                    <span class="glyphicon glyphicon-erase"></span>
+                </button>
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>CONSULTAR</label><br />
+                <button title="CONSULTAR" class="btn btn-primary btn-info" ng-disabled="datosRequeridos()" ng-click="mostrarDataTable()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <button title="CONSULTAR" class="btn btn-primary btn-warning" ng-disabled="datosRequeridos()" ng-click="mostrarDataTable()">
+                    <span class="glyphicon glyphicon-send"></span>
+                </button>
+                @*<button title="CONSULTAR" class="btn btn-primary btn-warning" ng-disabled="datosRequeridos()" ng-click="mostrarDataTable()">
+                    <span class="glyphicon glyphicon-globe"></span>
+                </button>*@
+
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>BUSCAR</label><br />@*25margin-top*@
+                <button title="CONSULTAR" style="margin-top:5px" class="btn btn-primary" ng-click="listarBandeja()"><span class="glyphicon glyphicon-search"></span></button>
+                @*<button title="CONSULTAR" style="margin-top:5px" class="btn btn-info" ng-click="listarBandeja()"><span class="glyphicon glyphicon-search"></span></button>*@
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>DESCARGAR</label><br />
+                <button title="DESCARGAR" ng-click="export('tabla-clientes')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+               
+                <button title="DESCARGAR" ng-click="export('tabla-clientes')" class="btn btn-success"><span class=" fa fa-download"></span></button>
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>VER</label><br />
+                <div class="form-group">
+                <a title="Muestra Reporte de venta de los vendedores por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaDeVendedoresPorConcepto}}">VER</a>
+                <a title="Muestra Reporte de venta de los vendedores por concepto" class="btn btn-primary btn-md" ng-href="{{URLReporteDeVentaDeVendedoresPorConcepto}}"><span class="fa fa-eye"></span> VER</a>
+               </div>
+            </div>
+
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>GUARDAR</label><br />
+                <button title="GUARDAR CLIENTE" class="btn btn-primary btn-md" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-sm-3">
+                <label>ANULAR</label><br /> @*ng-show="verVentaCorporativa.AccionAnular"*@
+                <button title="ANULAR CON NOTA DE CREDITO" ng-init="EsAnuladoConNotaDeCredito=false" ng-click="cargarDatosParaAnulacion()" data-toggle="modal" data-target="#modal-anulacion-nota-credito" class="btn btn-md btn-primary">ANULAR</button>
+                <button title="ANULAR CON NOTA DE CREDITO" ng-init="EsAnuladoConNotaDeCredito=false" ng-click="cargarDatosParaAnulacion()" data-toggle="modal" data-target="#modal-anulacion-nota-credito" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-ban-circle"></span> ANULAR</button>
+                
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-sm-3">
+                <label>CERRAR</label><br />
+                <button title="CERRAR" ng-click="close()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+
+            @*<div class="col-md-2 col-xs-6 col-sm-3">
+                <label>INHABILITADO</label><br />
+                <button class="btn btn-md btn-primary" title="CONFIRMAR" ng-disabled="!logicaValida" ng-click="inicializarTrazaDePago()" data-toggle="modal" data-target="#modal-registro-traza-ingreso-dinero"><span class="glyphicon glyphicon-floppy-disk"></span> CONFIRMAR</button>
+            </div>*@
+
+        <div class="col-md-3 col-xs-6 col-sm-3">
+            <label>CANCELAR</label><br />
+            <button class="btn btn-danger btn-md" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove-sign"></span> CANCELAR
+            </button>
+            <button class="btn btn-danger btn-md" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove"></span> CANCELAR
+            </button>
+        </div>
+
+           
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-3 col-xs-6 col-sm-3">
+                <label>CONFIRMAR</label><br />
+                <button class="btn btn-info btn-md btn-flat" data-dismiss="modal" ng-click="eliminar(actor.Id)"><span class="glyphicon glyphicon-check"></span> CONFIRMAR</button>
+                <button class="btn btn-primary btn-flat btn-md" data-dismiss="modal" ng-click="eliminar(actor.Id)"><span class="glyphicon glyphicon-check"></span> CONFIRMAR</button>
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-sm-3">
+                <label>AGREGAR ICONO-TEXTO</label><br />
+                <a title="Nuevo Concepto" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-registro-concepto-gasto" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVO CLIENTE</a>
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-sm-3">
+                <label>BOTON EDITAR</label><br />@*ng-show="verVentaCorporativa.AccionEditar"*@
+                <button title="EDITAR VENTA" ng-click="editarRegistro(verCompraCorporativa.IdOrden)" data-toggle="modal" data-target="#modal-registro-compra-corporativa" class="btn btn-md btn-primary">EDITAR</button>
+                <button title="EDITAR VENTA" ng-click="editarRegistro(verCompraCorporativa.IdOrden)" data-toggle="modal" data-target="#modal-registro-compra-corporativa" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-edit"></span> EDITAR</button>
+            </div>
+
+
+            <div class="col-md-3 col-xs-6 col-sm-3">
+                @*ng-click="nuevoRegistro()"*@
+                <label>ABRE UN MODAL</label><br />
+                <a title="Nueva categoria" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-categoria" ng-click=""><span class="glyphicon glyphicon-plus"></span> NUEVO CLIENTE</a>
+            </div>
+
+            <div id="modal-categoria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">REGISTRO</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="categoriaForm" class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="nombre">Nombre: </label>
+                                        <input class="form-control" id="nombre" uppercase-only ng-model="categoria.Nombre" placeholder="Nombre" required />
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a ng-disabled="categoriaForm.$invalid && angular.equals(categoria, categoriaTmp)" ng-click="nuevaCategoria(categoria)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR CATEGORÍA</a>
+                            <a data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="bold" style="text-align:center; font-size:20px; font-weight:bold;">
+                    BOTONES DENTRO DE UNA TABLA O PANEL
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>VER</label><br />
+                <a title="Ver cliente" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-ver-cartera-de-cliente" ng-click="verCarteraDeClientes(item.IdCartera)"><span class="glyphicon glyphicon-search"></span></a>
+                <a title="Ver cliente" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-ver-cartera-de-cliente" ng-click="verCarteraDeClientes(item.IdCartera)"><span class="glyphicon glyphicon-eye-open"></span></a>
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>EDITAR</label><br />
+                <a title="Editar cliente" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-registro-cartera-de-cliente" ng-click="editarCarteraDeClientes(item.IdCartera)"><span class="glyphicon glyphicon-edit"></span></a>
+                
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>ELIMINAR</label><br />
+                <a title="Eliminar cliente" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-dar-de-baja-centro-de-atencion" ng-click="enviarDatosParaModalDarDeBajaCentroDeAtencion(item.Id,item.Nombre)"><span class="glyphicon glyphicon-trash"></span></a>
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>EDITAR</label><br />
+                <a title="Editar cliente" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-registro-cliente" ng-click="editarClienteEnVenta(venta.Cliente.Id)" ng-disabled="venta.Cliente == null || venta.Cliente.Id == idClienteGenerico"><span class="glyphicon glyphicon-edit"></span> </a>
+
+            </div>
+
+            <div class="col-md-2 col-xs-6 col-sm-3">
+                <label>AGREGAR</label><br />
+                <a title="Nuevo Cliente" class="btn btn-xs btn-primary" style="margin-right:5px" data-toggle="modal" data-target="#modal-registro-cliente" ng-click=" nuevoRegistroClienteEnVenta()"><span class="glyphicon glyphicon-plus"></span> </a>
+            </div>
+
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="bold" style="text-align:center; font-size:20px; font-weight:bold;">
+                    ELEMENTOS
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <label>COMBO-BOX</label>
+                <select id="comboCliente" class="select2 form-control" ng-model="clienteSeleccionado" ng-options="item as item.Nombre for item in clientesDeEjemplo track by item.Id" required></select>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6 form-group">
+                <label>INPUT CON SELECCION MULTIPLE</label>
+                <select tabindex=1 class="select2 form-control concepto-basico" ng-model="comprobantesSeleccionados" ng-options="item as item.Nombre for item in comprobantesDeEjemplo track by item.Id" multiple="multiple"></select>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <label for="fecha">FECHA:</label><br />
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input id="fecha" placeholder="dd/mm/aaaa" class="datepicker form-control" ng-model="ventaMasiva.FechaDeEmision" required />
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <label>HORA</label><br />
+                <div class="bootstrap-timepicker">
+                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="horaIndividual" ng-model="horaInicio" ng-change="actualizarURLReporteKardex()" class="form-control timepickerIndividual">
+                            <div class="input-group-addon">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                @*ng-show="hayinconsistencias"*@
+                <label>INCONSISTENCIAS</label>
+                <div class="box box-danger ng-cloak" style="margin-top:15px">
+                    <div class="box-body">
+                        <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                        <table>
+                            <tr ng-repeat="item in inconsistencias">
+                                <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+                <label for="ObservacionSalida">OBSERVACION</label><br />
+                <textarea class="form-control" rows="5" id="ObservacionSalida" ng-model="salida.Observacion"></textarea>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+               <label>RADIO BUTTON</label><br />
+               <div class="radio radio-primary radio-inline" style="margin-left: 10px;">
+                    <input type="radio" id="radio1" name="traslado" value="true" ng-model="esEntrada" ng-checked="esEntrada==true">
+                    <label for="radio1">Entrada</label>
+                </div>
+                <div class="radio radio-primary radio-inline">
+                    <input type="radio" id="radio2" name="traslado" value="false" ng-model="esEntrada" ng-checked="esEntrada==false">
+                    <label for="radio2">Salida</label>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-sm-4">
+                <label>CHECKBOX</label><br />
+                <div class="checkbox checkbox-primary">
+                    <input style="height: 20px; width: 20px;" id="select-lote" type="checkbox" class="styled" ng-model="conLote" /><label style="margin-top: -11px; margin-left: 1px;" id="select-lote">Detallado</label>
+                </div>
+            </div>
+            
+        </div>
+
+        <br />
+    </div>
+
+    <br />
+
+    <div class="col-xs-12 col-md-12 col-12 col-lg-12 col-sm-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="row">
+                    @*<div class="col-xs-12 col-md-12 col-12 col-lg-12 col-ms-12">*@
+                    <div class="col-xs-12 col-sm-12 col-12 form-group">
+                        <label>HOLA MUNDO</label>
+                    </div>
+                    @*</div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <br />
+
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-9 col-xs-12 form-group">
+                        HOLA MUNDO
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading titulo texto-centrado">
+                <div>TITULO</div>
+            </div>
+            <div class="panel-body">
+                <label class="control-label">ALIAS:</label>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="col-md-12 col-xs-12 col-sm-12 col-12">
+        <div class="bg-green text-center" style="height: auto;padding:10px; display: flex;justify-content: center;align-items: center;margin-top: 7px;">
+            REPORTE DE LOS MEJORES CLIENTES Y PROVEEDORES DEL NEGOCIO
+        </div>
+    </div>
+
+    <br />

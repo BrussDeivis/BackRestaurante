@@ -1,0 +1,32 @@
+﻿<form name="registro-venta" class="formulario form-horizontal" ctrl-enter ng-cloak>
+    <div class="col-md-9">
+        <div class="box box-primary">
+            <div class="box-body no-pad-top">
+                <div class="row">
+                    <div class="col-md-3" ng-if="mostrarCodigoBarraBalanza">
+                        <label class="control-label">BALANZA:</label>
+                        <input id="idCodigoBarraBalanza" class="form-control" ng-model="codigo.codigoBarraBalanza" ng-enter="buscarConceptoPorCodigoDeBarraBalanza()" />
+                    </div>
+                    <div class="col-md-1 mt-5" id="nuevoConceptoServicio" ng-show="permitirRegistroConceptoServicio">
+                        <a title="Ingresar Concepto Servicio" class="btn btn-xs btn-primary pull-right" ng-click="nuevoRegistroConceptoServicio()"><span class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+                    <registrador-concepto-servicio api="$parent.registradorConceptoServicioAPI" concepto-servicio="conceptoServicio" changed="ingresoConceptoServicio(conceptoServicio)"></registrador-concepto-servicio>
+                </div>
+                <registrador-detalles ng-if="inicializacionRealizada && inicializacionRealizadaFacturacion" api="$parent.registradorDetallesAPI" operacion="venta.Orden" registrar-flete="permitirRegistroFlete" cursor-por-defecto-codigo-barra="cursorInicialEnCodigoBarra" cambiar-importe-total="cambiarImporteTotal(importeTotal)" inicio-realizado="inicioRealizadoRegistroDetalles()" seleccionar-codigo-balanza="focusCodigoBalanza()" set-focus-serie-comprobante="setFocusSerieComprobante()"></registrador-detalles>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 no-padding-left">
+        <facturacion-venta ng-if="inicializacionRealizada" external-id="0" api="$parent.facturacionVentaAPI" facturacion="venta" mostrar-punto-de-venta-vendedor="esVentaModoCajaAlmacen" debe-seleccionar-punto-de-venta-vendedor="esVentaModoCajaAlmacen" debe-seleccionar-almacen-almacenero="esVentaModoCajaAlmacen && permitirRegistroAlmacenEnVentaPorMostradorIntegradoModoCaja" debe-seleccionar-caja-cajero="false" debe-permitir-detalle-unificado="true" permitir-registro-fecha-emision="esVentaPorContingencia" permitir-registro-guia-remision="permitirRegistroDeGuiasDeRemision" permitir-registro-placa="permitirRegistroPlaca" id-medio-pago-default="idMedioDePagoEfectivo" importe-total="venta.Total.toFixed(2)" cambio-igv="cambiarAfeccionIgv(aplicarIgv)" inicio-realizado="inicioRealizadoFacturacion(facturacion)" carga-total-realizada="cargaRealizadaFacturacion()" serie-comprobante-enter="serieComprobante_enter()" change-facturacion="cambioFacturacion()"></facturacion-venta>
+        <div class="box box-danger" ng-show="inconsistenciasVenta.length > 0">
+            <div class="box-body">
+                <h4 class="error-title">INCONSISTENCIA(S):</h4>
+                <table>
+                    <tr ng-repeat="item in inconsistenciasVenta">
+                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

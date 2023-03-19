@@ -1,0 +1,34 @@
+﻿<div id="modal-registro-huesped" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-init="initRegistro()">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE HUESPED</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="frm_cliente" name="ClienteForm">
+                        @Html.Partial("../Persona/_DatosValidacionPartial")
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Datos Generales</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        @Html.Partial("../Persona/_DatosGeneralesPartial")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.Partial("../Persona/_TablaDireccionFiscalPartial")
+                    </form>
+                </div>
+                <h5>(*) Datos Obligatorios </h5>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-md btn-primary pull-left" title="Guardar" ng-disabled="HuespedForm.$invalid " ng-click="guardar()"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                <button class="btn btn-md btn-danger" data-dismiss="modal" title="Cerrar" ng-click="close()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

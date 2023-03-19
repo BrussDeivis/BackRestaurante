@@ -1,0 +1,18 @@
+﻿<div id="preguntar-cambio" class="modal fade" data-keyboard="false" role="dialog" data-backdrop-limit="1" aria-labelledby="Information" data-backdrop="static" aria-hidden="true" data-focus-on="input:first">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ADVERTENCIA</h4>
+            </div>
+            <div class="modal-body">
+                <p> Se perderan los datos ingresados ¿Esta seguro que desea salir?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary btn-md pull-left" data-dismiss="modal" ng-click="closeModal()"><span class="glyphicon glyphicon-check"></span> ACEPTAR</a>
+                <a class="btn btn-danger btn-md" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> CANCELAR</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<a id="modal-pregunta" style="display:none" data-toggle="modal" data-target="#preguntar-cambio"><span class="glyphicon glyphicon-remove"></span></a>

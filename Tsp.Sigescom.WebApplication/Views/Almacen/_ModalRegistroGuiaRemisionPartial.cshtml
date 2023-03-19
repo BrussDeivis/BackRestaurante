@@ -1,0 +1,124 @@
+﻿<form class="formulario form-horizontal">
+    <div class="col-md-4">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <selector-actor-comercial name="SelectorActorComercial" id="SelectorTercero" actor-comercial="guiaRemision.Tercero" rol="rolTercero" api="selectorTerceroAPI" changed="cambioTercero(actorComercial)"></selector-actor-comercial>
+                    <div class="col-md-12">
+                        <label class="control-label">DOCUMENTO </label>
+                        <select id="documento" class="select2 form-control tipoDocumento" ng-model="guiaRemision.TipoDeComprobante" ng-change="cargarSeries(guiaRemision.TipoDeComprobante); validarGuiaRemision()" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantesMasSeries track by item.TipoComprobante.Id" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show=" guiaRemision.TipoDeComprobante.MostrarSelectorSerie && guiaRemision.TipoDeComprobante.EsPropio ">
+                        <label class="control-label">SERIE </label>
+                        <select id="serie" class="select2 form-control" ng-model="guiaRemision.TipoDeComprobante.SerieSeleccionada" ng-change="validarGuiaRemision()" ng-options="item.Id as item.Nombre for item in series" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show="guiaRemision.TipoDeComprobante.MostrarEntradaSerie">
+                        <label class="control-label">SERIE </label>
+                        <input id="serieIngresada" class="form-control" ng-model="guiaRemision.TipoDeComprobante.SerieIngresada" ng-change="validarGuiaRemision()" ng-pattern="/^[a-zA-Z0-9][0-9]{0,3}$/" maxlength="4" ng-minlength="3" uppercase-only required />
+                    </div>
+                    <div class="col-md-12" ng-show="guiaRemision.TipoDeComprobante.MostrarEntradaNumero">
+                        <label class="control-label">N° DOCUMENTO </label>
+                        <input id="numeroIngresado" class="form-control" ng-model="guiaRemision.TipoDeComprobante.NumeroIngresado" ng-change="validarGuiaRemision()" maxlength="8" ng-pattern="/^[0-9]\d{0,7}$/" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">FECHA INICIO TRASLADO </label>
+                        <input id="fechaInicioTraslado" class="form-control datepicker-yyyy" ng-model="guiaRemision.FechaInicioTraslado" ng-change="validarGuiaRemision()" placeholder="dd/mm/aaaa" />
+                    </div>
+                    <selector-actor-comercial name="SelectorActorComercial" id="SelectorTranportista" actor-comercial="guiaRemision.Transporte.Transportista" rol="rolTransportista" api="selectorTransportistaAPI" changed="cambioTransportista(actorComercial)"></selector-actor-comercial>
+                    <div class="col-md-12">
+                        <label class="control-label">MARCA Y PLACA </label>
+                        <input id="marcaPlaca" class="form-control" ng-model="guiaRemision.Transporte.MarcaYPlaca" ng-change="validarGuiaRemision()" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">N° LICENCIA </label>
+                        <input id="nLicencia" class="form-control" ng-model="guiaRemision.Transporte.NumeroLicencia" ng-change="validarGuiaRemision()" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">OBSERVACION </label><br>
+                        <textarea class="form-control" id="observacion" rows="2" value="Observacion" ng-model="guiaRemision.Observacion"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box box-primary">
+            <div class="panel-body" style="padding:5px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <label class="control-label">MODALIDAD DE TRANSPORTE </label>
+                            <select id="modalidad" class="select2 form-control" ng-model="guiaRemision.ModalidadTransporte" ng-change="validarGuiaRemision()" ng-options="item as item.Nombre for item in modalidadesTraslado track by item.Id"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">MOTIVO DE TRASLADO </label>
+                            <select id="motivo" class="select2 form-control" ng-model="guiaRemision.MotivoTraslado" ng-change="cambioMotivoTraslado(); validarGuiaRemision()" ng-options="item as item.Nombre for item in motivosTraslado track by item.Id"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">DETALLE </label>
+                            <input id="detalle" class="form-control" ng-model="guiaRemision.DescripcionMotivo" ng-change="validarGuiaRemision()" ng-disabled="guiaRemision.MotivoTraslado.Id != idMotivoTrasladoOtros" uppercase-only required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <label class="control-label">DIRECCION ORIGEN </label>
+                            <div class="col-md-12 borde-azul" style="padding-bottom:5px">
+                                <label class="control-label">UBIGEO :</label>
+                                <select id="ubigeoOrigen" class="select2 form-control" ng-model="guiaRemision.UbigeoOrigen" ng-change="validarGuiaRemision()" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id"></select>
+                                <label class="control-label">DETALLE :</label>
+                                <input id="direccionOrigen" class="form-control" uppercase-only ng-model="guiaRemision.DireccionOrigen" ng-change="validarGuiaRemision()" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">DIRECCION DESTINO </label>
+                            <div class="col-md-12 borde-azul" style="padding-bottom:5px">
+                                <label class="control-label">UBIGEO :</label>
+                                <select id="ubigeoDestino" class="select2 form-control" ng-model="guiaRemision.UbigeoDestino" ng-change="validarGuiaRemision()" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id"></select>
+                                <label class="control-label">DETALLE :</label>
+                                <input id="direccionDestino" class="form-control" uppercase-only ng-model="guiaRemision.DireccionDestino" ng-change="validarGuiaRemision()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-body">
+                <selector-concepto-comercial ng-if="permitirSeleccionConcepto" concepto-comercial="conceptoComercial" api="selectorConceptoComercialAPI" modo-seleccion-familia="modoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="mostrarBuscadorCodigoBarra" modo-seleccion-concepto="modoSeleccionConcepto" complemento-stock="true" complemento-precio="true" minimo-caracteres-buscar-concepto="minimoCaracteresBuscarConcepto" changed="seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+                <div class="col-md-12" style="margin-top:15px">
+                    <table id="table-detalle-guia-remision" class="table table-stripped table-height-small table-bordered">
+                        <tr>
+                            <th class="col-md-1">N°</th>
+                            <th class="col-md-8">CONCEPTO</th>
+                            <th class="col-md-2">CANTIDAD</th>
+                            <th class="col-md-1" ng-if="permitirSeleccionConcepto">OPCIONES</th>
+                        </tr>
+                        <tr ng-repeat="item in guiaRemision.Detalles">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.Descripcion}}</td>
+                            <td style="vertical-align:initial">
+                                <input ng-if="permitirSeleccionConcepto" class="form-control numero-derecha" onClick="this.select();" style="height:34px" ng-model="item.IngresoSalidaActual" />
+                                <label ng-if="!permitirSeleccionConcepto" style="height:34px">{{item.IngresoSalidaActual}}</label>
+                            </td>
+                            <td ng-if="permitirSeleccionConcepto">
+                                <a title="Quitar producto" class="btn btn-xs btn-danger" ng-click="quitarDetalle($index)"><span class="glyphicon glyphicon-remove"></span></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="box box-danger" ng-show="inconsistenciasGuiaRemision.length > 0">
+            <div class="box-body">
+                <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                <table>
+                    <tr ng-repeat="item in inconsistenciasGuiaRemision">
+                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

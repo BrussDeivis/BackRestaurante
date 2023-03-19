@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Inicializar Cajas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/finanza/inicializarCajaController.js")></script>
+}
+
+<div class="col-md-12" ng-controller="inicializarCajaController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">INICIALIZAR CAJAS</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form name="cuentaBancariaForm">
+                <div class="col-md-12" style="overflow-x: auto; margin-top: 15px">
+                    <table id="tabla-cajas" class="table table-bordered table-striped" style="margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>ESTABLECIMIENTO</th>
+                                <th>CAJA</th>
+                                <th>MONTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in cajasAInicializar" ng-cloak>
+                                <td>{{$index+1}}</td>
+                                <td>{{item.Establecimiento}}</td>
+                                <td>{{item.Caja}}</td>
+                                <td>
+                                    <input type="number" class="form-control input-md number height-34 numero-derecha" ng-model="item.Monto"  ng-blur="item.Monto = formatNumber(item.Monto, 2)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+            <div class="col-md-12" style="margin-top:15px">
+                <div class="pull-right">
+                    <button title="GUARDAR" class="btn btn-primary btn-md" ng-click="guardarInicializarCaja()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+﻿<div id="modal-nueva-habitacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form name="formularioNuevaHabitacion" id="formularioNuevaHabitacion">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">REGISTRO HABITACIÓN</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-8 col-lg-8">
+                            <div class="row box box-primary box-solid shadow">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title color-white">Datos de habitación</h3>
+                                </div>
+                                <div class="box-body" name="datos">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Establecimiento:</label>
+                                                <select class="select2 input-sm" ng-model="habitacion.Establecimiento" ng-change="obtenerAmbientes(habitacion.Establecimiento.Id)" ng-options="establecimiento as establecimiento.Nombre for establecimiento in establecimientos track by establecimiento.Id">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group" ng-class="{'has-error':formularioNuevaHabitacion.ambiente.$invalid, 'has-success':formularioNuevaHabitacion.ambiente.$valid }">
+                                                <label>Ambiente:</label>
+                                                <select class="select2 input-sm" ng-model="habitacion.Ambiente" ng-options="ambiente as ambiente.Nombre for ambiente in ambientesHotel track by ambiente.Id" name="ambiente" id="ambiente" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group" ng-class="{'has-error':formularioNuevaHabitacion.tipoHabitacion.$invalid, 'has-success':formularioNuevaHabitacion.tipoHabitacion.$valid }">
+                                                <label>Tipo:</label>
+                                                <select class="select2 input-sm" ng-model="habitacion.TipoHabitacion" ng-options="tipoHabitacion as tipoHabitacion.Nombre for tipoHabitacion in tipoHabitaciones track by tipoHabitacion.Id" name="tipoHabitacion" id="tipoHabitacion" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group" ng-class="{'has-error':formularioNuevaHabitacion.codigo.$invalid,'has-success':formularioNuevaHabitacion.codigo.$valid}">
+                                                <label>Código:</label>
+                                                <input type="text" class="form-control input-sm" ng-model="habitacion.CodigoHabitacion" name="codigo" id="codigo" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group" ng-class="{'has-error':formularioNuevaHabitacion.anexo.$invalid, 'has-success':formularioNuevaHabitacion.anexo.$valid }">
+                                                <label>Anexo telf:</label>
+                                                <input type="text" class="form-control input-sm" ng-model="habitacion.Anexo" name="anexo" id="anexo" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-lg-4">
+                            <div class="row box box-primary box-solid shadow">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title color-white">Camas</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-condensed table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:120px">Tamaño</th>
+                                                        <th>Cantidad</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in tipoCamas track by item.Id">
+                                                        <td style="display:flex; justify-content:unset">
+                                                            <div class="checkbox checkbox-primary">
+                                                                <input id="tipo-Camas{{item.Id}}" name="tipoCamas{{item.Id}}" type="checkbox" checklist-model="habitacion.Camas" checklist-value="item" ng-click="verificarSeleccionCama(item.Id)"/>
+                                                                <label for="tipo-Camas{{item.Id}}">{{item.Nombre}}</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input id="cantidadCamas{{item.Id}}" name="cantidadCamas" class="form-control input-sm" ng-model="item.Valor" ng-disabled="formularioNuevaHabitacion.tipoCamas{{item.Id}}.$invalid" ng-pattern-restrict="^[0-9]*$"/>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="col-lg-12" ng-show="formularioNuevaHabitacion.ambiente.$invalid" style="color:red">Es necesario seleccionar el ambiente.</span>
+                            <span class="col-lg-12" ng-show="formularioNuevaHabitacion.tipoHabitacion.$invalid" style="color:red">Es necesario seleccionar el tipo de habitación.</span>
+                            <span class="col-lg-12" ng-show="formularioNuevaHabitacion.codigo.$invalid" style="color:red">Es necesario ingresar el código.</span>
+                            <span class="col-lg-12" ng-show="formularioNuevaHabitacion.anexo.$invalid" style="color:red">Es necesario ingresar el anexo.</span>
+                            <span class="col-lg-12" ng-show="habitacion.Camas.length==0" style="color:red">Es necesario seleccionar al menos 1 tipo de cama.</span>
+                            <span class="col-lg-12" ng-show="hayCamasSeleccionadasConNumeroNoValido()" style="color:red">Es necesario que el número de camas sea mayor a 0.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a title="Guardar" ng-click="guardarHabitacion()" ng-disabled="formularioNuevaHabitacion.$invalid || habitacion.Camas.length==0 || hayCamasSeleccionadasConNumeroNoValido()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                    <a title="Cerrar" ng-click="cerrarRegistroHabitacion()" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

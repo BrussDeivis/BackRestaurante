@@ -1,0 +1,81 @@
+﻿<div ng-show="reporteador.SeccionSeleccionada=='seccion4'">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3 " id="input-establecimiento">
+                    <div class="form-group">
+                        <label for="punto1" class="title-report">Establecimiento*</label>
+                        <select id="" class="select2 form-control" ng-model="reporteador.Facturacion.EstablecimientoSeleccionado" ng-options="item as item.Nombre for item in data.Establecimientos  track by item.Id" required ng-change="Facturacion_EstablecimientoChanged()"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Desde </label>
+                            <div>
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.Facturacion.FechaDesde" ng-change="Facturacion_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Hasta </label>
+                            <div>
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.Facturacion.FechaHasta" ng-change="Facturacion_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenedor-reportes">
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">Atenciones Facturadas</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Atenciones Facturadas" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Facturacion.Facturadas.ActivarBotonVer" ng-href="{{URLFacturacion_Facturadas}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">Atenciones No Facturadas</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Atenciones No Facturadas" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Facturacion.NoFacturadas.ActivarBotonVer" ng-href="{{URLFacturacion_NoFacturadas}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">Incidentes</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Incidentes" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Facturacion.Incidentes.ActivarBotonVer" ng-href="{{URLFacturacion_Incidentes}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

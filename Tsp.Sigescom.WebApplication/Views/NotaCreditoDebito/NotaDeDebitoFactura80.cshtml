@@ -1,0 +1,276 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.ComprobantesModel.NotaDeDebito
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+        .texto {
+            font-size: 3.1mm !important;
+        }
+
+        .texto3mm {
+            font-size: 2.7mm !important;
+        }
+
+        .texto-mini {
+            font-size: 2.4mm;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios {
+            margin: 0;
+            padding: 0;
+        }
+
+        th, td {
+            padding-left: 1mm;
+            padding-right: 1mm;
+        }
+
+        .sinmargen {
+            margin: 0;
+        }
+
+        .resaltado {
+            font-weight: bold;
+        }
+
+        .resaltado5mm {
+            font-weight: bold;
+            font-size: 4.5mm !important;
+        }
+
+        .resaltado6mm {
+            font-weight: bold;
+            font-size: 5.4mm !important;
+        }
+
+        .sinResaltado {
+            font-size: 3.1mm !important;
+            font-weight: normal !important;
+        }
+
+        body.receipt .sheet {
+            width: 70.5mm;
+            height: auto;
+        }
+        /*  sheet size */
+        @@page {
+            size: 70.5mm auto;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 70.5mm;
+                height: auto;
+            }
+        }
+        /* fix for Chro */
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+    </style>
+
+
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="texto">
+            <div>
+                @* Datos Emisor *@
+                @if (Model.MostrarTestigo)
+                {
+                    <div class="centrado">
+                        <div class="titulo">@(Model.Serie + "-" + Model.Numero)</div>
+                    </div>
+                }
+                @* Datos Emisor *@
+                @if (Model.MostrarLogo)
+                {
+                    <div class="centrado">
+                        <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Alternate Text" />
+                    </div>
+                }
+                <div class="centrado">
+                    <div class="titulo">@Model.Emisor.NombreComercial </div>
+                    <div class="texto3mm">
+                        <div>@Model.Emisor.RazonSocial</div>
+                        <div>RUC: @Model.Emisor.NumeroDocumentoIdentidad</div>
+                        <div>@Model.Emisor.Direccion</div>
+                        @if (Model.Emisor.EsSucursal)
+                        {
+                            <div class="negrita">SUC: @Model.Emisor.NombreSucursal</div>
+                            <div>@Model.Emisor.DireccionSucursal</div>
+                        }
+                        <div>@Model.Emisor.OtrosDatosContacto</div>
+                        <div>@Model.Emisor.Publicidad</div>
+                    </div>
+                </div>
+                @* Comprobante *@
+                <div class="centrado">
+                    <div class="texto3mm">@Model.NombreTipo </div>
+                    <div>@(Model.Serie + "-" + Model.Numero)</div>
+                   <div>Emisión: @Model.FechaEmision.ToString("dd/MM/yyyy hh:mm tt")</div>
+                </div>
+                <hr class="sinmargen">
+                @* Receptor *@
+            <div>
+                <div class="resaltado"><span class="sinResaltado">Cliente:</span> @Model.Receptor.RazonSocial </div>
+                @if (!Model.Receptor.TipoDocumentoIdentidad.IsEmpty())
+                {
+                    <div class="resaltado"><span class="sinResaltado">@Model.Receptor.TipoDocumentoIdentidad: </span> @Model.Receptor.DocumentoIdentidad </div>
+                }
+                <div>@(Model.Receptor.Direccion)</div>
+            </div>
+                <hr class="sinmargen">
+                <hr class="sinmargen">
+                @* Documento que modifica *@
+                <div>
+                    <div>Tipo de Nota: @Model.Discrepancia.Tipo - @Model.TipoDeNotaDebito</div>
+                    <div>Modifica a: @Model.Discrepancia.NroReferencia </div>
+                    <div>Motivo: @Model.Discrepancia.Descripcion</div>
+                </div>
+                <hr class="sinmargen">
+                @* Detalles *@
+                <div width="100%">
+                    <table width="100%">
+                        <tr>
+                            <th>Cant.</th>
+                            <th>Concepto</th>
+                            <th>P.U.</th>
+                            <th>Importe</th>
+
+                        </tr>
+                        @foreach (var item in Model.Detalles)
+                        {
+                            <tr width="100%">
+                                <td width="15%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnCantidad + "}", item.Cantidad)</td>
+                                <td width="50%"> @item.Concepto</td>
+                                <td width="15%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnPrecio + "}", item.ImporteUnitario)</td>
+                                <td width="20%" class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", item.ImporteTotal)</td>
+                            </tr>
+
+                            <tr width="100%">
+                                <td style=" width:100%" colspan=4>
+                                    <table width="100%" cellpadding="0" style="margin:0">
+                                        @for (int i = 0; i < item.CaracteristicasComunes.Count; i++)
+                                        {
+                                            <tr width="100%" class="sinmargen">
+                                                <td width="15%"></td>
+                                                <td style=" width:50%">@(item.CaracteristicasComunes[i].NombreCaracteristica + " " + item.CaracteristicasComunes[i].Valor) </td>
+                                                <td width="15%"></td>
+                                                <td width="20%"></td>
+                                            </tr>
+                                        }
+                                        @for (int i = 0; i < item.CaracteristicasPropias.Count; i++)
+                                        {
+                                            <tr width="100%" class="sinmargen">
+                                                <td width="15%"></td>
+                                                <td style=" width:50%">@(item.CaracteristicasPropias[i].Nombre + " " + item.CaracteristicasPropias[i].Valor )</td>
+                                                <td width="15%"></td>
+                                                <td width="20%"></td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <hr class="sinmargen">
+                @* Resumen *@
+                <div>
+                    <table width="100%" style="table-layout:fixed">
+                        <tr width="100%">
+                            <td width="60%">
+                                <div class="importe">Op. Gravadas S/</div>
+                                <div class="importe">Op. Inafectas S/</div>
+                                <div class="importe">Op. Exoneradas S/</div>
+                                <div class="importe">IGV S/</div>
+                                <div class="importe">ICBPER S/</div>
+                                <div class="importe resaltado5mm">Importe Total S/</div>
+                            </td>
+                            <td width="40%">
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionGravada)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionInafecta)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionExonerada)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.Igv)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.Icbper)</div>
+                                <div class="importe resaltado6mm">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteTotal)</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div>Son: @Model.ImporteTotalEnLetras</div>
+                    <div>Observación: @Model.Observacion</div>
+                    <div class="centrado">
+                        @if (Model.MostrarMensajeAmazonia)
+                        {
+                            <div class="texto3mm">@Model.MensajeAmazonia</div>
+                        }
+                        <img height="140mm" src=@Model.CodigoQRSrc alt="Alternate Text" />
+                    </div>
+                </div>
+                <hr class="sinmargen">
+                @* Mensajes *@
+                <div class="centrado">
+                    <div>Representación impresa de la Nota de Débito Electrónica</div>
+                    @*<div>Autorizado mediante resolución: @Model.ResolucionAutorizacionSunat</div>*@
+                    @if (Model.MostrarUrlConsultaComprobante)
+                    {
+                        <div class="texto3mm">Consulte su comprobante en:</div>
+                        <div class="texto3mm negrita">@Model.UrlConsultaComprobante</div>
+                    }
+                    @if (Model.MostrarMensajeNegocio)
+                    {
+                        <div>@Model.MensajeNegocio</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

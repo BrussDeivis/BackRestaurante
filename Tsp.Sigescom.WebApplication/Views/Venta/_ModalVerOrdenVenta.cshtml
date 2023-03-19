@@ -1,0 +1,60 @@
+﻿<div id="modal-ver-orden-venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ORDEN DE VENTA</h4>
+            </div>
+            <div class="modal-body">
+                <form name="pagoOrdenVentaForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12 padding-5">
+                            <div class="col-md-6">
+                                <label>{{ver.NombreDocumento}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>FECHA : </label>
+                                <label>{{ver.Fecha}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>{{ver.Cliente}}</label>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px"></div>
+                            <div class="col-md-12">
+                                @*<label class="center">DETALLES</label>*@
+                            </div>
+                            <div class="col-md-12">
+                                <table id="tabla-ver-ventas" class="table table-stripped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Concepto</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in ver.Detalles" ng-cloak>
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.Concepto}}</td>
+                                            <td>{{item.Cantidad}}</td>
+                                            <td class="money">{{"S/. "+item.Precio}}</td>
+                                            <td class="money">{{"S/. "+item.Importe}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-3 col-md-offset-9">
+                                <label>MONTO TOTAL : </label>
+                                <label>{{ver.Total}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="cerrar()" data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

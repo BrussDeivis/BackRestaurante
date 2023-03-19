@@ -1,0 +1,97 @@
+﻿<div id="registro-financiamiento-{{$ctrl.externalId}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">FINANCIAMIENTO</h4>
+            </div>
+            <div class="modal-body" style="background-color: white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="importepagar">A PAGAR</label>
+                                        <label class="form-control number">{{$ctrl.totalAPagar|number:2}}</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="inicial">INICIAL</label>
+                                        <input class="form-control number" id="inicial" ng-model="$ctrl.financiamiento.inicial" ng-change="$ctrl.calcularTotalFinanciamientoMonto()" ng-blur="$ctrl.formatoDosDecimales($event)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>TOTAL</label>
+                                        <label class="form-control">{{$ctrl.financiamiento.total|number:2}}</label>
+                                    </div> 
+                                    <div class="col-md-2">
+                                        <label for="couta">CUOTA(S)</label>
+                                        <input type="number" min="1" class="form-control" id="cuota" ng-model="$ctrl.financiamiento.cuota" ng-init="$ctrl.financiamiento.cuota=1" ng-change="$ctrl.limpiarCronogramaDePagos()" />
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="diavencimiento">DIA DE PAGO</label>
+                                        <div ng-show="$ctrl.financiamiento.cuota == 1" ng-hide="$ctrl.financiamiento.cuota > 1">
+                                            <input ng-model="$ctrl.financiamiento.fechaRegistro" placeholder="dd/mm/aaaa" class="td-datepicker form-control" ng-change="$ctrl.limpiarCronogramaDePagos()" />
+                                        </div>
+                                        <div ng-show="$ctrl.financiamiento.cuota > 1" ng-hide="$ctrl.financiamiento.cuota==1">
+                                            <select ng-model="$ctrl.financiamiento.diavencimiento" class="select2 form-control" id="diavencimiento" ng-options="item.id as item.nombre for item in $ctrl.diasDeVencimiento " ng-change="$ctrl.limpiarCronogramaDePagos()"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button ng-click="$ctrl.generarCuota()" style="margin-top:25px" title="Generar cuota(s)" ng-disabled="$ctrl.deshabilitarBotonGenerar($ctrl.financiamiento.fechaRegistro,$ctrl.financiamiento.diavencimiento)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-refresh"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h4 align="center">CRONOGRAMA DE PAGOS</h4>
+                        <table class="table table-stripped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>N° CUOTA</th>
+                                    <th>IMPORTE</th>
+                                    <th>FEC. VENC</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="$ctrl.financiamiento.cuotas.length>0">
+                                <tr ng-repeat="item in $ctrl.financiamiento.cuotas">
+                                    <td>{{$index+1}}</td> 
+                                    <td>{{item.ImporteCuota|number:2}}</td>
+                                    <td>{{item.FechaVencimiento}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody ng-hide="$ctrl.financiamiento.cuotas.length>0">
+                                <tr>
+                                    <td colspan="5" style="color:#bb1f1f">No existen coutas agregadas</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="ACEPTAR" ng-disabled="$ctrl.financiamiento.cuotas.length<=0" ng-click="$ctrl.registrarFinanciamiento()" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-check"></span> ACEPTAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-sm btn-danger" ng-click="$ctrl.finalizarFinanciamiento()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL DE REINICIAR FINANCIAMIENTO-->
+
+<div id="modal-reiniciar-financiamiento-{{$ctrl.externalId}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">Reiniciar financiamiento</h4>
+            </div>
+            <div class="modal-body">
+                <p>Ud. modificó la operación, por lo tanto su financiamiento sera restablecido. Desea realizar un nuevo financiamiento?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl.recalcularFinanciamiento()">Aceptar</a>
+                <a class="btn btn-danger" data-dismiss="modal" ng-click="$ctrl.finalizarFinanciamiento()">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>

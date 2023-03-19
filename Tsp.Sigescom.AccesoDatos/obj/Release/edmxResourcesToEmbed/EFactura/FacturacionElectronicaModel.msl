@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FacturacionModelStoreContainer" CdmEntityContainer="FacturacionEntities">
+    <EntitySetMapping Name="Binario">
+      <EntityTypeMapping TypeName="FacturacionModel.Binario">
+        <MappingFragment StoreEntitySet="Binario">
+          <ScalarProperty Name="archivoBinario" ColumnName="archivoBinario" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Documento">
+      <EntityTypeMapping TypeName="FacturacionModel.Documento">
+        <MappingFragment StoreEntitySet="Documento">
+          <ScalarProperty Name="enviado" ColumnName="enviado" />
+          <ScalarProperty Name="estadoSigescom" ColumnName="estadoSigescom" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+          <ScalarProperty Name="idBinarioDocumento" ColumnName="idBinarioDocumento" />
+          <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+          <ScalarProperty Name="numeroComprobante" ColumnName="numeroComprobante" />
+          <ScalarProperty Name="serieComprobante" ColumnName="serieComprobante" />
+          <ScalarProperty Name="codigoTipoComprobante" ColumnName="codigoTipoComprobante" />
+          <ScalarProperty Name="idSigescom" ColumnName="idSigescom" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Envio">
+      <EntityTypeMapping TypeName="FacturacionModel.Envio">
+        <MappingFragment StoreEntitySet="Envio">
+          <ScalarProperty Name="modoEnvio" ColumnName="modoEnvio" />
+          <ScalarProperty Name="numeroTicket" ColumnName="numeroTicket" />
+          <ScalarProperty Name="identificadorEnvio" ColumnName="identificadorEnvio" />
+          <ScalarProperty Name="observacion" ColumnName="observacion" />
+          <ScalarProperty Name="codigoRespuesta" ColumnName="codigoRespuesta" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="idBinarioRespuesta" ColumnName="idBinarioRespuesta" />
+          <ScalarProperty Name="idBinarioEnvio" ColumnName="idBinarioEnvio" />
+          <ScalarProperty Name="tipoEnvio" ColumnName="tipoEnvio" />
+          <ScalarProperty Name="fechaEnvio" ColumnName="fechaEnvio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EnvioDocumento">
+      <EntityTypeMapping TypeName="FacturacionModel.EnvioDocumento">
+        <MappingFragment StoreEntitySet="EnvioDocumento">
+          <ScalarProperty Name="idEnvio" ColumnName="idEnvio" />
+          <ScalarProperty Name="idDocumento" ColumnName="idDocumento" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramacionEnvio">
+      <EntityTypeMapping TypeName="FacturacionModel.ProgramacionEnvio">
+        <MappingFragment StoreEntitySet="ProgramacionEnvio">
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="tipoEnvioProgramado" ColumnName="tipoEnvioProgramado" />
+          <ScalarProperty Name="duracion" ColumnName="duracion" />
+          <ScalarProperty Name="horaInicial" ColumnName="horaInicial" />
+          <ScalarProperty Name="diaSemana" ColumnName="diaSemana" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

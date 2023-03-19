@@ -1,0 +1,56 @@
+﻿<div id="modal-registro-rol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE TIPO ROL</h4>
+            </div>
+            <div class="modal-body">
+                <form name="rolForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="nombre">NOMBRE:</label>
+                                <input type="text" name="nombre" id="nombre" value="" placeholder="Nombre" class="form-control" ng-model="rol.Nombre" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="descripcion">DESCRIPCIÓN:</label>
+                                <input type="text" name="descripcion" id="descripcion" value="" placeholder="Descripción" class="form-control" ng-model="rol.Descripcion" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="rolPadre">ROL PADRE</label>
+                                <select id="rolPadre" class="select2 form-control" ng-model="rol.RolPadre" ng-options="item as item.Nombre for item in listaRolesGenerico track by item.Id" @*required*@></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>ACCIÓN DE NEGOCIO:</label>
+                            </div>
+                            <div class="radio radio-primary radio-inline">
+                                <input type="radio" id="radio1" name="accionDeNegocio" value="2" ng-model="rol.Aplica" required>
+                                <label for="radio1">Actor</label>
+                            </div>
+                            <div class="radio radio-primary radio-inline">
+                                <input type="radio" id="radio2" name="accionDeNegocio" value="1" ng-model="rol.Aplica" required>
+                                <label for="radio2">Concepto</label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a id="btn-guardar" ng-disabled="rolForm.$invalid" ng-click="crearRol()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-tipo-de-transaccion')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

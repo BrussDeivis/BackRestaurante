@@ -1,0 +1,79 @@
+﻿<div class="row no-padding-bottom margin-bottom mx-10" style="border-bottom: solid white; border-bottom-color: #3c8dbc ">
+    <div class="col-md-6">
+        <div class="form-group no-margin-bottom">
+            <div class="row">
+                <div class="col-md-7">
+                    <label>Responsable:</label>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div id="nombre-responsable" class="col-md-12 ng-animate">
+                    <h4>{{responsable.NombreCompleto}}</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group no-margin-bottom">
+            <label>Fecha de registro:</label>
+            <h4>{{responsable.FechaDeRegistro}}</h4>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 container-widgetReserva" ng-repeat="reserva in responsable.Reservas">
+
+        <div class="row widgetReserva">
+
+            <div class="row cabecera">
+                <div class="col-sm-6 col-md-6">
+                    <h4>{{reserva.Habitacion}}</h4>
+                </div>
+                <div class="col-sm-6 col-md-6 boton">
+                    <button title="Anular" type="button" class="btn btn-warning" ng-click="reserva.Anulado = true" ng-if="!reserva.Anulado">
+                        <i class="fa fa-calendar-times-o"></i>
+                    </button>
+                    <button title="Reserva anulado" type="button" class="btn btn-warning" ng-if="reserva.Anulado" disabled="true">
+                        anulado
+                    </button>
+                </div>
+            </div>
+
+            <div class="row cuerpo">
+
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group m-0">
+                            <label for="exampleInputEmail1">Inicio Reserva</label>
+                            <p>{{reserva.FechaIngreso}}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group m-0">
+                            <label for="exampleInputEmail1">Fin Reserva</label>
+                            <p>{{reserva.FechaSalida}}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class=" row form-group m-0">
+                            <div class="col-md-12">
+                                <label for="exampleInputEmail1">Facturado</label>
+                            </div>
+                            <div class="col-md-12">
+                                <span class="label" ng-class="{'label-danger': reserva.Facturado == 'NO','label-success': reserva.Facturado == 'SI'}" style="font-size:13px">{{reserva.Facturado}}</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

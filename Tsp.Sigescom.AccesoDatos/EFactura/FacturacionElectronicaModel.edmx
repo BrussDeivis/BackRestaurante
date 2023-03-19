@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FacturacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Binario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="archivoBinario" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSigescom" Type="bigint" Nullable="false" />
+          <Property Name="codigoTipoComprobante" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="serieComprobante" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="numeroComprobante" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fechaEmision" Type="datetime" Nullable="false" />
+          <Property Name="idBinarioDocumento" Type="bigint" Nullable="false" />
+          <Property Name="tipoComprobante" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+          <Property Name="estadoSigescom" Type="int" Nullable="false" />
+          <Property Name="enviado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Envio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaEnvio" Type="datetime" Nullable="false" />
+          <Property Name="tipoEnvio" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idBinarioEnvio" Type="bigint" Nullable="false" />
+          <Property Name="idBinarioRespuesta" Type="bigint" />
+          <Property Name="estado" Type="int" Nullable="false" />
+          <Property Name="codigoRespuesta" Type="varchar" MaxLength="50" />
+          <Property Name="observacion" Type="varchar(max)" Nullable="false" />
+          <Property Name="identificadorEnvio" Type="varchar" MaxLength="5" />
+          <Property Name="numeroTicket" Type="varchar" MaxLength="50" />
+          <Property Name="modoEnvio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EnvioDocumento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDocumento" Type="bigint" Nullable="false" />
+          <Property Name="idEnvio" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProgramacionEnvio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="diaSemana" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="horaInicial" Type="time" Precision="7" Nullable="false" />
+          <Property Name="duracion" Type="int" Nullable="false" />
+          <Property Name="tipoEnvioProgramado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idUsuario" Type="bigint" />
+        </EntityType>
+        <Association Name="FK_Documento_Binario">
+          <End Role="Binario" Type="Self.Binario" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idBinarioDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envio_Binario">
+          <End Role="Binario" Type="Self.Binario" Multiplicity="1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="idBinarioEnvio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envio_Binario1">
+          <End Role="Binario" Type="Self.Binario" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="idBinarioRespuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnvioDocumento_Documento">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="1" />
+          <End Role="EnvioDocumento" Type="Self.EnvioDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EnvioDocumento">
+              <PropertyRef Name="idDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnvioDocumento_Envio">
+          <End Role="Envio" Type="Self.Envio" Multiplicity="1" />
+          <End Role="EnvioDocumento" Type="Self.EnvioDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Envio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EnvioDocumento">
+              <PropertyRef Name="idEnvio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FacturacionModelStoreContainer">
+          <EntitySet Name="Binario" EntityType="Self.Binario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Envio" EntityType="Self.Envio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EnvioDocumento" EntityType="Self.EnvioDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgramacionEnvio" EntityType="Self.ProgramacionEnvio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Documento_Binario" Association="Self.FK_Documento_Binario">
+            <End Role="Binario" EntitySet="Binario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envio_Binario" Association="Self.FK_Envio_Binario">
+            <End Role="Binario" EntitySet="Binario" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envio_Binario1" Association="Self.FK_Envio_Binario1">
+            <End Role="Binario" EntitySet="Binario" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnvioDocumento_Documento" Association="Self.FK_EnvioDocumento_Documento">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="EnvioDocumento" EntitySet="EnvioDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnvioDocumento_Envio" Association="Self.FK_EnvioDocumento_Envio">
+            <End Role="Envio" EntitySet="Envio" />
+            <End Role="EnvioDocumento" EntitySet="EnvioDocumento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FacturacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FacturacionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Binario" EntityType="FacturacionModel.Binario" />
+          <EntitySet Name="Documento" EntityType="FacturacionModel.Documento" />
+          <EntitySet Name="Envio" EntityType="FacturacionModel.Envio" />
+          <EntitySet Name="EnvioDocumento" EntityType="FacturacionModel.EnvioDocumento" />
+          <EntitySet Name="ProgramacionEnvio" EntityType="FacturacionModel.ProgramacionEnvio" />
+          <AssociationSet Name="FK_Documento_Binario" Association="FacturacionModel.FK_Documento_Binario">
+            <End Role="Binario" EntitySet="Binario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envio_Binario" Association="FacturacionModel.FK_Envio_Binario">
+            <End Role="Binario" EntitySet="Binario" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Envio_Binario1" Association="FacturacionModel.FK_Envio_Binario1">
+            <End Role="Binario" EntitySet="Binario" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnvioDocumento_Documento" Association="FacturacionModel.FK_EnvioDocumento_Documento">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="EnvioDocumento" EntitySet="EnvioDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnvioDocumento_Envio" Association="FacturacionModel.FK_EnvioDocumento_Envio">
+            <End Role="Envio" EntitySet="Envio" />
+            <End Role="EnvioDocumento" EntitySet="EnvioDocumento" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Binario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="archivoBinario" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Documento" Relationship="FacturacionModel.FK_Documento_Binario" FromRole="Binario" ToRole="Documento" />
+          <NavigationProperty Name="Envio" Relationship="FacturacionModel.FK_Envio_Binario" FromRole="Binario" ToRole="Envio" />
+          <NavigationProperty Name="Envio1" Relationship="FacturacionModel.FK_Envio_Binario1" FromRole="Binario" ToRole="Envio" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSigescom" Type="Int64" Nullable="false" />
+          <Property Name="codigoTipoComprobante" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="serieComprobante" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="numeroComprobante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idBinarioDocumento" Type="Int64" Nullable="false" />
+          <Property Name="tipoComprobante" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="estadoSigescom" Type="Int32" Nullable="false" />
+          <Property Name="enviado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Binario" Relationship="FacturacionModel.FK_Documento_Binario" FromRole="Documento" ToRole="Binario" />
+          <NavigationProperty Name="EnvioDocumento" Relationship="FacturacionModel.FK_EnvioDocumento_Documento" FromRole="Documento" ToRole="EnvioDocumento" />
+        </EntityType>
+        <EntityType Name="Envio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fechaEnvio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="tipoEnvio" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idBinarioEnvio" Type="Int64" Nullable="false" />
+          <Property Name="idBinarioRespuesta" Type="Int64" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="codigoRespuesta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="observacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="identificadorEnvio" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="numeroTicket" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modoEnvio" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Binario" Relationship="FacturacionModel.FK_Envio_Binario" FromRole="Envio" ToRole="Binario" />
+          <NavigationProperty Name="Binario1" Relationship="FacturacionModel.FK_Envio_Binario1" FromRole="Envio" ToRole="Binario" />
+          <NavigationProperty Name="EnvioDocumento" Relationship="FacturacionModel.FK_EnvioDocumento_Envio" FromRole="Envio" ToRole="EnvioDocumento" />
+        </EntityType>
+        <EntityType Name="EnvioDocumento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDocumento" Type="Int64" Nullable="false" />
+          <Property Name="idEnvio" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Documento" Relationship="FacturacionModel.FK_EnvioDocumento_Documento" FromRole="EnvioDocumento" ToRole="Documento" />
+          <NavigationProperty Name="Envio" Relationship="FacturacionModel.FK_EnvioDocumento_Envio" FromRole="EnvioDocumento" ToRole="Envio" />
+        </EntityType>
+        <EntityType Name="ProgramacionEnvio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="diaSemana" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="horaInicial" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="duracion" Type="Int32" Nullable="false" />
+          <Property Name="tipoEnvioProgramado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idUsuario" Type="Int64" />
+        </EntityType>
+        <Association Name="FK_Documento_Binario">
+          <End Type="FacturacionModel.Binario" Role="Binario" Multiplicity="1" />
+          <End Type="FacturacionModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idBinarioDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envio_Binario">
+          <End Type="FacturacionModel.Binario" Role="Binario" Multiplicity="1" />
+          <End Type="FacturacionModel.Envio" Role="Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="idBinarioEnvio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Envio_Binario1">
+          <End Type="FacturacionModel.Binario" Role="Binario" Multiplicity="0..1" />
+          <End Type="FacturacionModel.Envio" Role="Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="idBinarioRespuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnvioDocumento_Documento">
+          <End Type="FacturacionModel.Documento" Role="Documento" Multiplicity="1" />
+          <End Type="FacturacionModel.EnvioDocumento" Role="EnvioDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EnvioDocumento">
+              <PropertyRef Name="idDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnvioDocumento_Envio">
+          <End Type="FacturacionModel.Envio" Role="Envio" Multiplicity="1" />
+          <End Type="FacturacionModel.EnvioDocumento" Role="EnvioDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Envio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EnvioDocumento">
+              <PropertyRef Name="idEnvio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FacturacionModelStoreContainer" CdmEntityContainer="FacturacionEntities">
+          <EntitySetMapping Name="Binario">
+            <EntityTypeMapping TypeName="FacturacionModel.Binario">
+              <MappingFragment StoreEntitySet="Binario">
+                <ScalarProperty Name="archivoBinario" ColumnName="archivoBinario" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documento">
+            <EntityTypeMapping TypeName="FacturacionModel.Documento">
+              <MappingFragment StoreEntitySet="Documento">
+                <ScalarProperty Name="enviado" ColumnName="enviado" />
+                <ScalarProperty Name="estadoSigescom" ColumnName="estadoSigescom" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipoComprobante" ColumnName="tipoComprobante" />
+                <ScalarProperty Name="idBinarioDocumento" ColumnName="idBinarioDocumento" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="numeroComprobante" ColumnName="numeroComprobante" />
+                <ScalarProperty Name="serieComprobante" ColumnName="serieComprobante" />
+                <ScalarProperty Name="codigoTipoComprobante" ColumnName="codigoTipoComprobante" />
+                <ScalarProperty Name="idSigescom" ColumnName="idSigescom" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Envio">
+            <EntityTypeMapping TypeName="FacturacionModel.Envio">
+              <MappingFragment StoreEntitySet="Envio">
+                <ScalarProperty Name="modoEnvio" ColumnName="modoEnvio" />
+                <ScalarProperty Name="numeroTicket" ColumnName="numeroTicket" />
+                <ScalarProperty Name="identificadorEnvio" ColumnName="identificadorEnvio" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="codigoRespuesta" ColumnName="codigoRespuesta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idBinarioRespuesta" ColumnName="idBinarioRespuesta" />
+                <ScalarProperty Name="idBinarioEnvio" ColumnName="idBinarioEnvio" />
+                <ScalarProperty Name="tipoEnvio" ColumnName="tipoEnvio" />
+                <ScalarProperty Name="fechaEnvio" ColumnName="fechaEnvio" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnvioDocumento">
+            <EntityTypeMapping TypeName="FacturacionModel.EnvioDocumento">
+              <MappingFragment StoreEntitySet="EnvioDocumento">
+                <ScalarProperty Name="idEnvio" ColumnName="idEnvio" />
+                <ScalarProperty Name="idDocumento" ColumnName="idDocumento" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgramacionEnvio">
+            <EntityTypeMapping TypeName="FacturacionModel.ProgramacionEnvio">
+              <MappingFragment StoreEntitySet="ProgramacionEnvio">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="tipoEnvioProgramado" ColumnName="tipoEnvioProgramado" />
+                <ScalarProperty Name="duracion" ColumnName="duracion" />
+                <ScalarProperty Name="horaInicial" ColumnName="horaInicial" />
+                <ScalarProperty Name="diaSemana" ColumnName="diaSemana" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,43 @@
+﻿@model Tsp.Sigescom.WebApplication.Models.Turno.RegistroTurnoViewModel
+<div id="modal-registro-presentacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE PRESENTACIÓN</h4>
+            </div>
+            <div class="modal-body">
+                <form name="presentacionForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="codigo">CÓDIGO: </label>
+                                <input class="form-control" id="codigo" uppercase-only placeholder="Código" ng-model="presentacion.Codigo" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="nombre">NOMBRE: </label>
+                                <input class="form-control" id="nombre" uppercase-only placeholder="Nombre Detalle" ng-model="presentacion.Nombre" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="valor">VALOR: </label>
+                                <input class="form-control" id="valor" uppercase-only placeholder="Valor" ng-model="presentacion.Valor" required />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="presentacionForm.$invalid" ng-click="crearPresentacion()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-presentacion')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

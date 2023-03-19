@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Reportes Almacen";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/almacen/reportesAlmacenController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/reportesAlmacen_InventariosPorFechaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/reportesAlmacen_InventariosActualesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/reportesAlmacen_MovimientosController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/reportesAlmacen_KardexController.js")></script>
+
+    <script>
+        var reportData =@(Html.Raw(Json.Encode(ViewBag.Data)));
+    </script>
+
+}
+<div class="col-md-12" ng-controller="reportesAlmacenController" ng-init="inicializar()">
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTES DE ALMACEN</div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border" style="display:flex; justify-content:center">
+
+            <div class="box-title">
+                <div class="col-md-12 ">
+
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio1" value="seccion1" ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion1'">
+                        <label for="radio1">Inventarios Históricos</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio2" value="seccion2" ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion2'">
+                        <label for="radio2">Inventarios Actuales</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio3" value='seccion3' ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion3'">
+                        <label for="radio3">Movimientos</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio4" value='seccion4' ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion4'">
+                        <label for="radio4">Kardex</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("_InventariosPorFechaPartial")
+    @Html.Partial("_InventariosActualesPartial")
+    @Html.Partial("_MovimientosPartial")
+    @Html.Partial("_KardexPartial")
+
+</div>
+

@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "REPORTE DE CAJA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/reporte/reporteController.js")></script>
+
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+}
+<div class="box-body" ng-controller="reporteController" ng-init="inicializarReporteCaja()">
+    <!--=====================================================================================================================================================================================-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTES DE CAJA</div>
+            </div>
+        </div>
+    </div>
+    <!--=====================================================================================================================================================================================-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Flujo de caja</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateStart">Fecha Inicial </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStart" ng-model="reporte.FechaInicio" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteCaja()" class="form-control pull-right datepicker-start" data-date-end-date="0d" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporte.HoraInicio" ng-change="actualizarURLReporteCaja()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateEnd">Fecha Final</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="reporte.FechaFinal" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteCaja()" class="form-control pull-right datepicker-end" data-date-end-date="0d" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporte.HoraFinal" ng-change="actualizarURLReporteCaja()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="col-md-12 radio radio-primary radio-inline" style="margin-left: 10px;">
+                                <input type="radio" id="radio1" name="cuenta" value="1" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==1" ng-change="actualizarURLReporteCaja()">
+                                <label for="radio1">Global</label>
+                            </div>
+                            <div class="col-md-12 radio radio-primary radio-inline" style="margin-top: 10px;">
+                                <input type="radio" id="radio2" name="cuenta" value="2" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==2">
+                                <label for="radio2">Establecimiento</label>
+                            </div>
+                            <div class="col-md-12 radio radio-primary radio-inline" style="margin-top: 10px;">
+                                <input type="radio" id="radio3" name="cuenta" value="3" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==3">
+                                <label for="radio3">Centro atención</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3" ng-show="modoSelectorReporte == 2 || modoSelectorReporte == 3">
+                            <label class="col-md-12">Establecimiento:</label>
+                            <select class="select2 form-control" id="establecimientoComercial" ng-model="establecimiento" ng-change="cargarCentrosAtencionYActualizarURLReporteCaja()" ng-options="item as item.Nombre for item in listaEstablecimientos track by item.Id"></select>
+                        </div>
+                        <div class="col-md-3" ng-show="modoSelectorReporte == 3">
+                            <label class="col-md-12">Punto de venta:</label>
+                            <select class="select2 form-control" id="centroDeAtencion" ng-model="centroAtencion" ng-options="item as item.Nombre for item in listaCentrosAtencion track by item.Id" ng-change="actualizarURLReporteCaja()"></select>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <a title="Reporte de caja" class="btn btn-primary btn-flat" ng-href="{{URLReporteCaja}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

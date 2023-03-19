@@ -1,0 +1,49 @@
+﻿<div id="registroDeVehiculo" ng-init="$ctrl.inicializar()">
+    <ng-form name="form" novalidate class="css-form form-horizontal" isolate-form>
+        <div class="col-md-12">
+            <div class="col-md-12 no-padding">
+                <div class="form-group" style="margin-top:10px">
+                    <label class="col-md-2 col-xs-6 label-model" for="PlacaIngreso">PLACA</label>
+                    <input name="PlacaIngreso" placeholder="ABC-123" class="col-md-4 col-xs-6 input-model" type="text" ng-disabled="$ctrl.estaEditando" ng-model="$ctrl.vehiculo.Placa" id="PlacaIngreso" ng-enter="$ctrl.validarPlaca()" required ng-pattern-restrict="^[a-zA-Z0-9\+\-\s]{0,7}$" minlength="5" maxlength="7" uppercase-only style="font-size:16px; display:initial" /> <!--size="7" ng-blur="$ctrl.validarPlaca()"-->
+                    <!--<span ng-show="form.PlacaIngreso.$error.pattern">Valor no válido</span>-->
+                    <label style="margin-left: 10px;">{{$ctrl.vehiculo.NombreCompleto}}</label>
+                    <a ng-show="(!$ctrl.estaRegistrando && $ctrl.vehiculo.Id!=null && $ctrl.vehiculo.Id!='')" title="Editar vehiculo" class="btn btn-warning btn-xs" ng-click="$ctrl.habilitarEdicion()"><span class="glyphicon glyphicon-pencil"></span></a>
+                </div>
+            </div>
+            <div class="panel-body" ng-show="$ctrl.estaRegistrando" style="padding-top:0px">
+                <div class="row">
+                    <div class="col-md-12 no-padding">
+                        <div class="model-group no-padding">
+                            <label class="control-label" style="margin-right: 10px;">TIPO: </label>
+                            <span ng-repeat="item in $ctrl.tiposDeVehiculos track by item.Id">
+                                <label style="font-weight:100; margin-right: 10px;">
+                                    <input type="radio" id="tipo_vehiculo_radio_{{index}}" ng-model="$parent.$ctrl.vehiculo.TipoDeVehiculo" ng-value="item">
+                                    {{item.Nombre  }}
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding">
+                        <div class="col-md-6 no-padding">
+                            <label class="control-label">MARCA:</label>
+                            <select class="select2 form-control" ng-model="$ctrl.vehiculo.Marca" ng-options="item as item.Nombre for item in $ctrl.marcasDeVehiculos track by item.Id" required></select>
+                        </div>
+                        <div class="col-md-6 no-padding-right">
+                            <div class="group-model">
+                                <label class="control-label" for="Color">COLOR:</label>
+                                <div ng-class="form.color.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                    <div class="validate_msg" ng-show="form.color.$invalid">Debe ingresar un color.</div>
+                                    <input type="text" ng-model="$ctrl.vehiculo.Color" uppercase-only class="form-control" id="Color" name="color" placeholder="Color" upper-only required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <button type="button" title="Guardar vehículo" ng-disabled="!form.$valid" class="btn btn-flat btn-primary" ng-click="$ctrl.guardar()"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                        <button type="reset" title="Cancelar registro o edición de vehículo" ng-click="$ctrl.cancelar(form)" class="btn btn-danger btn-flat" style="margin-right: 10px;"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+</div>

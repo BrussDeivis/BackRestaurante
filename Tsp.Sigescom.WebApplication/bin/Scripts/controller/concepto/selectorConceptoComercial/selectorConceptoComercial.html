@@ -1,0 +1,125 @@
+﻿<ng-form name="conceptoComercialForm" novalidate class="css-form form-horizontal" isolate-form ctrl-shift>
+    <div class="row">
+        <div class="{{$ctrl.classParaCodigoBarra}}" ng-show="$ctrl.mostrarBuscadorCodigoBarra">
+            <label class="control-label">CÓDIGO:</label>
+            <input id="idCodigoBarra" class="form-control" placeholder="Código barra" ng-model="$ctrl.selector.CodigoBarraABuscar" ng-enter="$ctrl.buscarConceptoPorCodigoDeBarra()" />
+        </div>
+        <div ng-show="$ctrl.modoSeleccionConcepto == 4">
+            <div class="{{$ctrl.classParaConcepto}} select2-large">
+                <label class="control-label">CONCEPTO:</label>
+                <select id="concepto" class="select2-min form-control" ng-model="$ctrl.selector.Concepto" theme="bootstrap" ng-change="$ctrl.seleccionarConcepto()" ng-options="item as item.Nombre disable when item.StockCero for item in $ctrl.conceptos track by item.Id"></select>
+            </div>
+        </div>
+
+        <!--<div ng-show="$ctrl.modoSeleccionConcepto == 4">
+            <div class="{{$ctrl.classParaConcepto}} ui-select-large">
+                <label class="control-label">CONCEPTO</label>
+                <ui-select ng-model="$ctrl.selector.Concepto" ng-change="$ctrl.seleccionarConcepto()" theme="bootstrap" close-on-select="true">
+                    <ui-select-match placeholder="Concepto">{{$item.Nombre}}</ui-select-match>
+                    <ui-select-choices minimum-input-length="{{$ctrl.minimoCaracteresBuscarConcepto}}" repeat="conceptoBuscado in $ctrl.conceptos | filter:$select.search" refresh-delay="0">
+                        {{conceptoBuscado.Nombre}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>-->
+
+
+        <div ng-show="$ctrl.modoSeleccionConcepto == 1">
+            <div class="{{$ctrl.classParaConcepto}} ui-select-large">
+                <label class="control-label">CONCEPTO:</label>
+                <ui-select ng-model="$ctrl.selector.Concepto" ng-change="$ctrl.seleccionarConcepto()" theme="bootstrap" close-on-select="false">
+                    <ui-select-match placeholder="Concepto">{{$item.Nombre}}</ui-select-match>
+                    <ui-select-choices refresh="$ctrl.cargarConceptosPorBusqueda($select.search)"
+                                       minimum-input-length="{{$ctrl.minimoCaracteresBuscarConcepto}}"
+                                       refresh-delay="{{$ctrl.tiempoEsperaBusquedaSelector}}"
+                                       repeat="conceptoBuscado in $ctrl.conceptosPorBusqueda | filter:$select.search">
+                        {{conceptoBuscado.Nombre}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div ng-show="$ctrl.modoSeleccionConcepto == 2">
+            <div class="{{$ctrl.classParaFamilia}}">
+                <label class="control-label">FAMILIA:</label>
+                <select id="familia" class="select2 form-control" ng-model="$ctrl.selector.FamiliaSeleccionada" ng-change="$ctrl.obtenerConceptosPorFamilia($ctrl.selector.FamiliaSeleccionada.Id)" ng-options="item as item.Nombre for item in $ctrl.familias track by item.Id" required></select>
+            </div>
+            <div class="{{$ctrl.classParaConcepto}}">
+                <label class="control-label">CONCEPTO:</label>
+                <select id="conceptoPorFamilia" class="form-control" ng-model="$ctrl.selector.Concepto" ng-change="$ctrl.seleccionarConcepto();  " ng-options="item as item.Nombre for item in $ctrl.conceptosPorFamilia track by item.Id"></select>
+            </div>
+        </div>
+        <div ng-show="$ctrl.modoSeleccionConcepto == 3">
+            <div class="{{$ctrl.classParaBuscadorConcepto}}">
+                <input type="text" class="form-control" placeholder="Buscar ..." ng-model="$ctrl.selector.NombreABuscar" uppercase-only ng-enter="$ctrl.obtenerConceptosDeNegociosComercialesParaVentaPorNombre()">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="$ctrl.obtenerConceptosDeNegociosComercialesParaVentaPorNombre()"><i class="glyphicon glyphicon-search" title="Buscar conceptos de negocios"></i></button>
+                    <button type="button" class="btn btn-danger" ng-click="$ctrl.reinicializarFiltros()" title="Limpiar filtros"><i class="glyphicon glyphicon-trash"></i> </button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <uib-accordion close-others="oneAtATime">
+                    <div uib-accordion-group class="panel-primary accordion-panel gl" is-open="selector.DesplegarAcordion">
+                        <uib-accordion-heading>
+                            <span class="span-title">
+                                Ver Conceptos Negocios<i class="pull-right glyphicon" ng-class="{'glyphicon-minus-sign': selector.DesplegarAcordion, 'glyphicon-plus-sign': !selector.DesplegarAcordion}"></i>
+                            </span>
+                        </uib-accordion-heading>
+                        <div class="col-md-12 scroll-x" ng-cloak>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="col-xs-12 col-md-3" ng-repeat="filtro in tmpFiltrosConOpciones ">
+                                        <h3 class="title-filter">{{filtro.Nombre}}</h3>
+                                        <div class="col-xs-12 col-md-12 scroll-y-200 ">
+                                            <ul class="sortoptions">
+                                                <li ng-repeat="opcion in filtro.Opciones">
+                                                    <div class="checkbox checkbox-primary" style="font-size:12px;">
+                                                        <input id="checkbox2-{{opcion.Valor}}" ng-class="styled" type="checkbox" ng-model="opcion.EsSeleccionado" ng-checked="opcion.EsSeleccionado" ng-click="filtrarConceptoNegociosComercialesSegunElValorDeCaracteristica()">
+                                                        <label for="checkbox2-{{opcion.Valor}}">
+                                                            {{opcion.Valor}}
+                                                        </label>
+                                                        <span>({{opcion.Cantidad}})</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 scroll-y-250">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                    <table class="table table-bordered table-striped dataTable table-hover" ng-cloak>
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>CÓDIGO</th>
+                                                <th>CONCEPTO</th>
+                                                <th>STOCK</th>
+                                                <th>PRECIO</th>
+                                                <th>ACCIÓN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in tmpListaConceptosNegociosComercialesPorNombre | unique: 'Id' " ng-cloak>
+                                                <td>{{$index+1}}</td>
+                                                <td style="text-align:left">{{item.CodigoBarra}}</td>
+                                                <td style="text-align:left">{{item.Nombre}}</td>
+                                                <td style="text-align:right">{{item.Stock}}</td>
+                                                <td style="text-align:right">{{item.PrecioVenta}}</td>
+                                                <td>
+                                                    <a class="btn btn-success btn-sm" ng-click="seleccionarConceptoModoBusquedaNombre(item)"><span class="glyphicon glyphicon-plus"> </span></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-accordion>
+            </div>
+            <br />
+        </div>
+    </div>
+</ng-form>

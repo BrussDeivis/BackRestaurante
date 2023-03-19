@@ -1,0 +1,436 @@
+﻿<div id="registrador-nota" class="form-horizontal">
+    <div class="col-md-12">
+        <div class="box box-primary" style="margin-bottom: 0px">
+            <div class="box-header">
+                <div class="box-title">REGISTRO DE NOTA DE {{$ctrl.etiquetaNota}}</div>
+            </div>
+            <div class="box-body" style="padding: 0px 15px 15px 15px;">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="col-md-12 p-0">
+                            <label class="control-label">TIPO DE NOTA DE {{$ctrl.etiquetaNota}}</label>
+                            <select id="tipoDeNota" class="select2 form-control" ng-model="$ctrl.nota.TipoNota" ng-change="$ctrl.cargarTipoNota();" ng-options="item as item.Nombre for item in $ctrl.tiposDeNotas" required></select>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <label class="control-label">DOCUMENTO</label>
+                            <select id="documentoParaNota" class="select2 form-control" ng-model="$ctrl.nota.Comprobante" ng-change="$ctrl.cargarSeries()" ng-options="item as item.TipoComprobante.Nombre for item in $ctrl.tiposComprobantes" required></select>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div ng-show=" $ctrl.nota.Comprobante.MostrarSelectorSerie && $ctrl.nota.Comprobante.EsPropio ">
+                                        <label class="control-label">SERIE</label>
+                                        <select id="serie" class="select2 form-control" ng-model="$ctrl.nota.Comprobante.SerieSeleccionada" ng-change="$ctrl.verificarInconsistenciasNota()" ng-options="item.Id as item.Nombre for item in series" required></select>
+                                    </div>
+                                    <div ng-show="$ctrl.nota.Comprobante.MostrarEntradaSerie">
+                                        <label class="control-label">SERIE</label>
+                                        <input class="form-control" uppercase-only ng-model="$ctrl.nota.Comprobante.SerieIngresada" ng-change="$ctrl.verificarInconsistenciasNota()" ng-pattern-restrict="^[a-zA-Z0-9]{0,4}$" minlength="3" maxlength="4" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div ng-show="$ctrl.nota.Comprobante.MostrarEntradaNumero">
+                                        <label class="control-label">N° DOCUMENTO</label>
+                                        <input class="form-control" ng-model="$ctrl.nota.Comprobante.NumeroIngresado" ng-change="$ctrl.verificarInconsistenciasNota()" maxlength="8" ng-pattern-restrict="^[0-9]{0,8}$" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <label class="control-label">MOTIVO O SUSTENTO</label>
+                            <textarea class="form-control" id="motivo" placeholder="Motivo o sustento de la nota" ng-model="$ctrl.nota.Observacion" ng-change="$ctrl.verificarInconsistenciasNota()" required></textarea>
+                        </div>
+                        <div ng-show="$ctrl.mostrarIngresoMonto">
+                            <div class="col-md-12 p-0">
+                                <label class="control-label">{{$ctrl.etiquetaMontoNota}}</label>
+                                <input class="form-control numero-derecha" id="montoNota" ng-model="$ctrl.nota.MontoNota" ng-change="$ctrl.calcularTotalNotaMonto()" ng-blur="$ctrl.formatoDosDecimales($event)" onClick="select();" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" />
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <label class="control-label">IGV</label>
+                                <label class="form-control" style="text-align:right">{{($ctrl.nota.MontoNota - ($ctrl.nota.MontoNota / (1 + $ctrl.nota.tasaIGVParaNota)))|number:2}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0 mt-10 mg-bt-10" ng-if="$ctrl.parametros.MostrarSeccionEntregaEnVenta && ($ctrl.nota.HayMovimientoAlmacen || $ctrl.nota.HayRevocacionAlmacen)">
+                            <div class="box box-primary">
+                                <div class="box-body mh-0 pt-5 pb-5">
+                                    <label class="box-title">ENTREGA</label>
+                                    <div class="box-title p-0 pull-right" ng-show="$ctrl.nota.HayMovimientoAlmacen">
+                                        <div class="radio radio-primary radio-inline pt-2">
+                                            <input type="radio" id="radioNota1" name="entregaNota" ng-model="$ctrl.nota.EsDiferida" value="false">
+                                            <label for="radioNota1" title="Entrega Inmediata" style="font-size:14px;">INMEDIATA</label>
+                                        </div>
+                                        <div class="radio radio-primary radio-inline pt-2">
+                                            <input type="radio" id="radioNota2" name="entregaNota" ng-model="$ctrl.nota.EsDiferida" value="true">
+                                            <label for="radioNota2" title="Entrega Diferida" style="font-size:14px;">DIFERIDA</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 p-5" ng-show="$ctrl.nota.HayMovimientoAlmacen || $ctrl.nota.HayRevocacionAlmacen" style="border-radius: 8px 8px 8px 8px; border: 1px solid var(--color-primario) !important; color: var(--color-primario);">
+                                        <label ng-show="$ctrl.nota.HayMovimientoAlmacen">Se generará una orden de almacén para la nota.</label>
+                                        <label ng-show="$ctrl.nota.HayRevocacionAlmacen">Se revocará la orden de salida de almacén original.</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0" ng-show="$ctrl.nota.HayMovimientoEconomico">
+                            <editor-pago name="EditorPagoNota" id="EditorPagoNota" external-id="100" ng-model="$ctrl.nota.Pago" pago="$ctrl.nota.Pago" api="$ctrl.editorPagoNotaAPI" id-medio-pago-default="$ctrl.idMedioPagoEfectivo" permitir-venta-al-credito="$ctrl.permitirVentaCredito" id-cliente="$ctrl.operacion.IdCliente" changed="$ctrl.cambioPago(pago)" inicio-realizado="$ctrl.inicioRealizadoPago()"></editor-pago>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="col-md-12 p-0" ng-show="$ctrl.mostrarIngresoDetalle">
+                            <div class="box box-primary" style="margin-bottom: 15px;">
+                                <div class="box-body pt-5">
+                                    <div class="box-title">DETALLE DE NOTA DE {{$ctrl.etiquetaNota}}</div>
+                                    <div class="pt-5">
+                                        <div class="row">
+                                            <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" ng-show="$ctrl.mostrarDetalleNota">
+                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>N°</th>
+                                                            <th>CONCEPTO</th>
+                                                            <th>CANTIDAD</th>
+                                                            <th>PU</th>
+                                                            <th>SUB TOTAL</th>
+                                                            <th>IGV</th>
+                                                            <th>ICBPER</th>
+                                                            <th>TOTAL</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="detalle in $ctrl.operacion.Detalles" ng-cloak>
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{detalle.Concepto}}</td>
+                                                            <td>{{detalle.Cantidad|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                            <td>{{detalle.Precio|number:$ctrl.parametros.NumeroDecimalesEnPrecio}}</td>
+                                                            <td>{{detalle.Importe - detalle.Igv|number:2}}</td>
+                                                            <td>{{detalle.Igv|number:2}}</td>
+                                                            <td>{{detalle.Icbper|number:2}}</td>
+                                                            <td>{{detalle.Total|number:2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" ng-show="$ctrl.mostrarIngresoDetalleAlmacen">
+                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2">N°</th>
+                                                            <th rowspan="2">CONCEPTO</th>
+                                                            <th colspan="5">REVOCAR</th>
+                                                            <th colspan="5">DEVOLVER</th>
+                                                            <th colspan="5">TOTAL</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="120px">CANTIDAD</th>
+                                                            <th>SUB TOTAL</th>
+                                                            <th>IGV</th>
+                                                            <th>ICBPER</th>
+                                                            <th>IMPORTE</th>
+                                                            <th width="120px">CANTIDAD</th>
+                                                            <th>SUB TOTAL</th>
+                                                            <th>IGV</th>
+                                                            <th>ICBPER</th>
+                                                            <th>IMPORTE</th>
+                                                            <th>CANTIDAD</th>
+                                                            <th>SUB TOTAL</th>
+                                                            <th>IGV</th>
+                                                            <th>ICBPER</th>
+                                                            <th>IMPORTE</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="detalle in $ctrl.nota.Detalles" ng-cloak>
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{detalle.Concepto}}</td>
+                                                            <td><input class="form-control numero-derecha" id="valorDeDetalle" ng-model="detalle.MontoRevocado" ng-change="$ctrl.calcularTotalNotaDetalle()" ng-blur="$ctrl.formatoCantidadDecimales($event)" ng-disabled="detalle.Pendiente == 0" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{$ctrl.parametros.NumeroDecimalesEnCantidad}}})?)?$" onClick="select();" /></td>
+                                                            <td>{{detalle.ImporteRevocado - detalle.IgvRevocado|number:2}}</td>
+                                                            <td>{{detalle.IgvRevocado|number:2}}</td>
+                                                            <td>{{detalle.IcbperRevocado|number:2}}</td>
+                                                            <td>{{detalle.ImporteRevocado + detalle.IcbperRevocado|number:2}}</td>
+                                                            <td><input class="form-control numero-derecha" id="valorDeDetalle" ng-model="detalle.MontoDevuelto" ng-change="$ctrl.calcularTotalNotaDetalle()" ng-blur="$ctrl.formatoCantidadDecimales($event)" ng-disabled="detalle.Entregado == 0" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{$ctrl.parametros.NumeroDecimalesEnCantidad}}})?)?$" onClick="select();" /></td>
+                                                            <td>{{detalle.ImporteDevuelto - detalle.IgvDevuelto|number:2}}</td>
+                                                            <td>{{detalle.IgvDevuelto|number:2}}</td>
+                                                            <td>{{detalle.IcbperDevuelto|number:2}}</td>
+                                                            <td>{{detalle.ImporteDevuelto + detalle.IcbperDevuelto|number:2}}</td>
+                                                            <td style="background-color:lightgray">{{detalle.MontoRevocado + detalle.MontoDevuelto|number:2}}</td>
+                                                            <td style="background-color:lightgray">{{detalle.ImporteRevocado - detalle.IgvRevocado + detalle.ImporteDevuelto - detalle.IgvDevuelto|number:2}}</td>
+                                                            <td style="background-color:lightgray">{{detalle.IgvRevocado + detalle.IgvDevuelto|number:2}}</td>
+                                                            <td style="background-color:lightgray">{{detalle.IcbperRevocado + detalle.IcbperDevuelto|number:2}}</td>
+                                                            <td style="background-color:lightgray">{{detalle.ImporteRevocado + detalle.IcbperRevocado + detalle.ImporteDevuelto + detalle.IcbperDevuelto|number:2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" ng-show="$ctrl.mostrarIngresoDetalleTesoreria">
+                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2">N°</th>
+                                                            <th rowspan="2">CONCEPTO</th>
+                                                            <th rowspan="2">IMPORTE</th>
+                                                            <th colspan="2">{{$ctrl.etiquetaDetalleNota}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="200px">TOTAL {{$ctrl.etiquetaDetalleNota}}</th>
+                                                            <th>IGV {{$ctrl.etiquetaDetalleNota}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="detalle in $ctrl.nota.Detalles" ng-cloak>
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{detalle.Concepto}}</td>
+                                                            <td>{{detalle.Importe|number:2}}</td>
+                                                            <td><input class="form-control numero-derecha" id="valorDeDetalle" ng-model="detalle.MontoDetalle" ng-change="$ctrl.calcularTotalNotaDetalle()" ng-blur="$ctrl.formatoDosDecimales($event)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{$ctrl.parametros.NumeroDecimalesEnValorDeDetalle}}})?)?$" onClick="select();" /></td>
+                                                            <td>{{detalle.Igv|number:2}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <uib-accordion close-others="oneAtATime" class="acordion">
+                                <div uib-accordion-group class="panel-primary accordion-panel gl redondo" is-open="detalleDocumentoAcordion">
+                                    <uib-accordion-heading>
+                                        <span ng-click="acordionSituacionFinal = !acordionSituacionFinal" class="negrita font-size-15">
+                                            NOTA DE {{$ctrl.etiquetaNota}}<i class="pull-right glyphicon" ng-class="acordionSituacionFinal ? 'glyphicon-minus-sign' : 'glyphicon-plus-sign'"></i>
+                                        </span>
+                                    </uib-accordion-heading>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 table-responsive">
+                                            <div class="negrita">EN ALMACÉN</div>
+                                            <div class="negrita" ng-show="!$ctrl.mostrarDetallesOrdenAlmacenNota">Esta operación no genera ordenes de almacén.</div>
+                                            <table id="tabla-situacion-actual" ng-show="$ctrl.mostrarDetallesOrdenAlmacenNota" class="table table-bordered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>CONCEPTO</th>
+                                                        <th>ORDENADO</th>
+                                                        <th>REVOCADO</th>
+                                                        <th>ENTREGADO</th>
+                                                        <th>PENDIENTE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="detalle in $ctrl.nota.DetallesOrdenAlmacenNota" ng-cloak>
+                                                        <td>{{detalle.Concepto}}</td>
+                                                        <td>{{detalle.Ordenado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                        <td>{{detalle.Revocado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                        <td>{{detalle.Entregado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                        <td>{{detalle.Pendiente|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 table-responsive">
+                                            <div class="negrita">EN TESORERÍA</div>
+                                            <div class="negrita" ng-show="!$ctrl.mostrarDetallesTesoreriaNota">Esta operación no genera cuotas.</div>
+                                            <table id="tabla-situacion-actual" ng-show="$ctrl.mostrarDetallesTesoreriaNota" class="table table-bordered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>CUOTA</th>
+                                                        <th>TOTAL</th>
+                                                        <th>REVOCADO</th>
+                                                        <th>PAGADO</th>
+                                                        <th>PENDIENTE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="detalle in $ctrl.nota.DetallesTesoreriaNota" ng-cloak>
+                                                        <td>{{detalle.Codigo}}</td>
+                                                        <td>{{detalle.Total|number:2}}</td>
+                                                        <td>{{detalle.Revocado|number:2}}</td>
+                                                        <td>{{detalle.Pagado|number:2}}</td>
+                                                        <td>{{detalle.Saldo|number:2}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-accordion>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <uib-accordion close-others="oneAtATime" class="acordion">
+                                <div uib-accordion-group class="panel-primary accordion-panel gl redondo" is-open="detalleDocumentoAcordion">
+                                    <uib-accordion-heading>
+                                        <span ng-click="acordionOrdenOriginal = !acordionOrdenOriginal" class="negrita font-size-15">
+                                            ORDEN DE VENTA<i class="pull-right glyphicon" ng-class="acordionOrdenOriginal ? 'glyphicon-minus-sign' : 'glyphicon-plus-sign'"></i>
+                                        </span>
+                                    </uib-accordion-heading>
+                                    <div class="box box-primary" style="margin-bottom: 15px; border-top-color: darkgrey">
+                                        <div class="box-body pt-5">
+                                            <div class="row">
+                                                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                    <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th>CONCEPTO</th>
+                                                                <th>CANTIDAD</th>
+                                                                <th>PU</th>
+                                                                <th>SUB TOTAL</th>
+                                                                <th>IGV</th>
+                                                                <th>ICBPER</th>
+                                                                <th>TOTAL</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="detalle in $ctrl.operacion.Detalles" ng-cloak>
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{detalle.Concepto}}</td>
+                                                                <td>{{detalle.Cantidad|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                <td>{{detalle.Precio|number:$ctrl.parametros.NumeroDecimalesEnPrecio}}</td>
+                                                                <td>{{detalle.Importe - detalle.Igv|number:2}}</td>
+                                                                <td>{{detalle.Igv|number:2}}</td>
+                                                                <td>{{detalle.Icbper|number:2}}</td>
+                                                                <td>{{detalle.Total|number:2}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="box box-primary" style="margin-bottom: 0px; border-top-color: darkgrey">
+                                                <div class="box-body pt-5">
+                                                    <div class="box-title">ACTUAL</div>
+                                                    <div class="pt-5">
+                                                        <div class="row">
+                                                            <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                                <div class="negrita">EN ALMACÉN</div>
+                                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>CONCEPTO</th>
+                                                                            <th>ORDENADO</th>
+                                                                            <th>REVOCADO</th>
+                                                                            <th>ENTREGADO</th>
+                                                                            <th>PENDIENTE</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="detalle in $ctrl.operacion.DetallesOrdenAlmacen" ng-cloak>
+                                                                            <td>{{detalle.Concepto}}</td>
+                                                                            <td>{{detalle.Ordenado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                            <td>{{detalle.Revocado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                            <td>{{detalle.Entregado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                            <td>{{detalle.Pendiente|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                                <div class="negrita pt-10">EN TESORERÍA</div>
+                                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>CUOTA</th>
+                                                                            <th>TOTAL</th>
+                                                                            <th>REVOCADO</th>
+                                                                            <th>PAGADO</th>
+                                                                            <th>PENDIENTE</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="detalle in $ctrl.operacion.DetallesTesoreria" ng-cloak>
+                                                                            <td>{{detalle.Codigo}}</td>
+                                                                            <td>{{detalle.Total|number:2}}</td>
+                                                                            <td>{{detalle.Revocado|number:2}}</td>
+                                                                            <td>{{detalle.Pagado|number:2}}</td>
+                                                                            <td>{{detalle.Saldo|number:2}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="box box-primary" style="margin-bottom:0px; border-top-color:darkgrey">
+                                                <div class="box-body pt-5">
+                                                    <div class="box-title">FINAL</div>
+                                                    <div class="pt-5">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                                <div class="negrita">EN ALMACÉN</div>
+                                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>CONCEPTO</th>
+                                                                            <th>ORDENADO</th>
+                                                                            <th>REVOCADO</th>
+                                                                            <th>ENTREGADO</th>
+                                                                            <th>PENDIENTE</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="detalle in $ctrl.nota.DetallesOrdenAlmacenOriginal" ng-cloak>
+                                                                            <td>{{detalle.Concepto}}</td>
+                                                                            <td>{{detalle.Ordenado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                            <td>{{detalle.Revocado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                            <td>{{detalle.Entregado|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                            <td>{{detalle.Pendiente|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                                <div class="negrita pt-10">EN TESORERÍA</div>
+                                                                <table id="tabla-situacion-actual" class="table table-bordered mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>CUOTA</th>
+                                                                            <th>TOTAL</th>
+                                                                            <th>REVOCADO</th>
+                                                                            <th>PAGADO</th>
+                                                                            <th>PENDIENTE</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="detalle in $ctrl.nota.DetallesTesoreriaOriginal" ng-cloak>
+                                                                            <td>{{detalle.Codigo}}</td>
+                                                                            <td>{{detalle.Total|number:2}}</td>
+                                                                            <td>{{detalle.Revocado|number:2}}</td>
+                                                                            <td>{{detalle.Pagado|number:2}}</td>
+                                                                            <td>{{detalle.Saldo|number:2}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-accordion>
+                        </div>
+                        <div class="col-md-12 p-0" ng-show="$ctrl.inconsistenciasNota.length > 0">
+                            <div class="box box-danger" style="margin-bottom: 15px;">
+                                <div class="box-body pt-5">
+                                    <div class="box-title" style="color:#bb1f1f">INCONSISTENCIA(S):</div>
+                                    <table>
+                                        <tr ng-repeat="item in $ctrl.inconsistenciasNota">
+                                            <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 p-0">
+                    <button class="btn btn-md btn-danger pull-right" title="CANCELAR" ng-click="$ctrl.cancelarNota()" style="margin-left: 15px;"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+                    <button class="btn btn-md btn-primary pull-right" title="GUARDAR" ng-click="$ctrl.guardarNota()" ng-disabled="$ctrl.inconsistenciasNota.length>0"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

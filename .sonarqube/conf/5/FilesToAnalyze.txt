@@ -1,0 +1,5 @@
+﻿D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\ContenedorInyeccion.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\Dependencia.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\Properties\AssemblyInfo.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\app.config
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\packages.config

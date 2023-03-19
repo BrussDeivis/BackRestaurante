@@ -1,0 +1,131 @@
+﻿<div>
+    <div class="col-md-4">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label">DOCUMENTO </label>
+                        <select id="documento" class="select2 form-control tipoDocumento" ng-model="movimiento.TipoDeComprobante" ng-change="cargarSeriesMovimientoDeAlmacen(movimiento.TipoDeComprobante); verificarInconsistenciasMovimientoDeAlmacen();" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantesMasSeriesMovimientoDeAlmacen  track by item.TipoComprobante.Id" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show=" movimiento.TipoDeComprobante.MostrarSelectorSerie && movimiento.TipoDeComprobante.EsPropio ">
+                        <label class="control-label">SERIE </label>
+                        <select id="serie" class="select2 form-control" ng-model="movimiento.TipoDeComprobante.SerieSeleccionada" ng-options="item.Id as item.Nombre for item in seriesMovimientoDeAlmacen" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show="movimiento.TipoDeComprobante.MostrarEntradaSerie">
+                        <label class="control-label">SERIE </label>
+                        <input id="serieIngresada" class="form-control" ng-model="movimiento.TipoDeComprobante.SerieIngresada" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" ng-blur="" ng-pattern="/^[a-zA-Z0-9][0-9]{0,3}$/" maxlength="4" ng-minlength="3" uppercase-only required />
+                    </div>
+                    <div class="col-md-12" ng-show="movimiento.TipoDeComprobante.MostrarEntradaNumero">
+                        <label class="control-label">N° DOCUMENTO </label>
+                        <input id="numeroIngresado" class="form-control" ng-model="movimiento.TipoDeComprobante.NumeroIngresado" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" ng-blur="" maxlength="8" ng-pattern="/^[0-9]\d{0,7}$/" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">FECHA INICIO TRASLADO </label>
+                        <input id="fechaInicioTraslado" class="form-control datepicker-yyyy" ng-model="movimiento.FechaInicioTraslado" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" placeholder="dd/mm/aaaa" />
+                    </div>
+                    <div class="col-md-12" id="proveedor" ng-controller="proveedorController" ng-init="iniciarRegistro()">
+                        <label class="control-label">TRANSPORTISTA </label>
+                        <a title="Editar Transportista" id="editarTransportista" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#modal-registro-proveedor" ng-click="editarTransportistaEnMovimientoDeAlmacen(movimiento.Transporte.Transportista.Id)" ng-disabled="movimiento.Transporte.Transportista == null || movimiento.Transporte.Transportista.Id == idProveedorGenerico"><span class="glyphicon glyphicon-edit"></span> </a>
+                        <a title="Nuevo Transportista" id="nuevoTransportista" class="btn btn-xs btn-primary pull-right" style="margin-right:5px" data-toggle="modal" data-target="#modal-registro-proveedor" ng-click="nuevoRegistroTransportistaEnMovimientoDeAlmacen()"><span class="glyphicon glyphicon-plus"></span> </a>
+                        @Html.Partial("../Persona/_ModalRegistroProveedorPartial")
+                    </div>
+                    <div class="col-md-12">
+                        <select id="transportista" class="select2 form-control" auto-focus ng-model="movimiento.Transporte.Transportista" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" ng-options="item as item.NumeroDocumentoIdentidad+' : '+item.RazonSocial for item in transportistas track by item.Id" required></select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">MARCA Y PLACA </label>
+                        <input id="marcaPlaca" class="form-control" ng-model="movimiento.Transporte.MarcaYPlaca" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">N° LICENCIA </label>
+                        <input id="nLicencia" class="form-control" ng-model="movimiento.Transporte.NumeroLicencia" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">OBSERVACION </label><br>
+                        <textarea id="observacionMovimientoDeAlmacen" style="resize:none; overflow-y:scroll; width:100%" ng-model="movimiento.Observacion"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box box-primary">
+            <div class="panel-body" style="padding:5px">
+                <div class="col-md-6">
+                    <label>MODALIDAD DE TRANSPORTE </label>
+                    <select id="modalidad" class="select2 form-control" ng-model="movimiento.ModalidadTransporte" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" ng-options="item as item.Nombre for item in modalidadesTraslado track by item.Id"></select>
+                </div>
+                <div class="col-md-6">
+                    <label>MOTIVO DE TRASLADO </label>
+                    <select id="motivo" class="select2 form-control" ng-model="movimiento.MotivoTraslado" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" ng-options="item as item.Nombre for item in motivosTraslado track by item.Id"></select>
+                </div>
+                <div class="col-md-6">
+                    <label>DIRECCION ORIGEN </label>
+                    <div class="col-md-12" style="border: solid 1px; padding-bottom:5px">
+                        <div class="col-md-12">
+                            <label>UBIGEO :</label>
+                            <select id="ubigeoOrigen" class="select2 form-control" ng-model="movimiento.UbigeoOrigen" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id" ng-change="verificarInconsistenciasMovimientoDeAlmacen()"></select>
+                        </div>
+                        <div class="col-md-12">
+                            <label>DETALLE :</label>
+                            <input id="direccionOrigen" class="form-control" ng-model="movimiento.DireccionOrigen" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label>DIRECCION DESTINO </label>
+                    <div class="col-md-12"  style="border:solid 1px; padding-bottom:5px">
+                        <div class="col-md-12">
+                            <label>UBIGEO :</label>
+                            <select id="ubigeoDestino" class="select2 form-control" ng-model="movimiento.UbigeoDestino" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id" ng-change="verificarInconsistenciasMovimientoDeAlmacen()"></select>
+                        </div>
+                        <div class="col-md-12">
+                            <label>DETALLE :</label>
+                            <input id="direccionDestino" class="form-control" ng-model="movimiento.DireccionDestino" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="col-md-12">
+                    <table id="table-rolAcciones" class="table table-stripped table-height-small table-bordered">
+                        <tr>
+                            <th class="col-md-1">N°</th>
+                            <th class="col-md-5">DESCRIPCION</th>
+                            <th class="col-md-1">LOTE</th>
+                            <th class="col-md-1">ORDENADO</th>
+                            <th class="col-md-1">{{(tipoMovimiento == true || tipoMovimiento == 'true') ? 'RECIBIDO' : 'ENTREGADO'}}</th>
+                            <th class="col-md-2">{{(tipoMovimiento == true || tipoMovimiento == 'true') ? 'INGRESO' : 'SALIDA'}} ACTUAL</th>
+                            <th class="col-md-1">PENDIENTE</th>
+                        </tr>
+                        <tr ng-repeat="item in movimiento.Detalles">
+                            <td>{{$index+1}}</td>
+                            <td>
+                                <label for="decripcion">{{item.Descripcion}}</label>
+                            </td>
+                            <td>
+                                <label for="lote">{{item.Lote}}</label>
+                            </td>
+                            <td>
+                                <label class="numero-derecha">{{item.Ordenado|number:2}}</label>
+                            </td>
+                            <td>
+                                <label class="numero-derecha">{{item.RecibidoEntregado|number:2}}</label>
+                            </td>
+                            <td style="vertical-align:initial">
+                                <input class="form-control numero-derecha" onClick="this.select();" style="height:34px" ng-change="verificarInconsistenciasMovimientoDeAlmacen()" ng-model="item.IngresoSalidaActual" ng-blur="item.IngresoSalidaActual=formatNumber(item.IngresoSalidaActual,2)" />
+                            </td>
+                            <td>
+                                <label class="numero-derecha">{{(item.Ordenado - item.RecibidoEntregado - item.IngresoSalidaActual)|number:2}}</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

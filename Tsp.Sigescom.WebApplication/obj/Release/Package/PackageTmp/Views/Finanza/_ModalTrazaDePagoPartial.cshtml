@@ -1,0 +1,13 @@
+﻿<div class="col-md-12">
+    <label class="control-label">MEDIO DE PAGO</label>
+    <select id="medioDePago" class="select2 form-control" ng-model="trazaDePago.MedioDePago" ng-change="verificarInconsistenciasTrazaDePago(); establecerBancoPorDefecto()" ng-options="item as item.Nombre for item in listaMediosDePago track by item.Id"></select>
+</div>
+<div class="col-md-12">
+    <label class="control-label">BANCO</label>
+    <select id="entidadFinanciera" class="select2 form-control" ng-model="trazaDePago.EntidadFinanciera" ng-change="verificarInconsistenciasTrazaDePago()" ng-options="item as item.Nombre for item in listaEntidadesFinancieras track by item.Id"></select>
+</div>
+<div class="col-md-12">
+    <label class="control-label">INFORMACIÓN</label>
+    <textarea id="informacionPago" class="form-control" rows="3" ng-model="trazaDePago.InformacionDePago" ng-change="verificarInconsistenciasTrazaDePago()" placeholder="N° Operación" required></textarea>
+</div>
+

@@ -1,0 +1,90 @@
+﻿<div id="modal-ver-compra-corporativa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">DOCUMENTO {{verCompraCorporativa.SerieNumeroDocumento}} (S/ {{verCompraCorporativa.Total}})</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="col-md-12 ">Acciones :</label>
+                        <button ng-show="verCompraCorporativa.AccionEditar" title="EDITAR COMPRA" ng-click="cargarCompraAEditar(verCompraCorporativa.IdOrden)" data-toggle="modal" data-target="#modal-registro-compra-corporativa" class="btn btn-md btn-primary">EDITAR</button>
+                        <button ng-show="verCompraCorporativa.AccionConfirmar" title="CONFIRMAR COMPRA" ng-click="iniciarTrazaPago(); iniciarConfirmacion()" data-toggle="modal" data-target="#modal-registro-traza-pago" class="btn btn-md btn-primary">CONFIRMAR</button>
+                        <button ng-show="verCompraCorporativa.AccionInvalidar" title="INVALIDAR EL DOCUMENTO" ng-click="iniciarInvalidacion()" data-toggle="modal" data-target="#modal-invalidar-documento" class="btn btn-md btn-warning">INVALIDAR</button>
+                        <button ng-show="verCompraCorporativa.AccionEmitirNota" title="EMITIR NOTA DE DEBITO" ng-disabled="hayRegistroDeNota == true" ng-click="iniciarEmisionDeNotaDeDebito()" class="btn btn-md btn-primary">NOTA DE DEBITO</button>
+                        <button ng-show="verCompraCorporativa.AccionEmitirNota" title="EMITIR NOTA DE CREDITO" ng-disabled="hayRegistroDeNota == true" ng-click="iniciarEmisionDeNotaDeCredito()" class="btn btn-md btn-primary">NOTA DE CREDITO</button>
+                        <button ng-show="verCompraCorporativa.AccionModificarComprobante" title="MODIFICAR COMPROBANTE" ng-click="obtenerTiposDeComprobanteRegistroCompra()" data-toggle="modal" data-target="#modal-registro-comprobante-compra-corporativa" class="btn btn-md btn-primary">COMPROBANTE</button>
+                        <div ng-controller="ordenDeAlmacenController" style="display: inline-block" >
+                            <button ng-show="verCompraCorporativa.AccionGenerarOrdenDeAlmacen" title="GENERAR ORDEN DE ALMACEN" ng-click="inicializarRegistroOrdenDeAlmacen(verCompraCorporativa.IdOrden)" data-toggle="modal" data-target="#modal-registo-orden-de-almacen" class="btn btn-md btn-primary">ORDEN DE ALMACEN</button>
+                            @Html.Partial("../Almacen/_ModalRegistroOrdenDeAlmacen")
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        @*<label class="col-md-12 ">Formato :</label>
+                        <div class="col-md-12">
+                            <select class="select2 form-control" id="comboFormato" ng-model="formato" ng-change="cargarDocumento();" ng-options="item as item.Nombre for item in formatosDeImpresion track by item.Id" ng-disabled="hayRegistroDeNota == true"></select>
+                        </div>*@
+                    </div>
+                    <div class="col-md-3">
+                        @*<label class="col-md-12 ">Acciones :</label>
+                            <button title="IMPRIMIR EL DOCUMENTO" class="btn btn-md btn-primary" ng-click="imprimirDocumento()" ng-disabled="hayRegistroDeNota == true"><span class="glyphicon glyphicon-print"></span></button>
+                            <a title="DESCARGAR EN PDF" class="btn btn-md btn-primary" href="@Url.Action("DescargarDocumento", "Venta")?idOrdenDeVenta={{verCompraCorporativa.IdOrden}}&&formato={{formato.Id}}" ng-disabled="hayRegistroDeNota == true"><span class="glyphicon glyphicon-save-file"></span></a>
+                            <button title="ENVIAR POR CORREO ELECTRONICO" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-envio-documento" ng-click="inicializarEnvioCorreoElectronico()" ng-disabled="hayRegistroDeNota == true"><span class="glyphicon glyphicon-envelope"></span></button>*@
+                    </div>
+                    <div class="col-md-12" style="padding-top:15px">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12" ng-hide="hayRegistroDeNota">
+                                        <form name="comprobante" class="form-horizontal">
+                                            <div class="col-md-12">
+                                                <div id="pdfDocumento" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; font-family: auto; margin:auto; margin-top:15px"></div>
+                                            </div>
+                                            <div id="pdfGuia" class="col-md-12">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-12" ng-show="hayRegistroDeNota" style="padding-top:15px">
+                                        <uib-accordion close-others="oneAtATime">
+                                            <div uib-accordion-group class="panel-primary accordion-panel gl" is-open="notaDeOperacionAcordion">
+                                                <uib-accordion-heading>
+                                                    <span ng-click="accionNotaDeOperacion(notaDeOperacionAcordion)">
+                                                        REGISTRO DE NOTA DE {{etiquetaDeNota}} <i class="pull-right glyphicon" ng-class="{'glyphicon-minus-sign': notaDeOperacionAcordion, 'glyphicon-plus-sign': !notaDeOperacionAcordion}"></i>
+                                                    </span>
+                                                </uib-accordion-heading>
+                                                <div class="row">
+                                                    @Html.Partial("../NotaCreditoDebito/_RegistroDeNotaPartial")
+                                                </div>
+                                            </div>
+                                        </uib-accordion>
+                                    </div>
+                                    <div class="col-md-12" ng-show="hayRegistroDeNota">
+                                        <uib-accordion close-others="oneAtATime">
+                                            <div uib-accordion-group class="panel-primary accordion-panel gl" is-open="detalleDocumentoAcordion">
+                                                <uib-accordion-heading>
+                                                    <span ng-click="accionDetalleDocumento(detalleDocumentoAcordion)">
+                                                        VER DOCUMENTO {{verCompraCorporativa.SerieNumeroDocumento}} <i class="pull-right glyphicon" ng-class="{'glyphicon-minus-sign': detalleDocumentoAcordion, 'glyphicon-plus-sign': !detalleDocumentoAcordion}"></i>
+                                                    </span>
+                                                </uib-accordion-heading>
+                                                <div class="row">
+                                                    <form name="comprobante" class="form-horizontal">
+                                                        <div class="col-md-12">
+                                                            <div id="pdfDocumentoAcordion" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; font-family: auto; margin:auto; margin-top:15px"></div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </uib-accordion>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarVerCompraCorporativa()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

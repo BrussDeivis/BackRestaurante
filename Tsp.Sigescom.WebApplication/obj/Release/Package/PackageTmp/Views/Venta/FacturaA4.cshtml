@@ -1,0 +1,370 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.ComprobantesModel.Factura
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+        .supertitulo {
+            font-weight: bold;
+            font-size: 5.4mm !important;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .subtitulo {
+            font-weight: bolder;
+            font-size: 4mm;
+        }
+
+        .texto {
+            font-size: 3.1mm !important;
+        }
+
+        .texto-medium {
+            font-size: 2.9mm;
+        }
+
+        .texto-mini {
+            font-size: 2.4mm;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .sinmargen {
+            margin: 0;
+        }
+
+        .margen5 {
+            margin: 5px;
+        }
+
+        .titulo .centrado .importe .texto {
+            font-family: MS Gothic;
+            font-weight: lighter;
+        }
+
+        .contorno {
+            border: solid;
+        }
+
+        .contorno_fino {
+            border: solid;
+            border-width: thin;
+        }
+
+        .borde_colorido {
+            border-color: dodgerblue;
+        }
+
+        .borde_top_colorido {
+            border-top-color: dodgerblue;
+        }
+
+        th, td {
+            padding: 1mm;
+            line-height: 1.2;
+        }
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+
+        body.receipt .sheet {
+            width: 200mm;
+            height: 297mm;
+        }
+        /*  sheet size */
+        @@page {
+            size: 200mm 297mm;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 200mm
+            }
+        }
+
+        .linea {
+            border: 1px solid dodgerblue;
+            border-collapse: collapse;
+        }
+    </style>
+    <title></title>
+</head>
+<body class="texto">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="sheet texto">
+            <div class="@(@Model.EsInvalidada ? "contenedor-comprobante" : "")">
+                @* Datos Emisor *@
+                <div width="100%">
+                    <table width="100%">
+                        <tr>
+                            <td width="30%">
+                                @if (Model.MostrarLogo)
+                                {
+                                    <div class="centrado">
+                                        <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Alternate Text" />
+                                    </div>
+                                }
+                            </td>
+                            <td width="45%">
+                                <div class="centrado">
+                                    <div class="titulo">@Model.Emisor.NombreComercial </div>
+                                    <div>@Model.Emisor.RazonSocial</div>
+                                    <div class="texto-medium">@Model.Emisor.Direccion</div>
+                                    @if (Model.Emisor.EsSucursal)
+                                    {
+                                        <div class="negrita">SUC: @Model.Emisor.NombreSucursal</div>
+                                        <div class="texto-medium">@Model.Emisor.DireccionSucursal</div>
+                                    }
+                                    <div>@Model.Emisor.OtrosDatosContacto</div>
+                                </div>
+                            </td>
+                            <td width="25%" class="contorno borde_colorido">
+                                <div class="titulo centrado">RUC @Model.Emisor.NumeroDocumentoIdentidad</div>
+                                @* Comprobante *@
+                                <div class="subtitulo centrado">
+                                    <div class="subtitulo">@Model.NombreTipo </div>
+                                    <div>@(Model.Serie + "-" + Model.Numero)</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="centrado">@Model.Emisor.Publicidad</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                @* Fecha emisión *@
+                @* Receptor  *@
+                <div>
+                    <table width="100%">
+                        <tr>
+                            <td width="70%" colspan="2">
+                                <div class="negrita">CLIENTE</div>
+                                <div>@(Model.Receptor.TipoDocumentoIdentidad + " " + Model.Receptor.DocumentoIdentidad)</div>
+                                <div>@Model.Receptor.RazonSocial </div>
+                                <div>@(Model.Receptor.Direccion)</div>
+                            </td>
+                            <td width="30%" colspan="2">
+                                <div>Emisión: @Model.FechaEmision.ToString("dd/MM/yyyy hh:mm tt")</div>
+                                <div><span class="negrita">Forma de pago:</span> @Model.FormaPago.ToUpper()</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                @* Detalles *@
+                <div width="100%">
+                    <table width="100%">
+                        <tr>
+                            <th class="contorno_fino borde_colorido">Cant.</th>
+                            <th class="contorno_fino borde_colorido">Concepto</th>
+                            <th class="contorno_fino borde_colorido">P.U.</th>
+                            <th class="contorno_fino borde_colorido">Importe</th>
+                        </tr>
+                        @foreach (var item in Model.Detalles)
+                        {
+                            <tr width="100%" style="padding:0; margin:0">
+                                <td width="10%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnCantidad + "}", item.Cantidad)</td>
+                                <td width="65%" class="texto-medium"> @item.Concepto   @(Model.MostrarTrazabilidadConceptoNegocio ? item.Trazabilidad : "") </td>
+                                <td width="10%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnPrecio + "}", item.ImporteUnitario)</td>
+                                <td width="15%" class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", item.ImporteTotal)</td>
+                            </tr>
+                            if (item.CaracteristicasComunes != null && item.CaracteristicasComunes.Count > 0)
+                            {
+                                <tr width="100%">
+                                    <td style=" width:100%" colspan=4>
+                                        <table width="100%" cellpadding="0" style="margin:0">
+                                            @for (int i = 0; i < Math.Ceiling((decimal)item.CaracteristicasComunes.Count / 2); i += 2)
+                                            {
+                                                <tr width="100%" class="sinespacios">
+                                                    <td width="10%"></td>
+                                                    <td style=" width:32.5%">@(item.CaracteristicasComunes[i].NombreCaracteristica + " " + item.CaracteristicasComunes[i].Valor) </td>
+                                                    <td style=" width:32.5%">@(i + 1 < item.CaracteristicasComunes.Count ? (item.CaracteristicasComunes[i + 1].NombreCaracteristica + " " + item.CaracteristicasComunes[i + 1].Valor) : "")</td>
+                                                    <td width="10%"></td>
+                                                    <td width="15%"></td>
+
+                                                </tr>
+                                            }
+                                            @for (int i = 0; i < Math.Ceiling((decimal)item.CaracteristicasPropias.Count / 2); i += 2)
+                                            {
+                                                <tr width="100%" class="sinespacios">
+                                                    <td width="10%"></td>
+                                                    <td style=" width:32.5%">@(item.CaracteristicasPropias[i].Nombre + " " + item.CaracteristicasPropias[i].Valor)</td>
+                                                    <td style=" width:32.5%">@(i + 1 < item.CaracteristicasComunes.Count ? (item.CaracteristicasPropias[i + 1].Nombre + " " + item.CaracteristicasPropias[i + 1].Valor) : "")</td>
+                                                    <td width="10%"></td>
+                                                    <td width="15%"></td>
+                                                </tr>
+
+                                            }
+                                        </table>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+                @* Resumen *@
+                <div>
+                    <table width="100%">
+                        <tr width="100%">
+                            <td width="20%">
+                                <div class="centrado">
+                                    <img height="150" src=@Model.CodigoQRSrc alt="Alternate Text" />
+                                </div>
+                            </td>
+                            <td width="35%">
+                                <div class="centrado">
+                                </div>
+                            </td>
+                            <td width="25%">
+                                <div class="importe">Op. Gravadas S/</div>
+                                <div class="importe">Op. Inafectas S/</div>
+                                <div class="importe">Op. Exoneradas S/</div>
+                                <div class="importe">IGV S/</div>
+                                <div class="importe">ICBPER S/</div>
+                                <div class="importe titulo">Importe Total S/</div>
+                            </td>
+                            <td width="20%">
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionGravada)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionInafecta)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionExonerada)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.Igv)</div>
+                                <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.Icbper)</div>
+                                <div class="importe subtitulo">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteTotal)</div>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div>SON: @Model.ImporteTotalEnLetras</div>
+                    @if (Model.MostrarPuntos)
+                    {
+                        <div>Puntos ganados: @Model.PuntosGanados , Acumulados: @Model.PuntosAcumulados</div>
+                    }
+                    @if (Model.MostrarEmpleado)
+                    {
+                        <div>@Model.EtiquetaEmpleado: @Model.NombreEmpleado</div>
+                    }
+                    @if (Model.MostrarPlaca)
+                    {
+                        <div>N° Placa: @Model.Placa</div>
+                    }
+                    @if (Model.MostrarInformacion)
+                    {
+                        <div>Info: @Model.Informacion</div>
+                    }
+                    <div>Observación: @Model.Observacion</div>
+                    @if (Model.MostrarInformacionAdicionalA4)
+                    {
+                        <hr class="margen5 borde_top_colorido">
+                        @Html.Raw(HttpUtility.HtmlDecode(@Model.InformacionAdicionalA4));
+                    }
+                    @if (Model.EsInvalidada)
+                    {
+                        <div class="negrita">MOTIVO DE INVALIDACIÓN: @Model.MotivoInvalidacion.ToUpper()</div>
+                    }
+                    @if (Model.Cuotas.Count > 0)
+                    {
+                        <hr class="margen5 borde_colorido">
+                        <div><span class="negrita">Informacion del crédito</span></div>
+                        <table width="40%" style="table-layout:fixed">
+                            <tr width="100%">
+                                <td width="75%">
+                                    <div>Monto neto pendiente de pago:</div>
+                                    <div>Total de cuotas:</div>
+                                </td>
+                                <td width="25%">
+                                    <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.MontoACredito)</div>
+                                    <div class="importe">@Model.Cuotas.Count</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:40%;" class="linea">
+                            <tr>
+                                <th class="linea centrado">N° Cuota</th>
+                                <th class="linea centrado">F. Vencimiento</th>
+                                <th class="linea centrado">Importe</th>
+                            </tr>
+                            @foreach (var cuota in Model.Cuotas)
+                            {
+                                <tr>
+                                    <td class="linea centrado">@cuota.Numero</td>
+                                    <td class="linea centrado">@cuota.FechaVencimiento.ToString("dd/MM/yyyy")</td>
+                                    <td class="linea importe">@cuota.Monto</td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                </div>
+                <hr class="margen5 borde_colorido">
+                @* Mensajes *@
+                <div class="centrado">
+                    @if (Model.MostrarMensajeAmazonia)
+                    {
+                        <div>@Model.MensajeAmazonia</div>
+                    }
+                    <div>Representación impresa de la factura electrónica</div>
+                    @*<div>Autorizado mediante resolución: @Model.ResolucionAutorizacionSunat</div>*@
+                    @if (Model.MostrarUrlConsultaComprobante)
+                    {
+                        <div class="texto3mm">Consulte su comprobante en: <span class="negrita">@Model.UrlConsultaComprobante</span></div>
+                    }
+                    <div>@Model.MensajeNegocio</div>
+                    <div class="centrado texto-mini">Sistema de Gestión Comercial | Siges |www.siges.tsolperu.com</div>
+                </div>
+                @if (Model.EsInvalidada)
+                {
+                    <div class="marca-agua">
+                        <p class="texto-marca-agua">INVALIDADO</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</body>
+</html>

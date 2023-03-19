@@ -1,0 +1,49 @@
+﻿<div id="modal-canje-de-comprobante" class="modal fade" data-keyboard="false" role="dialog" data-backdrop-limit="1" aria-labelledby="information" data-backdrop="static" aria-hidden="true" data-focus-on="input:first" @*ng-controller="canjeDeComprobanteController" ng-init="iniciarCanjeDeComprobante()"*@>
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">CANJE DE COMPROBANTE</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label">DOCUMENTO:</label>
+                        <select class="select2 form-control tipoDocumento" ng-model="canjeDeComprobante.TipoDeComprobante" ng-change="cargarSeriesCanje(canjeDeComprobante.TipoDeComprobante); verificarInconsistenciasCanje()" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantes  track by item.TipoComprobante.Id" required></select>
+                    </div>
+                    <div class="col-md-12" ng-show="canjeDeComprobante.TipoDeComprobante.MostrarSelectorSerie">
+                        <label class="control-label">SERIE</label>
+                        <select class="select2 form-control serieComprobante" ng-init="canjeDeComprobante.TipoDeComprobante.SerieSeleccionada=series[0].Id" ng-model="canjeDeComprobante.TipoDeComprobante.SerieSeleccionada" ng-change="verificarInconsistenciasCanje()" ng-options="item.Id as item.Nombre for item in series  track by item.Id" required></select>
+                        @*<div class="col-md-12 row">
+                    <div class="radio radio-primary radio-inline col-md-3" ng-init="canjeDeComprobante.TipoDeComprobante.SerieSeleccionada=series[0].Id" ng-repeat="item in series">
+                        <input type="radio" id="radio-{{$index}}" ng-model="canjeDeComprobante.TipoDeComprobante.SerieSeleccionada" ng-change="ValidarModoIntegrado(); verificarAutonumerable(item)" value="{{item.Id}}" ng-enter="guardar()" ng-checked="canjeDeComprobante.TipoDeComprobante.SerieSeleccionada==item.Id">
+                        <label for="radio-{{$index}}">{{item.Nombre}}</label>
+                    </div>
+                </div>*@
+                    </div>
+                    <div class="col-md-12" ng-show="canjeDeComprobante.TipoDeComprobante.MostrarEntradaSerie">
+                        <label class="control-label">SERIE:</label>
+                        <input class="form-control" uppercase-only ng-model="canjeDeComprobante.TipoDeComprobante.SerieIngresada" ng-change="verificarInconsistenciasCanje()" ng-pattern="/^[a-zA-Z0-9]{0,4}$/" minlength="3" maxlength="4" required />
+                    </div>
+                    <div class="col-md-12" ng-show="canjeDeComprobante.TipoDeComprobante.MostrarEntradaNumero">
+                        <label class="control-label">N° DOCUMENTO:</label>
+                        <input class="form-control" ng-model="canjeDeComprobante.TipoDeComprobante.NumeroIngresado" ng-change="verificarInconsistenciasCanje()"  maxlength="8" ng-pattern="/^[0-9]{0,8}$/" required />
+                    </div>
+                </div>
+                <div class="box box-danger" ng-show="inconsistenciasCanje.length > 0">
+                    <div class="box-body">
+                        <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                        <table>
+                            <tr ng-repeat="item in inconsistenciasCanje">
+                                <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="registarCanjeDeComprobante()" ng-disabled="inconsistenciasCanje.length > 0" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-check"></span>ACEPTAR</button>
+                <button data-dismiss="modal" title="cancelar" class="btn btn-danger btn-md"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<div class="col-md-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">DIRECCION: </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ubigeo">Ubigeo: *</label>
+                                <select id="ubigeo" class="select2 form-control ubigeo" ng-model="direccion.Ubigeo" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id" ng-change="verificarUbigeoSeleccionado()" required></select>
+                                <h5 style="color:#bb1f1f" ng-if="ubigeoSeleccionadoNoEspecificado">Seleccionar ubigeo.</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="detalle">Detalle: *</label>
+                                <input id="detalle" class="form-control" placeholder="INGRESE DIRECCION" uppercase-only ng-model="direccion.Detalle" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

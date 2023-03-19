@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "REPORTES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/venta/reporteVentaController.js")></script>
+
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+}
+
+    <div class="box-body" ng-controller="reporteVentaController" ng-init="nuevoReporteGerente()">
+        <!--===========================================================================================================================================================================================-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">REPORTE DE VENTAS</div>
+                </div>
+            </div>
+        </div>
+        <!-- ==================================== INTERVALO DE TIEMPO ==================================================== --> 
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Seleccione periodo  </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateStart">Fecha y Hora Inicial </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStart" ng-model="reporte.FechaInicio" ng-change="actualizarURLsAdministrador()" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporte.HoraInicio" ng-change="actualizarURLsAdministrador()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateEnd">Fecha y Hora Final</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="reporte.FechaFinal" ng-change="actualizarURLsAdministrador()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporte.HoraFinal" ng-change="actualizarURLsAdministrador()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="height:300px; overflow-y:scroll; ">
+            <!--===============================================================REPORTE POR CONCEPTO DE VENDEDOR===============a14===============================-->
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">De Vendedores Por Concepto </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Vendedor"> Vendedores </label>
+                                    <select class="select2 form-control" ng-model="reporte.EmpleadosParaVender" ng-change="actualizarURLReporteDeVentaDeVendedoresPorConcepto()" ng-options="item as item.Nombre for item in listaEmpleadosGenerico  track by item.Id" required multiple="multiple"></select>   @*listaDeVendedores*@
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Muestra Reporte de venta de los vendedores por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaDeVendedoresPorConcepto}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

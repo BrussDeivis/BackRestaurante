@@ -1,0 +1,69 @@
+﻿<div id="modal-registro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE BONIFICACION</h4>
+            </div>
+            <div class="modal-body">
+                <form name="bonificacionForm" class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Cantidad:</label>
+                                        <input class="form-control" type="number" ng-model="bonificacion.CantidadMinima" required />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Mercaderia:</label>
+                                        <select id="producto" class="select2 form-control" ng-model="bonificacion.Mercaderia" ng-options="item as item.Nombre for item in productos track by item.Id" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Bonificacion:</label>
+                                        <input class="form-control" ng-model="bonificacion.Valor" required />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Aplica a:</label>
+                                        <select id="productoReferencia" class="select2 form-control" ng-model="bonificacion.MercaderiaReferencia" ng-options="item as item.Nombre for item in productos track by item.Id" required></select>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Cant. Max. Bon.:</label>
+                                        <input class="form-control" type="number" ng-model="bonificacion.CantidadMaxima" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Desde:</label>
+                                        <input class="datepicker-start form-control center" ng-model="bonificacion.FechaDesde" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Hasta:</label>
+                                        <input class="datepicker-end form-control center" ng-model="bonificacion.FechaHasta" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="descripcion">Descripción:</label>
+                                <textarea id="descipcion" class="form-control" ng-model="bonificacion.Descripcion" required></textarea>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="bonificacionForm.$invalid" ng-click="guardarBonificacion(bonificacion)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR BONIFICACION</a>
+                <a data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

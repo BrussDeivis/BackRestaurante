@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Reporte de Digemid";
+}
+
+@*<script src=@Url.Content("~/Scripts/controller/concepto/conceptoController.js")></script>*@
+
+<div class="box-body" @*ng-controller="conceptoController"*@>
+    @* controlador del javaScript *@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTE DE CONCEPTOS DE DIGEMID</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="documento">ENTIDAD ACTUAL</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <br />
+                            <a title="Descargar el reporte de conceptos de digemid" class="btn btn-primary btn-flat" ng-href="@Url.Action("DescargarReporteDigemid","Concepto")">DESCARGAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

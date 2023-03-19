@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Categorias";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/categoria/categoriaController.js")></script>
+    <script>
+        var idCategoriaNula = @ViewBag.IdCategoriaNula;
+    </script>
+}
+<div class="col-md-12" ng-controller="categoriaController">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">CATEGORIA</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button title="DESCARGAR" ng-click="export('tabla-categoria')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                            <a title="Nueva categoria" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-categoria" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVA CATEGORIA</a>
+                        </div>
+                        <div class="col-xs-12">
+                            <table id="tabla-categoria" datatable="ng" dt-options="dtOptions" dt-column-defs="categorias.dtColumnDefs" class="table table-stripped table-bordered dateTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Categoría Padre</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in categorias.Lista" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>{{item.Valor}}</td>
+                                        <td>{{item.DetalleMaestroPadre.Nombre}}</td>
+                                        <td>
+                                            <a title="Editar categoria" class="btn btn-primary btn-xs" ng-show="item.Id != idCategoriaNula" data-toggle="modal" data-target="#modal-categoria" ng-click="editarCategoria(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroCategoria")
+    </div>
+</div>
+
+
+

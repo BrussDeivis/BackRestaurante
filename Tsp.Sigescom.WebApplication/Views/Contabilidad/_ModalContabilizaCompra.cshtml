@@ -1,0 +1,26 @@
+﻿<div id="modal-contabiliza-compra" class="modal fade" data-keyboard="false" role="dialog" data-backdrop-limit="1" aria-labelledby="information" data-backdrop="static" aria-hidden="true" data-focus-on="input:first">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">confirmar compra corporativa</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="documento">Periodo</label>
+                            <select class="select2 form-control" ng-model="periodoSeleccionado" ng-options=" item as item.Nombre for item in listaDePeriodos track by item.Id" required" title="Es necesario seleccionar un periodo."></select>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-footer">
+                    <button ng-click="contabilizarCompra()" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-check"></span>aceptar</button>
+                    <button data-dismiss="modal" title="cancelar" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

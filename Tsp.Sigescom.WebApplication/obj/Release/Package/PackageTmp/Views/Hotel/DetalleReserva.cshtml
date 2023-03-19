@@ -1,0 +1,266 @@
+﻿@{
+    ViewBag.Title = "Atencion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/detalleReservaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorHuesped/registradorHuesped.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturador/facturador.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/visualizadorComprobante/visualizadorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorPago/editorPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/registradorFinanciamiento/registradorFinanciamiento.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+    <script>
+        var accionesProcesoHabitacion = @(Html.Raw(Json.Encode(@ViewBag.accionesProcesoHabitacion)));
+        var idAtencionMacro = @ViewBag.idAtencionMacro;
+        var idAtencion = @ViewBag.idAtencion;
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idRolCliente = @ViewBag.idRolCliente;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var minimoCaracteresBuscarActorComercial = @ViewBag.minimoCaracteresBuscarActorComercial;
+        var mascaraDeVisualizacionValidacionRegistroCliente = '@ViewBag.mascaraDeVisualizacionValidacionRegistroCliente';
+        var idEstadoRegistrado = @ViewBag.idEstadoRegistrado;
+        var idEstadoConfirmado = @ViewBag.idEstadoConfirmado;
+        var idEstadoCheckedIn = @ViewBag.idEstadoCheckedIn;
+        var idEstadoCheckedOut = @ViewBag.idEstadoCheckedOut;
+        var idEstadoFacturado = @ViewBag.idEstadoFacturado;
+        var idEstadoAnulado = @ViewBag.idEstadoAnulado;
+        var idEstadoEntradaCambiado = @ViewBag.idEstadoEntradaCambiado;
+        var idEstadoSalidaCambiado = @ViewBag.idEstadoSalidaCambiado;
+        var fechaActual = '@ViewBag.fechaActual';
+        var idEstablecimiento = @ViewBag.idEstablecimiento;
+
+    </script>
+}
+<div id="detalle-de-reserva" class="col-md-12" ng-controller="detalleReservaController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">DETALLE DE RESERVA</div>
+            </div>
+        </div>
+        <!--Informacion general -->
+        <div class="col-md-12">
+            <div class="row datos-reserva">
+                <div class="col-sm-1 contenedor-codigo">
+                    <div class="form-group">
+                        <label style="font-size: medium;">Código</label>
+                        <h4 style="margin-top: 3px; font-size: 17px;">{{atencionMacro.Codigo}}</h4>
+                    </div>
+                </div>
+                <div class="col-sm-2 contenedor-fecha-registro">
+                    <div class="form-group">
+                        <label style="font-size: medium;">Fecha de registro</label>
+                        <h4 style="margin-top: 3px; font-size: 17px;">{{atencionMacro.FechaHoraRegistroString}}</h4>
+                    </div>
+                </div>
+                <div class="col-sm-4 contenedor-responsable">
+                    <div class="form-group">
+                        <label style="font-size: medium;">Responsable</label>
+                        <a title="Editar Responsable" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" ng-if="puedeEditarResponsable()" ng-click="abrirEditarResponsable()" style="background-color: #EB5C24"><span class="fa fa-pencil"></span></a>
+                        <h4 style="margin-top: 3px; font-size: 17px;">{{atencionMacro.Responsable.NombreORazonSocial}}</h4>
+                    </div>
+                </div>
+                <div class="col-sm-1 contenedor-voucher" ng-if="atencionMacro.HayImagenVoucherExtranet">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 nombre-voucher">
+                            <label style="font-size: medium;">Voucher</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12">
+                            <button type="button" class="btn btn-default btn-lg btn-voucher" data-toggle="modal" data-target="#modalVerImagen">
+                                <span class="fa fa-file-image-o"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 contenedor-acciones-macro" ng-if="activarBotonesGlobales() && (puedeConfirmarTodasLasAtenciones() || puedeCheckInTodasLasAtenciones() || (puedeFacturarTodasLasAtenciones() || atencionMacro.TieneFacturacion  && atencionMacro.FacturadoGlobal) || puedeCheckOutTodasLasAtenciones() || puedeAnularTodasLasAtenciones())">
+                    <div class="row">
+                        <div class="col-xs-12"><label style="font-size: medium;">Acciones</label></div>
+                        <div class="col-xs-12">
+                            <button title="Confirmar" class="btn btn-mediano btn-warning" ng-if="puedeConfirmarTodasLasAtenciones()" ng-click="abrirConfirmarAtencionMacro()"><span class="fa fa-calendar-check-o"></span></button>
+                            <button title="Check-In" class="btn btn-mediano btn-success" ng-if="puedeCheckInTodasLasAtenciones()" ng-disabled="desabilitarCheckInTodasLasAtenciones()" ng-click="abrirCheckInAtencionMacro()"><span class="fa fa-sign-in"></span></button>
+                            <button title="Facturar" class="btn btn-mediano btn-info" ng-if="(puedeFacturarTodasLasAtenciones() || atencionMacro.TieneFacturacion) && atencionMacro.FacturadoGlobal" ng-click="abrirFacturarAtencionMacro()"><span ng-class="estanFacturadasTodasLasAtenciones() ? 'fa fa-file-text-o' : 'fa fa-file-text'"></span></button>
+                            <button title="Check- Out" class="btn btn-mediano btn-danger" ng-if="puedeCheckOutTodasLasAtenciones()" ng-disabled="desabilitarCheckOutTodasLasAtenciones() && !estanFacturadasTodasLasAtenciones()" ng-click="abrirCheckOutAtencionMacro()"><span class="fa fa-sign-out"></span></button>
+                            <button title="Anular" class="btn btn-mediano btn-danger" ng-if="puedeAnularTodasLasAtenciones()" ng-click="abrirAnularAtencionMacro()"><span class="fa  fa-calendar-times-o"></span></button>
+                            <button title="Incidente" class="btn btn-mediano btn-purple" ng-if="estanFacturadasTodasLasAtenciones() && estanIngresoTodasLasAtenciones()  && atencionMacro.FacturadoGlobal" ng-click="abrirIncidenteAtencionMacro()"><span class="fa fa-repeat"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 contenedor-facturacion" ng-if="puedeCambiarModoFacturacion()">
+                    <div class="row">
+                        <div class="col-xs-12"><label style="font-size: medium;">Facturación</label></div>
+                        <div class="col-xs-12 form-group">
+                            <div class="onoffswitch">
+                                <input type="checkbox" ng-disabled="atencionMacro.TieneFacturacion || !activarBotonesGlobales()" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0" ng-model="atencionMacro.FacturadoGlobal" ng-checked="atencionMacro.FacturadoGlobal">
+                                <label class="onoffswitch-label" for="myonoffswitch" ng-class="atencionMacro.TieneFacturacion || !activarBotonesGlobales() ? 'opaco' : ''">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1"></div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 tabla-accordion">
+                    <table id="accordion" class="table tabla-acordion">
+                        <thead class="cabecera-tabla-acordion">
+                            <tr>
+                                <th class="prioridad-1">#</th>
+                                <th class="prioridad-2">HABITACIÓN</th>
+                                <th class="prioridad-3">NOCHES</th>
+                                <th class="prioridad-4">PRECIO</th>
+                                <th class="prioridad-5">IMPORTE</th>
+                                <th class="prioridad-6">HUESPED</th>
+                                <th class="prioridad-7">ESTADO</th>
+                                <th class="prioridad-8">FACTURADO</th>
+                                <th class="prioridad-9"></th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="atencion in atencionMacro.Atenciones">
+                            <tr class="fila-tabla-acordion">
+                                @*ng-class="{'fila-seleccionada': seleccionarAcordion(atencion.id)}"*@
+                                <td class="prioridad-1">{{$index+1}}</td>
+                                <td class="prioridad-2">
+                                    <div class="row fila-fecha-registro">
+                                        <div class="col-xs-12">
+                                            <div class="row" style="position:relative">
+                                                <div class="col-xs-10">
+                                                    {{atencion.Habitacion.TipoHabitacion.Nombre}} - {{atencion.Habitacion.CodigoHabitacion}}
+                                                </div>
+                                                <div class="col-xs-2 contenedor-btn-editar" ng-click="abrirEditarFechaAtencion($index)" ng-if="(atencion.EstadoActual.Id == idEstadoRegistrado || atencion.EstadoActual.Id == idEstadoConfirmado || atencion.EstadoActual.Id == idEstadoCheckedIn) && !atencion.TieneFacturacion">
+                                                    <button title="Editar fecha" class="btn btn-default btn-xs btn-flat"><span class="fa fa-pencil"></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-10">
+                                            <p class="fecha-registro">({{atencion.FechaIngresoString}} - {{atencion.FechaSalidaString}})</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="prioridad-3" ng-class="atencion.EstadoActual.Id == idEstadoAnulado ? 'tachado' : ''">{{atencion.Noches}}</td>
+                                <td class="prioridad-4" ng-class="atencion.EstadoActual.Id == idEstadoAnulado ? 'tachado' : ''">{{atencion.PrecioUnitario|number:2}}</td>
+                                <td class="prioridad-5" ng-class="atencion.EstadoActual.Id == idEstadoAnulado ? 'tachado' : ''">{{atencion.Importe|number:2}}</td>
+                                <td class="prioridad-6" ng-class="atencion.EstadoActual.Id == idEstadoAnulado || atencion.Importe == 0 ? 'tachado' : ''">{{atencion.Huespedes.length}}</td>
+                                <td class="prioridad-7">{{atencion.EstadoActual.Nombre}}</td>
+                                <td class="prioridad-8"><span class="label" ng-show="atencion.Importe > 0" ng-class="atencion.Facturado ? 'label-success' : 'label-danger'" style="font-size: 15px;color:black">{{atencion.Facturado ? 'SI': 'NO'}}</span></td>
+                                <td class="prioridad-9">
+                                    <a title="Ver detalle" class="btn btn-default btn-block btn-collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse{{atencion.Id}}"><span class="fa fa-sort-down"></span></a>
+                                </td>
+                            </tr>
+                            <tr id="collapse{{atencion.Id}}" class="collapse" ng-class="idAtencion == atencion.Id ? 'in' : ''" ng-repeat-end>
+                                <td colspan="9" class="acordion-contenido" style="text-align:left">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 contenedor-linea-de-tiempo">
+                                                <div class="row">
+                                                    <div class="col-sm-12" style="text-align:center"><label>Proceso</label></div>
+                                                    <div class="col-sm-12">
+                                                        <ul class="nav-justified linea-de-tiempo" style="display: flex; justify-content:center">
+                                                            <li ng-repeat="estado in atencion.Estados">
+                                                                <div class="row">
+                                                                    <hr class="linea" />
+                                                                    <a class="circulo" ng-click="mostrarObservacioEstado(estado)" ng-style="{background: estado.Valor}" style="border: 1px solid gray; cursor: pointer;"></a>
+                                                                    <div class="contenido" style="text-align: center;">
+                                                                        <p>{{estado.Nombre}}</p>
+                                                                        <p>{{estado.FechaString}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 contenedor-acciones" ng-if="atencion.PuedeConfirmar || atencion.PuedeCheckIn || (atencion.PuedeFacturar || atencion.TieneFacturacion  && !atencionMacro.FacturadoGlobal) || atencion.PuedeCheckOut || atencion.PuedeAnular || atencion.PuedeCambiarHabitacion">
+                                                <div class="col-sm-12 acciones-titulo">
+                                                    <label>Acciones</label>
+                                                </div>
+                                                <div class="col-sm-12 acciones-botones">
+                                                    <button title="Confirmar Reserva" class="btn btn-mediano btn-warning" ng-if="atencion.PuedeConfirmar" ng-click="abrirConfirmarAtencion($index)"><span class="fa fa-calendar-check-o"></span></button>
+                                                    <button title="Check-In" class="btn btn-mediano btn-success" ng-if="atencion.PuedeCheckIn" ng-disabled="atencion.Huespedes.length == 0" ng-click="abrirCheckInAtencion($index)"><span class="fa fa-sign-in"></span></button>
+                                                    <button title="Facturar" class="btn btn-mediano btn-info" ng-if="(atencion.PuedeFacturar || atencion.TieneFacturacion)  && atencion.Importe > 0 && !atencionMacro.FacturadoGlobal" ng-click="abrirFacturarAtencion($index)"><span ng-class="atencion.Facturado ? 'fa fa-file-text-o' : 'fa fa-file-text'"></span></button>
+                                                    <button title="Check- Out" class="btn btn-mediano btn-danger" ng-if="atencion.PuedeCheckOut" ng-disabled="!atencion.Facturado" ng-click="abrirCheckOutAtencion($index)"><span class="fa fa-sign-out"></span></button>
+                                                    <button title="Anular" class="btn btn-mediano btn-danger" ng-if="atencion.PuedeAnular" ng-click="abrirAnularAtencion($index)"><span class="fa  fa-calendar-times-o"></span></button>
+                                                    <button title="Cambiar Habitacion" class="btn btn-mediano btn-warning" style="background-color:#ab630a; border-color:#ab630a" ng-if="atencion.PuedeCambiarHabitacion" ng-click="abrirCambiarHabitacionAtencion($index)"><span class="fa fa-exchange"></span></button>
+                                                    <button title="Incidente" class="btn btn-mediano btn-purple" ng-if="atencion.Facturado && atencion.PuedeCheckOut && !atencionMacro.FacturadoGlobal" ng-click="abrirIncidenteAtencion($index)"><span class="fa fa-repeat"></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9" style="border-right: 2px solid grey">
+                                                <registrador-huesped name="RegistradorHuesped" id="RegistradorHuesped" atencion="atencion" api="registradoHuespedAPI" changed="cambioRegistroHuesped()" puede-guardar-huesped="true" puede-modificar-huesped="atencion.EstadoActual.Id == idEstadoRegistrado || atencion.EstadoActual.Id == idEstadoConfirmado || atencion.EstadoActual.Id == idEstadoCheckedIn" external-id="$index"></registrador-huesped>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3">
+                                                <div class="row">
+                                                    <div class="col-sm-12"><label>Anotación</label></div>
+                                                    <div class="col-sm-12 anotacion" ng-repeat="item in atencion.Anotaciones">
+                                                        <div class="row">
+                                                            <div class="col-xs-4 col-sm-6 anotacion-fecha"><p>{{item.Fecha}}</p></div>
+                                                            <div class="col-xs-8 col-sm-6 anotacion-descripcion p-0"><p>{{item.Mensaje}}</p></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12" style="padding-bottom:1rem;">
+                                                        <div class="row" style="display:flex; justify-content:center; align-items:center">
+                                                            <div class="col-xs-10 col-sm-9" style="padding-right:0">
+                                                                <input type="text" name="anotacion" maxlength="30" placeholder="¿Algo importante?" uppercase-only class="form-control" ng-model="atencion.Anotacion" ng-enter="guardarAnotacion($index)" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <button class="btn btn-sm btn-primary pull-left" ng-click="guardarAnotacion($index)" ng-disabled="atencion.Anotacion == undefined || atencion.Anotacion == ''"><span class="fa fa-save"></span></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2">TOTAL</th>
+                                <th>{{atencionMacro.TotalNoches}}</th>
+                                <th></th>
+                                <th>{{atencionMacro.Total|number:2}}</th>
+                                <th>{{atencionMacro.TotalHuespedes}}</th>
+                                <th colspan="3"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL VOUCHER-->
+    <div class="modal fade" id="modalVerImagen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="position:relative">
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img id="imagenVoucher" src="{{atencionMacro.SrcImagenVoucherExtranet}}" alt="Alternate Text" style="width:100%" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <facturador name="Facturador" id="Facturador" atencion="atencionAfacturar" api="facturadorAPI" cerrar-facturacion="cerrarFacturacion(seFacturo)" guardar-facturacion="facturarAtencion()"></facturador>
+    @Html.Partial("_Editar_Fecha_Reserva")
+    @Html.Partial("_Editar_Responsable")
+    @Html.Partial("_Confirmar_Reserva")
+    @Html.Partial("_Registrar_CheckIn")
+    @Html.Partial("_Registrar_CheckOut")
+    @Html.Partial("_Anular_Reserva")
+    @Html.Partial("_Cambiar_Habitacion")
+    @Html.Partial("_Registro_Incidente")
+</div>

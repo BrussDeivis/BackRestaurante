@@ -1,0 +1,408 @@
+﻿@{
+    ViewBag.Title = "Restaurante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/atencion/atencionController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/atencion/atencion_AmbienteController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/atencion/atencion_GestionOrdenesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/atencion/atencion_DetalleOrdenAtencionController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/atencion/atencion_TomarOrdenAtencionController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/atencion/atencion_FacturacionController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorPago/editorPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/registradorFinanciamiento/registradorFinanciamiento.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/facturadorRestaurante/facturadorRestaurante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/visualizadorFacturador/visualizadorFacturador.js")></script>
+    <script>
+        var ParametrosDeConfiguracion = @(Html.Raw(Json.Encode(ViewBag.ParametrosDeConfiguracion)));
+    </script>
+
+    @Html.Raw(ViewBag.WCPScript);
+}
+<div id="main-content-restaurant" ng-controller="atenciónController" ng-init="iniciarDatos()">
+    <div class="col-md-12 mb-5 p-0">
+        <div class="col-md-4 col-lg-4 p-0" ng-class="{ 'div-disabled': _banderaCambiandoMesa}" ng-show="ParametrosDeAtencion.UsuarioTieneRolAdministradorDeNegocio">
+            <div class="col-md-4">
+                <label for="selector_establecimiento" style="margin-top:0.7rem">Establecimiento </label>
+            </div>
+            <div class="col-md-8">
+                <select id="selector_establecimiento" class="select2 form-control" ng-model="EstablecimientoSeleccionado" ng-change="obtenerAmbientes(1)" ng-options="item as item.Nombre for item in ParametrosDeAtencion.Establecimientos  track by item.Id" required></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <!-- MESAS -->
+        <div ng-class="(_banderaMesaSeleccionada == true)?'col-md-6  p-0':'col-md-12 p-0'">
+            <div style="display: flex; flex-direction: row; justify-content: space-between; padding-bottom:5px">
+                <div show="true">
+                    <div class="radio-toolbar" ng-show="ParametrosDeAtencion.PermitirVentaEnMesa && (ParametrosDeAtencion.PermitirVentaPorDelivery || ParametrosDeAtencion.PermitirVentaAlPaso)">
+                        <input type="radio" id="atencionconmesa" name="modoatencionmesa" ng-checked="atencionConMesa == 'true'" value="true" ng-click="seleccionarAtencionConMesa()">@*ng-model="atencionConMesa"*@
+                        <label class="p-3-5" id="labelatencionconmesa" for="atencionconmesa" title="Atención con Mesa"><span class="fa fa-2x fa-th"></span></label>
+                        <input type="radio" id="atencionsinmesa" name="modoatencionmesa" ng-checked="atencionConMesa == 'false'" value="false" ng-click="seleccionarAtencionSinMesa()">@*ng-model="atencionConMesa"*@
+                        <label class="p-3-5" id="labelatencionsinmesa" for="atencionsinmesa" title="Atención sin Mesa"><span class="fa fa-2x fa-th-list"></span></label>
+                    </div>
+                </div>
+                <div class="flex-center" ng-show="atencionConMesa == 'true' && ambientesConMesa.length > 0">
+                    <div class="radio-toolbar-btn" ng-repeat="ambienteConMesa in ambientesConMesa">
+                        <input type="radio" id="ambienteconmesa-{{$index}}" name="ambienteconmesa" value="{{$index}}" ng-checked="numeroDeAmbiente == {{$index}} + 1" ng-click="cambioAmbienteConMesa($index+1)">
+                        <label id="ambienteconmesa-{{$index}}" for="ambienteconmesa-{{$index}}">{{ambienteConMesa.Nombre}}</label>
+                    </div>
+                </div>
+                <div ng-show="atencionConMesa == 'true' && ambientesConMesa.length > 0">
+                    <button class="btn btn-danger btn-sm mx-2" ng-click="eliminarAmbiente(ambienteActual)" title="Eliminar ambiente" ng-show="ParametrosDeAtencion.UsuarioTieneRolAdministradorDeNegocio && mesas.length == 0"><span class="fa fa-trash"></span></button>
+                    <button class="btn btn-warning btn-sm mx-2" ng-click="editarAmbiente(ambienteActual)" title="Editar ambiente" ng-show="ParametrosDeAtencion.UsuarioTieneRolAdministradorDeNegocio"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button class="btn btn-primary btn-sm mx-2" ng-click="agregarAmbiente()" title="Agregar nuevo ambiente" ng-show="ParametrosDeAtencion.UsuarioTieneRolAdministradorDeNegocio"><span class="glyphicon glyphicon-plus"></span></button>
+                    <button class="btn btn-info btn-sm mx-2" ng-click="obtenerMesasDeAmbiente(ambienteActual.Id)" title="Actualizar"><span class="glyphicon glyphicon-refresh"></span></button>
+                </div>
+                <div class="flex-center" ng-show="atencionConMesa == 'false' && ambientesSinMesa.length > 0">
+                    <div class="radio-toolbar-btn" ng-repeat="ambienteSinMesa in ambientesSinMesa" ng-init="cargarAmbienteSinMesaPorDefecto()">
+                        <input type="radio" id="ambientesinmesa-{{$index}}" name="ambientesinmesa" value="{{$index}}" ng-checked="numeroDeAmbiente == {{$index}} + 1" ng-click="cambioAmbienteSinMesa($index+1)">
+                        <label id="ambientesinmesa-{{$index}}" for="ambientesinmesa-{{$index}}">{{ambienteSinMesa.Nombre}}</label>
+                    </div>
+                </div>
+                <div ng-show="atencionConMesa == 'false' && ambientesSinMesa.length > 0">
+                    <button class="btn btn-info btn-sm mx-2" ng-click="obtenerAtencionesSinMesa()" title="Actualizar"><span class="glyphicon glyphicon-refresh"></span></button>
+                </div>
+            </div>
+            <div ng-show="atencionConMesa == 'true' && ambientesConMesa.length > 0">
+                <div id="contenedorDeMesas">
+                </div>
+            </div>
+            <div ng-show="atencionConMesa == 'true' && ambientesConMesa.length == 0 && ambientesConMesaCargados" class="col-md-6" style="padding: 20px;">
+                <h1 class="col-md-6 col-xs-12" style="text-align: center; margin: auto;">SIN AMBIENTES</h1>
+                <div class="col-md-6 col-xs-12">
+                    <button style="margin: auto; text-align: center;" class="btn btn-primary " ng-click="agregarAmbiente()">Nuevo Ambiente</button>
+                </div>
+            </div>
+            <div ng-show="atencionConMesa == 'false'">
+                <div ng-class="(_banderaMesaSeleccionada == true)?'col-md-12  p-0':'col-md-6 p-0'">
+                    <div class="box box-primary">
+                        <div class="box-header with-border p-5">
+                            <h3 class="box-title col-md-11 col-xs-10" style="text-align: center; padding-top: 7px;">LISTADO DE PEDIDOS</h3>
+                            <div class="col-md-1 col-xs-2 p-0" style="text-align:right">
+                                <a title="NUEVA ATENCIÓN" class="btn btn-md btn-primary" ng-click="nuevaAtencionPorLista()"><span class="glyphicon glyphicon-plus"></span></a>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-1">N°</th>
+                                        <th class="col-md-2">ALIAS</th>
+                                        <th class="col-md-2">MODO</th>
+                                        <th class="col-md-2">HORA ATENCION</th>
+                                        <th class="col-md-2">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ng-cloak">
+                                    <tr ng-repeat="item in atencionesSinMesa" ng-click="actualizarAtencionSinMesa(item.IdMesa)">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Cliente}}</td>
+                                        <td>{{item.ModoAtencion}}</td>
+                                        <td>{{item.HoraAtencion}}</td>
+                                        <td>{{item.Total|number:2}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="atencionConMesa == 'false' && ambientesSinMesa.length == 0 && ambientesSinMesaCargados" class="col-md-6" style="padding: 20px;">
+                <h4 class="col-md-6 col-xs-12" style="text-align: center; margin: auto;">SIN CENTRO DE ATENCION PARA OPERACIONES</h4>
+            </div>
+        </div>
+        <!-----------------------------PANEL DE ATENCION --------------------------------------------------------------->
+        <div id="panel-atencion" class="col-md-6 px-10" ng-hide="_banderaMesaSeleccionada == false" ng-init="iniciarComplementos()">
+            <!--CONFIGURACIÓN DE ATENCIÓN ENCABEZADO-->
+            <div class="col-sm-12 col-xs-12 px-0" style="color:red" ng-if="_banderaCambiandoMesa">
+                CAMBIO DE MESA. Por favor seleccione una mesa disponible.
+                <button title="Cancelar cambio de mesa" style="color:red" ng-click="cancelarCambioDeMesa()" class="btn btn-default btn-xs"><span class="fa fa-2x fa-close"></span></button>
+            </div>
+            <div ng-class="{ 'div-disabled': _banderaCambiandoMesa}">
+                <div class="col-sm-12 col-xs-12 px-0">
+                    <div class="row encabezado-atencion">
+                        <div class="col-sm-3 col-xs-12 encabezado-atencion-icono">
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12 icono">
+                                    <button class="btn btn-info" title="Cambiar Mesa" ng-show="atencionConMesa == 'true'" ng-click="habilitarCambioDeMesa()">
+                                        <span class="glyphicon glyphicon-cutlery text-gray">
+                                        </span>
+                                    </button>
+                                    <span class="info-box-number" style="font-size:35px" ng-show="atencionConMesa == 'true'">&nbsp;{{atencionActual.Mesa.Nombre}}</span>
+                                    <span class="info-box-number" style="font-size:20px; text-align:center; display:contents" ng-show="atencionConMesa == 'false'">{{atencionActual.Mesa.Nombre}}&nbsp;&nbsp;</span>
+                                    <div ng-show="atencionConMesa == 'false'">
+                                        <div ng-show="nuevaAtencionSinMesa" class="transparente">
+                                            <a title="NUEVA ATENCION"><span class="fa fa-star" style="font-size:35px"></span></a>
+                                        </div>
+                                        <div ng-show="!nuevaAtencionSinMesa" class="transparente">
+                                            <a title="ATENCION EN PROCESO"><span class="fa fa-hourglass" style="font-size:35px"></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-12 encabezado-atencion-cuerpo">
+                            <div class="input-group" ng-show="atencionConMesa == 'false' && nuevaAtencionSinMesa">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="Nombre Cliente" ng-model="atencionActual.Cliente" uppercase-only>
+                            </div>
+                            <div class="col-sm-5 col-xs-12 text-center" ng-show="atencionConMesa == 'true' || !nuevaAtencionSinMesa">
+                                <span class="info-box-number" style="font-size:25px">S/ {{atencionActual.ImporteAtencion.toFixed(2)}}</span>
+                            </div>
+                            <div class="col-sm-7 col-xs-12" ng-if="atencionActual.Id > 0">
+                                <button class="btn btn-primary" ng-if="verBotonCerrarAtencion()" ng-disabled="!puedeCerrarAtencion()" ng-click="cerrarAtencion()" title="Cerrar la atencion"><span class="glyphicon glyphicon-check"></span></button>
+                                <button class="btn btn-primary" ng-if="verBotonFacturarAtencion()" ng-disabled="!puedeFacturarAtencion()" ng-click="iniciarFacturacion()" title="Facturar la atencion"><span class="fa fa-file-text-o"></span></button>
+                                <button class="btn btn-default" ng-click="imprimirCuenta(atencionActual)" title="Imprimir la cuenta"><span class="glyphicon glyphicon-print"></span></button>
+                                @*<button class="btn btn-default" ng-click="imprimirCuentaDirecta(atencionActual)" title="Imprimir la cuenta"><span class="glyphicon glyphicon-print"></span></button>*@
+                                <a title="Descargar la cuenta en formato PDF" class="btn btn-default" href="@Url.Action("ObtenerAtencionPDF", "Restaurante")?idAtencion={{atencionActual.Id}}" target="_blank"><span class="fa fa-file-pdf-o"></span></a>
+                                <button class="btn btn-info" ng-show="!_banderaRealizandoseOrden" ng-click="actualizarAtencion(atencionActual.Mesa.Id)" title="Actualizar"><span class="glyphicon glyphicon-refresh"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--REALIZACIÓN DE ORDEN-->
+                <div class="col-sm-12 col-xs-12 px-0" ng-hide="atencionConMesa == 'false' && !nuevaAtencionSinMesa">
+                    <div id="tomarpedido-box" class="box box-solid box-primary shadow border-radius-10" ng-hide="atencionActual.Estado == ParametrosDeAtencion.IdEstadoCerrado">
+                        <div class="box-header with-border">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-6 px-2" style="padding-right:0;">
+                                    <div class="box-tools">
+                                        <a type="button" class="btn btn-box-tool" data-toggle="collapse" data-parent="#panel-atencion" href="#tomarPedido">
+                                            <i class="fa fa-caret-square-o-down box-title titulo-negrita-blanco"></i>&nbsp;<h3 class="box-title titulo-negrita-blanco">Tomar Orden</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6 px-0">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-6">
+                                            <span class="info-box-number" style="font-size:20px">S/ {{ordenDeVista.ImporteOrden.toFixed(2)}}</span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6" ng-show="(!ParametrosDeAtencion.UsuarioTieneRolCajero || (ordenDeVista.Mozo != undefined)) && (ordenDeVista.DetallesDeOrden.length>0) && atencionActual.Estado != ParametrosDeAtencion.IdEstadoCerrado && (atencionConMesa == 'true' || atencionActual.Cliente != '')">
+                                            <p class="btn btn-secundary btn-sm" ng-click="realizarOrden()" title="Guardar Orden"><span class="glyphicon glyphicon-save"></span> GUARDAR</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tomarPedido" class="box-body collapse">
+                            <div class="px-10">
+                                <div class="row" style="padding-bottom:10px" ng-if="ParametrosDeAtencion.UsuarioTieneRolCajero">
+                                    <div class="col-lg-2">
+                                        <label for="mozo" class="label-control" style="padding-top:7px">Mozo</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <select id="mozo" class="select2 form-control" ng-model="ordenDeVista.Mozo" ng-options="item as item.Nombre for item in mozos track by item.Id">
+                                            <option value="">Selecciona un mozo</option>
+                                        </select>
+                                        <p style="margin:0; color:red; padding-top:5px;" ng-show="ordenDeVista.Mozo.Id == undefined">Seleccionar Un Mozo</p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="radio-toolbar pull-right" ng-show="atencionConMesa == 'false' && ambienteActual.EsPuntoDelivery && ambienteActual.EsPuntoAlPaso">
+                                            <input type="radio" id="atenciondelivery" name="modoatencion" ng-show="ambienteActual.EsPuntoDelivery" ng-checked="atencionDelivery == 'true'" value="true" ng-click="seleccionarAtencionDelivery()">@*ng-model="atencionDelivery"*@
+                                            <label class="p-3-5" id="labelatenciondelivery" for="atenciondelivery" ng-show="ambienteActual.EsPuntoDelivery" title="Atención por Delivery"><span class="fa fa-2x fa-phone"></span></label>
+                                            <input type="radio" id="atencionalpaso" name="modoatencion" ng-show="ambienteActual.EsPuntoAlPaso" ng-checked="atencionDelivery == 'false'" value="false" ng-click="seleccionarAtencionAlPaso()">@*ng-model="atencionDelivery"*@
+                                            <label class="p-3-5" id="labelatencionalpaso" for="atencionalpaso" ng-show="ambienteActual.EsPuntoAlPaso" title="Atención al Paso"><span class="fa fa-2x fa-male"></span></label>
+                                        </div>
+                                        <div class="radio-toolbar pull-right" ng-show="!(ambienteActual.EsPuntoDelivery && ambienteActual.EsPuntoAlPaso)">
+                                            <h5 style="color: var(--color-primario); font-weight: bold" ng-show="ambienteActual.EsPuntoDelivery">VENTA POR DELIVERY</h5>
+                                            <h5 style="color: var(--color-primario); font-weight: bold" ng-show="ambienteActual.EsPuntoAlPaso">VENTA AL PASO</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="codigoItem">Código Barra </label>
+                                        <input class="form-control" type="text" ng-enter="buscarItemPorCodigoBarra()" id="codigoBarraItem" placeholder="Codigo de barra del concepto (Ejemplo: 125)" />
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <label>Categorías </label>
+                                        <div>
+                                            <button type="button" ng-click="limpiarCategorias()" style="float:left" class="btn btn-xs btn-primary" title="Limpiar seleccion de categorias"><span class="">Todo</span></button>
+                                        </div>
+                                        <div id="categorias" ng-init="iniciarCategorias()">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-sm-9 px-5">
+                                            <label for="itemId">Item </label>
+                                            <select class="select2 form-control" id="itemSeleccionado" ng-model="itemSeleccionado.Concepto" ng-change="focusNextConcepto()" ng-options="item as item.NombreCompleto for item in itemsVisibles track by item.Id" required>
+                                                <option value="">Selecciona un item</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-2 px-5 pb-10">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="number" id="cantidadItem" class="form-control" min="1" step="1" onkeypress="return !(event.charCode == 46)" ng-model="itemSeleccionado.Cantidad" ng-enter="agregarItemSeleccionadoDesdeCantidad()" />
+                                        </div>
+                                        <div class="col-sm-1 col-xs-4 px-5 pb-10 btn-cantidad-item" style="margin-top:27px">
+                                            <button type="button" class="btn btn-primary btn-sm" ng-disabled="desabilitarTomarOrden()" ng-click="agregarItemSeleccionado()" title="Agregar Item"><span class="fa fa-check"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 px-10">
+                                        <div class="table-responsive">
+                                            <table id="acordionAnotacion" class="table tabla-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>Descripción</th>
+                                                        <th>Cantidad</th>
+                                                        <th>P.U</th>
+                                                        <th>Importe</th>
+                                                        <th>Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody ng-repeat="itemOrden in ordenDeVista.DetallesDeOrden" ng-init="indexOrden = $index">
+                                                    <tr>
+                                                        <td style="width: 2%">{{$index+1}}</td>
+                                                        <td style="width: 60%">{{itemOrden.NombreItem}}</td>
+                                                        <td style="width: 10%">{{itemOrden.Cantidad.toFixed(2)}}</td>
+                                                        <td style="width: 10%">{{itemOrden.Precio.toFixed(2)}}</td>
+                                                        <td style="width: 10%">{{itemOrden.Importe.toFixed(2)}}</td>
+                                                        <td style="width: 5%">
+                                                            <button type="button" ng-click="eliminarItemOrden($index)" class="btn btn-xs btn-danger" title="Eliminar Item de Orden"><span class="glyphicon glyphicon-trash"></span></button>
+                                                            <a ng-click="ponleFocusAnotacion(indexOrden)" title="Agregar una Anotacion" class="btn btn-xs btn-info" data-toggle="collapse" data-parent="#acordionAnotacion" href="#anotacion{{indexOrden}}"><span class="fa fa-thumb-tack"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="complementos{{indexOrden}}">
+                                                        <td colspan="5">
+                                                            <div style="display: flex; flex-direction: column;">
+                                                                <div class="orden-complementos" ng-repeat="complementos in itemOrden.ComplementosDeFamilia" ng-init="indexComplementos = $index">
+                                                                    <div style="display: flex; flex-direction: row; justify-content: left; margin-left:20px">
+                                                                        <div ng-repeat="complemento in complementos.Detalles_Complemento track by complemento.Id" style="display:flex; flex-direction: row; margin-top:2px">
+                                                                            <input class="ItemComplemento{{indexOrden}}" id="item-complemento{{indexOrden}}{{complemento.Id}}" type="checkbox" ng-value="complemento.Id" ng-click="complementoSeleccionado(indexComplementos,complemento,$event,indexOrden)" />
+                                                                            <label for="item-complemento{{indexOrden}}{{complemento.Id}}" style="font-weight:500">{{complemento.Nombre}}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="anotacion{{indexOrden}}" class="collapse">
+                                                        <td colspan="5">
+                                                            <div class="form-group has-feedback contenedor-anotacion">
+                                                                <input class="form-control" id="input-anotacion{{indexOrden}}" aria-describedby="input-anotacion{{indexOrden}}Status" placeholder="Ej: Sin ensalada" ng-model="itemOrden.DetalleItemRestaurante.AnotacionIndicacion" maxlength="60">
+                                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="itemOrden.DetalleItemRestaurante.AnotacionIndicacion = ''; eliminarAnotacion(indexOrden)"></span>
+                                                                <span class="sr-only" id="input-anotacion{{indexOrden}}Status">(error)</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--RESUMEN DE ORDENES-->
+                <div class="col-sm-12 col-xs-12 px-0">
+                    <div id="ordenes-box" class="box box-solid box-primary shadow border-radius-10">
+                        <div class="box-header with-border">
+                            <div class="col-sm-12 col-xs-12 px-0" style="padding-right:0;">
+                                <div class="box-tools">
+                                    <a type="button" class="btn btn-box-tool" data-toggle="collapse" data-parent="#panel-atencion" href="#ordenes">
+                                        <i class="fa fa-caret-square-o-down box-title titulo-negrita-blanco"></i>&nbsp;<h3 class="box-title titulo-negrita-blanco">Órdenes</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ordenes" class="box-body collapse">
+                            <div class="px-10" ng-repeat=" orden in atencionActual.Ordenes" ng-init="IndexOrden = $index">
+                                <table class="table table-height-small" ng-disabled="orden.Estado == ParametrosDeOrden.EstadoCerrado">
+                                    <thead>
+                                        <tr class="orden-cabecera" ng-style="obtenerEstiloDeReporteDeOrden(orden.Estado)">
+                                            <th colspan="5" style="padding-bottom:0;">
+                                                <div class="pull-left" style="display: flex; flex-direction: row;">
+                                                    <pre style="padding:5px;"><strong><span class="fa fa-book"></span> {{orden.Codigo}}</strong></pre>
+                                                    <pre style="font-size: 15px; padding:5px"><strong>S/{{orden.ImporteOrden.toFixed(2)}}</strong></pre>
+                                                    <button class="btn btn-default" ng-click="imprimirOrden(orden)" title="Imprimir Orden" style="margin-bottom:10px"><span class="glyphicon glyphicon-print"></span></button>
+                                                    @*<button class="btn btn-default" ng-click="descargarOrdenPDF(orden)" title="Descargar Orden en formato PDF"><span class="fa fa-file-pdf-o"></span></button>*@
+                                                    <a title="Descargar Orden en formato PDF" class="btn btn-default" href="@Url.Action("ObtenerOrdenPDF", "Restaurante")?idOrden={{orden.Id}}" style="margin-bottom:10px" target="_blank"><span class="fa fa-file-pdf-o"></span></a>
+                                                </div>
+                                                <div class="pull-right" style="display: flex; flex-direction: row;">
+                                                    <button title="Cerrar Orden" ng-if="verBotonCerrarOrden(orden)" ng-disabled="!puedeCerrarOrden(orden)" ng-click="cerrarOrden(orden)" class="btn btn-primary btn-xs "><span class="glyphicon glyphicon-check fa-2x"></span></button>
+                                                    <button title="Reanudar todo" ng-if="puedeReanudarTodosLosDetallesDeOrden(orden)" style="color: var(--color-primario)" ng-click="reanudarTodosLosDetallesDeOrden(orden)" class="btn btn-default btn-xs"><span class="fa fa-2x fa-share"></span></button>
+                                                    <button title="Atender todo" ng-if="puedeAtenderTodosLosDetallesDeOrden(orden)" style="color: var(--color-primario)" ng-click="atenderTodosLosDetallesDeOrden(orden)" class="btn btn-default btn-xs"><span class="fa fa-2x fa-check"></span></button>
+                                                    <button title="Anular todo" ng-if="puedeAnularTodosLosDetallesDeOrden(orden)" style="color: var(--color-secundario)" ng-click="anularTodosLosDetallesDeOrden(orden)" class="btn btn-default btn-xs"><span class="fa fa-2x fa-close"></span></button>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Cantidad</th>
+                                            <th>P.U.</th>
+                                            <th>Importe</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat=" detalle in orden.DetallesDeOrden" ng-init=" IndexDetalle = $index">
+                                        <tr ng-style=obtenerEstiloDeDetalleDeOrden(detalle.Estado)>
+                                            <td style="text-align:left">
+                                                {{detalle.NombreItem}}
+                                                <div style="display: flex; flex-direction: column; align-items:flex-start">
+                                                    <span ng-repeat="complemento in detalle.DetalleItemRestaurante.DetallesComplemento" ng-if="detalle.DetalleItemRestaurante.DetallesComplemento.length > 0" style="padding-top:3px">
+                                                        <span ng-repeat="itemComplemento in complemento.ItemsComplemento" ng-init="indexComplementos = $index ;" style="padding-left:2px">
+                                                            <label class="label label-primary">
+                                                                {{itemComplemento['Nombre']}}
+                                                            </label>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <label ng-if="detalle.DetalleItemRestaurante.AnotacionIndicacion.length > 0" class="label label-warning" style="text-transform:uppercase">
+                                                    {{detalle.DetalleItemRestaurante.AnotacionIndicacion}}
+                                                </label>
+                                                <label ng-if="detalle.DetalleItemRestaurante.AnotacionObservacion.length > 0" class="label label-danger" style="text-transform:uppercase; margin-left: 10px;">
+                                                    {{detalle.DetalleItemRestaurante.AnotacionObservacion}}
+                                                </label>
+                                            </td>
+                                            <td>{{detalle.Cantidad.toFixed(2)}}</td>
+                                            <td>{{detalle.Precio.toFixed(2)}}</td>
+                                            <td>{{detalle.Importe.toFixed(2)}}</td>
+                                            <td ng-style="(orden.Estado != ParametrosDeOrden.EstadoConfirmado)?{'pointer-events':'none','opacity':'0.35'}:{}">
+                                                <button ng-if="puedeAtenderDetalleOrden(detalle)" style=" text-align: center; color: var(--color-primario)" type="button" class="btn btn-default btn-xs " title="Atender" ng-click="atenderDetalleDeOrden(IndexOrden, IndexDetalle)"><span class="fa fa-check"></span></button>
+                                                <button ng-if="puedeAnularDetalleOrden(detalle)" style=" text-align: center; color: var(--color-secundario)" type="button" class="btn btn-default btn-xs " title="Anular" ng-click="anularDetalleDeOrden(IndexOrden, IndexDetalle)"><span class="fa  fa-close"></span></button>
+                                                <button ng-if="puedeDevolverDetalleOrden(detalle)" style=" text-align: center; color: var(--color-secundario)" type="button" class="btn btn-default btn-xs " title="Devolver: se descarta por problemas de calidad" ng-click="devolverDetalleDeOrden(IndexOrden, IndexDetalle)"><span class="fa fa-trash"></span></button>
+                                                <button ng-if="puedeReanudarDetalleOrden(detalle)" style="text-align: center; color: var(--color-primario) " type="button" class="btn btn-default btn-xs " title="Reanudar: nuevamente se considera el detalle como válido dentro de la orden" ng-click="reanudarDetalleDeOrden(IndexOrden, IndexDetalle)"><span class="fa fa-share"></span></button>
+                                                <a ng-if="puedeObservarDetalleOrden(detalle)" title="Agregar observacion" class="btn btn-xs btn-default" data-toggle="collapse" data-parent="#ordenes" href="#anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" ng-click="ponleFocusAnotacionDetalle(IndexOrden, IndexDetalle)"><span class="fa fa-mail-reply" style="color:orange"></span></a>
+                                                <a ng-if="puedeAtenderDetalleOrden(detalle)&&puedeAnularDetalleOrden(detalle)" style="color: darkcyan" title="Agregar Anotacion" class="btn btn-xs btn-default" data-toggle="collapse" data-parent="#ordenes" href="#anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" ng-click="ponleFocusAnotacionDetalle(IndexOrden, IndexDetalle)"><span class="fa fa-thumb-tack"></span></a>
+                                            </td>
+                                        </tr>
+                                        <tr id="anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" class="collapse">
+                                            <td colspan="5" class="contenedor-anotacion-observacion-td">
+                                                <div ng-if="puedeAtenderDetalleOrden(detalle)&&puedeAnularDetalleOrden(detalle)" class="form-group has-feedback contenedor-anotacion">
+                                                    <input class="form-control" id="input-anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" placeholder="Ej: sin ensalada" ng-model="detalle.DetalleItemRestaurante.AnotacionIndicacion" maxlength="60">
+                                                    <a ng-if="puedeAtenderDetalleOrden(detalle)&&puedeAnularDetalleOrden(detalle)" title="Guardar observacion" class="btn btn-xs btn-primary form-control-feedback-guardar" data-toggle="collapse" data-parent="#ordenes" href="#anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" ng-click="guardarAnotacionIndicacionDetalleOrden(IndexOrden, IndexDetalle)"><span class="fa fa-save"></span></a>
+                                                    <a title="Eliminar observacion" class="form-control-feedback" ng-click="detalle.DetalleItemRestaurante.AnotacionIndicacion = ''; guardarAnotacionIndicacionDetalleOrden(IndexOrden, IndexDetalle)" data-toggle="collapse" data-parent="#ordenes" href="#anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}"><span class="glyphicon glyphicon-remove"></span></a>
+                                                </div>
+                                                <div ng-if="!(puedeAtenderDetalleOrden(detalle)&&puedeAnularDetalleOrden(detalle))" class="form-group has-feedback contenedor-anotacion">
+                                                    <input class="form-control" id="input-anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" placeholder="Ej: falta sal" ng-model="detalle.DetalleItemRestaurante.AnotacionObservacion" autofocus maxlength="60">
+                                                    <a title="Guardar observacion" class="btn btn-xs btn-primary form-control-feedback-guardar" data-toggle="collapse" data-parent="#ordenes" href="#anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}" ng-click="guardarAnotacionObservacionDetalleOrden(IndexOrden, IndexDetalle); observarDetalleDeOrden(IndexOrden, IndexDetalle)"><span class="fa fa-save"></span></a>
+                                                    <a title="Eliminar observacion" class="form-control-feedback" data-toggle="collapse" data-parent="#ordenes" href="#anotacion-detalleOrden{{IndexOrden}}{{IndexDetalle}}"><span class="glyphicon glyphicon-remove" ng-click="detalle.DetalleItemRestaurante.AnotacionObservacion = ''; guardarAnotacionObservacionDetalleOrden(IndexOrden, IndexDetalle)"></span></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <facturador-restaurante name="FacturadorRestaurante" id="FacturadorRestaurante" atencion="atencionActual" api="facturadorRestauranteAPI" cerrar-facturacion="cerrarFacturacion(seFacturo)"></facturador-restaurante>
+    <visualizador-facturador name="VisualizadorFacturador" id="VisualizadorFacturador" atencion="atencionActual" api="visualizadorFacturadorAPI" cerrar-visualizador="cerrarVisualizador()"></visualizador-facturador>
+</div>
+
+

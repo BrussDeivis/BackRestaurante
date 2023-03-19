@@ -1,0 +1,63 @@
+﻿<div id="modal-registro-turno" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE TURNO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="turnoForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="establecimientoComercial">ESTABLECIMIENTO COMERCIAL:</label>
+                                <select id="establecimientoComercial" class="select2 form-control" ng-model="turno.EstablecimientoComercial" ng-change="obtenerCentrosAtencion(turno.EstablecimientoComercial.Id)" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="centroDeAtencion">CENTRO DE ATENCIÓN:</label>
+                                <select id="centroDeAtencion" class="select2 form-control" ng-model="turno.CentroDeAtencion" ng-options="item as item.Nombre for item in listaCentrosDeAtencion track by item.Id" required></select>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="empleado">EMPLEADO:</label>
+                                <select id="empleado" class="select2 form-control" ng-model="turno.Empleado" ng-options="item as item.Nombre for item in listaEmpleados track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <label for="desde">DESDE:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="desde" placeholder="dd/mm/aaaa" class="datepicker-start form-control" ng-model="turno.Desde" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <label for="hasta">HASTA:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="hasta" placeholder="dd/mm/aaaa" class="datepicker-end form-control" ng-model="turno.Hasta" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="turnoForm.$invalid" ng-click="guardarTurno()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-turno')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

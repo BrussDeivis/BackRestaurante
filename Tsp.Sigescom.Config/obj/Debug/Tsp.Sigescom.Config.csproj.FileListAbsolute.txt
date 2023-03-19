@@ -1,0 +1,11 @@
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\bin\Debug\Tsp.Sigescom.Config.dll
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\bin\Debug\Tsp.Sigescom.Config.pdb
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.csproj.CoreCompileInputs.cache
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.dll
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.pdb
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.dll
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.pdb
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\bin\Debug\Tsp.Sigescom.Config.dll
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\bin\Debug\Tsp.Sigescom.Config.pdb
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.csproj.AssemblyReference.cache
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\obj\Debug\Tsp.Sigescom.Config.csproj.CoreCompileInputs.cache

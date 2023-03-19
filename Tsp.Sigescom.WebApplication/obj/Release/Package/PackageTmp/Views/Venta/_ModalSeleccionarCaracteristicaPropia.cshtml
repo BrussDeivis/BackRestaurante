@@ -1,0 +1,62 @@
+﻿<div id="modal-seleccionar-caracteristica-propia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">SELECCIONAR CARACTERISTICAS PROPIAS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 style="text-align:center">{{venta.Detalles[indexDetalle].Producto.Nombre}}</h3>
+                                        <div class="col-md-12">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-body">
+                                                    <table class="table table-hover table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th ng-repeat="caracteristicas in venta.Detalles[indexDetalle].Producto.ConceptoBasico.NombresCaracteristicasPropias">{{ caracteristica.Nombre }}</th>
+                                                                <td>OPCIÓN</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-size:13px;" class="ng-cloak">
+                                                            <tr ng-repeat="item in venta.Detalles[indexDetalle].Producto.ConceptoBasico.CaracteristicasPropias">
+                                                                <td>{{item.Numero}}</td>
+                                                                <td ng-repeat="valor in item.Valores">{{valor}}</td>
+                                                                <td>
+                                                                    <div class="checkbox checkbox-primary">
+                                                                        <input style="height: 20px; width: 20px;" id="check-{{$index}}" type="checkbox"  class="styled" ng-model="nombre"  ng-click="seleccionarCaracteristicaPropia(item)" /><label style="margin-top: -11px; margin-left: 1px;" id="check-{{$index}}"></label>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="GUARDAR" ng-disabled="" class="btn btn-md btn-primary" ng-click="guardarCaracteristicasPropias()"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<td>
+    <div class="checkbox checkbox-primary">
+    <input style="height: 20px; width: 20px;" type="checkbox" form="check-{{$index}}" class="styled" value="{{item}}" ng-checked="cuotasSeleccionadas.indexOf(item)>-1" ng-click="seleccionarCuota(item)" /><label style="margin-top: -11px; margin-left: 1px;" id="check-{{$index}}"></label>
+    </div> 
+  </td>*@

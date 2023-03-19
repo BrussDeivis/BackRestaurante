@@ -1,0 +1,89 @@
+﻿<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>TARIFA</label>
+        </div>
+        <div class="col-md-8">
+            <label style="font-weight:100">{{salida.SistemaDePago.Nombre}}</label>
+        </div>
+        <div class="col-md-4">
+            <label>INGRESO</label>
+        </div>
+        <div class="col-md-8">
+            <label style="font-weight:100">{{salida.IngresoString}}</label>
+        </div>
+        <div class="col-md-4">
+            <label>SALIDA</label>
+        </div>
+        <div class="col-md-8">
+            <label style="font-weight:100">{{salida.SalidaString}}</label>
+        </div>
+        <div class="col-md-4">
+            <label>TURNO</label>
+        </div>
+        <div class="col-md-8">
+            <label style="font-weight:100">{{salida.Turno.FechaInicioString}} {{salida.Turno.HoraInicioString}} - {{salida.Turno.FechaFinString}} {{salida.Turno.HoraFinString}}</label>
+        </div>
+        <div class="col-md-4">
+            <label>POR TURNO</label>
+        </div>
+        <div class="col-md-8" style="text-align:right">
+            <label style="font-weight:100">S/ {{salida.DetallesACobrar.Principal|number:2}}</label>
+        </div>
+        <div class="col-md-4">
+            <label>EXCESO</label>
+        </div>
+        <div class="col-md-4">
+            <label style="font-weight:100">{{salida.TiempoExcesoSistemaPlanaPorTurnos.HorasString}}</label>
+        </div>
+        <div class="col-md-4" style="text-align:right">
+            <label style="font-weight:100">S/ {{salida.DetallesACobrar.Exceso|number:2}}</label>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*<div class="col-md-12">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Tarifa</label>
+                <h5>{{salida.SistemaDePago.Nombre}}</h5>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Ingreso</label>
+                <h5>{{salida.IngresoString}}</h5>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Salida</label>
+                <h5>{{salida.SalidaString}}</h5>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Turno</label>
+                <h5>{{salida.Turno.FechaInicioString}} {{salida.Turno.HoraInicioString}} - {{salida.Turno.FechaFinString}} {{salida.Turno.HoraFinString}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Por Turno </label>
+                <h5>S/ {{salida.DetallesACobrar.Principal}}</h5>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Exceso</label>
+                <h5>{{salida.TiempoExcesoSistemaPlanaPorTurnos.HorasString}}</h5>
+                <h5>S/ {{salida.DetallesACobrar.Exceso}} </h5>
+            </div>
+        </div>
+
+    </div>*@

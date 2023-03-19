@@ -1,0 +1,33 @@
+Product projects
+---------------------------------------
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Config\Tsp.Sigescom.Config.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Modelo\Tsp.Sigescom.Modelo.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.AccesoDatos\Tsp.Sigescom.AccesoDatos.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\Tsp.Sigescom.Utilitarios.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Logica\Tsp.Sigescom.Logica.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\Tsp.Sigescom.Inyeccion.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\Tsp.Sigescom.GeneradorCodigo.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.WebApplication\Tsp.Sigescom.WebApplication.csproj
+
+
+Test projects
+---------------------------------------
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Tsp.Sigescom.UnitTestDatos.csproj
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestLogica\Tsp.Sigescom.UnitTestLogica.csproj
+
+
+Invalid projects
+---------------------------------------
+{none}
+
+
+Skipped projects
+---------------------------------------
+{none}
+
+
+Excluded projects
+---------------------------------------
+{none}
+
+

@@ -1,0 +1,49 @@
+﻿<div class="col-md-12">
+    <div class="row" ng-repeat="puntoDePrecio in precio.PuntosDePrecio" ng-init="parentIndex=$index">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="text-align:center;">{{puntoDePrecio.PuntoDePrecio.Nombre}} </div>
+            <div class="panel-body table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-md-2">TARIFA</th>
+                            <th class="col-md-1">PRECIO ACTUAL</th>
+                            <th class="col-md-1">NUEVO PRECIO</th>
+                            <th class="col-md-1">PRECIO COMPRA</th>
+                            <th class="col-md-1">GANANCIA</th>
+                            <th class="col-md-2">DESDE</th>
+                            <th class="col-md-2">HASTA</th>
+                            <th class="col-md-2">OBSERVACIÓN</th>
+                        </tr>
+                    </thead>
+                    <tbody class="ng-cloak">
+                        <tr ng-repeat="item in puntoDePrecio.Tarifas">
+                            <td>
+                                <div class="checkbox checkbox-primary" style="text-align:left">
+                                    <input id="esIngresado{{parentIndex}}{{$index}}" type="checkbox" ng-model="item.EsIngresado" />
+                                    <label for="esIngresado{{parentIndex}}{{$index}}">{{item.Tarifa.Nombre}}</label>
+                                </div>
+                            </td>
+                            <td class="numero-derecha">{{item.PrecioActual}}</td>
+                            <td>
+                                <input class="form-control numero-derecha number" ng-model="item.Valor" ng-disabled="!item.EsIngresado"  onClick="this.select();" ng-blur="item.Valor=formatNumber(item.Valor,numeroDecimalesEnPrecio)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnPrecio}}})?)?$"/>
+                            </td>
+                            <td class="numero-derecha">{{item.PrecioCompra}}</td>
+                            <td class="numero-derecha" ng-if="!item.EsIngresado">{{item.PrecioActual == 0 ? 0 : (item.PrecioActual - item.PrecioCompra)|number:numeroDecimalesEnPrecio}}</td>
+                            <td class="numero-derecha" ng-if="item.EsIngresado">{{(item.Valor - item.PrecioCompra)|number:numeroDecimalesEnPrecio}}</td>
+                            <td>
+                                <input id="fechaDesde{{parentIndex}}{{$index}}" class="form-control td-datepicker datepicker-start3" placeholder="dd/mm/aaaa" ng-disabled="!item.EsIngresado" ng-model="item.FechaDesde" ng-change="verificarFecha(parentIndex,$index,true)" data-date-start-date='+0d'/>
+                            </td>
+                            <td>
+                                <input id="fechaHasta{{parentIndex}}{{$index}}" class="form-control td-datepicker datepicker-end3" placeholder="dd/mm/aaaa" ng-disabled="!item.EsIngresado" ng-model="item.FechaHasta" ng-change="verificarFecha(parentIndex,$index,false)" data-date-start-date='+0d'/>
+                            </td>
+                            <td>
+                                <input class="form-control" ng-model="item.Descripcion" ng-disabled="!item.EsIngresado" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

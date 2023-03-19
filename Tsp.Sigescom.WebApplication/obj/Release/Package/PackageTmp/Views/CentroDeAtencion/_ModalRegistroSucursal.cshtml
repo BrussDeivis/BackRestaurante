@@ -1,0 +1,141 @@
+﻿<div id="modal-registro-sucursal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO SUCURSAL</h4>
+            </div>
+            <div class="modal-body">
+                <form name="sucursalForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Datos Generales</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="codigoEstablecimiento">Código Establecimiento: *</label>
+                                                    <input id="codigoEstablecimiento" class="form-control" ng-model="sucursal.CodigoEstablecimiento" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre: *</label>
+                                                    <input id="nombre" placeholder="Nombre" class="form-control" uppercase-only ng-model="sucursal.Nombre" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="nombreInterno">Nombre Interno: *</label>
+                                                    <input id="nombreInterno" placeholder="Nombre Interno" class="form-control" uppercase-only ng-model="sucursal.NombreInterno" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="telefono">Teléfono: </label>
+                                                    <input id="telefono" placeholder="Teléfono" class="form-control" ng-model="sucursal.Telefono" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6" ng-if="permitirRegistroCodigoDigemidEnEstableciemientoComercial">
+                                                <div class="form-group">
+                                                    <label for="codigoEstablecimientoDigemid">Código Establecimiento Digemid: *</label>
+                                                    <input id="codigoEstablecimientoDigemid" class="form-control" ng-model="sucursal.CodigoEstablecimientoDigemid" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="correo">Correo: </label>
+                                                    <input id="correo" placeholder="Correo" class="form-control" type="email" ng-model="sucursal.Correo" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="informacionPublicitaria">Información Publicitaria:</label>
+                                                    <textarea class="form-control" rows="2" id="informacionPublicitaria" style=" resize: none;" ng-model="sucursal.InformacionPublicitaria"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Imagen</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row" ng-cloak>
+                                        <div class="col-xs-12" flow-file-added="[processFile($file)][!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]]">
+                                            <div class="form-group">
+                                                <span class="btn btn-primary btn-flat btn-sm" ng-show="!sucursal.Foto.HayFoto" ng-click="dasactivarBotonRestablecer()" flow-btn=""><span class="fa fa-plus"></span> Agregar imagen<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                                <span class="btn btn-info btn-flat  btn-sm" ng-show="sucursal.Foto.HayFoto" ng-click="dasactivarBotonRestablecer()" flow-btn=""><span class="glyphicon glyphicon-refresh"></span> Cambiar<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                                <span class="btn btn-danger btn-flat  btn-sm" ng-show="sucursal.Foto.HayFoto" ng-click="$flow.cancel(); eliminarFotoSucursal()">
+                                                    <span class="glyphicon glyphicon-trash"></span> Remover
+                                                </span>
+                                                <span class="btn btn-success btn-flat  btn-sm" ng-show="botonRestablecer" ng-click="restablecerFotoSucursal()">
+                                                    <span class="glyphicon glyphicon-arrow-left"></span> Restablecer
+                                                </span>
+                                            </div>
+                                            <div class="thumbnail" ng-show="!$flow.files.length">
+                                                <img src="{{sucursal.Foto.FotoSrc}}">
+                                            </div>
+                                            <div class="thumbnail" ng-show="$flow.files.length">
+                                                <img flow-img="$flow.files[0]">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Dirección</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ubigeo">Ubigeo: *</label>
+                                                    <select id="ubigeo" class="select2 form-control" ng-model="sucursal.Direccion.Ubigeo" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="detalle">Detalle: *</label>
+                                                    <input id="detalle" class="form-control" placeholder="Jr. Tupac Amaru N° 234" uppercase-only ng-model="sucursal.Direccion.Detalle" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                <h5>(*) Datos Obligatorios </h5>
+            </div>
+            <div class="modal-footer">
+                <button ng-disabled="sucursalForm.$invalid" ng-click="crearSucursal()" class="btn btn-sm btn-primary pull-left " title="Guardar">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR
+                </button>
+                <button data-dismiss="modal" title="Cerrar" id="#cerrar-modal-registro-sucursal" class="btn btn-sm btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    CERRAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

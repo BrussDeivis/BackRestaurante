@@ -1,0 +1,53 @@
+﻿/*.texto {
+            font-size: 2.8mm !important;
+        }
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }*/
+.texto {
+    font-size: 11.2mm !important;
+}
+
+.titulo {
+    font-weight: bolder;
+    font-size: 20mm;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.importe {
+    text-align: right;
+}
+
+.sinespacios {
+    margin: 0;
+    padding: 0;
+}
+
+.titulo .centrado .importe .texto {
+    font-family: MS Gothic;
+    font-weight: lighter;
+}
+
+.lineaHorizontal {
+    margin: 0;
+}
+
+body.receipt .sheet {
+    width: 58mm;
+    height: 100mm;
+}
+/* sheet size */
+@page {
+    size: 58mm 100mm;
+}
+/* output size */
+@media print {
+    body.receipt {
+        width: 80mm
+    }
+}
+/* fix for Chrome */

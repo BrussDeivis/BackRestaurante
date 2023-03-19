@@ -1,0 +1,23 @@
+﻿<div id="modal-confirmar-reserva" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form name="formularioConfirmarReservacion" id="formularioConfirmarReservacion">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">CONFIRMAR RESERVACION</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label for="textarea">Observación</label>
+                            <textarea class="form-control" rows="3" maxlength="250" ng-model="observacionConfirmar"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a title="Guardar" ng-click="confirmarAtencion()" ng-disabled="observacionConfirmar == undefined || observacionConfirmar.length == 0 || observacionConfirmar.length > 250" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                    <a title="Cerrar" ng-click="cerrarModal('modal-confirmar-reserva')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

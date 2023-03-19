@@ -1,0 +1,113 @@
+﻿<div class="col-xs-12 contenedorDocumentoVenta" style="min-width:400px">
+    <div class="row">
+        <div class="col-xs-3 col-md-3 px-10">
+            <label>Acciones :</label>
+            <div class="col-xs-12 col-md-12 no-padding" ng-show="$ctrl.comprobante.Operacion.PuedeCambiarOperacion">
+                <button title="INVALIDAR EL DOCUMENTO {{$ctrl.comprobante.Operacion.SerieNumeroDocumento}}" ng-show="$ctrl.comprobante.Operacion.EsVigente" ng-click="$ctrl.iniciarInvalidacion()" data-toggle="modal" data-target="#modal-invalidar-documento" class="btn btn-md btn-warning">INVALIDAR</button>
+            </div>
+        </div>
+        <div class="col-xs-4 col-md-4 form-group px-10">
+            <label>Formato :</label>
+            <select class="select2 form-control" id="comboFormato" ng-model="$ctrl.formato" ng-change="$ctrl.cargarDocumento()" ng-options="item as item.Nombre for item in $ctrl.formatosDeImpresion track by item.Id"></select>
+        </div>
+        <div class="col-xs-5 col-md-5 px-10">
+            <label>Opciones: </label>
+            <div class="col-xs-12 col-md-12 no-padding">
+                <button title="IMPRIMIR EL DOCUMENTO" class="btn btn-md btn-primary" ng-click="$ctrl.imprimirDocumentoVenta()"><span class="glyphicon glyphicon-print"></span></button>
+                <div class="btn-group">
+                    <a title="DESCARGAR EN PDF" class="btn btn-md btn-primary" href="/Comprobante/DescargarDocumentoPdf?idOperacion={{$ctrl.comprobante.IdOrden}}&&formato={{$ctrl.formato.Id}}" target="_blank"><span class="fa fa-file-pdf-o"></span></a>
+                    <a class="btn btn-primary dropdown-toggle grupo-boton" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only"></span>
+                    </a>
+                    <div class="dropdown-menu" role="menu" style="min-width:85px">
+                        <a title="DESCARGAR EN XML" class="btn btn-md btn-primary" href="/Comprobante/DescargarDocumentoXml?idOperacion={{$ctrl.comprobante.IdOrden}}&&formato={{$ctrl.formato.Id}}"><span class="fa fa-file-code-o"></span></a>
+                        <a title="DESCARGAR EN ZIP" class="btn btn-md btn-primary" href="/Comprobante/DescargarDocumentoZip?idOperacion={{$ctrl.comprobante.IdOrden}}&&formato={{$ctrl.formato.Id}}"><span class="fa fa-file-zip-o"></span></a>
+                    </div>
+                </div>
+                <button title="ENVIAR POR CORREO ELECTRONICO" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-envio-documento-{{$ctrl.comprobante.IdOrden}}" ng-click="$ctrl.iniciarEnvioCorreo()"><span class="glyphicon glyphicon-envelope"></span></button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <form name="comprobante" class="form-horizontal">
+            <div id="id-comprobante-visualizacion" class="col-md-12 table-responsive" style="padding-left: 0; display: flex; justify-content: center;">
+                <div id="pdfDocumento-{{$ctrl.comprobante.IdOrden}}"
+                     style='width:{{$ctrl.tamanioComprobante}}; border:solid; border-width: thin; margin-left:10px'>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal-envio-documento-{{$ctrl.comprobante.IdOrden}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ENVIO DE DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="table-e-mail" class="table table-stripped table-height-small table-bordered">
+                            <tr>
+                                <th class="col-md-10">Correo</th>
+                                <th class="col-md-2"></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="correoImput" class="form-control" style="height:30px" ng-model="$ctrl.correoElectronico" />
+                                </td>
+                                <td>
+                                    <a ng-click="$ctrl.agregarCorreoElectronico()" ng-disabled="$ctrl.correoElectronico == ''" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in $ctrl.correosElectronicos">
+                                <td>{{item}}</td>
+                                <td>
+                                    <a ng-click="$ctrl.eliminarCorreoElectronico($index)" class="btn btn-danger btn-sm"> <span class="glyphicon glyphicon-remove"></span> </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="ENVIAR" class="btn btn-sm btn-primary" ng-disabled="$ctrl.correosElectronicos.length < 1" ng-click="$ctrl.enviarCorreoElectronico()"><span class="glyphicon glyphicon-check"></span> ENVIAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-sm btn-danger" ng-click="$ctrl.limpiarEnvioDeCorrero()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-invalidar-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">INVALIDAR DOCUMENTO {{$ctrl.comprobante.Operacion.SerieNumeroDocumento}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="invalidacionDeDocumentoForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12 padding-5">
+                            <div class="col-md-12">
+                                <label>Observación :</label>
+                                <textarea class="form-control" rows="3" ng-model="$ctrl.invalidacion.observacion"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-center mt-10"><strong>¿Esta seguro que invalidar el documento {{$ctrl.comprobante.Operacion.SerieNumeroDocumento}}?</strong></p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="margin flex-space-around">
+                                    <a class="col-md-2 btn btn-lg btn-primary" ng-disabled="!$ctrl.invalidacion.observacion" ng-click="$ctrl.invalidacionDocumento()">SI</a>
+                                    <a class="col-md-2 btn btn-lg btn-danger ml-25" data-dismiss="modal" aria-label="close">NO</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Reporte por Familia";
+
+    @section scripts{
+
+        <script src=@Url.Content("~/Scripts/controller/almacen/reporteAlmacenController.js")></script>
+        <script src=@Url.Content("~/Scripts/code39/jquery-barcode.min.js")></script>
+        <script>
+            var fechaHoraInicio = '@ViewBag.fechaInicio';
+                 var fechaHoraFin = '@ViewBag.fechaFin';
+        </script>
+    }
+}
+<div class="col-xs-12" ng-controller="kardexController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">
+                    REPORTE DE SALIDAS DE ALCOHOL
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <form name="formKardex" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="dateStart">FECHA INICIAL </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input id="dateStart" ng-model="fechaInicio" ng-change="actualizarURLReporteConceptoBasico()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-start" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="bootstrap-timepicker">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" id="horaIndividual" ng-model="horaInicio" ng-change="actualizarURLReporteConceptoBasico()" class="form-control timepickerIndividual
+                                                               ">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="dateEnd">FECHA FINAL</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input id="dateEnd" ng-model="fechaFin" ng-change="actualizarURLReporteConceptoBasico()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="bootstrap-timepicker">
+
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" id="horaIndividual" ng-model="horaFin" ng-change="actualizarURLReporteConceptoBasico()" class="form-control timepickerIndividual">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ALMACENES:</label>
+                                            <select id="alm" class="select2 form-control" ng-model="almacenes" ng-change="actualizarURLReporteConceptoBasico()" ng-options="item as item.Nombre for item in listaAlmacenes track by item.Id" multiple="multiple"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a id="search-report-concepto-basico" title="Muestra Reporte de Salidas de Alcohol" class="btn btn-primary btn-info glyphicon glyphicon-search" ng-href="{{URLReporteConceptoBasico}}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

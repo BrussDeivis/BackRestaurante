@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Registro de Concepto";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/producto/consultarMercaderiaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/conceptoController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/caracteristica/caracteristica_Controller.js")></script>
+
+
+
+    <script>
+        var idUnidadDeMedidaSubUnidad = @ViewBag.IdUnidadDeMedidaSubUnidad;
+        var valorPrecioVentaPorDefectoQueNoSeDebeGuardar = @ViewBag.ValorPrecioVentaPorDefectoQueNoSeDebeGuardar;
+        var idPresentacionPorDefecto = @ViewBag.IdPresentacionPorDefecto;
+        var idUnidadMedidaPorDefecto = @ViewBag.IdUnidadMedidaPorDefecto;
+        var idPresentacionAOcultarEnNombreConceptoNegocio = @ViewBag.IdPresentacionAOcultarEnNombreConceptoNegocio;
+        var idUnidadDeMedidaComercialAOcultarEnNombreConceptoNegocio = @ViewBag.IdUnidadDeMedidaComercialAOcultarEnNombreConceptoNegocio;
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+        var modoDeSeleccionTipoFamiliaEnRegistroFamilia = @ViewBag.modoDeSeleccionTipoFamiliaEnRegistroFamilia;
+        var mostrarCampoCodigoAlRegistrarConcepto = @ViewBag.mostrarCampoCodigoAlRegistrarConcepto.ToString().ToLower();
+        var mostrarCampoCodigoDigemidAlRegistrarConcepto = @ViewBag.mostrarCampoCodigoDigemidAlRegistrarConcepto.ToString().ToLower();
+        var modulosAdicionales = @(Html.Raw(Json.Encode(@ViewBag.modulosAdicionales)));
+    </script>
+}
+<div class="col-md-12" id="modelo-mercaderia" ng-controller="consultarMercaderiaController" ng-init="inicializarRegistroMercaderia()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REGISTRO DE CONCEPTO</div>
+            </div>
+        </div>
+        @Html.Partial("_RegistroConceptoPartial")
+        <div class="col-xs-12">
+            <button title="GUARDAR" class="btn btn-primary btn-flat" ng-click="guardar();$flow.cancel()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+            <button title="GUARDAR Y CLONAR" class="btn btn-primary btn-flat" ng-click="guardarYClonar();$flow.cancel()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR Y CLONAR</button>
+        </div>
+    </div>
+</div>

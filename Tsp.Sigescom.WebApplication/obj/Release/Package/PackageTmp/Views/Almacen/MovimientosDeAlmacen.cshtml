@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Entradas y Salidas de Almacen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/almacen/movimientoDeAlmacenController.js")></script>
+    <script>
+    var fechaInicio = '@ViewBag.FechaInicio';
+    var fechaFin = '@ViewBag.FechaFin';
+    var idEstablecimientoPorDefecto = @ViewBag.IdEstablecimientoPorDefecto;
+    var idCentroDeAtencionPorDefecto = @ViewBag.IdCentroDeAtencionPorDefecto;
+    var tieneRolAdministradorDeNegocio = @ViewBag.TieneRolAdministradorDeNegocio.ToString().ToLower();
+
+    </script>
+    @Html.Raw(ViewBag.WCPScript);
+}
+
+<div class="col-md-12" ng-controller="movimientoDeAlmacenController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">MOVIMIENTOS DE ALMACEN</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label for="dateStart">Fecha Inicial</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input id="dateStar" ng-model="buscador.fechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-2 no-padding-left">
+                    <label for="dateEnd">Fecha Final</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input id="dateEnd" ng-model="buscador.fechaFin" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding-left">
+                    <div class="panel panel-primary" style="margin-bottom:0px;">
+                        <div class="panel-body" style="padding:5px; padding-left:10px;">
+                            <div class="radio radio-primary radio-inline">
+                                <input type="radio" id="radio1" name="traslado" value="true" ng-model="buscador.esEntrada" ng-checked="buscador.esEntrada==true">
+                                <label for="radio1">Entrada</label>
+                            </div>
+                            <div class="radio radio-primary radio-inline" style="margin-left: 0px;">
+                                <input type="radio" id="radio2" name="traslado" value="false" ng-model="buscador.esEntrada" ng-checked="buscador.esEntrada==false">
+                                <label for="radio2">Salida</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 no-padding-left" ng-if="tieneRolAdministradorDeNegocio">
+                    <label class="control-label">Establecimiento comercial:</label>
+                    <select class="select2 form-control" id="establecimientoComercial" ng-model="buscador.establecimientosComerciales" ng-change="obtenerCentrosDeAtencionConRolAlmacen()" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required multiple="multiple"></select>
+                </div>
+                <div class="col-md-3 no-padding-left" ng-if="tieneRolAdministradorDeNegocio">
+                    <label class="control-label">Almacenes:</label>
+                    <select class="select2 form-control" id="centroDeAtencion" ng-model="buscador.centrosDeAtencion" ng-options="item as item.Nombre for item in listaCentrosDeAtencionConRolAlmacen track by item.Id" required multiple="multiple"></select>
+                </div>
+                <div class="col-md-1 no-padding">
+                    <button title="CONSULTAR" ng-disabled="!buscador.fechaInicio || !buscador.fechaFin || !buscador.esEntrada || !buscador.centrosDeAtencion || buscador.centrosDeAtencion.length == 0" style="margin-top:25px" class="btn btn-primary btn-md" ng-click="listarBandeja()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-movimiento-almacen')" class="btn btn-primary btn-md"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:10px;">
+            <table id="tabla-movimiento-almacen" datatable="ng" dt-options="dtOptions" dt-column-defs="entradasSalidas.dtColumnDefs" class="row-border hover table table-stripped table-bordered ">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Fecha</th>
+                        <th ng-if="tieneRolAdministradorDeNegocio">Establecimiento</th>
+                        <th ng-if="tieneRolAdministradorDeNegocio">Almacén</th>
+                        <th>T/C</th>
+                        <th>N° Comprobante</th>
+                        <th>Tipo Ope.</th>
+                        <th>Responsable</th>
+                        <th>{{labelOrigenDestino}}</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in movimientosDeAlmacen" ng-cloak>
+                        <td class="number">{{$index+1}}</td>
+                        <td>{{item.Fecha}}</td>
+                        <td ng-if="tieneRolAdministradorDeNegocio">{{item.Establecimiento}}</td>
+                        <td ng-if="tieneRolAdministradorDeNegocio">{{item.CentroDeAtencion}}</td>
+                        <td title="{{item.TipoComprobante}}">{{item.CodigoTipoComprobante}}</td>
+                        <td>{{item.Comprobante}}</td>
+                        <td>{{item.TipoDeOperacion}}</td>
+                        <td>{{item.Responsable}}</td>
+                        <td>{{item.OrigenDestino}}</td>
+                        <td>
+                            <a title="VER {{labelEntradaSalida}} DE MERCADERIA" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-movimiento-de-almacen" ng-click="inicializarVerMovimiento(item)"><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalVerMovimientoDeAlmacen")
+</div>

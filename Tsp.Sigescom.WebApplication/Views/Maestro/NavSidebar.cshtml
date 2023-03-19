@@ -1,0 +1,164 @@
+﻿@model IEnumerable<Tsp.Sigescom.WebApplication.Models.NavBar>
+@section scripts{
+
+    <script src=@Url.Content("~/Scripts/controller/maestro/maestroController.js")></script>
+}
+
+<header class="main-header">
+    <!-- Logo -->
+    <a href="@Url.Action("Estadistica", "Escritorio")"class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>S</b>G</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">
+            <img id="ImagenLogo" src="@Url.Content("~/Content/images/logo-1.png")" class="user-image left" alt="Logo software Siges">
+        </span>
+
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-
+         -top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" onclick="toogleLogo()">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+
+        <div class="name-entity" style="word-wrap: break-word; width:38%;">
+            <h2 style="margin:0; font-size:15px"> @(((Tsp.Sigescom.Modelo.Entidades.Sesion.UserProfileSessionData)HttpContext.Current.Session["UserProfile"]).NombreCentroDeAtencionSeleccionado)</h2>
+        </div>
+
+        <div class="popup" onclick="manejarPopPup()">
+            <span class="popuptext" id="OnlineStatus">Ud. no se encuentra conectado a internet. Tenga en cuenta que podrían haber documentos electrónicos sin envíar. Trate de conectarse a internet lo mas pronto posible y asegúrese que sus documentos electrónicos sean envíados correctamente a SUNAT.</span>
+        </div>
+
+        <!-- /.navbar-header -->
+
+        @Html.Partial("_loginPartial")
+    </nav>
+</header>
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar control-sidebar-light">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar width-230 pb-50">
+        <!-- search form -->
+        @*<form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Buscar...">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>*@
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            @foreach (var item in Model)
+            {
+                var padreTieneRol = false;
+                foreach (var rol in item.Roles)
+                {
+                    padreTieneRol = padreTieneRol || User.IsInRole(rol);
+                }
+                if (padreTieneRol)
+                {
+                    if ((item.EsPadre == false && item.IdPadre == 0))
+                    {
+                        <li>
+                            <a href="@Url.Action(item.Accion, item.Controlador,new { area = item.Area != null ? item.Area : ""})" class="menu-lista-cabecera">
+                                <i class="@item.Icono"></i> <span>@item.Nombre</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        if (item.EsPadre == true && item.IdPadre == 0)
+                        {
+                            <li class="treeview">
+                                <a href="#" class="menu-lista-cabecera">
+                                    <i class="@item.Icono"></i> <span>@item.Nombre</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @foreach (var child in Model.Where(p => p.IdPadre == item.Id))
+                                    {
+                                        var hijoTieneRol = false;
+                                        foreach (var rol in child.Roles)
+                                        {
+                                            hijoTieneRol = hijoTieneRol || User.IsInRole(rol);
+                                        }
+                                        if (child.Controlador == null && child.IdPadre == 0)
+                                        {
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-circle-o"></i> @child.Nombre
+                                                </a>
+                                            </li>
+                                        }
+                                        else if (hijoTieneRol)
+                                        {
+                                            if ((child.EsPadre && child.IdPadre != 0))
+                                            {
+                                                <li class="treeview">
+                                                    <a href="#">
+                                                        <i class="fa fa-circle-o"></i> <span>@child.Nombre</span>
+                                                        <span class="pull-right-container">
+                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                        </span>
+                                                    </a>
+                                                    <ul class="treeview-menu">
+                                                        @foreach (var childJr in Model.Where(p => p.IdPadre == child.Id))
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action(childJr.Accion, childJr.Controlador, new { c = childJr.IdCaracteristica,  area = childJr.Area != null ? childJr.Area : "" })">
+                                                                    <i class="fa fa-circle-o"></i> @childJr.Nombre
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                if (child.IdSucursal == 0)
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action(child.Accion, child.Controlador,new { area = child.Area != null ? child.Area : ""})">
+                                                            <i class="fa fa-circle-o"></i> @child.Nombre
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    if (child.IdSucursal != 0)
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action(child.Accion, child.Controlador, new {  idSucursal = child.IdSucursal,  area = child.Area != null ? child.Area : "" })">
+                                                                <i class="fa fa-circle-o"></i> @child.Nombre
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                }
+            }
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+<script>
+    let toogleLogo = () => {
+        let nodo = document.getElementById('ImagenLogo');
+        nodo.classList.toggle('collapseLogo');
+    }
+</script>
+<!-- Navigation -->

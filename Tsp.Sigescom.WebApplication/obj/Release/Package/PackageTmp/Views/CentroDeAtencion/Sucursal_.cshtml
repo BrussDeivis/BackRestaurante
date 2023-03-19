@@ -1,0 +1,64 @@
+﻿@{
+
+    ViewBag.Title = ViewBag.nombre;
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/centroDeAtencion/centroDeAtencionController.js")></script>
+    <script>
+        var IdCentroDeAtencionPadre = @ViewBag.IdSucursal;
+        var idRolAlmacen = @ViewBag.idRolAlmacen;
+    </script>
+}
+<div class="col-md-12" ng-controller="sucursalCentroDeAtencionController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">SUCURSAL: @ViewBag.nombre</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        @*<div class="col-md-12 form-group" ng-if="!hayCentroDeAtencionPrincipal" ng-cloak>
+                            <div class=" alert alert-danger">
+                                <strong>NO TIENE ESTABLECIDO UN CENTRO DE ATENCION PRINCIPAL ❗ </strong>
+                            </div>
+                        </div>*@
+                        <div class="col-md-12 form-group">
+                            <a title="Registrar Centro de Atención" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-centro-de-atencion" ng-click="nuevoRegistroCentroDeAtencion()"><span class="glyphicon glyphicon-plus"></span> NUEVO CENTRO DE ATENCIÓN</a>
+                            <a title="Establecer Centro de Atención para la Obtencion de Precios y Stock" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-establecer-centro-de-atencion-para-obtencion-precios-stock" ng-click="cargarCentrosDeAtencionParaObtencionPreciosYStock()" style="margin-right:15px">ESTABLECER C.A. PARA OPERACIONES</a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-serie-de-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>N° </th>
+                                        <th>CENTRO DE ATENCIÓN</th>
+                                        <th>ROL</th>
+                                        <th>ACCIÓN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaCentrosDeAtencion" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Nombre}}{{item.EsCentroAtencionParaObtencioDePrecios == true ? " - PRECIO" : ""}}{{item.EsCentroAtencionParaObtencioDeStock ? " - STOCK" : ""}}</td>
+                                        <td>{{item.Roles}}</td>
+                                        <td>
+                                            <a title="Editar centro de atención" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-centro-de-atencion" ng-click="editarCentroDeAtencion(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a title="Eliminar centro de atencion" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-dar-de-baja-centro-de-atencion" ng-click="enviarDatosParaModalDarDeBajaCentroDeAtencion(item.Id,item.Nombre)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        @Html.Partial("_ModalRegistroCentroDeAtencion")
+                        @Html.Partial("_ModalDarDeBajaCentroDeAtencion")
+                        @Html.Partial("_ModalEstablecerCentroDeAtencionParaObtencionDePreciosYStock")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

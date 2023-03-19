@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Transformacion de Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/producto/productoTransformacionController.js")></script>
+}
+@section MenuLeft{
+    <div class="col-md-1 center">
+        <div class="nav-left">
+            <a class="" href="@Url.Action("Index", "Producto")"><i class="mdi mdi-cube"></i>Producto</a>
+            <a class="active" href="@Url.Action("Transformacion","Producto")"><i class="mdi mdi-cube-unfolded"></i>Transformacion</a>
+        </div>
+    </div>
+}
+<div class="col-md-11 padding-right-10" ng-controller="productoTransformacionController">
+    <div class="center">
+        <h2 class="titulo1">Bandeja de Productos Transformados</h2>
+    </div>
+    <div class="col-md-8 padding-0 table-options">
+        <div class="col-md-2 padding-0">
+            <a title="Agregar Maestro" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-registro-maestro" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span></a>
+        </div>
+    </div>
+    <table id="tabla-maestros" datatable="ng" dt-options="dtOptions" dt-column-defs="maestros.dtColumnDefs" class="tabla-maestros row-border hover table table-stripped tabla-bandeja table-bordered">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Dimensiones</th>
+                <th>Unidad de Medida</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in maestros.Lista" ng-cloak>
+                <td class="width-40">{{item.Producto}}</td>
+                <td class="left width-300">{{item.Codigo}}</td>
+                <td class="left">{{item.Nombre}}</td>
+                <td class="width-40">
+                    <a title="Editar Maestro" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-registro-maestro" ng-click="editarMaestro(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a title="Ver Detalles" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-detalle-maestro" ng-click="verDetalles(item)"><span class="glyphicon glyphicon-search"></span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+

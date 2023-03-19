@@ -1,0 +1,109 @@
+﻿<div id="modal-cobrar-pagar-cuota" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">{{tituloModal}}</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <form name="cobrarPagarForm" class="formulario form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <p for="tercero"><b>{{denominadorTercero}} :</b> {{movimiento.ActorComercial}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p for="cajero"><b> CAJERO :</b> {{nombreCajero}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="table-rolAcciones" class="table table-stripped table-height-small table-bordered">
+                                                <tr>
+                                                    <th>CÓDIGO</th>
+                                                    <th>SALDO</th>
+                                                    <th>A {{denominadorAccion}}</th>
+                                                </tr>
+                                                <tr ng-repeat="item in movimiento.PagoCuota">
+                                                    <td class="col-md-4">
+                                                        <label for="codigo">{{item.CodigoCuota}}</label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <label style=" font-size:15px; margin-right:3px;">{{item.Saldo|number:2}}</label>
+                                                    </td>
+                                                    <td class="col-md-4" style="vertical-align:initial">
+                                                        <input style="height:34px" class="form-control number numero-derecha" id="importe" ng-model="item.Importe" ng-change="validarModal();" ng-blur="validarNumero($index); calcularTotal(); " ng-pattern-restrict="^[0-9.]*$" onClick="select();" required />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-4"> </td>
+                                                    <td class="col-md-4">TOTAL : </td>
+                                                    <td class="col-md-4 numero-derecha">
+                                                        <label style=" font-size: 15px; margin-right: 3px;">{{movimiento.Total|number:2}}</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="documento">DOCUMENTO</label>
+                                            <select class="select2 form-control tipoDocumento" id="tipoComprobante" ng-model="movimiento.Comprobante" ng-change="cargarSeries(movimiento.Comprobante); validarModal();" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantes  track by item.TipoComprobante.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12" ng-show="movimiento.Comprobante.MostrarSelectorSerie">
+                                            <label for="serie">SERIE</label>
+                                            <select class="select2 form-control" id="serie" ng-model="movimiento.Serie" ng-change="validarModal();" ng-options="item as item.Nombre for item in series  track by item.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="observacion">OBSERVACIÓN</label>
+                                            <textarea class="form-control" rows="2" ng-model="movimiento.Observacion" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">MEDIO DE PAGO</label>
+                                            <select id="medioDePago" class="select2 form-control" ng-model="movimiento.Traza.MedioDePago" ng-change="establecerBancoPorDefecto(); seleccionMedioDePago(); verificarInconsistenciasTraza(); ; validarModal();" ng-options="item as item.Nombre for item in mediosDePago track by item.Id"></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">BANCO</label>
+                                            <select id="entidadFinanciera" class="select2 form-control" ng-model="movimiento.Traza.EntidadFinanciera" ng-change="seleccionEntidadFinanciera(); verificarInconsistenciasTraza(); validarModal();" ng-options="item as item.Nombre for item in entidadesFinancieras track by item.Id"></select>
+                                        </div>
+                                        <div class="col-md-12" ng-show="mostrarSeleccionCuentaBancaria">
+                                            <label class="control-label">CUENTA BANCARIA</label>
+                                            <select id="cuentaBancaria" class="select2 form-control" ng-model="movimiento.Traza.CuentaBancaria" ng-change="verificarInconsistenciasTraza(); validarModal();" ng-options="item as item.Nombre for item in cuentasBancarias track by item.Id"></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">INFORMACIÓN</label>
+                                            <textarea id="informacionPago" class="form-control" rows="3" ng-model="movimiento.Traza.InformacionDePago" ng-change="verificarInconsistenciasTraza(); validarModal();" placeholder="N° Operación" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-danger" ng-show="mensajeAdvertencia.length > 0">
+                        <div class="box-body">
+                            <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                            <table>
+                                <tr ng-repeat="item in mensajeAdvertencia">
+                                    <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="cobrarPagarCuota()" title="GUARDAR" ng-disabled="mensajeAdvertencia.length > 0" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-check"></span> GUARDAR</button>
+                <button data-dismiss="modal" ng-click="cerrar()" title="CANCELAR" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*<button id="modal-cobrar-pagar-cuota" data-toggle="modal" data-target="#modal-cobrar-pagar-cuota" style="display:none"></button>*@

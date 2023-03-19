@@ -1,0 +1,95 @@
+﻿<div ng-show="reporteador.SeccionSeleccionada=='seccion3'">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3 " id="input-establecimiento">
+                    <div class="form-group">
+                        <label for="punto1" class="title-report">Establecimiento*</label>
+                        <select id="" class="select2 form-control" ng-model="reporteador.Atenciones.EstablecimientoSeleccionado" ng-options="item as item.Nombre for item in data.Establecimientos  track by item.Id" required ng-change="Atenciones_EstablecimientoChanged()"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Desde </label>
+                            <div>
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.Atenciones.FechaDesde" ng-change="Atenciones_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Hasta </label>
+                            <div>
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.Atenciones.FechaHasta" ng-change="Atenciones_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenedor-reportes">
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">INGRESOS</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Atenciones" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Atenciones.Ingresos.ActivarBotonVer" ng-href="{{URLAtenciones_Ingresos}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">SALIDAS</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Atenciones" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Atenciones.Salidas.ActivarBotonVer" ng-href="{{URLAtenciones_Salidas}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">ANULADAS</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Atenciones" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Atenciones.Anuladas.ActivarBotonVer" ng-href="{{URLAtenciones_Anuladas}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">INFORME MENSUAL MINCETUR</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="flex-center">
+                            <a title="Atenciones" class="btn btn-primary btn-flat ng-cloak" ng-disabled="!reporteador.Atenciones.Mincetur.ActivarBotonVer" ng-href="{{URLAtenciones_Mincetur}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

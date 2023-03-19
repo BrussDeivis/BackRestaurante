@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "Ordenes de Almacen";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/ordenAlmacen/ordenAlmacenController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/visualizadorComprobante/visualizadorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/registradorGuiaRemision/registradorGuiaRemision.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script>
+        var data =@(Html.Raw(Json.Encode(ViewBag.Data)));
+    </script>
+}
+<div class="col-md-12" ng-controller="ordenAlmacenController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">ÓRDENES DE ALMACEN</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="box box-success">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-12">
+                                    <label class="title-box-body">EMITIDAS</label>
+                                    <div class="row">
+                                        <div class="col-sx-12 col-md-6">
+                                            <label>DESDE</label>
+                                            <div class="input-group">
+                                                <input ng-model="principal.Desde" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sx-12 col-md-6 no-padding-left">
+                                            <label>HASTA</label>
+                                            <div class="input-group">
+                                                <input ng-model="principal.Hasta" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-6">
+                                    <label class="title-box-body">TIPO</label>
+                                    <div>
+                                        <div class="radio radio-primary radio-inline">
+                                            <input type="radio" id="radio1" name="cuenta" value="false" ng-model="principal.PorIngresar">
+                                            <label for="radio1">Por Salir</label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="radio radio-primary radio-inline">
+                                            <input type="radio" id="radio2" name="cuenta" value="true" ng-model="principal.PorIngresar">
+                                            <label for="radio2">Por Ingresar</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-6">
+                                    <label class="title-box-body">MODO ENTREGA</label>
+                                    <div class="checkbox checkbox-primary mt-0">
+                                        <input id="entregaInmediata" type="checkbox" class="styled" ng-model="principal.EntregaInmediata" />
+                                        <label for="entregaInmediata">Inmediata</label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="entregaDiferida" type="checkbox" class="styled" ng-model="principal.EntregaDiferida" />
+                                        <label for="entregaDiferida">Diferida</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-6">
+                                    <label class="title-box-body">ESTADO</label>
+                                    <div class="checkbox checkbox-primary mt-0">
+                                        <input id="estadoOrdenAlmacenPendiente" type="checkbox" class="styled" ng-model="principal.EstadoPendiente" />
+                                        <label for="estadoOrdenAlmacenPendiente">Pendiente</label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="estadoOrdenAlmacenParcial" type="checkbox" class="styled" ng-model="principal.EstadoParcial" />
+                                        <label for="estadoOrdenAlmacenParcial">Parcial</label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary mb-0">
+                                        <input id="estadoOrdenAlmacenCompletada" type="checkbox" class="styled" ng-model="principal.EstadoCompletada" />
+                                        <label for="estadoOrdenAlmacenCompletada">Completada</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12" ng-if="data.EsAdministrador">
+                                    <div class="form-group mb-0">
+                                        <label class="title-box-body">ALMACENES</label>
+                                        <select class="select2 form-control" ng-model="principal.AlmacenesSeleccionados" ng-options="item as item.Nombre for item in data.Almacenes track by item.Id" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding" style="margin-top:40px;">
+                    <button title="Consultar" class="btn btn-primary btn-md" ng-click="obtenerOrdenesAlmacen()" ng-disabled="!validarObtenerOrdenesAlmacen()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="Descargar" ng-click="export('tabla-orden-almacen')" class="btn btn-primary btn-md"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-orden-almacen" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>FECHA</th>
+                                        <th ng-if="data.EsAdministrador">ESTABLECIMENTO {{principal.EtiquetaInterna}}</th>
+                                        <th ng-if="data.EsAdministrador">ALMACEN {{principal.EtiquetaInterna}}</th>
+                                        <th>T/C</th>
+                                        <th>N COMPROBANTE</th>
+                                        <th>TIPO DE OPERACION</th>
+                                        <th>ORDENANTE</th>
+                                        <th>{{principal.EtiquetaExterna}}</th>
+                                        <th>MODO</th>
+                                        <th>ESTADO</th>
+                                        <th>OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="orden in ordenesAlmacen" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{orden.FechaEmision}}</td>
+                                        <td ng-if="data.EsAdministrador">{{orden.Establecimiento}}</td>
+                                        <td ng-if="data.EsAdministrador">{{orden.Almacen}}</td>
+                                        <td>{{orden.TipoDocumento}}</td>
+                                        <td>{{orden.SerieNumeroDocumento}}</td>
+                                        <td>{{orden.TipoOperacion}}</td>
+                                        <td>{{orden.Ordenante}}</td>
+                                        <td>{{orden.OrigenDestino}}</td>
+                                        <td>{{orden.ModoEntrega}}</td>
+                                        <td>{{orden.Estado}}</td>
+                                        <td>
+                                            <a title="Ver Orden de Almacen" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-orden-almacen" ng-click="cargarVerOrdenAlmacen(orden.Id)"><span class="glyphicon glyphicon-search"></span></a>
+                                            <a title="Registrar {{principal.SeleccionadoPorIngresar ? 'Ingreso' : 'Salida'}} de Almacen" ng-show="orden.PuedeRegistrarMovimiento" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-registro-movimiento-orden-almacen" ng-click="cargarRegistroMovimientoOrdenAlmacen(orden)"><span ng-class="principal.SeleccionadoPorIngresar ? 'fa fa-sign-in' : 'fa fa-sign-out'"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroMovimientoOrdenAlmacen")
+    @Html.Partial("_ModalVerOrdenAlmacen")
+</div>

@@ -1,0 +1,332 @@
+﻿
+@{
+    ViewBag.Title = "Punto de Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/venta/ventaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/cliente/clienteController.js")></script>
+
+    <script>
+        var aplicaLeyAmazonia = @ViewBag.aplicaLeyAmazonia.ToString().ToLower();
+        var tasaIGV = @ViewBag.tasaIGV;
+        var idMedioDePagoEfectivo = @ViewBag.idMedioDePagoEfectivo;
+        var ventasSujetasADisponibilidadStock = @ViewBag.ventasSujetasADisponibilidadStock.ToString().ToLower();
+        var idTipoActorPersonaJuridica =@ViewBag.idTipoActorPersonaJuridica;
+        var precioContieneIgv = @ViewBag.aplicaLeyAmazonia.ToString().ToLower();
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idTipoDocumentoCuandoClienteEsGenerico = @ViewBag.idTipoDocumentoCuandoClienteEsGenerico;
+        var idTipoDocumentoPorDefectoParaVenta = @ViewBag.idTipoDocumentoPorDefectoParaVenta;
+        var mostrarAliasDeClienteGenerico = @ViewBag.mostrarAliasDeClienteGenerico.ToString().ToLower();
+        var precioUnitarioCalculadoVenta = @ViewBag.precioUnitarioCalculadoVenta.ToString().ToLower();
+        var mostrarDetalleUnificado = @ViewBag.mostrarDetalleUnificado.ToString().ToLower();
+        var checketDetalleUnificado  = @ViewBag.checketDetalleUnificado.ToString().ToLower();
+        var valorDetalleUnificado = '@ViewBag.valorDetalleUnificado';
+        var aplicarCantidadPorDefectoEnVentas = @ViewBag.aplicarCantidadPorDefectoEnVentas.ToString().ToLower();
+        var cantidadPorDefectoEnVentas = '@ViewBag.cantidadPorDefectoEnVentas';
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin = '@ViewBag.fechaHoraFin';
+        var idTipoPersonaSeleccionadaPorDefecto = @ViewBag.idTipoPersonaSeleccionadaPorDefecto;
+        var idTipoDocumentoSeleccionadaConTipoPersonaNatural = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaNatural;
+        var idTipoDocumentoSeleccionadaConTipoPersonaJuridica = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaJuridica;
+        var precioUnitarioIngresadoVenta = @ViewBag.precioUnitarioIngresadoVenta.ToString().ToLower();
+        var idTipoDocumentoIdentidadDni = @ViewBag.idTipoDocumentoIdentidadDni;
+        var idTipoDocumentoIdentidadRuc = @ViewBag.idTipoDocumentoIdentidadRuc;
+        var idDetalleMaestroCatalogoDocumentoBoleta = @ViewBag.idDetalleMaestroCatalogoDocumentoBoleta;
+        var montoMaximoAVenderCuandoClienteNoEstaIdenticicado = @ViewBag.montoMaximoAVenderCuandoClienteNoEstaIdenticicado;
+        var permitirVentaAlCredito = @ViewBag.permitirVentaAlCredito.ToString().ToLower();
+        var permitirVentaConFechaPasada = @ViewBag.permitirVentaConFechaPasada.ToString().ToLower();
+        var fechaActual = '@ViewBag.fechaActual';
+        var permitirRegistroFlete = @ViewBag.permitirRegistroFlete.ToString().ToLower();
+        var idUbigeoSeleccionadoPorDefecto = @ViewBag.idUbigeoSeleccionadoPorDefecto;
+        var idUbigeoNoEspecificado = @ViewBag.idUbigeoNoEspecificado;
+        var modoIngresoCodigoBarra = @ViewBag.modoIngresoCodigoBarraEnVenta;
+        var cursorPorDefectoCodigoBarra = @ViewBag.cursorPorDefectoCodigoBarraEnVenta;
+        var numeroDecimalesEnCantidad = @ViewBag.numeroDecimalesEnCantidad;
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+    </script>
+}
+<div class="col-md-12" id="modelo" ng-controller="ventaController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REGISTRO DE VENTA</div>
+            </div>
+        </div>
+        <form name="registro-venta" class="formulario form-horizontal" ctrl-enter>
+            <div class="col-md-8 ">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12 ">
+                                    <div class="col-md-3" ng-show="modoIngresoCodigoBarra == 1 || modoIngresoCodigoBarra == 3">
+                                        <label class="control-label">CODIGO:</label>
+                                        <input id="idCodigoBarraConcepto" class="form-control" ng-model="venta.CodigoBarraABuscar" ng-enter="checkIfEnterKeyWasPressedPuntoVenta()" />
+                                    </div>
+                                    <div class="col-md-3" ng-show="modoIngresoCodigoBarra == 2 || modoIngresoCodigoBarra == 3">
+                                        <label class="control-label">BALANZA:</label>
+                                        <input id="idCodigoBarraBalanza" class="form-control" ng-model="venta.CodigoBarraBalanza" ng-enter="buscarCodigoDeBarraBalanza()" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="panel panel-primary" ng-show="permitirVentaAlCredito">
+                                            <div class="panel-heading">ES A CRÉDITO</div>
+                                            <div class="panel-body" style="padding:5px;">
+                                                <div class="col-md-12">
+                                                    <div class="checkbox checkbox-primary checkbox-inline">
+                                                        <input id="credito" type="checkbox" ng-disabled="venta.Total==0" class="styled" ng-model="venta.EsVentaACredito" ng-click="iniciarFinanciamiento()" />
+                                                        <label for="credito">AL CREDITO</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="radio radio-primary radio-inline" style="margin-left: 10px">
+                                                        <input type="radio" id="radio1" name="credito" ng-disabled="venta.Total==0" value="true" ng-model="venta.EsCreditoRapido" ng-checked="venta.EsCreditoRapido == true" ng-click="seleccionarEsCredito()">
+                                                        <label for="radio1">Rapido</label>
+                                                    </div>
+                                                    <div class="radio radio-primary radio-inline">
+                                                        <input type="radio" id="radio2" name="credito" ng-disabled="venta.Total==0" value="false" ng-model="venta.EsCreditoRapido" ng-click="seleccionarEsCredito(); financiamientoConfigurado()" ng-checked="venta.EsCreditoRapido == false">
+                                                        <label for="radio2">Configurar</label>
+                                                    </div>
+                                                    <div class="col-md-12" ng-show="venta.Inicial > 0 && !venta.EsCreditoRapido">
+                                                        <div class=" checkbox checkbox-primary checkbox-inline">
+                                                            <input id="pagoinicialahora" type="checkbox" ng-model="venta.PagarInicialAlConfimar" />
+                                                            <label style="font-size:13px" for="pagoinicialahora">PAGAR INICIAL AL CONFIRMAR</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="panel panel-primary" ng-show="permitirVentaConFechaPasada">
+                                            <div class="panel-heading">ES FECHA PASADA</div>
+                                            <div class="panel-body" style="padding:5px;">
+                                                <div class="col-md-12">
+                                                    <div class="checkbox checkbox-primary checkbox-inline">
+                                                        <input id="esVentaPasada" type="checkbox" class="styled" ng-model="venta.EsVentaPasada" ng-click="iniciarVentaPasada(); ValidarModoPuntoVenta()" />
+                                                        <label for="esVentaPasada" style="font-size: 12px;">FECHA PASADA</label>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group" style="padding-top:5px">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input id="fechaRegistro" ng-disabled="venta.EsVentaPasada==false" ng-model="venta.FechaRegistro" ng-change="ValidarModoPuntoVenta()" placeholder="dd/mm/aaaa" class="form-control datepicker-yyyy" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label">CONCEPTO BASICO:</label>
+                                            <select tabindex=1 id="nombre-basico" class="select2 form-control" ng-model="conceptoBasicoSeleccionado" ng-change="obtenerProductos()" placeholder="Producto básico" ng-options="item as item.Nombre for item in conceptos track by item.Id" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-9" style="padding-left:50px">
+                                        <div class="form-group">
+                                            <label class="control-label">MERCADERIA:</label>
+                                            <select class="select2 form-control" ng-model="detalle.Producto" ng-change="agregarDetalle(); ValidarModoPuntoVenta()" ng-options="item as item.NombreYPrecios for item in productos track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <table id="tabla-ventas" class="table table-height-small table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ITEM</th>
+                                            <th>PRODUCTO</th>
+                                            <th>STOCK</th>
+                                            <th>TARIFA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>P.U</th>
+                                            <th>V. VENTA</th>
+                                            <th>I.G.V</th>
+                                            @* <th>DSCTO</th>*@
+                                            <th>IMPORTE</th>
+                                            <th>OPCION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-show="venta.Detalles.length>0">
+                                        <tr ng-repeat="item in venta.Detalles">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.Producto.Nombre}}</td>
+                                            <td>{{ventasSujetasADisponibilidadStock?item.Producto.Stock:'n'}}</td>
+                                            <td>
+                                                <div>
+                                                    <select id="select-preciounitario" class="select2 tarifa form-control" ng-model="item.IdPrecioUnitario" ng-change="calcularImporte(venta.Detalles,$index,false)" ng-options="itemPrecio.Id as itemPrecio.Tarifa +' '+ itemPrecio.Valor for itemPrecio in item.Producto.Precios track by itemPrecio.Id"></select>
+                                                </div>
+                                            </td>
+                                            <td class="width-20">
+                                                <input id="cantidad-{{$index}}" class="form-control input-md height-34" type="number" min="0" ng-model="item.Cantidad" ng-change="verificarStockDescuentoYCalcularDetalle(venta.Detalles,$index); ValidarModoPuntoVenta()" ng-blur="item.Cantidad = item.Cantidad>0 ? item.Cantidad:0; item.PrecioUnitario=formatNumber(item.PrecioUnitario,2);item.Importe=formatNumber(item.Importe,2)" ng-enter="focusSelectNext('importe')" />
+                                            </td>
+                                            <td class="number" ng-hide="precioUnitarioIngresadoVenta">{{item.PrecioUnitario|number:2}}</td>
+                                            <td class="width-20" ng-show="precioUnitarioIngresadoVenta">
+                                                <input id="precioUnitario" onClick="this.select();" class="form-control input-md number height-34" ng-model="item.PrecioUnitario" ng-change="item.PrecioUnitario=(item.PrecioUnitario<0)?0:item.PrecioUnitario;calcularImporte(venta.Detalles,$index,true)" ng-blur="item.PrecioUnitario=formatNumber(item.PrecioUnitario,2);item.Importe=formatNumber(item.Importe,2)" />
+                                            </td>
+
+                                            <td class="number">{{item.Importe-item.Igv|number:2}}</td>
+                                            <td class="number">{{item.Igv|number:2}}</td>
+                                            @*<td class="number">{{item.Descuento|number:2}}</td>*@
+                                            <td class="number" ng-hide="precioUnitarioCalculadoVenta">{{item.Importe|number:2}}</td>
+                                            <td class="width-20" ng-show="precioUnitarioCalculadoVenta">
+                                                <input id="importe" onClick="this.select();" class="form-control input-md number height-34" ng-model="item.Importe" ng-change="item.Importe=(item.Importe<0)?0:item.Importe;calcularValoresIngresadoImporte(venta.Detalles,$index)" ng-blur="item.Importe=formatNumber(item.Importe,2);item.PrecioUnitario=formatNumber(item.PrecioUnitario,2);" ng-enter="focusNext('radio-0')" />
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-xs btn-danger" ng-click="quitarDetalle($index); ValidarModoPuntoVenta()"><span class="glyphicon glyphicon-remove"></span></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody ng-hide="venta.Detalles.length>0">
+                                        <tr>
+                                            <td colspan="8" style="color:#bb1f1f">No existe ningun registro en el carrito</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12" ng-show="permitirRegistroFlete">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label">FLETE:</label>
+                                            <input class="form-control" id="flete" ng-model="venta.Flete" onClick="this.select();" ng-blur="venta.Flete=formatNumber(venta.Flete,2)" ng-change="calcularTotal(venta.Detalles)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <table ng-show="venta.Detalles.length>0" class="table table-bordered table-height-small">
+                                    <thead>
+                                        <tr>
+                                            <th>SUBTOTAL</th>
+                                            <th>IGV</th>
+                                            <th>DESCUENTO</th>
+                                            <th>TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{venta.SubTotal|number:2}}</td>
+                                            <td>{{venta.Igv|number:2}}</td>
+                                            <td>{{venta.Descuento|number:2}}</td>
+                                            <td>{{venta.Total|number:2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-show="venta.MontoRecibido>0" class="col-md-12">
+                                <div class="col-md-4 panel-small">
+                                    <div class="text-primary">
+                                        TOTAL A PAGAR
+                                    </div>
+                                    <div class="border">
+                                        S/. {{venta.Total!=null?venta.Total:0.00|number:2}}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 panel-small">
+                                    <div class="text-warning">
+                                        IMPORTE RECIBIDO
+                                    </div>
+                                    <div class="border">
+                                        S/. {{venta.MontoRecibido|number:2}}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 panel-small">
+                                    <div class="text-danger">
+                                        CAMBIO
+                                    </div>
+                                    <div class="border">
+                                        S/. {{venta.MontoRecibido-venta.Total|number:2}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading titulo texto-centrado">
+                        <div>S/. {{venta.Total!=null?venta.Total:0.00|number:2}}</div>
+                    </div>
+                    <div class="panel-body" style="padding:5px;" ng-show="aplicaLeyAmazonia || mostrarDetalleUnificado">
+                        <div class="col-md-6" ng-show="aplicaLeyAmazonia">
+                            <div class="checkbox checkbox-primary">
+                                <input id="ventaigv" type="checkbox" class="styled" ng-model="venta.GrabaIgv" ng-change="cambioDeGrabarIgv(venta.Detalles);" />
+                                <label for="ventaigv">VENTA CON IGV</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6" ng-show="mostrarDetalleUnificado">
+                            <div class="checkbox checkbox-primary">
+                                <input id="detalleunificado" type="checkbox" class="detalleunificado styled" ng-model="venta.DetalleUnificado" ng-checked="venta.DetalleUnificado" />
+                                <label for="detalleunificado">DETALLE UNIFICADO</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12" id="cliente" ng-controller="clienteController">
+                                <label>CLIENTE</label>
+                                <a title="Editar Cliente" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#modal-registro-cliente" ng-click="editarClienteEnVenta(venta.Cliente.Id)" ng-disabled="venta.Cliente == null || venta.Cliente.Id == idClienteGenerico"><span class="glyphicon glyphicon-edit"></span> </a>
+                                <a title="Nuevo Cliente" class="btn btn-xs btn-primary pull-right" style="margin-right:5px" data-toggle="modal" data-target="#modal-registro-cliente" ng-click=" nuevoRegistroClienteEnVenta()"><span class="glyphicon glyphicon-plus"></span> </a>
+                                @Html.Partial("../Persona/_ModalRegistroClientePartial")
+                                @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+                            </div>
+                            <div class="col-md-12">
+                                <select class="select2 form-control cliente" id="comboCliente" ng-model="venta.Cliente" ng-change="validarClienteYRucPuntoVenta(venta.Cliente);asignarComprobantePorDefecto(venta.Cliente)" ng-options="item as item.NumeroDocumentoIdentidad+' | '+ item.RazonSocial for item in clientes track by item.Id" required></select>
+                            </div>
+                            <div class="col-md-12" ng-show="venta.Cliente.Id == idClienteGenerico && mostrarAliasDeClienteGenerico == true">
+                                <label>ALIAS</label>
+                                <input class="form-control" uppercase-only ng-model="venta.Alias" />
+                            </div>
+                            <div class="col-md-12">
+                                <label>DOCUMENTO</label>
+                                <select class="select2 form-control tipoDocumento" ng-model="venta.TipoDeComprobante" ng-change="cargarSeriesYValidarClienteYRucPuntoVenta(venta.TipoDeComprobante)" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantes  track by item.TipoComprobante.Id" required></select>
+                            </div>
+                            <div class="col-md-12" ng-show=" venta.TipoDeComprobante.MostrarSelectorSerie && venta.TipoDeComprobante.EsPropio ">
+                                <div class="row">
+                                    <label class="col-md-12">SERIE</label>
+                                </div>
+                                <div class="radio radio-primary radio-inline col-md-3" ng-init="venta.TipoDeComprobante.SerieSeleccionada=series[0].Id" ng-repeat="item in series">
+                                    <input type="radio" id="radio-{{$index}}" ng-model="venta.TipoDeComprobante.SerieSeleccionada" ng-change="ValidarModoPuntoVenta(); verificarAutonumerable(item)" value="{{item.Id}}" ng-enter="guardar()" ng-checked="venta.TipoDeComprobante.SerieSeleccionada==item.Id">
+                                    <label for="radio-{{$index}}">{{item.Nombre}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-show="modelo.TipoDeComprobante.MostrarEntradaSerie">
+                                <label>SERIE</label>
+                                <input class="form-control" uppercase-only ng-model="venta.TipoDeComprobante.SerieIngresada" ng-change="ValidarModoPuntoVenta()" ng-pattern="/^[a-zA-Z0-9]{0,4}$/" minlength="3" maxlength="4" required />
+                            </div>
+                            <div class="col-md-12" ng-show="modelo.TipoDeComprobante.MostrarEntradaNumero || !serieSeleccionaesEsAutonumerica">
+                                <label>N° DOCUMENTO</label>
+                                <input class="form-control" ng-model="venta.TipoDeComprobante.NumeroIngresado" ng-change="ValidarModoPuntoVenta()" maxlength="8" ng-pattern="/^[0-9]{0,8}$/" required />
+                            </div>
+                            <div class="col-md-12">
+                                <label>OBSERVACION</label>
+                                <input class="form-control" id="observacion" value="Observacion" ng-model="venta.Observacion" required />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <label class="col-md-5">MEDIO PAGO</label>
+                                    <div class="radio radio-primary radio-inline col-md-3" ng-repeat="item in mediosDePago">
+                                        <input type="radio" id="radio-{{item.Id}}" ng-model="venta.IdMedioDePago" ng-change="ver(venta.IdMedioDePago); ValidarModoPuntoVenta()" value="{{item.Id}}" ng-checked="venta.IdMedioDePago==item.Id">
+                                        <label for="radio-{{item.Id}}">{{item.Nombre}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table>
+                    <tr ng-repeat="item in mensajeAdvertencia">
+                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <div class="col-md-12" style="margin-top:15px">
+            <div class="pull-right">
+                <button title="GUARDAR VENTA" class="btn btn-primary btn-md" ng-disabled="!logicaValida" ng-click="guardarVentaPuntoVenta()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR VENTA</button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("../Compra/_ModalRegistroFinanciamientoPartial")
+    @Html.Partial("../Compra/_ModalReiniciarFinanciamiento")
+</div>

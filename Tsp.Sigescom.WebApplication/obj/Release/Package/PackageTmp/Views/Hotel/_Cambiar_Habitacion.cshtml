@@ -1,0 +1,104 @@
+﻿<div id="modal-cambiar-habitacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form name="formularioConfirmarReservacion" id="formularioConfirmarReservacion">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">CAMBIAR HABITACION</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Habitacion Actual: </label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p>{{informacionHabitacionACambiar}}</p>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-info" style="margin-top:3px" ng-click="obtenerHabitacionesDisponibles()">
+                                        <span class="fa fa-refresh"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 margin-top-10">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover tabla-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Ambiente</th>
+                                            <th>Aforo</th>
+                                            <th>Seleccionar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="habitacionDisponible in habitacionesDisponibles" ng-cloak style="height: 30px">
+                                            <td>{{habitacionDisponible.CodigoHabitacion}}</td>
+                                            <td>{{habitacionDisponible.Ambiente.Nombre}}</td>
+                                            <td>{{habitacionDisponible.InformacionAforo}}</td>
+                                            <td>
+                                                <input type="radio" name="radioHabitacion" ng-model="atencionCambioHabitacion.Habitacion" ng-value="habitacionDisponible">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-hide="atencionCambioHabitacion.Habitacion == undefined">
+                            <div class="box box-primary contenedor-habitacion">
+                                <div class="box-header with-border contenedor-habitacion-cabecera">
+                                    <div class="row" style="padding-left:5px">
+                                        <div class="col-md-3 col-sm-12 tag-habitacion">
+                                            <div class="row tag-habitacion-title">
+                                                <h4>{{atencionCambioHabitacion.Habitacion.CodigoHabitacion}}</h4>
+                                            </div>
+                                            <p style="text-align:center">{{atencionCambioHabitacion.Habitacion.TipoHabitacion.Nombre}} | {{atencionCambioHabitacion.Habitacion.Ambiente.Nombre}}</p>
+                                        </div>
+                                        <div class="col-md-9 no-padding">
+                                            <div class="col-md-3 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>INGRESO:</label>
+                                                    <p>{{atencionCambioHabitacion.FechaIngreso}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>SALIDA:</label>
+                                                    <p>{{atencionCambioHabitacion.FechaSalida}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>NOCHES:</label>
+                                                    <p>{{atencionCambioHabitacion.Noches}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>PRECIO:</label>
+                                                    <p>{{atencionCambioHabitacion.PrecioUnitario|number:2}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>IMPORTE:</label>
+                                                    <p>S/. {{atencionCambioHabitacion.Importe|number:2}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a title="Guardar" ng-click="cambiarHabitacion()" ng-disabled="atencionCambioHabitacion.Habitacion == undefined" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                    <a title="Cerrar" ng-click="cerrarModal('modal-cambiar-habitacion')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

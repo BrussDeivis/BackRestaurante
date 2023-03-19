@@ -1,0 +1,126 @@
+﻿<div id="modal-registro-grupo-clientes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">{{accionModal}} GRUPO DE CLIENTES</h4>
+            </div>
+            <div class="modal-body">
+                <form name="grupoClientes">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">DATOS DEL GRUPO</div>
+                        <div class="panel-body" style="padding:5px;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>CÓDIGO:*</label>
+                                            <input class="form-control" ng-model="grupoClientes.Codigo" ng-change="verificarInconsistencias()" required uppercase-only/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>NOMBRE:*</label>
+                                            <input class="form-control" ng-model="grupoClientes.Nombre" ng-change="verificarInconsistencias()" required uppercase-only/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>TIPO:*</label>
+                                            <select class="select2 form-control" ng-model="grupoClientes.Tipo" ng-change="verificarInconsistencias()" ng-options="item as item.Nombre for item in tiposGrupoClientes track by item.Id" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>CLASIFICACION:*</label>
+                                            <select class="select2 form-control" ng-model="grupoClientes.Clasificacion" ng-change="verificarInconsistencias()" ng-options="item as item.Nombre for item in clasificacionesGrupoClientes track by item.Id" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">DATOS DEL REPRESENTANTE</div>
+                        <div class="panel-body" style="padding:5px;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                        <div class="row no-padding">
+                                            <selector-actor-comercial ng-if="inicializacionRealizada" name="SelectorResponsable" id="SelectorResponsable" actor-comercial="grupoClientes.Responsable" rol="rolCliente" etiqueta-rol="'RESPONSABLE'" api="$parent.selectorResponsableAPI" changed="cambioResponsable(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="1" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroCliente"></selector-actor-comercial>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label>TELÉFONO:</label>
+                                            <h5>{{grupoClientes.Responsable.Telefono}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label>CORREO:</label>
+                                            <h5>{{grupoClientes.Responsable.Correo}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">CLIENTES ASOCIADOS AL GRUPO</div>
+                        <div class="panel-body" style="padding:5px;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-5">
+                                        <div class="row no-padding">
+                                            <selector-actor-comercial ng-if="inicializacionRealizada" name="SelectorCliente" id="SelectorCliente" actor-comercial="grupoClientes.Cliente" rol="rolCliente" etiqueta-rol="'CLIENTE'" api="$parent.selectorClienteAPI" changed="cambioCliente(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="2" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroCliente"></selector-actor-comercial>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-1">
+                                        <a ng-click="agregarClienteAGrupoClientes()" ng-disabled="idClienteGenerico == grupoClientes.Cliente.Id" class="btn btn-success pull-left"><span class="glyphicon glyphicon-plus"></span></a>
+                                    </div>
+                                    <div class="col-xs-12 table-responsive">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>DOCUMENTO</th>
+                                                    <th>NOMBRE</th>
+                                                    <th>ELIMINAR</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-show="grupoClientes.Clientes.length>0" ng-cloak>
+                                                <tr ng-repeat="cliente in grupoClientes.Clientes">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{cliente.Documento}}</td>
+                                                    <td>{{cliente.Nombre}}</td>
+                                                    <td>
+                                                        <a class="btn btn-xs btn-danger" ng-click="quitarClienteDeGrupoClientes($index)"><span class="glyphicon glyphicon-remove"></span></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-danger" ng-show="inconsistencias.length > 0">
+                        <div class="box-body">
+                            <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                            <table>
+                                <tr ng-repeat="item in inconsistencias">
+                                    <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="inconsistencias.length > 0" ng-click="guardarGrupoClientes()" class="btn btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-grupo-clientes')" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

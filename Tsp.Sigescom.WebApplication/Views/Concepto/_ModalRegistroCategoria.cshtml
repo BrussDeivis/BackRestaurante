@@ -1,0 +1,32 @@
+﻿<div id="modal-categoria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO CATEGORÍA</h4>
+            </div>
+            <div class="modal-body">
+                <form name="categoriaForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="nombre" class="control-label">Nombre: </label>
+                            <input class="form-control" id="nombre" uppercase-only ng-model="categoria.Nombre" placeholder="Nombre" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label for="descripcion" class="control-label">Descripción: </label>
+                            <textarea id="descripcion" ng-model="categoria.Valor" class="form-control" required placeholder="Descripción"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="categoriaPadre" class="control-label">Categoría Padre: </label>
+                            <select id="categoriaPadre" class="select2 form-control" ng-model="categoria.DetalleMaestroPadre" ng-options="item as item.Nombre for item in categorias.Lista track by item.Id">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="categoriaForm.$invalid && angular.equals(categoria, categoriaTmp)" ng-click="nuevaCategoria(categoria)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR CATEGORÍA</a>
+                <a data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

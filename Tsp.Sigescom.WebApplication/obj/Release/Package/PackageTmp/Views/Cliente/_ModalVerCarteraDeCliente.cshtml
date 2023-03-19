@@ -1,0 +1,51 @@
+﻿<div id="modal-ver-cartera-de-cliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">CARTERA DE CLIENTE</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-body">
+
+                                <div class="box" style="border:1px solid;">
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <label class="col-md-12" style="text-align:center">CENTRO DE ATENCION</label>
+                                            <label class="col-md-12">{{verCartera.CentroDeAtencion}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box" style="border:1px solid;">
+                                    <div class="box-body">
+                                        <label class="col-md-12" style="text-align:center">LISTA DE CLIENTES</label>
+                                        <table id="tabla-ver-cartera" class="table table-stripped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Razon Social</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in verCartera.Clientes" ng-cloak>
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{item}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a title="Cerrar" ng-click="cerrar('modal-ver-cartera-de-cliente')" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

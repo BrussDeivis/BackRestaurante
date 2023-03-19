@@ -1,0 +1,216 @@
+﻿<div id="modal-registrador-reserva" class="modal fade modal-responsive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog" style="width:90%;">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE RESERVA</h4>
+            </div>
+            <div class="modal-body bg-conedor-principal">
+                <div class="row">
+                    <div class="col-sm-8 px-10">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="col-sm-12 px-5">
+                                    <div class="col-sm-3 px-5">
+                                        <div class="form-group">
+                                            <label>Tipo*:</label>
+                                            <select class="select2 form-control" ng-model="$ctrl.busqueda.TipoHabitacion" ng-change="$ctrl.limpiarHabitacionesDisponibles()" ng-options="item as item.Nombre for item in $ctrl.tiposHabitacion track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 px-5">
+                                        <div class="form-group">
+                                            <label>Ingreso*:</label>
+                                            <input ng-if="$ctrl.parametros.AgregarDiaAFechaDesde" ng-model="$ctrl.busqueda.FechaDesde" id="fechaDesdeReservar" placeholder="dd/mm/aaaa" ng-change="$ctrl.limpiarHabitacionesDisponibles()" class="form-control datepicker-yyyy td-datepicker" data-date-start-date="-1d" />
+                                            <input ng-if="!$ctrl.parametros.AgregarDiaAFechaDesde" ng-model="$ctrl.busqueda.FechaDesde" id="fechaDesdeReservar" placeholder="dd/mm/aaaa" ng-change="$ctrl.limpiarHabitacionesDisponibles()" class="form-control datepicker-yyyy td-datepicker" data-date-start-date="0d" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 px-5">
+                                        <div class="form-group">
+                                            <label>Salida*:</label>
+                                            <input ng-model="$ctrl.busqueda.FechaHasta" id="fechaHastaReservar" placeholder="dd/mm/aaaa" ng-change="$ctrl.limpiarHabitacionesDisponibles()" class="form-control datepicker-yyyy td-datepicker" data-date-start-date="0d" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 px-5">
+                                        <div class="form-group">
+                                            <label>Ambiente:</label>
+                                            <select class="select2 form-control" id="idAmbiente" ng-model="$ctrl.busqueda.Ambiente" ng-change="$ctrl.limpiarHabitacionesDisponibles()" ng-options="item as item.Nombre for item in $ctrl.ambientesHabitacion track by item.Id">
+                                                <option value="">Seleccionar ambiente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 px-5" style="display: flex;justify-content: center;align-items: center;height: 75px;">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-click="$ctrl.obtenerHabitacionesDisponibles()" ng-disabled="!$ctrl.busqueda.TipoHabitacion || !$ctrl.busqueda.FechaDesde || !$ctrl.busqueda.FechaHasta || $ctrl.diferenciaDiasEntreFechas($ctrl.busqueda.FechaDesde,$ctrl.busqueda.FechaHasta) <= 0 || $ctrl.diferenciaDiasEntreFechas($ctrl.busqueda.FechaDesde,$ctrl.busqueda.FechaHasta) > $ctrl.parametros.DiasMaximoDuracionReserva || $ctrl.diferenciaDiasEntreFechas($ctrl.parametros.FechaActual,$ctrl.busqueda.FechaHasta) > $ctrl.parametros.DiasMaximoAnticipacionReserva">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 px-10">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover tabla-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Ambiente</th>
+                                                    <th>Tipo Habitación</th>
+                                                    <th>Aforo</th>
+                                                    <th style="width:200px">Precio</th>
+                                                    <th>Seleccionar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="habitacionDisponible in $ctrl.habitacionesDisponibles" ng-cloak>
+                                                    <td>{{habitacionDisponible.CodigoHabitacion}}</td>
+                                                    <td>{{habitacionDisponible.Ambiente.Nombre}}</td>
+                                                    <td>{{habitacionDisponible.TipoHabitacion.Nombre}}</td>
+                                                    <td>{{habitacionDisponible.InformacionAforo}}</td>
+                                                    <td>
+                                                        <select class="select2 form-control" ng-model="habitacionDisponible.Precio" ng-init="habitacionDisponible.Precio = habitacionDisponible.TipoHabitacion.Precios[0]" ng-options="precio as precio.Tarifa+' - S/.'+ precio.ValorString for precio in habitacionDisponible.TipoHabitacion.Precios track by precio.Id"></select>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-xs" ng-click="$ctrl.seleccionarHabitacionDisponible(habitacionDisponible)"><span class="fa fa-check"></span></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" style="padding-left:15px; padding-right:15px" ng-repeat="atencion in $ctrl.reserva.Atenciones" ng-cloak>
+                                <div class="box box-primary">
+                                    <div class="box-header with-border contenedor-habitacion-cabecera">
+                                        <div class="row" style="padding-left:5px">
+                                            <div class="col-md-2 col-sm-12 tag-habitacion">
+                                                <div class="row tag-habitacion-title">
+                                                    <h4>{{atencion.Habitacion.CodigoHabitacion}}</h4>
+                                                </div>
+                                                <p style="text-align:center">{{atencion.Habitacion.TipoHabitacion.Nombre}} | {{atencion.Habitacion.Ambiente.Nombre}}</p>
+                                            </div>
+                                            <div class="col-md-10 no-padding">
+                                                <div class="col-md-3 no-padding">
+                                                    <div class="col-md-6 col-xs-6">
+                                                        <div class="form-group">
+                                                            <label>INGRESO:</label>
+                                                            <p>{{atencion.FechaIngreso}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-xs-6">
+                                                        <div class="form-group">
+                                                            <label>SALIDA:</label>
+                                                            <p>{{atencion.FechaSalida}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>NOCHES:</label>
+                                                        <p>{{atencion.Noches}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>PRECIO:</label>
+                                                        <select class="select2 form-control" ng-model="atencion.Habitacion.Precio" ng-change="$ctrl.calcularTotalDetalleReserva($index)" ng-options="precio as precio.Tarifa+' - S/.'+ precio.ValorString for precio in atencion.Habitacion.TipoHabitacion.Precios track by precio.Id"></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>IMPORTE:</label>
+                                                        <p>S/. {{atencion.Importe|number:2}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1 box-tools pull-right">
+                                                    <button type="button" class="btn btn-box-tool pull-right" data-widget="remove" ng-click="$ctrl.quitarHabitacionSeleccinada($index)"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <registrador-huesped name="RegistradorHuesped" id="RegistradorHuesped" atencion="atencion" api="$ctrl.registradoHuespedAPI" change="$ctrl.cambioRegistroHuesped" puede-guardar-huesped="false" puede-modificar-huesped="true" external-id="$index"></registrador-huesped>
+                                        <div class="col-md-12 group-model no-padding">
+                                            <label class="col-md-2 label-model">ANOTACIÓN:</label>
+                                            <input class="col-md-10 col-xs-12 input-model" uppercase-only ng-model="atencion.Anotacion" maxlength="30" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 px-10">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="col-sm-12 no-padding">
+                                    <selector-actor-comercial ng-if="$ctrl.inicializacionRealizada" name="SelectorUsuario" id="SelectorUsuario" actor-comercial="$ctrl.reserva.Responsable" rol="$ctrl.rolUsuario" etiqueta-rol="'Responsable'" api="$ctrl.selectorUsuarioAPI" changed="$ctrl.cambioResponsable(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="-1" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroCliente"></selector-actor-comercial>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="box-grey">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">#</th>
+                                                        <th>Habitación</th>
+                                                        <th>Noches</th>
+                                                        <th>P.U</th>
+                                                        <th>Importe</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="resumen in $ctrl.resumenHabitaciones" ng-cloak>
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{resumen.Nombre}}</td>
+                                                        <td>{{resumen.Cantidad}}</td>
+                                                        <td>{{resumen.PrecioUnitario}}</td>
+                                                        <td>{{resumen.Importe}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex; justify-content:flex-end">
+                                        <label>Total:</label>
+                                        <label>S/ {{$ctrl.reserva.Total|number:2}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <label class="px-10">FACTURAR</label>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="radio1" name="facturado" value="false" ng-model="$ctrl.reserva.FacturadoGlobal" ng-checked="$ctrl.reserva.FacturadoGlobal==false">
+                                    <label for="radio1" title="Después" style="font-size:14px;">Después</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="radio2" name="facturado" value="true" ng-model="$ctrl.reserva.FacturadoGlobal" ng-checked="$ctrl.reserva.FacturadoGlobal==true">
+                                    <label for="radio2" title="Ahora">Ahora</label>
+                                </div>
+                                <div class="col-xs-12 px-10" ng-if="$ctrl.reserva.FacturadoGlobal == 'true'">
+                                    <facturacion-venta external-id="0" api="$ctrl.facturacionVentaAPI" facturacion="$ctrl.reserva.Comprobante" mostrar-punto-de-venta-vendedor="false" debe-seleccionar-punto-de-venta-vendedor="false" debe-seleccionar-almacen-almacenero="false" debe-seleccionar-caja-cajero="false" debe-permitir-detalle-unificado="true" permitir-registro-fecha-emision="false" permitir-registro-placa="false" id-medio-pago-default="$ctrl.parametros.IdMedioDePagoEfectivo" importe-total="$ctrl.reserva.Total.toFixed(2)" cambio-igv="$ctrl.cambiarAfeccionIgv(aplicarIgv)" inicio-realizado="$ctrl.inicioRealizadoFacturacion(facturacion)"></facturacion-venta>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-danger" ng-show="$ctrl.inconsistenciasReserva.length > 0">
+                    <div class="box-body">
+                        <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                        <table>
+                            <tr ng-repeat="item in $ctrl.inconsistenciasReserva">
+                                <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a title="Confirmar Reserva" ng-click="$ctrl.guardarReserva()" ng-disabled="!$ctrl.reserva.esValido" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> CONFIRMAR</a>
+                <a title="Check-In Reserva" ng-click="$ctrl.checkInReserva()" ng-disabled="!$ctrl.reserva.esValido || $ctrl.hayAtencionesSinHuespedes()" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> CHECK-IN</a>
+                <a title="Cerrar Registro de Reserva" ng-click="$ctrl.cerrarReserva()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

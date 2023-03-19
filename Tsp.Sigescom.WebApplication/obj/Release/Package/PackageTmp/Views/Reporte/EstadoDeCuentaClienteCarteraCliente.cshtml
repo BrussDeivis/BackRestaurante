@@ -1,0 +1,174 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.Custom.EstadoCuentaCliente_VentaCobro
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+
+        .texto {
+            font-size: 4mm;
+        }
+
+        .texto3mm {
+            font-size: 3mm;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 7mm;
+        }
+
+        .subtitulo {
+            font-weight: bolder;
+            font-size: 5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .contorno {
+            border: solid;
+        }
+
+        .contorno_fino {
+            border: solid;
+            border-width: thin;
+        }
+
+        th, td {
+            padding: 1mm;
+            line-height: 1.2;
+        }
+
+        .sinmargen {
+            margin: 0;
+            padding: 0
+        }
+
+        .lineaHorizontal {
+            margin: 5px;
+        }
+
+        body.receipt .sheet {
+            width: 200mm;
+            height: 297mm;
+        }
+        /*  sheet size */
+        @@page {
+            size: 200mm 297mm;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 200mm
+            }
+        }
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+    <title></title>
+</head>
+<body class="receipt texto>
+    <section class="sheet ">
+        @* Datos Del Reporte *@
+        <div width="100%">
+            <table width="100%">
+                <tr>
+                    <td width="100%">
+                        <div class="centrado">
+                            <div class="titulo">ESTADO DE CUENTA POR CARTERA DE CLIENTE</div>
+                            <div><label style="font-weight:bold"> Cliente: </label>@Model.Cliente</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr class="lineaHorizontal">
+        <div class="subtitulo centrado">RESUMEN DE ESTADO DE CUENTA</div>
+        <hr class="lineaHorizontal">
+        @* Resumen *@
+        <div class="centrado">
+            <table width="100%">
+                <tr>
+                    <th class="contorno_fino">SALDO ANTERIOR</th>
+                    <th class="contorno_fino">ENTREGA</th>
+                    <th class="contorno_fino">COBRO</th>
+                    <th class="contorno_fino">SALDO ACTUAL</th>
+                </tr>
+                <tr width="100%" style="padding:0; margin:0">
+                    <td width="25%" class="contorno_fino">@string.Format("S/.{0:0.00}", @Model.Resumen.SaldoAnterior)</td>
+                    <td width="25%" class="contorno_fino">@string.Format("S/.{0:0.00}", @Model.Resumen.EntregaTotal)</td>
+                    <td width="25%" class="contorno_fino">@string.Format("S/.{0:0.00}", @Model.Resumen.CobroTotal)</td>
+                    <td width="25%" class="contorno_fino">@string.Format("S/.{0:0.00}", @Model.Resumen.SaldoFinal)</td>
+                </tr>
+            </table>
+        </div>
+        <hr class="lineaHorizontal">
+        <div class="subtitulo centrado">DETALLE DE ESTADO DE CUENTA</div>
+        <hr class="lineaHorizontal">
+        @* Detalles *@
+        <div width="100%">
+            <table width="100%" border:"1">
+                <tr>
+                    <th width="10%" rowspan="2" class="contorno_fino">Fecha</th>
+                    <th width="10%" rowspan="2" class="contorno_fino">Saldo Anterior</th>
+                    <th width="50%" colspan="5" class="contorno_fino">Entrega</th>
+                    <th width="10%" rowspan="2" class="contorno_fino">Total</th>
+                    <th width="10%" rowspan="2" class="contorno_fino">Cobro</th>
+                    <th width="10%" rowspan="2" class="contorno_fino">Saldo</th>
+                </tr>
+                <tr>
+                    <th class="contorno_fino">Código</th>
+                    <th class="contorno_fino">Concepto</th>
+                    <th class="contorno_fino">Cantidad</th>
+                    <th class="contorno_fino">P.U</th>
+                    <th class="contorno_fino">Importe</th>
+                </tr>
+                @foreach (var detalle in Model.Detalles)
+                {
+                    <tr class="contorno_fino" style="padding:0; margin:0">
+                        <td class="contorno_fino">@detalle.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td class="importe contorno_fino">@string.Format("{0:0.00}", detalle.SaldoAnterior)</td>
+                        <td class="contorno_fino" colspan="5">
+                            <table>
+                                @foreach (var item in detalle.DetallesDeVenta)
+                                {
+                                    <tr width="100%" style="padding:0; margin:0">
+                                        <td>@item.Codigo</td>
+                                        <td>@item.Concepto</td>
+                                        <td class="importe">@string.Format("{0:0.00}", item.Cantidad)</td>
+                                        <td class="importe">@string.Format("{0:0.00}", item.PrecioUnitario)</td>
+                                        <td class="importe">@string.Format("{0:0.00}", item.Importe)</td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                        <td class="importe contorno_fino">@string.Format("{0:0.00}", detalle.Total)</td>
+                        <td class="importe contorno_fino">@string.Format("{0:0.00}", detalle.Cobro)</td>
+                        <td class="importe contorno_fino">@string.Format("{0:0.00}", detalle.Saldo)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </section>
+</body>
+</html>

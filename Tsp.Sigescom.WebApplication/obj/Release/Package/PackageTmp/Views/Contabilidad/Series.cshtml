@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Series de comprobante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/contabilidad/serieComprobanteController.js")></script>
+}
+
+<div class="col-md-12" ng-controller="serieComprobanteController">
+    <div class="row">
+        <div class="col-md-12 texto-centrado form-group">
+            <div class="titulo1">SERIES DE COMPROBANTES</div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <a title="DESCARGAR" class="btn btn-sm btn-success"><i class="fa fa-file-excel-o"></i> DESCARGAR</a>
+                </div>
+                <div class="form-group col-md-offset-8 col-md-2">
+                    <a title="NUEVA SERIE" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-serie" ng-click="nuevoRegistroSerie()"><span class="glyphicon glyphicon-plus"></span> NUEVA SERIE</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table id="tabla-serie" datatable="ng" dt-options="dtOptions" dt-column-defs="compras.dtColumnDefs" class="table table-bordered table-height-small tabla-bandeja ">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>T/Comprobante</th>
+                        <th>Sede</th>
+                        <th>N° Serie</th>
+                        <th>Autonumerico</th>
+                        <th>N° Siguiente</th>
+                        <th>Vigente</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="serieComprobante in series.lista">
+                        <td class="number">{{$index+1}}</td>
+                        <td>
+                            {{serieComprobante.TipoDeComprobante}}
+                        </td>
+                        <td>
+                            {{serieComprobante.Sede}}
+                        </td>
+                        <td >
+                            <span>{{serieComprobante.NumeroSerie}}</span>
+                        </td>
+                        <td >
+                            <span>{{serieComprobante.Autonumerico?'SI':'NO'}}</span>
+                        </td>
+                        <td >
+                            <span>{{serieComprobante.NumeroSiguiente}}</span>
+                        </td>
+                        <td >
+                            <span>{{serieComprobante.Vigente?'SI':'NO'}}</span>
+                        </td>
+                        <td >
+                            <button ng-hide="serieComprobante.activoGuardar" title="Editar" class="btn-default btn-xs btn" ng-click="activarEditado(serieComprobante)"><span class="glyphicon glyphicon-pencil"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="modal-serie" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">REGISTRAR SERIE</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="serieForm" class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label>TIPO DE COMPROBANTE</label>
+                                        <select class="select2 form-control" ng-model="model.IdTipoDeComprobante" ng-change="cargarTipoDeComprobante()" ng-options="comprobante.Id as comprobante.Nombre for comprobante in tiposDeComprobante"></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>SEDE</label>
+                                        <select class="select2 form-control" ng-model="model.IdSede" ng-change="cargarSede()" ng-options="sede.Id as sede.Nombre for sede in sedes"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>SERIE</label>
+                                        <input class="form-control" uppercase-only ng-model="model.NumeroSerie" ng-pattern="/^[a-zA-Z0-9][0-9]{0,3}$/" maxlength="4" ng-minlength="4" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="checkbox checkbox-primary"><input type="checkbox" ng-model="model.Autonumerico" form="check-autonumerico" class="styled" value="true"/><label id="check-autonumerico">AUTONUMERICO</label></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>NUMERO</label>
+                                        <input class="form-control" ng-model="model.NumeroSiguiente">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="checkbox checkbox-primary"><input type="checkbox" ng-model="model.Vigente" form="check-vigente" class="styled" value="true" /><label id="check-vigente">VIGENTE</label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a title="GUARDAR SERIE" class="btn btn-info btn-sm" ng-disabled="!model.IdTipoDeComprobante||!model.NumeroSerie||!model.IdSede||!model.Autonumerico||!model.NumeroSiguiente||!model.Vigente" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR SERIE</a>
+                        <a title="CERRAR" class="btn btn-sm btn-danger" ng-click="close()"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+    </div>
+</div>
+
+
+

@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Reportes Pedidos";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/pedido/pedidoReportesController.js")></script>
+    <script>
+        var reportData =@(Html.Raw(Json.Encode(ViewBag.Data)));
+    </script>
+}
+
+<div class="col-md-12" ng-controller="pedidoReportesController" ng-init="inicializar()">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTES DE PEDIDOS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3 " id="input-establecimiento">
+                    <div class="form-group">
+                        <label for="punto1" class="title-report">Establecimiento*</label>
+                        <select id="" class="select2 form-control" ng-model="reporteador.PedidosInvalidadosPorFecha.EstablecimientoSeleccionado" ng-options="item as item.Nombre for item in data.Establecimientos  track by item.Id" required ng-change="PorPedidosInvalidados_EstablecimientoChanged()"></select>
+                    </div>
+                </div>
+                <div class="col-md-3" id="input-caja">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Punto de Venta</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="todasLosPuntosVenta" type="checkbox" class="styled" ng-model="reporteador.PedidosInvalidadosPorFecha.SeleccionarTodosLosPuntosVenta" ng-change="PorPedidosInvalidados_SeleccionarTodosLosPuntosVentaChanged()" />
+                                <label class="negrita">Todas</label>
+                            </div>
+                        </div>
+                        <select id="InvalidadosPorFecha_puntos_venta" class="select2 form-control" ng-model="reporteador.PedidosInvalidadosPorFecha.PuntosVentaSelecionados" ng-change="PorInvalidados_PuntosVentaChanged()" ng-options="item as item.Nombre for item in reporteador.PedidosInvalidadosPorFecha.EstablecimientoSeleccionado.CentrosAtencion  track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Desde </label>
+                            <div>
+                                @*<input id="PorGrupos_ingresos_fechadesde" ng-model="reporteador.PorGrupos.FechaDesde" ng-change="PorGrupos_actualizarURLs()" class="form-control datetimepicker" />*@
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.PedidosInvalidadosPorFecha.FechaDesde" ng-change="PorInvalidados_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Hasta </label>
+                            <div>
+                                @*<input id="PorGrupos_ingresos_fechahasta" ng-model="reporteador.PorGrupos.FechaHasta" ng-change="PorGrupos_actualizarURLs()" class="form-control datetimepicker" />*@
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.PedidosInvalidadosPorFecha.FechaHasta" ng-change="PorInvalidados_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">INVALIDADOS</h3>
+        </div>
+        <div class="box-body">
+            <div class="row ">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Ventas Por Grupos" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PedidosInvalidadosPorFecha.ActivarBotonVer" ng-href="{{URLPorInvalidados_PedidosInvalidadosPuntosVenta}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "flaticon";
+    src: url("./flaticon.ttf?c19588818ab0d62751436e5c0b0680c4") format("truetype"),
+url("./flaticon.woff?c19588818ab0d62751436e5c0b0680c4") format("woff"),
+url("./flaticon.woff2?c19588818ab0d62751436e5c0b0680c4") format("woff2"),
+url("./flaticon.eot?c19588818ab0d62751436e5c0b0680c4#iefix") format("embedded-opentype"),
+url("./flaticon.svg?c19588818ab0d62751436e5c0b0680c4#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-check-out:before {
+    content: "\f101";
+}
+.flaticon-hotel:before {
+    content: "\f102";
+}
+.flaticon-check-in-desk:before {
+    content: "\f103";
+}
+.flaticon-luggage-cart:before {
+    content: "\f104";
+}
+.flaticon-hotel-1:before {
+    content: "\f105";
+}
+.flaticon-bed:before {
+    content: "\f106";
+}
+.flaticon-do-not-disturb:before {
+    content: "\f107";
+}
+.flaticon-sleep:before {
+    content: "\f108";
+}
+.flaticon-slumber:before {
+    content: "\f109";
+}
+.flaticon-calendar:before {
+    content: "\f10a";
+}
+.flaticon-household:before {
+    content: "\f10b";
+}
+.flaticon-bedroom:before {
+    content: "\f10c";
+}
+.flaticon-broom:before {
+    content: "\f10d";
+}

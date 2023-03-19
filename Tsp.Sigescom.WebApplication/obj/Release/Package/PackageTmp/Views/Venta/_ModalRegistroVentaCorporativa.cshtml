@@ -1,0 +1,21 @@
+﻿<div id="modal-registro-venta-corporativa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE VENTA CORPORATIVA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.Partial("_RegistroVentaPartial")
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-md btn-primary pull-left" title="CONFIRMAR" ng-disabled="!logicaValida" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-disk"></span> CONFIRMAR</button>
+                <button class="btn btn-md btn-primary pull-left" title="REGISTAR" ng-disabled="guardarVentaPuntoVenta()" ng-click="registarVenta()"><span class="glyphicon glyphicon-check"></span> REGISTAR</button>
+                <button class="btn btn-md btn-danger" data-dismiss="modal" title="CERRAR" ng-click="close()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("../Compra/_ModalRegistroFinanciamientoPartial")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>

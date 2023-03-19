@@ -1,0 +1,70 @@
+﻿<div id="modal-registro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE DESCUENTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="descuentoForm" class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label>Mercaderia:</label>
+                                        <select id="producto" class="select2 form-control" ng-model="descuento.Mercaderia" ng-options="item as item.Nombre for item in productos track by item.Id" required></select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Porcentaje:</label>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="mostrar" type="checkbox" class="styled" ng-model="descuento.Porcentaje" />
+                                            <label for="mostrar"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label ng-show="descuento.Porcentaje">Descuento: (%)</label>
+                                        <label ng-hide="descuento.Porcentaje">Descuento: (S/)</label>
+                                        <input class="form-control" ng-class="descuento.Porcentaje?'number':''" ng-model="descuento.Valor" required/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Cant. Minima:</label>
+                                        <input class="form-control" type="number" ng-model="descuento.CantidadMinima" required/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Cant. Maxima:</label>
+                                        <input class="form-control" type="number" ng-model="descuento.CantidadMaxima" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Desde:</label>
+                                        <input class="datepicker-start form-control center" ng-model="descuento.FechaDesde" required />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Hasta:</label>
+                                        <input class="datepicker-end form-control center" ng-model="descuento.FechaHasta" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="descripcion">Descripción:</label>
+                                <textarea id="descipcion" class="form-control" ng-model="descuento.Descripcion" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="descuentoForm.$invalid" ng-click="guardarDescuento(descuento)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR DESCUENTO</a>
+                <a title="Cerrar" ng-click="close()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

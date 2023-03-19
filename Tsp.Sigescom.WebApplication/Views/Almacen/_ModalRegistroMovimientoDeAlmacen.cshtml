@@ -1,0 +1,46 @@
+﻿<div id="modal-registro-movimiento-de-almacen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> REGISTRO DE {{labelEntradaSalida}} DE ALMACEN</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <div class="row">
+                    <form class="formulario form-horizontal">
+                        <div class="col-md-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">{{labelRemitenteDestinatario}}</div>
+                                <div class="panel-body" style="padding:5px;">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <label class="col-md-6">{{movimiento.EtiquetaDocumentoIdentidadTercero}} : {{movimiento.DocumentoIdentidadTercero}}</label>
+                                            <label class="col-md-6">{{movimiento.EtiquetaNombreTercero}} : {{movimiento.Tercero}}</label>
+                                            <label class="col-md-6">{{movimiento.DireccionTercero}} , {{movimiento.UbigeoTercero}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.Partial("_ModalMovimientoMercaderiaPartial")
+                        <div class="col-md-12">
+                            <div class="box box-danger" ng-show="hayInconsistenciasMovimientoDeAlmacen && inconsistenciasMovimientoDeAlmacen.length > 0">
+                                <div class="box-body">
+                                    <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                    <table>
+                                        <tr ng-repeat="item in inconsistenciasMovimientoDeAlmacen">
+                                            <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button title="GUARDAR" class="btn btn-primary btn-md" ng-disabled="hayInconsistenciasMovimientoDeAlmacen" ng-click="guardarMovimientoDeAlmacen()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button title="CERRAR" ng-click="cerrar()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

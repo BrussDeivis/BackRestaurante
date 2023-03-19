@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Grupo de Clientes";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/cliente/grupoClientesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script>
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idRolCliente = @ViewBag.idRolCliente;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var minimoCaracteresBuscarActorComercial = @ViewBag.minimoCaracteresBuscarActorComercial;
+        var mascaraDeVisualizacionValidacionRegistroCliente = '@ViewBag.mascaraDeVisualizacionValidacionRegistroCliente';
+    </script>
+}
+<div class="col-md-12" ng-controller="grupoClientesController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">GRUPO DE CLIENTES</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <a title="Nuevo grupo de clientes" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-grupo-clientes" ng-click="nuevoGrupoClientes()">NUEVO GRUPO DE CLIENTES</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-grupo-cliente" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Clasificación</th>
+                                        <th>N° Documento</th>
+                                        <th>Responsable</th>
+                                        <th>Teléfono</th>
+                                        <th>Clientes</th>
+                                        <th>Vigente</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="cliente in gruposClientes" ng-cloak>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{$index+1}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.Codigo}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.Nombre}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.Tipo}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.Clasificacion}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.DocumentoResponsable}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.NombreResponsable}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.TelefonoResponsable}}</td>
+                                        <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.NumeroClientes}}</td>
+                                        <td>{{cliente.EsVigente ? 'SI': 'NO'}}</td>
+                                        <td>
+                                            <a title="Ver grupo de clientes" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-grupo-clientes" ng-click="cargarVerGrupoClientes(cliente)"><span class="glyphicon glyphicon-search"></span></a>
+                                            <a title="Editar grupo de clientes" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-registro-grupo-clientes" ng-click="editarGrupoClientes(cliente.Id)" ng-if="cliente.EsVigente"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroGrupoClientes")
+    @Html.Partial("_ModalVerGrupoClientes")
+</div>

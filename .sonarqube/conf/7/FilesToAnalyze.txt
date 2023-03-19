@@ -1,0 +1,6 @@
+﻿D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\Class1.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\Properties\AssemblyInfo.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\GeneradorConstructor.tt
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\App.config
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\packages.config
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.GeneradorCodigo\ConfigurationAccessor.ttinclude

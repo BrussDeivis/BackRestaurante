@@ -1,0 +1,719 @@
+﻿@{
+    ViewBag.Title = "REPORTES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/venta/reporteVentaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/cliente/clienteController.js")></script>
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin = '@ViewBag.fechaHoraFin';
+        var parametrosReportesAdministrador=@(Html.Raw(Json.Encode(ViewBag.parametrosReportesAdministrador)));
+    </script>
+}
+
+<div ng-controller="reporteVentaController" ng-init="nuevoReporteGerente()">
+    <!--=====================================================================    INPUTS DATETIME =========================================================================-->
+    <div class="date-fixed">
+        <div class="box box-success">
+            <div class="color-palette-set" style="margin-bottom: 0px;">
+                <div class="bg-green color-palette">REPORTE DE VENTAS</div>
+            </div>
+            @*<div class="box-header with-border">
+                    <h3 class="box-title">Seleccione Periodo</h3>
+                </div>*@
+            <div class="box-body" style="padding-left: 15px; padding-bottom: 0px;">
+                <form autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-6">
+                            <div class="form-group">
+                                <label for="dateStart">Fecha y Hora Inicial </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStart" ng-model="reporte.FechaInicio" ng-change="actualizarURLsAdministrador()" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                </div>
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" id="horaIndividual" ng-model="reporte.HoraInicio" ng-change="actualizarURLsAdministrador()" class="form-control timepickerIndividual">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <div class="form-group">
+                                <label for="dateEnd">Fecha y Hora Final</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd" ng-model="reporte.FechaFinal" ng-change="actualizarURLsAdministrador()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                </div>
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" id="horaIndividual" ng-model="reporte.HoraFinal" ng-change="actualizarURLsAdministrador()" class="form-control timepickerIndividual">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--REPORTE DE PUNTOS DE VENTA POR COMPROBANTE -->
+    <div class="col-xs-12 after-date-fixed">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Centro de Atencion y Serie </h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4 " id="input-report-puntos-venta-comprobante-vigentes">
+                        <div class="form-group">
+                            <label for="punto1" class="title-report"> Puntos de Venta Vigentes: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaComprobanteVigentes" ng-change="actualizarURLReporteDeVentaDeLosPuntosDeVentaPorComprobante(); validarSeleccionDePuntosDeVentaParaComprobanteVigentes()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 " id="input-report-puntos-venta-comprobante-no-vigentes">
+                        <div class="form-group">
+                            <label for="punto1" class="title-report"> Puntos de Venta no Vigentes: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaComprobanteNoVigentes" ng-change="actualizarURLReporteDeVentaDeLosPuntosDeVentaPorComprobante(); validarSeleccionDePuntosDeVentaParaComprobanteNoVigentes()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVentaNoVigentes  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2  mt-20">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta por comprobante agrupado por serie" class="btn btn-primary btn-flat" id="btn-see-in-report-1" ng-href="{{URLReporteDeVentaDeLosPuntosDeVentaPorComprobante}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--REPORTE POR COMPROBANTE==============-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Comprobante </h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-comprobante">
+                        <div class="form-group">
+                            <label for="documento">Por Comprobante: *</label>
+                            <select id="" class="select2 form-control tipoDocumento" ng-model="reporte.TipoDeComprobante" ng-change="cargarSeries(reporte.TipoDeComprobante)" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantes track by item.TipoComprobante.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="input-report-serie">
+                        <div class="form-group">
+                            <label for="serie">Serie: *</label>
+                            <select id="serie" class="select2 form-control" ng-model="reporte.Serie" ng-change="actualizarURLReporteDeVentaPorSerieDeComprobante()" ng-options="item.Id as item.Nombre for item in series track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2  mt-20">
+                        <div class="form-group">
+
+                            <a title="Reporte de Ventas según comprobante y series seleccionadas" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorSerieDeComprobante}}" disabled id="btn-see-in-report-2">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DETALLADO - 01 FILA POR ITEM-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Detallado: Concepto, características y forma de pago </h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4 " id="input-report-punto-venta-detallado-concepto-caracteristica-formapago">
+                        <div class="form-group">
+                            <label for="punto1" class="title-report"> Puntos de Venta Vigentes: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntoDeVentaParaDetalladoPorConceptoCaracteristicasFormaPago" ng-change="actualizarURLReporteDeVentaDetalladoPorConceptoCaracteristicasFormaPago(); validarSeleccionDePuntosDeVentaParaComprobanteVigentes()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required></select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 " id="input-report-caracteristicas-detallado-concepto-caracteristica-formapago">
+                        <label for="punto11" class="title-report"> Características a mostrar</label>
+                        <ui-select ng-model="reporte.CaracteristicasSeleccionadas_Para_DetalladoPorConceptoCaracteristicasFormaPago"
+                                   ng-change="actualizarURLReporteDeVentaDetalladoPorConceptoCaracteristicasFormaPago()"
+                                   theme="bootstrap"
+                                   close-on-select="false"
+                                   multiple="multiple"
+                                   sortable="true">
+                            <ui-select-match placeholder="Caracteristicas">{{$item.Nombre}}</ui-select-match>
+                            <ui-select-choices repeat="item in caracteristicasConcepto | filter:$select.search">
+                                {{item.Nombre}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="col-md-2  mt-20">
+                        <div class="form-group">
+                            <a title="Reporte de venta detallado por concepto, caracteristicas y forma de pago" class="btn btn-primary btn-flat" id="btn-see-in-report-detallado-concepto-caracteristica-formapago" ng-href="{{URLReporteDeVentaDetalladoPorConceptoCaracteristicasFormaPago}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===========================================================REPORTE DE PUNTOS DE VENTA POR CONCEPTO===========cambio: por concepto=================================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Concepto </h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-puntos-venta-concepto">
+                        <div class="form-group">
+                            <label for="punto2"> Puntos de Venta: *</label>
+                            <select class="select2 form-control" ng-model="reporte.PuntosDeVentaParaConcepto" ng-change="actualizarURLReporteDeVentaPorConceptoDeVariosPuntoDeVenta()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2  mt-20">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta por punto de venta" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorConceptoDeVariosPuntoDeVenta}}" id="btn-see-in-report-3" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===============================================================REPORTE DE VENDEDORES POR CONCEPTO=========================================CAMBIO==POR CONCEPTO Y VENDEDOR=======================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Concepto y Vendedor </h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-vendedores-concepto">
+                        <div class="form-group">
+                            <label for="Vendedor"> Vendedores: * </label>
+                            <select id="" class="select2 form-control" ng-model="reporte.EmpleadosParaVender" ng-change="actualizarURLReporteDeVentaDeVendedoresPorConcepto()" ng-options="item as item.Nombre for item in listaEmpleadosGenerico  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2  mt-20">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta de los vendedores por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaDeVendedoresPorConcepto}} " id="btn-see-in-report-4" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Característica</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-caracteristica-puntoventa">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaSeleccionados_Para_ReportePorCaracteristica" ng-change="actualizarURLReporteDeVentasPorCaracteristica()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="input-report-venta-caracteristica-caracteristica">
+                        <div class="form-group">
+                            <label for="punto4"> Característica: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.CaracteristicaSeleccionada_Para_ReportePorCaracteristica" ng-change="actualizarURLReporteDeVentasPorCaracteristica()" ng-options="item as item.Nombre for item in caracteristicasConcepto  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-caracteristica" title="Muestra las ventas por característica" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorCaracteristica}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Familia y Serie</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-puntos-venta-serie-familia">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaFamilia" ng-change="actualizarURLReporteDeVentaDeLosPuntosDeVentaPorSerieDeComprobanteYFamilia()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-5" title="Muestra Reporte agrupado por Familia y Serie" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaDeLosPuntosDeVentaPorSerieDeComprobanteYFamilia}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--===========================================================REPORTE DE PUNTOS DE VENTA POR SERIE Y CONCEPTO===============================cambio=por concepto y serie cam========================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Concepto y Serie</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-punto-venta-serie-concepto">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaConceptoDeAdministrador" ng-change="actualizarURLReporteDeVentaDeLosPuntosDeVentaPorSerieDeComprobanteYConcepto()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-6" title="Muestra Reporte agrupado Por Serie y Concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaDeLosPuntosDeVentaPorSerieDeComprobanteYConcepto}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Categoria y Serie</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-puntos-venta-serie-categoria">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaCategoria" ng-change="actualizarURLReporteDeVentaDeLosPuntosDeVentaPorSerieDeComprobanteYCategoria()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-cat-5" title="Muestra Reporte agrupado por Categoria y Serie" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaDeLosPuntosDeVentaPorSerieDeComprobanteYCategoria}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Serie</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-series">
+                        <div class="form-group">
+                            <label for="punto4"> Comprobantes y Series: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.SeriesConTipoComprobante" ng-change="actualizarURLReporteDeVentaPorSeriesConTipoComprobante()" ng-options="item as item.Nombre for item in seriesConTipoComprobante track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-ser-5" title="Muestra Reporte agrupado por Serie" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorSeriesConTipoComprobante}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=====================================================REPORTE DE VENTAS POR MODALIDAD CONSOLIDADO POR CONCEPTO================cambio: por modalidad y concepto========================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Modalidad y Concepto</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-modalidad-consolidado-concepto-vendedor">
+                        <div class="form-group">
+                            <label for="Vendedor"> Vendedor: * </label>
+                            <select class="select2 form-control" ng-model="reporte.EmpleadosParaVender1" ng-change="actualizarURLReporteDeVentasPorModalidadConsolidadoPorConcepto()" ng-options="item as item.Nombre for item in listaEmpleadosGenerico  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="input-report-venta-modalidad-consolidado-concepto-modalidades">
+                        <div class="form-group">
+                            <label for="tipo-venta"> Modalidad: * </label>
+                            <select id="tipo-venta" class="select2 form-control" ng-model="reporte.Modalidades1" ng-change="actualizarURLReporteDeVentasPorModalidadConsolidadoPorConcepto()" ng-options="item as item.Nombre for item in listaDeModalidadesGenerico  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-7" title="Ventas por modalidad consolidado por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasPorModalidadConsolidadoPorConcepto}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=============================================== REPORTE DE VENTAS POR MODALIDAD CONSOLIDADO POR PRECIO UNITARIO ===============cambio: Por Modalidad, Concepto y Precio Unitario=========================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Modalidad, Concepto y Precio Unitario</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-modalidad-consolidado-precio-unitario-vendedor">
+                        <div class="form-group">
+                            <label for="Vendedor"> Vendedor: * </label>
+                            <select class="select2 form-control" ng-model="reporte.EmpleadosParaVender2" ng-change="actualizarURLReporteDeVentasPorModalidadConsolidadoPorPrecioUnitario()" ng-options="item as item.Nombre for item in listaEmpleadosGenerico  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="input-report-venta-modalidad-consolidado-precio-unitario-modalidades">
+                        <div class="form-group">
+                            <label for="tipo-venta"> Modalidad: * </label>
+                            <select id="tipo-venta" class="select2 form-control" ng-model="reporte.Modalidades2" ng-change="actualizarURLReporteDeVentasPorModalidadConsolidadoPorPrecioUnitario()" ng-options="item as item.Nombre for item in listaDeModalidadesGenerico  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-8" title="Ventas por modalidad consolidado por precio unitario" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasPorModalidadConsolidadoPorPrecioUnitario}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===================================================== REPORTE POR NÚMERO DE COMPROBANTE CON ICBPER ===================cambio: resumen por serie=====================================-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Comprobantes con ICBPER</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-por-numero-de-comprobante-con-icbper">
+                        <div class="form-group">
+                            <label for="Vendedor"> Puntos de venta: * </label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaReportePorNumeroDeComprobanteConIcbper" ng-change="actualizarURLReporteDeVentaPorNumeroDeComprobanteConIcbper()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta track by item.Id" multiple required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-9" title="Reporte de venta por número de comprobante con ICBPER " class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorNumeroDeComprobanteConIcbper}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--===========================================================REPORTE DE PUNTOS DE VENTA POR INTERVALO DIARIO==============cambio:Por Intervalo De Tiempo:==========================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Según horario ({{reporte.HoraInicio+' - '+ reporte.HoraFinal}})</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-por-intervalo-diario">
+                        <div class="form-group">
+                            <label for="puntoVenta"> Punto de venta: * </label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaParaReportePorIntervaloDiario" ng-change="actualizarURLReporteDeVentaPorIntervaloDiario()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta track by item.Id" multiple required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-10" title="Ventas realizadas según las fechas seleccionadas y especificamente en el horario seleccionado. Por ejemplo: Ventas realizadas entre el 1 de marzo y el 15 de abril especificamente en el horario de 8am a 10am" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorIntervaloDiario}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--===========================================================REPORTE DE VENTAS POR FAMILIA=====================================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Familia y Vendedor</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-concepto-basico-vendedor">
+                        <div class="form-group">
+                            <label for="punto4"> Vendedor: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.VendedorParaReportePorConceptoBasico" ng-change="actualizarURLReporteDeVentasPorConceptoBasicoPorVendedor()" ng-options="item as item.Nombre for item in listaEmpleadosGenerico  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-11" title="Muestra Reporte de Ventas por Familia y Vendedor" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasPorConceptoBasicoPorVendedor}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===========================================================REPORTE DE VENTAS POR FAMILIA, CONCEPTO Y CARACTERISTICA=====================================================-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Familia, Concepto y Característica</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-md-3 radio radio-primary radio-inline">
+                            <input type="radio" id="radio1" name="cuenta" value="1" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==1" ng-click="obtenerFamilias()">
+                            <label for="radio1">Por Familia y Característica</label>
+                        </div>
+                        <div class="col-md-2 radio radio-primary radio-inline">
+                            <input type="radio" id="radio2" name="cuenta" value="2" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==2">
+                            <label for="radio2">Por Característica</label>
+                        </div>
+                        <div class="col-md-2 radio radio-primary radio-inline">
+                            <input type="radio" id="radio3" name="cuenta" value="3" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==3" ng-click="obtenerConceptos()">
+                            <label for="radio3">Por Concepto</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px" ng-show="modoSelectorReporte == 1">
+                    <div class="col-md-4" id="input-report-venta-familia-caracteristica-punto-venta">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaReporteVentasPorFamiliaCaracteristica" ng-change="actualizarURLReporteVentasPorFamiliaCaracteristica()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="input-report-venta-familia-caracteristica-familia">
+                        <div class="form-group">
+                            <label for="punto4"> Familia: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.FamiliaReporteVentasPorFamiliaCaracteristica" ng-change="obtenerCaracteristicaParaFamiliaCaracteristica();actualizarURLReporteVentasPorFamiliaCaracteristica()" ng-options="item as item.Nombre for item in familias  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="input-report-venta-familia-caracteristica-caracteristica">
+                        <div class="form-group">
+                            <label for="punto4"> Característica: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.CaracteristicaReporteVentasPorFamiliaCaracteristica" ng-change="obtenerValoresCaracteristicaParaFamiliaCaracteristica(); actualizarURLReporteVentasPorFamiliaCaracteristica()" ng-options="item as item.Nombre for item in caracteristicaReporteVentasPorFamiliaCaracteristica track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="input-report-venta-familia-caracteristica-valor-caracteristica">
+                        <div class="form-group">
+                            <label for="punto4"> Nombre: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.ValorCaracteristicaReporteVentasPorFamiliaCaracteristica" ng-change="actualizarURLReporteVentasPorFamiliaCaracteristica()" ng-options="item as item.Nombre for item in valoresCaracteristicaReporteVentasPorFamiliaCaracteristica  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-venta-familia-caracteristica" title="Descarga reporte de ventas por familia y caracteristica" class="btn btn-success btn-flat" ng-href="{{URLReporteVentasPorFamiliaCaracteristica}}">DESCARGAR</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px" ng-show="modoSelectorReporte == 2">
+                    <div class="col-md-4" id="input-report-venta-valor-caracteristica-punto-venta">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaReporteVentasPorCaracteristica" ng-change="actualizarURLReporteVentasPorCaracteristica()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="input-report-venta-valor-caracteristica-caracteristica">
+                        <div class="form-group">
+                            <label for="punto4"> Característica: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.CaracteristicaReporteVentasPorCaracteristica" ng-change="obtenerValoresCaracteristicaParaCaracteristica();  actualizarURLReporteVentasPorCaracteristica()" ng-options="item as item.Nombre for item in caracteristicasConcepto  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="input-report-venta-valor-caracteristica-valor-caracteristica">
+                        <div class="form-group">
+                            <label for="punto4"> Nombre: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.ValorCaracteristicaReporteVentasPorCaracteristica" ng-change="actualizarURLReporteVentasPorCaracteristica()" ng-options="item as item.Nombre for item in valoresCaracteristicaReporteVentasPorCaracteristica track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-venta-valor-caracteristica" title="Descarga reporte de ventas por caracteristica" class="btn btn-success btn-flat" ng-href="{{URLReporteVentasPorCaracteristica}}">DESCARGAR</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px" ng-show="modoSelectorReporte == 3">
+                    <div class="col-md-4" id="input-report-venta-concepto-punto-venta">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.PuntosDeVentaReporteVentasPorConcepto" ng-change="actualizarURLReporteVentasPorConcepto()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="input-report-venta-concepto-concepto">
+                        <div class="form-group">
+                            <label for="punto4"> Concepto: *</label>
+                            <select id="" class="select2 form-control" ng-model="reporte.ConceptoReporteVentasPorConcepto" ng-change="actualizarURLReporteVentasPorConcepto()" ng-options="item as item.Nombre for item in conceptos  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-venta-concepto" title="Descarga reporte de ventas por concepto" class="btn btn-success btn-flat" ng-href="{{URLReporteVentasPorConcepto}}">DESCARGAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================================================REPORTE DE VENTAS POR FAMILIA Y VENDEDOR=============================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Familia</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a title="Muestra Reporte Agrupado por Familia" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasConsolidadoPorConceptoBasicoPorVendedores}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--====================================================REPORTE DE VENTAS AL CONTADO Y AL CREDITO POR VENDEDORES============cambio::==================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ventas al Contado y al Crédito por Vendedores</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-2 mt-20">
+                        <div class="form-group">
+                            <a title="Muestra Reporte Agrupado por pago al contado o al credito por Vendedores" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasConsolidadoAlContadoAlCreditoPorVendedores}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Invalidaciones</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-invalidaciones-administrador">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="select-report-12" class="select2 form-control" ng-model="reporte.PuntoDeVentaReporteInvalidaciones" ng-change="actualizarURLReporteInvalidacionesAdministrador()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-md-offset-1 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-12" title="Comprobantes de venta invalidados" class="btn btn-primary btn-flat" ng-href="{{URLReporteInvalidacionesAdministrador}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="red-text">{{reporte.MensajeErrorInvalidaciones}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Notas de crédito</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-notas-credito">
+                        <div class="form-group">
+                            <label for="punto4"> Punto de Venta: *</label>
+                            <select id="select-report-13" class="select2 form-control" ng-model="reporte.PuntoDeVentaReporteNotasDeCredito" ng-change="actualizarURLReporteNotasDeCredito()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-md-offset-1 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-13" title="Notas de crédito" class="btn btn-primary btn-flat" ng-href="{{URLReporteNotasDeCredito}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="red-text">{{reporte.MensajeErrorReporteNotasDeCredito}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Notas de débito</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-notas-debito">
+                        <div class="form-group">
+                            <label for="punto4">Punto de Venta: *</label>
+                            <select id="select-report-14" class="select2 form-control" ng-model="reporte.PuntoDeVentaReporteNotasDebito" ng-change="actualizarURLReporteNotasDebito()" ng-options="item as item.Nombre for item in listaDeEntidadesInternasConRolPuntoDeVenta  track by item.Id" required></select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-md-offset-1 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-14" title="Notas de débito" class="btn btn-primary btn-flat" ng-href="{{URLReporteNotasDebito}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="red-text">{{reporte.MensajeErrorReporteNotasDebito}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <h5 class="col-xs-12">(*) Datos Obligarios</h5>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,182 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.ComprobantesModel.ReciboDeIngresoEgreso
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 60px;
+            font-family: courier
+        }
+
+        .centrado {
+            text-align: center;
+            
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios{
+            margin:0px;
+            padding:0px;
+        }
+        div {
+            font-size: 35px;
+        }
+
+        th, td {
+            padding: 5px;
+            vertical-align:top
+        }
+
+        .centrado, .importe, div, td, th {
+            font-family: MS Gothic;
+            font-weight: lighter;
+        }
+
+        .container {
+            display: grid;
+            height: 150px;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto;
+        }
+
+        .item {
+            width: 50%;
+            height: 50%;
+            justify-self: center;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .text-important {
+            font-size: 70px;
+        }
+
+        body.receipt .sheet {
+            width: 70.5mm;
+            height: auto;
+        }
+        /*  sheet size */
+        @@page {
+            size: 70.5mm auto;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 70.5mm;
+                height: auto;
+            }
+        }
+        /* fix for Chro */
+    </style>
+
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet" style="font-family:Consolas">
+        @* Datos Emisor *@
+        @if (Model.MostrarTestigo)
+        {
+            <div class="centrado titulo">
+                <div>@(Model.Serie + "-" + Model.Numero)</div>
+
+            </div>
+        }
+        @* Datos Emisor *@
+        @if (Model.MostrarLogo)
+        {
+            <div class="centrado">
+                <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Logo Siges Facturacion Electronica" />
+            </div>
+        }
+        <div class="centrado">
+            <div class="titulo">@Model.Emisor.NombreComercial </div>
+            <div class="texto3mm">
+                <div>@Model.Emisor.RazonSocial</div>
+                <div>RUC: @Model.Emisor.NumeroDocumentoIdentidad</div>
+                <div>@Model.Emisor.Direccion</div>
+                @if (Model.Emisor.EsSucursal)
+                {
+                    <div class="negrita">SUC: @Model.Emisor.NombreSucursal</div>
+                    <div>@Model.Emisor.DireccionSucursal</div>
+                }
+                <div>@Model.Emisor.OtrosDatosContacto</div>
+                <div>@Model.Emisor.Publicidad</div>
+                <div>Fecha de emisión:@Model.FechaEmision.ToString("dd/MM/yyyy hh:mm tt")</div>
+            </div>
+        </div>
+        <hr>
+        @* Caja *@
+        <div>
+            <div>Caja: @Model.Caja </div>
+        </div>
+        <hr />
+        @* Cajero *@
+        <div>
+            <div>Cajero: @Model.Cajero </div>
+        </div>
+        <hr />
+        @* Receptor *@
+        <div>
+            <div>Cliente: @Model.Receptor.RazonSocial </div>
+            <div>@(Model.Receptor.TipoDocumentoIdentidad + " " + Model.Receptor.DocumentoIdentidad)</div>
+            <div>@(Model.Receptor.Direccion)</div>
+        </div>
+        <hr>
+        @* Detalles *@
+        <div width="100%">
+            <table width="100%">
+                <tr>
+                    <th>N° Cuota</th>
+                    <th>Comprobante</th>
+                    <th>S/</th>
+
+                </tr>
+                @foreach (var item in Model.DetallesDeIngresoEgreso)
+                {
+                    <tr width="100%">
+                        <td width="30%" >@string.Format("{0}", item.CodigoCuota)</td>
+                        <td width="40%" >@string.Format("{0}", item.Comprobante)</td>
+                        <td width="30%" >@string.Format("{0}", item.Importe)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <hr>
+        @* Detalles *@
+        <div class="container">
+            @*<div class="item">
+                <label for="">Saldo Actual: </label>
+            </div>*@
+            <div class="item text-important">
+                <label for="">Importe: </label>
+            </div>
+            @*<div class="item">
+                <label for=""> Saldo final: </label>
+            </div>*@
+            @*<div class="item">
+                <label for="">@Model.SaldoAnterior</label>
+            </div>*@
+            <div class="item text-important">
+                <label for="">@Model.ImporteTotal</label>
+            </div>
+            @*<div class="item">
+                <label for="">@Model.SaldoFinal</label>
+            </div>*@
+        </div>
+    </section> 
+</body>
+</html>

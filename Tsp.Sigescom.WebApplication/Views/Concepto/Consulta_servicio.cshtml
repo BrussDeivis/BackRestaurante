@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Mantenimiento de Servicios";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/producto/productoController.js")></script>
+    <script>
+        var idUnidadDeMedidaSubUnidad=@ViewBag.IdUnidadDeMedidaSubUnidad;
+    </script>
+}
+<div class="col-xs-12" ng-controller="consultarServicioController">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">
+                    SERVICIOS
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+           <div class="box box-success">
+               <div class="box-body">
+                   <div class="row">
+                       <div class="col-xs-12 form-group">
+                            <a title="Descargar" class="btn btn-flat btn-success"><span class="fa fa-file-excel-o"></span> Descargar</a>
+                            <a title="Nuevo Servicio" class="btn btn-flat btn-primary pull-right" data-toggle="modal" data-target="#modal-servicio" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> Nuevo Servicio</a>
+                       </div>
+                        <div class="col-xs-12">
+                            <table id="tabla-servicio" datatable="ng" dt-options="dtOptions" dt-column-defs="servicios.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>CÓDIGO</th>
+                                        <th>NOMBRE</th>
+                                        <th>ROL</th>
+                                        <th>CATEGORIAS</th>
+                                        <th>PROPIEDADES</th>
+                                        <th class="noExport not-search">ACCIÓN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in productos.Lista" ng-cloak>
+                                        <td class="width-40">{{$index+1}}</td>
+                                        <td class="left">{{item.Codigo}}</td>
+                                        <td class="left">{{item.Nombre}}</td>
+                                        <td class="left">{{item.Rol}}</td>
+                                        <td class="left">{{item.Categoria}}</td>
+                                        <td class="left">{{item.Propiedades}}</td>
+                                        <td class="width-40">
+                                            <a title="Editar Producto" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-servicio" ng-click="editarProducto(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroServicioPartial")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>
+

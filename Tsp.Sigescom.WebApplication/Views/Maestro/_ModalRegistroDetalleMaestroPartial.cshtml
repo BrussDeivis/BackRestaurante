@@ -1,0 +1,31 @@
+﻿<div id="modal-registro-detalle" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DETALLE</h4>
+                @*<a class="close" title="Cerrar" data-dismiss="modal"><span class="mdi mdi-close"></span></a>*@
+            </div>
+            <div class="modal-body">
+                    <form name="detalleForm">
+                        <div class="form-group">
+                                <label for="codigo">CÓDIGO: </label>
+                                    <input class="form-control" id="codigo" uppercase-only placeholder="Código Detalle" ng-model="detalle.Codigo" required />
+                        </div>
+                        <div class="form-group">
+                                <label for="nombre">NOMBRE: </label>
+                                    <input class="form-control" id="nombre" uppercase-only placeholder="Nombre Detalle" ng-model="detalle.Nombre" required />
+                        </div>
+                        <div class="form-group">
+                                <label for="valor">VALOR: </label>
+                                    <input class="form-control" id="valor" uppercase-only placeholder="Valor Detalle" ng-model="detalle.Valor" required />
+                        </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="detalleForm.$invalid" ng-click="nuevoDetalle(detalle)" class="btn btn-primary btn-flat pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a ng-click="cerrarModalDetalle()" title="Cerrar" class="btn btn-flat btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

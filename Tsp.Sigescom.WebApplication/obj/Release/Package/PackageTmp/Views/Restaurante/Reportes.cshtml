@@ -1,0 +1,194 @@
+﻿@using Tsp.Sigescom.Modelo;
+@{
+    ViewBag.Title = "Restaurante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/reportesRestauranteController.js")></script>
+    <script>
+        var fechaHoraInicio = new Date(@(((DateTime)ViewBag.fechaHoraInicio).ToJavaScriptMilliseconds()));
+        var fechaHoraFin = new Date(@(((DateTime)ViewBag.fechaHoraFin).ToJavaScriptMilliseconds()));
+        var parametros =@(Html.Raw(Json.Encode(ViewBag.parametros)));
+        var establecimientos=@(Html.Raw(Json.Encode(ViewBag.establecimientos)));
+    </script>   
+}
+  
+
+<form name="reporteForm" novalidate>
+
+    <div class="col-md-12" ng-controller="reportesRestauranteController" ng-init="inicializar()">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">REPORTES RESTAURANTE</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">SELECCIONE PERIODO </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dateStart">Fecha y Hora Inicial </label>
+                                        <div>
+                                            <input type="text" datetime="dd/MM/yyyy hh:mm:ss a" ng-model="reporteador.fechaHoraInicio" ng-change="actualizarURLReportes()" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dateEnd">Fecha y Hora Final </label>
+                                        <div>
+                                            <input type="text" datetime="dd/MM/yyyy hh:mm:ss a" ng-model="reporteador.fechaHoraFin" ng-change="actualizarURLReportes()" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 " id="input-establecimiento">
+                                <div class="form-group">
+                                    <label for="punto1" class="title-report">Establecimiento*</label>
+                                    <select id="" class="select2 form-control" ng-model="reporteador.establecimientoSeleccionado" ng-change="actualizarURLReportes()" ng-options="item as item.Nombre for item in reporteador.establecimientos  track by item.Id" required></select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">ATENCIONES</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Atenciones" class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;"
+                                       ng-href="{{reporteAtenciones.Url}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="red-text">{{reporteAtenciones.MensajeError}}</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">ORDENES POR CONCEPTO</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Items de Restaurante" class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;" ng-href="{{reporteOrdenesPorConcepto.URl}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="red-text">{{reporteOrdenesPorConcepto.MensajeError}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">ORDENES POR MOZO</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Resumen de ordenes" class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;" ng-href="{{reporteOrdenesPorMozo.Url}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="red-text">{{reporteOrdenesPorMozo.MensajeError}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">ORDENES DETALLADAS</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Ordenes Detalladas" class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;"
+                                       ng-href="{{reporteOrdenesDetalladas.Url}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="red-text">{{reporteOrdenesDetalladas.MensajeError}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">DEVOLUCIONES EN ORDENES</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Devolución por falta de calidad" class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;"
+                                       ng-href="{{reporteDevolucionesEnOrdenes.Url}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="red-text">{{reporteDevolucionesEnOrdenes.MensajeError}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">POR MODO ATENCIONES</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Atenciones" class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;"
+                                       ng-href="{{reportePorModoAtenciones.Url}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="red-text">{{reportePorModoAtenciones.MensajeError}}</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

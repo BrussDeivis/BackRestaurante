@@ -1,0 +1,36 @@
+﻿<div class="col-md-7 padding-0">
+    <div class="form-group">
+        <label class="col-md-4">{{persona.primerNombre}}:</label>
+        <div class="col-md-7">
+            <input class="form-control " ng-disabled="deshabilitar" ng-model="actorComercial.RazonSocial" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4">Nombre Comercial:</label>
+        <div class="col-md-7">
+            <input class="form-control " ng-disabled="deshabilitar" ng-model="actorComercial.NombreComercial" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4">Nombre Corto:</label>
+        <div class="col-md-7">
+            <input class="form-control" name="NombreCorto" ng-disabled="deshabilitar" ng-model="actorComercial.NombreCorto" maxlength="10" required />
+        </div>
+    </div>
+</div>
+<div class="col-md-5">
+    <div class="form-group">
+        <label class="col-md-5">Forma de pago:</label>
+        <div class="col-md-7">
+            <select class="select2 select-model" ng-disabled="deshabilitar" ng-model="actorComercial.FormaPago" ng-options="item as item.Nombre for item in formasPago track by item.Id" required>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5">Condicion de Pago:</label>
+        <div class="col-md-7">
+            <select class="select2 select-model" ng-disabled="deshabilitar" ng-model="actorComercial.CondicionPago" ng-options="item as item.Nombre for item in condicionesPago track by item.Id" required>
+            </select>
+        </div>
+    </div>
+</div>

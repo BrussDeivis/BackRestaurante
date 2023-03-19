@@ -1,0 +1,3967 @@
+﻿/*/*Inicio css para ver los bordes rojos
+.success, .valid, .ng-valid .select2-choice {
+    border-color: #5CB85C !important;
+}
+
+.input-validation-error, .ng-invalid-required, .ng-invalid-required .select2-choice {
+    border-color: red;
+}
+
+.ng-valid-required .select2-choice {
+    border-color: #5CB85C !important;
+}
+
+.modelo-tabla.ng-invalid-required .select2-choice {
+    border-color: unset !important;
+}
+Fin
+
+input:invalid {
+    border: 1px solid groove;
+}
+
+input:valid {
+    border: 1px solid green;
+}*/
+
+.boton-limpieza {
+    opacity: 0;
+}
+
+td:hover .boton-limpieza {
+    opacity: 1;
+}
+
+.edit-link {
+    color: #d9d9d9;
+    font-size: 80%;
+    font-weight: 400;
+    vertical-align: text-top;
+}
+
+    .edit-link:hover {
+        color: #3c8dbc;
+    }
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+.p-5 {
+    padding: 5px;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.ml-5 {
+    margin-left: 5px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+.ml-25 {
+    margin-left: 25px;
+}
+/*Boton de slider*/
+/*{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ABREVIATURAS*/
+.mx-5 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mb-1 {
+    margin-bottom: 10px;
+}
+
+.pb-10 {
+    padding-bottom: 10px;
+}
+
+.pb-5 {
+    padding-bottom: 5px;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.fs-15 {
+    font-size: 15px;
+}
+
+.fs-17 {
+    font-size: 17px;
+}
+/*}}}}}}}}}}}}}}}}*/
+.activo, .inactivo {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+i.activo {
+    /*color: #5cb85c*/
+    color: #0422d8;
+}
+
+i.inactivo {
+    color: #d9534f
+}
+/*Fin boton de slider*/
+/*Validacion de formularios*/
+.button_disable {
+    background-color: #d9d9d9 !important;
+    pointer-events: none;
+    color: #a7a7a7 !important;
+}
+
+    .button_disable:before {
+        display: none;
+    }
+
+.input_wrapper {
+    position: relative;
+}
+
+    .input_wrapper.validate_require {
+        border: 1px solid #ff1f05 !important;
+        border-radius: .1rem;
+    }
+
+        .input_wrapper.validate_require textarea,
+        .input_wrapper.validate_require input,
+        .input_wrapper.validate_require select {
+            border: none !important;
+            display: block;
+        }
+
+        .input_wrapper.validate_require .validate_msg {
+            display: block;
+        }
+
+    .input_wrapper .validate_msg {
+        position: absolute;
+        right: -1px;
+        top: -17px;
+        background-color: #ff1f05;
+        color: white;
+        font-family: 'c-book', sans-serif;
+        font-size: 10px;
+        padding: 1px 5px;
+        border-radius: .1rem .1rem 0 0;
+        display: none;
+    }
+
+.field_form {
+    border-radius: 25px;
+    border: 1px solid rgba(42, 48, 56, 0.25) !important;
+    padding: 8px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 0.1rem;
+    font-size: 13px;
+    height: 40px;
+    color: #171B26;
+    font-family: "c-book", sans-serif;
+    width: 100%;
+}
+
+    .field_form:focus,
+    .field_form:active {
+        outline: none;
+    }
+
+    .field_form.need_validated {
+        border: 1px solid #ff1f05 !important;
+        -webkit-box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.15);
+        box-shadow: 8px 10px 20px 0px rgba(46, 61, 73, 0.15);
+    }
+/*Fin de validacion de formularios*/
+
+.height-34 {
+    height: 34px !important;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.no-padding-top {
+    padding-top: 0;
+}
+
+.no-padding-bottom {
+    padding-bottom: 0;
+}
+
+.no-padding-left {
+    padding-left: 0;
+}
+
+.no-padding-right {
+    padding-right: 0;
+}
+
+.borde-azul {
+    border: solid 2px;
+    border-color: var(--color-primario);
+}
+
+.padding-left-15 {
+    padding-left: 15px;
+}
+
+.pad-top-10 {
+    padding-top: 10px;
+}
+
+
+.elemento-superior-derecho {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+
+.name-entity {
+    float: left;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+
+@media (max-width: 767px) {
+
+
+    .name-entity h2 {
+        font-size: 13px !important;
+    }
+}
+
+.alert {
+    z-index: 1060 !important;
+}
+
+.numero-derecha {
+    text-align: right;
+}
+
+.validacion-error {
+    color: red;
+    font-size: 12px;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.red-text {
+    color: red;
+}
+
+.panel-menu-user {
+    position: absolute;
+    right: 0;
+    left: auto;
+}
+/*
+    Responsive tables
+*/
+
+/*.row div:last-child {
+    overflow-x: auto;
+}*/
+
+
+
+/*.primero {
+    display: none;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    position: relative;
+    width: 200px;
+}
+
+.primero-contenido:hover .primero {
+    display: block;
+}*/
+
+/*Clases custom de SIGES fecha de creacion 29/11/2020*/
+.no-bold {
+    font-weight: normal !important;
+}
+
+.negrita {
+    font-weight: bold !important;
+}
+
+.titulo-negrita {
+    font-size: 25px !important;
+    font-weight: bold !important;
+}
+
+.titulo-negrita-blanco {
+    font-size: 25px !important;
+    font-weight: bold !important;
+    color: #fff !important;
+}
+
+.titulo-negrita-centrado {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.centrar-contenido {
+    margin: 0 auto;
+}
+
+.modelo-etiqueta {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 13px;
+    text-align: left;
+}
+
+.modelo-valor-input {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 16px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: right;
+}
+
+.modelo-valor-label {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 16px;
+    text-align: right;
+}
+
+.value-model {
+    font-size: 16px !important;
+    padding-right: 10px !important;
+}
+
+
+.group-model {
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+
+.label-model {
+    padding-top: 5px;
+    margin-bottom: 0;
+    text-align: right;
+    padding-left: 0px;
+    padding-bottom: 3px;
+}
+
+.label-info-huesped {
+    padding-left: 0px;
+}
+
+.label-data-huesped {
+    font-size: 14px !important;
+    padding-right: 10px !important;
+    font-weight: normal
+}
+
+
+.input-model {
+    display: block;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+    outline: 0 none;
+}
+
+    .input-model:focus {
+        border-color: #0C7CBA;
+        outline: 0 none;
+    }
+
+.width-230 {
+    width: 230px !important;
+}
+
+.font-size-15 {
+    font-size: 15px;
+}
+/*input[type=text] {
+    height: 34px;
+    -webkit-transition: height .35s ease-in-out;
+    transition: height .35s ease-in-out;
+}
+
+    input[type=text]:focus {
+        height: 250px;
+    }*/
+.textarea-model {
+    height: 32px;
+    -webkit-transition: height .35s ease-in-out;
+    transition: height .35s ease-in-out;
+}
+
+    .textarea-model:focus {
+        height: 75px;
+    }
+
+.boton-medio-pago {
+    margin-right: 5px !important;
+    background-color: white !important;
+    font-weight: bold !important;
+    color: green !important;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-7 {
+    margin-top: 7px;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
+
+/*Clases para los inputs de fecha en la seccion reporte-ventas*/
+.date-fixed {
+    position: fixed;
+    z-index: 1;
+    margin-top: -15px;
+    width: 100%;
+    /*margin-right: 15px;*/
+}
+
+.date-fixed-cus {
+    position: fixed;
+    z-index: 1;
+    margin-top: -15px;
+    padding-right: 65px;
+}
+
+
+.after-date-fixed {
+    margin-top: 170px;
+}
+
+.after-date-fixed-200 {
+    margin-top: 200px;
+}
+
+.mt-2 {
+    margin-top: 2px !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .after-date-fixed {
+        margin-top: 360px;
+        margin-top: 170px;
+    }
+}
+
+.content-button div {
+    margin-bottom: 5px;
+}
+
+/*Clases para el boton "ver" en la seccion reportes*/
+
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700");
+
+.btn-see-in-report:hover {
+    cursor: not-allowed;
+}
+
+.input-report-content:after {
+    margin-top: -10px;
+    display: block;
+    color: rgb(187, 31, 31);
+    content: "Seleccione una opción !";
+    font-family: "Poppins", sans-serif;
+}
+
+.no-after-input-report-content:after {
+    content: none;
+}
+
+.error-in-select {
+    border: 1px solid !important;
+    border-color: rgb(187, 31, 31) !important;
+}
+
+
+
+tr.border_bottom > td {
+    border-bottom: 1pt solid #B7B6B6 !important;
+}
+
+
+/* Clases para mensajes */
+
+.info-msg,
+.success-msg,
+.warning-msg,
+.error-msg {
+    font-size: 16px;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.info-msg {
+    color: #059;
+    background-color: #BEF;
+}
+
+.success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+}
+
+.warning-msg {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+.error-msg {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+
+.hoide-msg {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+}
+
+.show-msg {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.btn-circle {
+    border-radius: 50%;
+}
+
+/*.btn-oculto {
+    visibility: hidden !important;
+}
+
+.btn-oculto:hover {
+    visibility: visible !important;
+}*/
+
+
+/* CLASES PARA LAS TABLAS */
+
+.error-in-table {
+    border: 3px solid #FF3333 !important;
+}
+
+
+/* SCROLL 300PX*/
+
+.scroll-y-250 {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.scroll-x {
+    overflow-x: scroll;
+}
+
+.scroll-y-200 {
+    height: 200px;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+.title-filter {
+    font-size: 14px;
+    font-weight: 200;
+    font-weight: bold;
+}
+
+.sortoptions {
+    list-style: none;
+    margin-top: 3px;
+    margin-bottom: 0;
+    padding-left: 0px;
+}
+
+
+.sidebar {
+    float: left;
+    text-transform: capitalize;
+}
+
+.span-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+
+
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    top: 200px;
+}
+
+    /* The actual popup */
+    .popup .popuptext {
+        visibility: hidden;
+        width: 300px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+    }
+
+        /* Popup arrow */
+        .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+    /* Toggle this class - hide and show the popup */
+    .popup .show {
+        visibility: visible;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s;
+    }
+
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+/*---------------------------------ESTILOS RESTAURANTE-------------------------------*/
+/*---index ATENCION---*/
+#main-content-restaurant .encabezado-atencion {
+    border-radius: 10px;
+    background-color: white;
+    min-height: 55px;
+    box-shadow: 0px 0px 5px 1px #888888;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#main-content-restaurant .encabezado-atencion-icono {
+    min-height: 55px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+    #main-content-restaurant .encabezado-atencion-icono .icono {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 55px;
+        color: white;
+        font-size: 20px;
+        background-color: #00C0EF;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    #main-content-restaurant .encabezado-atencion-icono div:nth-child(2) {
+        background-color: white;
+    }
+
+
+#main-content-restaurant .encabezado-atencion-cuerpo {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    #main-content-restaurant .encabezado-atencion-cuerpo div:nth-child(2) {
+        display: flex;
+        justify-content: space-around;
+    }
+
+#main-content-restaurant .box-header {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#tomarPedido .table tbody:hover {
+    background-color: aliceblue;
+}
+
+.mesa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 25px !important;
+    margin: 2px !important;
+    height: 1.5em !important;
+    padding: 0 !important;
+    border-radius: 5px !important;
+}
+
+    .mesa.mesa-default {
+        background-color: white !important;
+        border: 1.5px solid #404040 !important;
+        box-shadow: 0px 1px 2px 0px grey !important;
+    }
+
+    .mesa.mesa-ocupada {
+        box-shadow: 0px 1px 2px 0px red !important;
+        transition: all 0.5s;
+    }
+
+        .mesa.mesa-ocupada:hover {
+            opacity: 0.8;
+        }
+
+    .mesa.mesa-disponible {
+        box-shadow: 0px 1px 2px 0px green !important;
+    }
+
+/*tomar orden*/
+.orden-complementos input[type="checkbox"] {
+    display:none;
+}
+
+.orden-complementos label {
+    display: inline-block;
+    background-color: white;
+    padding: 2px 3px;
+    font-size: 12px;
+    border: 1px solid var(--color-primario);
+    border-radius: 3px;
+    color: var(--color-primario);
+    margin: 0px 1px;
+}
+
+.orden-complementos input[type="checkbox"]:hover + label {
+    background-color: #fdd;
+    cursor: pointer !important;
+}
+
+.orden-complementos input[type="checkbox"]:focus + label {
+    border: 1px solid var(--color-secundario);
+}
+
+.orden-complementos input[type="checkbox"]:checked + label {
+    background-color: var(--color-secundario);
+    color: white;
+    border-color: var(--color-secundario)
+}
+ 
+ 
+
+/*    
+
+.orden-complementos input[type="checkbox"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.orden-complementos label:hover {
+    background-color: #fdd;
+    cursor: pointer !important;
+}
+
+.orden-complementos input[type="checkbox"]:focus + label {
+    border: 1px solid var(--color-secundario);
+}
+
+.orden-complementos input[type="checkbox"]:checked + label {
+    background-color: var(--color-secundario);
+    color: white;
+}*/
+
+/*.orden-complementos {
+    display: flex;
+    flex-direction: column;
+    justify-content: initial;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+    .orden-complementos .btn-group .item-complemento {
+        margin-right: 10px;
+        border-radius: 4px !important;
+        font-size: 13px !important;
+    }
+*/
+#ordenes table {
+    box-shadow: 0px 0px 2px 0px gray;
+}
+
+denes table:hover {
+    background-color: aliceblue !important;
+}
+
+#panel-atencion .encabezado-atencion-icono .icono span:nth-child(3) {
+    display: none;
+}
+
+#main-content-restaurant .contenedor-anotacion {
+    margin-left: 37px;
+}
+
+    #main-content-restaurant .contenedor-anotacion .form-control-feedback {
+        pointer-events: auto !important;
+        cursor: pointer;
+        transition: all 0.5s;
+    }
+
+        #main-content-restaurant .contenedor-anotacion .form-control-feedback:hover {
+            color: red;
+        }
+
+#ordenes .contenedor-anotacion-observacion-td {
+    margin: 0;
+    height: 45px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+#ordenes .contenedor-anotacion {
+    margin: 0;
+}
+
+    #ordenes .contenedor-anotacion input {
+        height: 34px;
+        border-radius: 4px;
+    }
+
+    #ordenes .contenedor-anotacion .form-control-feedback-guardar {
+        position: absolute;
+        z-index: 2;
+        top: 6px;
+        right: 30px;
+    }
+
+@media screen and (max-width: 767px) {
+    #main-content-restaurant .encabezado-atencion-icono .icono {
+        background-color: #00A3CC;
+        height: auto;
+        font-size: 2em;
+        height: 1.4em;
+        border-bottom-left-radius: 0;
+    }
+
+    #main-content-restaurant .encabezado-atencion-icono div:nth-child(2) {
+        background-color: #00A3CC;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: white;
+        height: 39px;
+        border-top-right-radius: 10px;
+    }
+
+    #main-content-restaurant .encabezado-atencion-cuerpo {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding-top: 0;
+        padding-bottom: 10px;
+    }
+
+        #main-content-restaurant .encabezado-atencion-cuerpo div:nth-child(2) {
+            display: flex;
+            justify-content: space-around;
+        }
+}
+
+@media (max-width: 736px) and (orientation:landscape) {
+    #panel-atencion .encabezado-atencion-icono {
+        min-height: 36px;
+    }
+
+        #panel-atencion .encabezado-atencion-icono .icono {
+            justify-content: normal;
+            font-size: 1.5em !important;
+        }
+
+            #panel-atencion .encabezado-atencion-icono .icono span {
+                font-size: 20px !important;
+            }
+
+                #panel-atencion .encabezado-atencion-icono .icono span:nth-child(3) {
+                    display: block;
+                    margin-left: 265px;
+                }
+
+    #panel-atencion .encabezado-atencion .encabezado-atencion-cuerpo div:first-child {
+        display: none !important;
+    }
+
+    #panel-atencion .encabezado-atencion .encabezado-atencion-cuerpo div:nth-child(2) .btn {
+        width: 100%;
+        margin-right: 10px
+    }
+
+    .content .box-header {
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+
+    #tomarpedido-box .box-header p {
+        width: 80%;
+    }
+
+    #tomarPedido {
+        padding-top: 3px;
+    }
+
+    #tomarpedido-box .box-header .btn-default {
+        display: block;
+        width: 100%;
+    }
+
+    #categorias {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        #categorias div:nth-child(2) .btn-info {
+            background: #8793a0;
+        }
+
+    #tomarPedido .btn-cantidad-item button {
+        display: block;
+        width: 100%;
+    }
+}
+/*/////////////////////PREPARACION///////////////////////////////////////*/
+.contenedor-cartillas {
+    display: flex;
+    overflow-x: scroll;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+    .contenedor-cartillas .box {
+        margin: 20px;
+        box-shadow: 0px 4px 5px 0px grey;
+    }
+
+    .contenedor-cartillas .box-header {
+        width: auto;
+        min-width: 200px;
+    }
+
+    .contenedor-cartillas .box-body {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .contenedor-cartillas .cartilla-orden {
+        margin-bottom: 5px;
+    }
+
+#modulo-preparacion .leyenda li {
+    display: inline;
+    font-size: 15px;
+}
+
+.grupo-boton-radio {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    /*esto sirve para quitar la opcion deseleccinar texto*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.no-seleccionable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.grupo-boton-radio input[type="radio"] {
+    display: none
+}
+
+    .grupo-boton-radio input[type = "radio"]:checked + label {
+        background-color: #3c8dbc;
+        color: white;
+        font-weight: 700;
+        pointer-events: none;
+        border-bottom: none;
+    }
+
+.grupo-boton-radio .boton-radio {
+    border: 1px solid #3c8dbc;
+    padding: 5px 10px 5px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.3s;
+}
+
+.filtro-ambiente {
+    padding-left: 5px;
+}
+
+.filtro-categoria .sub-categorias {
+    padding-left: 100px;
+}
+
+    .filtro-categoria .sub-categorias .grupo-boton-radio .boton-radio {
+        background-color: #ededed;
+    }
+/*leyenda*/
+.text-white {
+    color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.label-detalle-orden {
+    padding: 10px;
+    border: solid 1px #a79d9d;
+}
+
+.leyenda {
+    padding: 0;
+}
+
+    .leyenda li {
+        font-weight: 700;
+    }
+
+/*cartillas detallle orden*/
+.botones-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.boton-detalle-orden-seleccionado {
+    border: 3px solid #616161;
+    box-shadow: 0px 2px 5px 3px #353535;
+}
+
+    .boton-detalle-orden-seleccionado:hover {
+        opacity: 0.9;
+    }
+/*ordenes atentidas*/
+
+#modulo-preparacion .ordenes-atendidas {
+    margin: 20px;
+    background: white;
+    border: 2px solid #7cad80;
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+    #modulo-preparacion .ordenes-atendidas .titulo-comandas-atendidas {
+        margin: 0;
+        position: relative;
+        left: 2px;
+        bottom: 16px;
+    }
+
+    #modulo-preparacion .ordenes-atendidas .ordenes-contenedor {
+        display: flex;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #modulo-preparacion .ordenes-atendidas .box-success {
+        margin-left: 30px;
+        height: 100%;
+    }
+
+        #modulo-preparacion .ordenes-atendidas .box-success .box-header {
+            min-width: 200px;
+        }
+
+        #modulo-preparacion .ordenes-atendidas .box-success .box-tools {
+            right: 7px;
+            top: 6px;
+        }
+
+@media screen and (max-width: 740px) {
+    .ordenes-atendidas .box-header {
+        height: 6vh;
+    }
+
+        .ordenes-atendidas .box-header .box-tools {
+            top: 0 !important;
+        }
+
+        .ordenes-atendidas .box-header h3:nth-child(2) {
+            margin-right: 54px !important;
+        }
+}
+
+@media (max-width: 736px) and (orientation:landscape) {
+    .filtro-categoria .sub-categorias {
+        width: 100%;
+        border-top: 2px solid #3c8dbc;
+        padding-left: 5px !important;
+    }
+
+        .filtro-categoria .sub-categorias .grupo-boton-radio {
+            padding-top: 5px;
+        }
+
+            .filtro-categoria .sub-categorias .grupo-boton-radio .boton-radio {
+                border: 1px solid #565d60;
+                background-color: #ededed;
+            }
+}
+
+
+/*MODAL FACTURACION ///////////////////////////////////////////////*/
+#modal-facturador-restaurante .contenedor-detalleOrdenes button {
+    display: none;
+}
+
+#modal-facturador-restaurante .modal-body .panel-ordenes .contenedor-comandas {
+    min-height: 578px;
+    overflow: auto;
+    margin-top: 10px;
+}
+/*facturacion simple*/
+#modal-facturador-restaurante .facturacion-simple {
+    background: white;
+    margin-left: 15px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+    #modal-facturador-restaurante .facturacion-simple .pdf-imprimir-factura {
+        display: flex !important;
+        justify-content: space-around;
+    }
+
+        #modal-facturador-restaurante .facturacion-simple .pdf-imprimir-factura button {
+            width: 30%;
+            display: flex !important;
+            justify-content: center;
+        }
+
+            #modal-facturador-restaurante .facturacion-simple .pdf-imprimir-factura button span {
+                font-size: 17px;
+            }
+/*modal facturacion diferenciado*/
+#modal-facturador-restaurante .modal-header .btn-group {
+    display: none;
+}
+
+#modal-facturador-restaurante .modal-body {
+    background-color: #ECF0F5 !important;
+}
+
+#modal-facturador-restaurante .panel-ordenes {
+    background: rgb(127,130,130);
+    background: linear-gradient(90deg, rgba(127,130,130,1) 0%, rgba(185,185,185,1) 48%, rgba(127,130,130,1) 100%);
+}
+
+    #modal-facturador-restaurante .panel-ordenes .btn-default {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        white-space: inherit !important;
+        text-align: start !important;
+        cursor: move !important;
+    }
+
+#modal-facturador-restaurante .box-primary .box-body {
+    min-height: 100px;
+}
+
+#modal-facturador-restaurante .panel-ordenes .contenedor-detalleOrdenes .btn-default .nombre-detalleOrden {
+    font-size: 12px;
+}
+
+#modal-facturador-restaurante .panel-ordenes .contenedor-detalleOrdenes .btn-default .pull-right-container {
+    position: relative;
+    right: -20px;
+    font-size: 17px;
+}
+
+#modal-facturador-restaurante .panel-ordenes .btn-default .label {
+    padding-top: 5px;
+    background-color: #3c8dbc !important;
+}
+/*despues del drag and drop*/
+
+#modal-facturador-restaurante .cabecera-de-ordenes {
+    padding: 0;
+    border-radius: 5px;
+    min-height: 40px;
+    /*box-shadow: 1px 2px 4px #313131;*/
+}
+
+    #modal-facturador-restaurante .cabecera-de-ordenes div:first-child {
+        background: #00c0ef;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 10px 0px 10px;
+        font-size: 35px;
+        align-self: center;
+        min-height: 40px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    #modal-facturador-restaurante .cabecera-de-ordenes div:nth-child(2) {
+        background: white;
+        min-height: 40px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+        #modal-facturador-restaurante .cabecera-de-ordenes div:nth-child(2) h3 {
+            margin: 0;
+            margin-top: 5px;
+        }
+
+#modal-facturador-restaurante .filtro-pagos {
+    width: 90%;
+    border: 1px solid #337ab7;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 4px grey;
+    background: white;
+}
+
+    #modal-facturador-restaurante .filtro-pagos div:first-child label {
+        font-size: 17px;
+    }
+
+    #modal-facturador-restaurante .filtro-pagos div:nth-child(2) {
+        font-size: 17px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+        #modal-facturador-restaurante .filtro-pagos div:nth-child(2) input[type=radio] {
+            width: 16px;
+            height: 16px;
+        }
+
+#modal-facturador-restaurante .cabecera-pagos {
+    margin-top: 20px;
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #337ab7;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+    #modal-facturador-restaurante .cabecera-pagos label {
+        font-size: 20px
+    }
+
+#modal-facturador-restaurante .contenedor-card-pagos {
+    padding-top: 20px;
+    background-color: #ECF0F5;
+    display: flex;
+}
+
+#modal-facturador-restaurante .card-pagos {
+    min-width: 330px;
+    box-shadow: 1px 2px 4px grey;
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+    #modal-facturador-restaurante .card-pagos .card-icono {
+        display: none;
+        font-size: 100px;
+        position: relative;
+        left: 83px;
+        top: 118px;
+        opacity: 0.5;
+        z-index: 1;
+    }
+
+#modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-header {
+    background: rgb(246,246,246);
+    background: radial-gradient(circle, rgba(246,246,246,0.7707457983193278) 0%, rgba(172,185,189,0.6362920168067228) 100%);
+    min-height: 250px;
+    max-height: 400px;
+    padding-top: 10px;
+    padding: 20px 10px 10px 10px;
+    overflow: auto;
+}
+
+#modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-delete .pdf-imprimir-factura {
+    display: flex;
+    justify-content: space-around;
+    padding-right: 0;
+}
+
+    #modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-delete .pdf-imprimir-factura button {
+        width: 30%;
+    }
+
+#modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-header .carril-detalleOrden {
+    min-height: 240px;
+    max-height: 370px;
+}
+
+#modal-facturador-restaurante .card-pagos .card-pagos-header .carril-detalleOrden button {
+    /*boton eliminar*/
+    display: block;
+}
+
+#modal-facturador-restaurante .card-pagos .card-pagos-header .carril-detalleOrden .nombre-detalleOrden {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#modal-facturador-restaurante .card-pagos .card-pagos-header .carril-detalleOrden .btn-default {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+    #modal-facturador-restaurante .card-pagos .card-pagos-header .carril-detalleOrden .btn-default .pull-right {
+        position: relative;
+        right: -12px;
+        font-size: 13px;
+    }
+
+#modal-facturador-restaurante .card-pagos .card-pagos-header .detalle-de-orden {
+    background-color: white;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 4px grey;
+}
+
+#modal-facturador-restaurante .card-pagos .card-pagos-facturacion {
+}
+
+#modal-facturador-restaurante .contenedor-card-pagos .agregar-card-pagos {
+    background: #3c8dbc;
+    opacity: 0.5;
+    width: 150px;
+    height:;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: #d8d8d8;
+    border-radius: 8px;
+    border: 10px dashed #d8d8d8;
+    filter: blur(1px);
+    box-shadow: 1px 2px 4px grey;
+    margin: 10px 2px 10px 2px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+    #modal-facturador-restaurante .contenedor-card-pagos .agregar-card-pagos:hover {
+        opacity: 0.7;
+        margin: 0;
+        width: 155px;
+        filter: blur(0px);
+        font-size: 55px;
+    }
+/*despues de soltar*/
+#modal-facturador-restaurante .card-pagos-header .btn-default {
+    border-radius: 10px !important;
+    padding-bottom: 3px;
+    z-index: 5;
+}
+
+    #modal-facturador-restaurante .card-pagos-header .btn-default span:first-child {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+#modal-facturador-restaurante .card-pagos .card-pagos-delete {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: rgb(4,130,167);
+    background: linear-gradient(240deg, rgba(4,130,167,0.5939675174013921) 14%, rgba(60,141,188,1) 100%);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+    #modal-facturador-restaurante .card-pagos .card-pagos-delete label i {
+        color: white;
+        font-size: 17px;
+        margin: 0;
+    }
+
+#modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-delete .card-pagos-total {
+    font-size: 17px;
+    color: white;
+}
+
+#modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-delete .btn-box-tool i {
+    font-size: 17px;
+    color: white;
+}
+
+    #modal-facturador-restaurante .facturacion-diferenciado .card-pagos .card-pagos-delete .btn-box-tool i:hover {
+        color: red;
+    }
+/*FACTURACION dividido ///////////////////////////////////////////////////////////////////*/
+#modal-facturador-restaurante .facturacion-dividido .card-pagos {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+#modal-facturador-restaurante .facturacion-dividido .card-pagos-header {
+    background: rgb(4,130,167);
+    background: linear-gradient(240deg, rgba(4,130,167,0.5939675174013921) 14%, rgba(60,141,188,1) 100%);
+    height: 40px;
+    width: 130px;
+    border-radius: 20px;
+    padding: 0;
+    position: relative;
+    top: -13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+}
+
+#modal-facturador-restaurante .facturacion-dividido .card-pagos .cabecera-card-pagos {
+    height: 28px;
+}
+
+    #modal-facturador-restaurante .facturacion-dividido .card-pagos .cabecera-card-pagos .close {
+        position: relative;
+        top: -44px;
+        right: -21px;
+    }
+
+    #modal-facturador-restaurante .facturacion-dividido .card-pagos .cabecera-card-pagos .pdf-imprimir-factura {
+        display: flex;
+        justify-content: space-around;
+    }
+
+        #modal-facturador-restaurante .facturacion-dividido .card-pagos .cabecera-card-pagos .pdf-imprimir-factura button {
+            min-width: 76.55px;
+        }
+
+    #modal-facturador-restaurante .facturacion-dividido .card-pagos .cabecera-card-pagos .close span {
+        font-size: 45px;
+    }
+
+#modal-facturador-restaurante .facturacion-dividido .card-pagos-header input[type="number"] {
+    width: 85px;
+    font-size: 21px;
+    border: none;
+    background: transparent;
+}
+/*con esto desactivamos  las flechitas de type number*/
+#modal-facturador-restaurante .facturacion-dividido .card-pagos-header input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/*RESPONSIVO FACTURACION*/
+@media (max-width: 736px) {
+}
+
+@media (max-width: 736px) and (orientation:landscape) {
+    #modal-facturador-restaurante .modal-dialog {
+        width: 98% !important;
+    }
+
+    #modal-facturador-restaurante .modal-header {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        display: flex;
+        align-items: center;
+    }
+
+        #modal-facturador-restaurante .modal-header .btn-group {
+            display: block;
+        }
+
+            #modal-facturador-restaurante .modal-header .btn-group .btn-primary {
+                font-size: 15px;
+                padding: 5px 12px 5px 12px;
+            }
+
+
+    #modal-facturador-restaurante .modal-body .contenedor-facturarRestaurante {
+        display: flex;
+        margin-right: 0;
+    }
+
+    #modal-facturador-restaurante .modal-body {
+        padding-bottom: 0;
+        padding-right: 0;
+    }
+
+        #modal-facturador-restaurante .modal-body .panel-ordenes {
+            width: 35%
+        }
+
+            #modal-facturador-restaurante .modal-body .panel-ordenes .contenedor-comandas {
+                min-height: 515px;
+            }
+
+
+            #modal-facturador-restaurante .modal-body .panel-ordenes .cabecera-de-ordenes div:first-child {
+                min-height: 25px;
+            }
+
+            #modal-facturador-restaurante .modal-body .panel-ordenes .cabecera-de-ordenes {
+                min-height: 20px
+            }
+
+                #modal-facturador-restaurante .modal-body .panel-ordenes .cabecera-de-ordenes span {
+                    font-size: 20px;
+                }
+
+                #modal-facturador-restaurante .modal-body .panel-ordenes .cabecera-de-ordenes div:nth-child(2) {
+                    min-height: 25px;
+                }
+
+                    #modal-facturador-restaurante .modal-body .panel-ordenes .cabecera-de-ordenes div:nth-child(2) h3 {
+                        font-size: 15px;
+                        font-weight: 700;
+                    }
+
+            #modal-facturador-restaurante .modal-body .panel-ordenes .box-primary {
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+
+
+
+            #modal-facturador-restaurante .modal-body .panel-ordenes .box-header {
+                padding-top: 3px;
+                padding-bottom: 3px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+            #modal-facturador-restaurante .modal-body .panel-ordenes .box-body {
+                min-height: 80px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+                #modal-facturador-restaurante .modal-body .panel-ordenes .box-body .btn-default {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+
+                    #modal-facturador-restaurante .modal-body .panel-ordenes .box-body .btn-default span {
+                        font-size: 12px;
+                    }
+
+        #modal-facturador-restaurante .modal-body .panel-facturar {
+            width: 65%;
+            padding-top: 0px !important;
+        }
+
+            #modal-facturador-restaurante .modal-body .panel-facturar .filtro-pagos {
+                display: none;
+            }
+
+                #modal-facturador-restaurante .modal-body .panel-facturar .filtro-pagos div:first-child {
+                    display: none;
+                }
+
+                #modal-facturador-restaurante .modal-body .panel-facturar .filtro-pagos div:nth-child(2) {
+                    padding: 0;
+                }
+
+            #modal-facturador-restaurante .modal-body .panel-facturar .cabecera-pagos {
+                width: 100%;
+                margin: 0;
+                margin-top: 5px;
+                font-size: 10px;
+            }
+
+                #modal-facturador-restaurante .modal-body .panel-facturar .cabecera-pagos div {
+                    padding-right: 5px;
+                }
+
+                #modal-facturador-restaurante .modal-body .panel-facturar .cabecera-pagos label {
+                    font-size: 15px;
+                }
+
+            #modal-facturador-restaurante .modal-body .panel-facturar .contenedor-card-pagos {
+                padding-top: 10px;
+            }
+
+                #modal-facturador-restaurante .modal-body .panel-facturar .contenedor-card-pagos .card-pagos {
+                    margin-right: 10px;
+                    width: 220px;
+                }
+
+            #modal-facturador-restaurante .modal-body .panel-facturar .facturacion-diferenciado .contenedor-card-pagos .card-pagos-header {
+                padding: 5px 10px 5px 7px;
+                min-height: 148px;
+            }
+
+
+    #modal-facturador-restaurante .card-pagos-header .btn-default {
+        padding-top: 1px;
+        padding-left: 10px;
+    }
+
+        #modal-facturador-restaurante .card-pagos-header .btn-default span:first-child {
+            font-size: 11px
+        }
+
+    /*responsivo facturacion dividido*/
+    #modal-facturador-restaurante .facturacion-dividido {
+        padding-top: 10px
+    }
+}
+
+/*PREVISUALIZACION -- visualizador facturador*/
+#modal-visualizador-facturador #documentosDeVenta {
+    display: flex;
+}
+
+#modal-visualizador-facturador .panel-ordenes {
+    border-right: 3px solid #337ab7;
+    min-height: 450px;
+}
+
+    #modal-visualizador-facturador .panel-ordenes #documentoDeAtencion {
+        background: white;
+    }
+
+#modal-visualizador-facturador #documentosDeVenta .contenedorDocumentoVenta {
+    margin-left: 25px;
+}
+
+@media screen and (max-width: 500px) {
+    #modal-visualizador-facturador .panel-ordenes {
+        border-bottom: 3px solid #337ab7;
+    }
+}
+
+/*TABLA RESPONSIVA*/
+/*---------------------------------ESTILOS HOTEL---------------------------------------------------------*/
+.contenedor-habitacion {
+    border: 2px solid #0C7CBA;
+    border-radius: 5px;
+}
+
+.contenedor-habitacion-cabecera {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+    .contenedor-habitacion-cabecera p {
+        padding-bottom: 0;
+        font-size: 13px;
+    }
+
+    .contenedor-habitacion-cabecera i:hover {
+        color: red;
+    }
+
+.tag-habitacion {
+    border-bottom: 2px solid #0322d8;
+    border-right: 2px solid #0322d8;
+    border-left: 2px solid #0322d8;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding-left: 5px;
+}
+
+.tag-habitacion-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tag-habitacion h4 {
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    padding-right: 4px;
+}
+
+.tag-habitacion p {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.tabla-sm > tbody > tr > td {
+    padding: 0;
+}
+
+.tablamini-habitacion {
+    border-collapse: collapse;
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+    .tablamini-habitacion thead {
+        background: #CCCCCC;
+    }
+
+.shadow {
+    box-shadow: 0px 0px 5px 1px #888888;
+    margin: 0px;
+    margin-bottom: 7px;
+}
+
+.box-green {
+    border: solid 3px #00a65a;
+    margin: 0px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.box-blue {
+    border: solid 3px #3c8dbc;
+    margin: 0px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.box-red {
+    border: solid 3px #dd4b39;
+    margin: 0px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.box-grey {
+    border: solid 3px #d2d6de;
+    margin: 0px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.mg-bt-10 {
+    margin-bottom: 10px;
+}
+
+.px-10 {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+.px-5 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.py-5 {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.py-0 {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.px-0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.pt-10 {
+    padding-top: 10px;
+}
+
+.pt-5 {
+    padding-top: 5px;
+}
+
+.pt-0 {
+    padding-top: 0px;
+}
+
+.pt-2 {
+    padding-top: 2px !important;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.mt-1r {
+    margin-top: 1rem;
+}
+
+.border-radius-10 {
+    border-radius: 10px !important;
+}
+
+.selecto-sm {
+    background: green !important;
+}
+
+/*HOTEL-RESERVAS*/
+.small-box {
+    margin-bottom: 5px;
+}
+
+    .small-box .icon {
+        padding-top: 20px;
+        color: gainsboro;
+        font-size: 50px;
+    }
+
+    .small-box p {
+        font-weight: 600;
+    }
+
+    .small-box:hover .icon {
+        font-size: 60px;
+    }
+
+.actualizar-fechayHora {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+    .actualizar-fechayHora p {
+        font-size: 17px;
+        font-weight: 600;
+        color: #5297C5;
+        margin-left: 20px;
+    }
+
+.check-estado {
+    font-size: 15px;
+}
+
+    .check-estado input {
+        width: 15px;
+        height: 15px;
+    }
+
+/*HOTEL - TABLA PLANIFICADOR */
+
+.reporte-planificador {
+}
+
+.box-reporte-planificador {
+    color: white;
+}
+
+.reporte-planificador p {
+    margin: 0;
+}
+
+.box-reporte-disponible-hotel {
+    background-color: #008d4c;
+    border: 0.3rem solid #008d4c;
+}
+
+.box-reporte-porIngresar-hotel {
+    color: #008d4c;
+    border: 0.3rem solid #008d4c;
+}
+
+    .box-reporte-porIngresar-hotel:hover {
+        color: #008d4c;
+    }
+
+    .box-reporte-porIngresar-hotel .icon {
+        color: #008d4c;
+    }
+
+.box-reporte-ocupado-hotel {
+    background-color: #d33724;
+    border: 0.3rem solid #d33724;
+}
+
+.box-reporte-porSalir-hotel {
+    color: #d33724;
+    border: 0.3rem solid #d33724;
+}
+
+    .box-reporte-porSalir-hotel:hover {
+        color: #d33724;
+    }
+
+    .box-reporte-porSalir-hotel .icon {
+        color: #d33724;
+    }
+
+.box-reporte-limpieza-hotel {
+    background-color: #874421;
+    border: 0.3rem solid #874421;
+}
+
+.tabla-planificador thead th {
+    background-color: #357CA5;
+    color: white;
+}
+
+.tabla-planificador td {
+    cursor: pointer;
+}
+
+.disponible {
+    background-color: #00a65a;
+    /*opacity: .7;*/
+}
+
+.ocupado {
+    background-color: #d33724;
+    /*opacity: .7;*/
+}
+
+.reservado {
+    background-color: #db8b0b;
+    /*opacity: .7;*/
+}
+
+.ocupado-disponible {
+    background: linear-gradient(150deg, rgba(211,55,36,1) 48%, rgba(0,166,90,1) 52%);
+    /*opacity: .7;*/
+}
+
+.highlight {
+    border: 3px solid #000000 !important;
+}
+
+.fechaHoy {
+    background-color: #00c0ef !important;
+}
+
+@media screen and (max-width: 700px) {
+    #bandejaPlanificador .contenedor-filtro {
+        padding-top: 1rem !important;
+    }
+}
+/*HOTEL - evento click derecho */
+#context-menu {
+    margin: 0;
+    position: fixed;
+    z-index: 1000;
+    width: 155px;
+    background-color: white;
+    transform: scale(0);
+    transform-origin: top left;
+}
+
+    #context-menu.active {
+        transform: scale(1);
+        transition: transform 200ms ease-in-out;
+    }
+
+    #context-menu .item {
+        padding: 8px 10px;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    }
+
+.item i {
+    font-style: normal !important;
+}
+
+#context-menu .item:hover {
+    background-color: #3c8dbc;
+    color: white !important;
+}
+
+    #context-menu .item:hover a {
+        color: white !important;
+    }
+
+#context-menu .item i {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#context-menu .item hr {
+    margin: 2px 0px;
+    border-color: #555;
+}
+
+/*HOTEL- NUEVA HABITACION*/
+.checkboxCamas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 40px
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.py-10 {
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+}
+
+/*HOTEL Nuevo Tipo Habitacion*/
+
+#fileFoto {
+    display: none;
+}
+
+.add-new-photo {
+    display: flex;
+    border: 3px dashed #367FA9;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: #367FA9;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+    margin-bottom: 10px;
+}
+
+    .add-new-photo.first:hover {
+        background: rgba(10, 10, 10, 0.10);
+        border-color: rgba(53, 127, 169, 0.50);
+        color: rgba(53, 127, 169, 0.70);
+    }
+/*sector imagenes*/
+.imagen-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .imagen-container img {
+        min-width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        width: 130px;
+        height: 100px;
+    }
+
+    .imagen-container figure {
+        position: relative;
+    }
+
+
+        .imagen-container figure figcaption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            font-size: 44px;
+            cursor: pointer;
+            opacity: 0;
+            transition: 0.3s all ease;
+        }
+
+            .imagen-container figure figcaption:hover {
+                opacity: 1;
+                border-radius: 10px;
+            }
+
+
+
+@media screen and (max-width: 1000px) {
+    /*TABLA RESPONSIVA//////////////////////////////////////////////////////////////////////////////////*/
+    .principal-tablaResponsiva .dataTables_length {
+        display: none;
+    }
+    /*utilizamos el segundo div dentro de la clase .row*/
+    .principal-tablaResponsiva .row div:nth-child(2) {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .principal-tablaResponsiva .dataTables_filter {
+    }
+
+    .tabla-responsiva {
+        border: 0 !important;
+    }
+
+        .tabla-responsiva thead {
+            display: none !important;
+        }
+
+        .tabla-responsiva tr {
+            border-top: 2px solid #3c8dbc;
+            border-bottom: 1px solid #3c8dbc;
+            padding: 0.3em !important;
+            background: #f8f8f8 !important;
+            display: block !important;
+            margin-bottom: 1.091em !important;
+        }
+
+        .tabla-responsiva td {
+            border-bottom: 1px solid #ddd !important;
+            display: block !important;
+            font-size: 1em !important;
+            text-align: right !important;
+        }
+
+            .tabla-responsiva td:before {
+                content: attr(data-label) !important;
+                float: left !important;
+                font-weight: 600 !important;
+                text-transform: uppercase !important;
+            }
+
+            .tabla-responsiva td:last-child {
+                border-bottom: 0 !important;
+            }
+}
+
+/*MODULO CHECK IN */
+
+/*para la tabla acordion*/
+/*  .tabla-acordion tbody:hover {
+        background-color: rgba(10, 10, 10, 0.10);
+        transition: all 0.5s;
+    }*/
+
+.tabla-acordion td {
+    text-transform: uppercase;
+}
+
+.mx-10 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/*.acordion-contenido {
+    box-shadow: 0px 1px 0px 0px #6461614f;
+}
+        .acordion-contenido .fila-tabla-acordion {
+            box-shadow: 0px 1px 1px 0px #6c6c6c38 !important; 
+        }*/
+
+#selector-comercial-responsable {
+    border: 2px solid #3c8dbc;
+    border-radius: 8px;
+    background-color: rgba(10, 10, 10, 0.10);
+    margin-bottom: 10px;
+}
+
+.container-widgetReserva {
+    display: flex;
+    justify-content: center;
+    padding-left: 33px;
+    padding-right: 33px;
+    margin-bottom: 15px;
+}
+
+    .container-widgetReserva .cabecera {
+        display: flex;
+        border-bottom: 3px solid azure;
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-bottom: 10px;
+    }
+
+        .container-widgetReserva .cabecera h4 {
+            color: #0C8DD1;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .container-widgetReserva .cabecera .boton {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+            .container-widgetReserva .cabecera .boton button {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+
+
+    .container-widgetReserva .widgetReserva {
+        background: rgb(207,241,249);
+        background: linear-gradient(152deg, rgba(207,241,249,0.98) 37%, rgba(61,199,235,0.47102591036414565) 99%);
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        box-shadow: 5px 7px 8px rgb(125, 154, 172);
+        transition: all 0.5s;
+    }
+
+        .container-widgetReserva .widgetReserva:hover {
+            width: 102%;
+        }
+
+
+    .container-widgetReserva.cuerpo label {
+        font-size: 16px;
+    }
+
+    .container-widgetReserva .cuerpo p {
+        text-transform: uppercase;
+        font-size: 16px;
+    }
+
+/* HOTEL- detalle de reserva///////////////////////////////////////////////////////////////////////////////////////////////*/
+/*TABLA ACORDEON ------------------------------------------------------------------------*/
+.tabla-acordion .btn-collapse {
+    font-size: 1.563rem;
+    line-height: 1rem;
+    background-color: transparent;
+    border: none;
+}
+
+.tabla-acordion .fila-tabla-acordion {
+    box-shadow: 0px 1px 0px 0px #6461614f;
+}
+
+    .tabla-acordion .fila-tabla-acordion:hover {
+        background-color: #3c8dbc3b;
+        border: 2px solid #3c8dbc;
+    }
+
+.tabla-acordion .fila-seleccionada {
+    background-color: #3c8dbc3b;
+    border: 2px solid #3c8dbc;
+}
+
+.tabla-acordion .acordion-contenido {
+    box-shadow: inset 0px 1px 7px 1px #9b98987d;
+    background-color: #e7e7e7a1;
+}
+
+@media screen and (max-width: 700px) {
+    /*  .tabla-acordion .cabecera-tabla-acordion {
+        display:none;
+    }*/
+}
+/*FIN TABLA ACORDEON--------------------------------------------------------------*/
+
+
+/*#region LINEA DE TIEMPO*/
+.contenedor-linea-de-tiempo .linea-de-tiempo {
+    list-style: none !important;
+    padding-left: 0;
+    display: flex;
+}
+
+    .contenedor-linea-de-tiempo .linea-de-tiempo li {
+        width: 33.33%;
+    }
+
+        .contenedor-linea-de-tiempo .linea-de-tiempo li .row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding-top: 1rem;
+        }
+
+            .contenedor-linea-de-tiempo .linea-de-tiempo li .row .linea {
+                width: 100%;
+                height: 0.5rem;
+                background-color: gray;
+                position: absolute;
+                margin: 0;
+                border: none;
+                top: 20%;
+            }
+
+            .contenedor-linea-de-tiempo .linea-de-tiempo li .row .circulo {
+                width: 20px;
+                height: 20px;
+                border-radius: 30px;
+                color: white;
+                font-weight: 600;
+                background: green;
+                z-index: 100;
+            }
+
+            .contenedor-linea-de-tiempo .linea-de-tiempo li .row .contenido {
+                margin-top: 0.5rem;
+            }
+
+@media screen and (max-width: 700px) {
+    .contenedor-linea-de-tiempo .linea-de-tiempo li {
+        display: inline-block;
+        width: 17%;
+    }
+}
+/*#endregion LINEA DE TIEMPO*/
+
+#modalVerImagen .btn-close {
+    font-size: 4rem;
+    border-radius: 20px;
+    width: 4rem;
+    position: absolute;
+    z-index: 1000;
+    right: -10px;
+    top: -13px;
+    background-color: white;
+    opacity: 1;
+}
+
+#detalle-de-reserva .tabla-acordion .fila-tabla-acordion .fecha-registro {
+    margin: 0;
+}
+
+#detalle-de-reserva .btn-voucher {
+    background-color: transparent;
+    font-size: 3rem;
+    padding: 0;
+    border: none;
+}
+
+#detalle-de-reserva .tabla-acordion .prioridad-2 .contenedor-btn-editar {
+    position: absolute;
+    right: 1rem;
+    top: -4px;
+}
+
+#detalle-de-reserva .tabla-acordion .prioridad-2 .btn-default {
+    display: none;
+    background-color: transparent;
+    border: none;
+    font-size: 2.2rem;
+    opacity: 0.8;
+}
+
+#detalle-de-reserva .tabla-acordion .prioridad-2 .fila-fecha-registro:hover .btn-default {
+    display: block;
+}
+
+.btn-mediano {
+    padding: 5px 7px;
+    font-size: 2.1rem;
+    line-height: 0.5;
+}
+/*anotacion hotel*/
+#detalle-de-reserva .tabla-acordion .acordion-contenido .anotacion {
+}
+
+    #detalle-de-reserva .tabla-acordion .acordion-contenido .anotacion .anotacion-descripcion {
+    }
+
+@media screen and (max-width: 700px) {
+    #detalle-de-reserva .datos-reserva {
+        display: flex;
+        flex-flow: wrap;
+    }
+
+    #detalle-de-reserva .contenedor-codigo {
+        order: 1;
+    }
+
+    #detalle-de-reserva .contenedor-fecha-registro {
+        order: 2;
+    }
+
+    #detalle-de-reserva .contenedor-responsable {
+        order: 3;
+        width: 100%;
+    }
+
+    #detalle-de-reserva .contenedor-voucher {
+        order: 4;
+    }
+
+    #detalle-de-reserva .contenedor-acciones-macro {
+        order: 5;
+        width: 50%;
+    }
+
+    #detalle-de-reserva .contenedor-facturacion {
+        order: 6;
+        width: 50%;
+    }
+
+    #detalle-de-reserva .tabla-acordion .prioridad-3, .prioridad-4, .prioridad-5, .prioridad-6, .prioridad-7 {
+        display: none;
+    }
+
+
+    #detalle-de-reserva .tabla-acordion .acordion-contenido .contenedor-acciones {
+        margin-bottom: 1rem !important;
+        float: right;
+    }
+
+    #detalle-de-reserva .tabla-acordion .prioridad-2 .contenedor-btn-editar {
+        right: 0;
+    }
+
+    #detalle-de-reserva .tabla-acordion .acordion-contenido .contenedor-voucher {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+        #detalle-de-reserva .tabla-acordion .acordion-contenido .contenedor-voucher .nombre-voucher {
+            align-self: center;
+        }
+
+        #detalle-de-reserva .tabla-acordion .acordion-contenido .contenedor-voucher .btn-voucher {
+            padding: 0;
+            line-height: 0;
+            font-size: 3rem;
+        }
+
+    #detalle-de-reserva .tabla-acordion .acordion-contenido .anotacion {
+    }
+
+        #detalle-de-reserva .tabla-acordion .acordion-contenido .anotacion .anotacion-descripcion {
+            overflow-x: auto;
+        }
+}
+/*Inicio Switch*/
+.onoffswitch {
+    position: relative;
+    width: 125px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #808080;
+    border-radius: 15px;
+}
+
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block;
+        float: left;
+        width: 50%;
+        height: 30px;
+        padding: 0;
+        line-height: 30px;
+        font-size: 14px;
+        color: white;
+        font-family: Trebuchet, Arial, sans-serif;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .onoffswitch-inner:before {
+        content: "GLOBAL";
+        padding-left: 10px;
+        background-color: #00c0ef;
+        color: #FFFFFF;
+    }
+
+    .onoffswitch-inner:after {
+        content: "INDIVIDUAL";
+        padding-right: 10px;
+        background-color: #1c7fb9;
+        color: #FFFFFF;
+        text-align: right;
+    }
+
+.onoffswitch-switch {
+    display: block;
+    width: 18px;
+    margin: 6px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /*right: 56px;*/
+    border: 2px solid #808080;
+    border-radius: 15px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
+.opaco {
+    opacity: 0.65;
+}
+/*Fin Switch*/
+
+/*#region COMPONENTE FACTURADOR*/
+#modal-facturador .contenedor-detalleOrdenes button {
+    display: none;
+}
+
+#modal-facturador .modal-header .close:hover {
+    color: red !important;
+}
+
+#modal-facturador .modal-body .panel-ordenes .contenedor-comandas {
+    min-height: 67rem;
+    overflow: auto;
+    margin-top: 10px;
+}
+/*facturacion simple*/
+#modal-facturador .facturacion-simple {
+    background: white;
+    margin-left: 15px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+    #modal-facturador .facturacion-simple .pdf-imprimir-factura {
+        display: flex !important;
+        justify-content: space-around;
+    }
+
+        #modal-facturador .facturacion-simple .pdf-imprimir-factura button {
+            width: 30%;
+            display: flex !important;
+            justify-content: center;
+        }
+
+            #modal-facturador .facturacion-simple .pdf-imprimir-factura button span {
+                font-size: 17px;
+            }
+/*modal facturacion diferenciado*/
+#modal-facturador .modal-header .btn-group {
+    display: none;
+}
+
+#modal-facturador .modal-body {
+    background-color: #ECF0F5 !important;
+}
+
+/*#modal-facturador .panel-ordenes {
+    background: rgb(127,130,130);
+    background: linear-gradient(90deg, rgba(127,130,130,1) 0%, rgba(185,185,185,1) 48%, rgba(127,130,130,1) 100%);
+}*/
+
+#modal-facturador .panel-ordenes .btn-default {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: inherit !important;
+    text-align: start !important;
+    cursor: move !important;
+}
+
+#modal-facturador .box-primary .box-body {
+    min-height: 100px;
+}
+
+#modal-facturador .panel-ordenes .contenedor-detalleOrdenes .btn-default .nombre-detalleOrden {
+    font-size: 12px;
+}
+
+#modal-facturador .panel-ordenes .contenedor-detalleOrdenes .btn-default .pull-right-container {
+    position: relative;
+    right: -20px;
+    font-size: 17px;
+}
+
+#modal-facturador .panel-ordenes .btn-default .label {
+    padding-top: 5px;
+    background-color: #3c8dbc !important;
+}
+/*despues del drag and drop*/
+
+#modal-facturador .cabecera-de-ordenes {
+    padding: 0;
+    border-radius: 5px;
+    min-height: 40px;
+    /*box-shadow: 1px 2px 4px #313131;*/
+}
+
+    #modal-facturador .cabecera-de-ordenes div:first-child {
+        background: #00c0ef;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 10px 0px 10px;
+        font-size: 35px;
+        align-self: center;
+        min-height: 40px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    #modal-facturador .cabecera-de-ordenes div:nth-child(2) {
+        background: white;
+        min-height: 40px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+        #modal-facturador .cabecera-de-ordenes div:nth-child(2) h3 {
+            margin: 0;
+            margin-top: 5px;
+        }
+
+#modal-facturador .filtro-pagos {
+    width: 70%;
+    border: 1px solid #337ab7;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 4px grey;
+    background: white;
+}
+
+    #modal-facturador .filtro-pagos div:first-child label {
+        font-size: 17px;
+    }
+
+    #modal-facturador .filtro-pagos div:nth-child(2) {
+        font-size: 17px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+        #modal-facturador .filtro-pagos div:nth-child(2) input[type=radio] {
+            width: 16px;
+            height: 16px;
+        }
+
+#modal-facturador .cabecera-pagos {
+    margin-top: 5px;
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    /* padding-bottom: 3px;
+    border-bottom: 2px solid #337ab7;*/
+    /*padding-left: 0;
+    padding-right: 0;*/
+}
+
+#modal-facturador .panel-facturar .contenedor-facturado {
+    transition: all 0.5s;
+}
+
+#modal-facturador .panel-facturar .contenedor-por-facturar {
+    box-shadow: 1px 0px 2px 0px #b7aeae;
+    padding-left: 0;
+    padding-right: 5px;
+    transition: all 0.5s;
+}
+
+    #modal-facturador .panel-facturar .contenedor-por-facturar .btn-dividir {
+        font-size: 2rem;
+    }
+
+.maximizar-por-facturar {
+    width: 80%;
+}
+
+.maximizarTotalPorfacturar {
+    width: 100% !important;
+}
+
+.minimizar-facturado {
+    width: 20%;
+}
+
+.maximizarTotalFacturado {
+    width: 100% !important;
+}
+
+#modal-facturador .panel-facturar .contenedor-por-facturar .cabecera-pagos .contenedor-btn-maximizar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0;
+}
+
+#modal-facturador .panel-facturar .contenedor-por-facturar .cabecera-pagos .btn-maximizar {
+    font-size: 20px;
+    padding: 0px 4px;
+}
+
+#modal-facturador .cabecera-pagos label {
+    font-size: 20px
+}
+
+#modal-facturador .contenedor-card-pagos {
+    margin-left: 15px;
+    padding-top: 30px;
+    display: flex;
+    padding-bottom: 20px;
+    overflow-x: auto;
+}
+
+#modal-facturador .card-pagos {
+    min-width: 350px;
+    max-width: 360px;
+    box-shadow: 1px 1px 3px grey;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+    #modal-facturador .card-pagos .card-icono {
+        display: none;
+        font-size: 100px;
+        position: relative;
+        left: 83px;
+        top: 118px;
+        opacity: 0.5;
+        z-index: 1;
+    }
+
+#modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-header {
+    background: rgb(246,246,246);
+    background: radial-gradient(circle, rgba(246,246,246,0.7707457983193278) 0%, rgba(172,185,189,0.6362920168067228) 100%);
+    min-height: 250px;
+    max-height: 400px;
+    padding-top: 10px;
+    padding: 20px 10px 10px 10px;
+    overflow: auto;
+}
+
+#modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-delete .pdf-imprimir-factura {
+    display: flex;
+    justify-content: space-around;
+    padding-right: 0;
+}
+
+    #modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-delete .pdf-imprimir-factura button {
+        width: 30%;
+    }
+
+#modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-header .carril-detalleOrden {
+    min-height: 240px;
+    max-height: 370px;
+}
+
+#modal-facturador .card-pagos .card-pagos-header .carril-detalleOrden button {
+    /*boton eliminar*/
+    display: block;
+}
+
+#modal-facturador .card-pagos .card-pagos-header .carril-detalleOrden .nombre-detalleOrden {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#modal-facturador .card-pagos .card-pagos-header .carril-detalleOrden .btn-default {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+    #modal-facturador .card-pagos .card-pagos-header .carril-detalleOrden .btn-default .pull-right {
+        position: relative;
+        right: -12px;
+        font-size: 13px;
+    }
+
+#modal-facturador .card-pagos .card-pagos-header .detalle-de-orden {
+    background-color: white;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 4px grey;
+}
+
+#modal-facturador .card-pagos .card-pagos-facturacion {
+}
+
+#modal-facturador .contenedor-card-pagos .agregar-card-pagos {
+    background: #3c8dbc;
+    opacity: 0.5;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: #d8d8d8;
+    border-radius: 8px;
+    border: 5px dashed #ffffff00; /*#d8d8d8;*/
+    filter: blur(1px);
+    /* box-shadow: 1px 2px 4px grey;*/
+    margin: 2px 2px 2px 2px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+    #modal-facturador .contenedor-card-pagos .agregar-card-pagos:hover {
+        opacity: 0.7;
+        margin: 0;
+        width: 100px;
+        filter: blur(0px);
+        font-size: 50px;
+    }
+/*despues de soltar*/
+#modal-facturador .card-pagos-header .btn-default {
+    border-radius: 10px !important;
+    padding-bottom: 3px;
+    z-index: 5;
+}
+
+    #modal-facturador .card-pagos-header .btn-default span:first-child {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+#modal-facturador .card-pagos .card-pagos-delete {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: rgb(4,130,167);
+    background: linear-gradient(240deg, rgba(4,130,167,0.5939675174013921) 14%, rgba(60,141,188,1) 100%);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+    #modal-facturador .card-pagos .card-pagos-delete label i {
+        color: white;
+        font-size: 17px;
+        margin: 0;
+    }
+
+#modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-delete .card-pagos-total {
+    font-size: 17px;
+    color: white;
+}
+
+#modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-delete .btn-box-tool i {
+    font-size: 17px;
+    color: white;
+}
+
+    #modal-facturador .facturacion-diferenciado .card-pagos .card-pagos-delete .btn-box-tool i:hover {
+        color: red;
+    }
+/*FACTURACION dividido ///////////////////////////////////////////////////////////////////*/
+#modal-facturador .facturacion-dividido {
+    padding-left: 0;
+}
+
+    #modal-facturador .facturacion-dividido .card-pagos {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+    }
+
+    #modal-facturador .facturacion-dividido .card-pagos-header {
+        background: rgb(4,130,167);
+        background: linear-gradient(240deg, rgba(4,130,167,0.5939675174013921) 14%, rgba(60,141,188,1) 100%);
+        height: 40px;
+        width: 130px;
+        border-radius: 10px;
+        padding: 0;
+        position: relative;
+        top: -13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 20px;
+    }
+
+    #modal-facturador .facturacion-dividido .card-pagos .cabecera-card-pagos {
+        height: 28px;
+    }
+
+        #modal-facturador .facturacion-dividido .card-pagos .cabecera-card-pagos .close {
+            position: relative;
+            top: -52px;
+            right: -21px;
+        }
+
+        #modal-facturador .facturacion-dividido .card-pagos .cabecera-card-pagos .pdf-imprimir-factura {
+            display: flex;
+            justify-content: space-around;
+        }
+
+            #modal-facturador .facturacion-dividido .card-pagos .cabecera-card-pagos .pdf-imprimir-factura button {
+                min-width: 76.55px;
+            }
+
+        #modal-facturador .facturacion-dividido .card-pagos .cabecera-card-pagos .close span {
+            font-size: 45px;
+        }
+
+    #modal-facturador .facturacion-dividido .card-pagos-header input[type="number"] {
+        width: 85px;
+        font-size: 21px;
+        border: none;
+        background: transparent;
+        text-align: right;
+    }
+    /*con esto desactivamos  las flechitas de type number*/
+    #modal-facturador .facturacion-dividido .card-pagos-header input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+/*RESPONSIVO FACTURACION*/
+@media (max-width: 736px) {
+    /*    #modal-facturador .modal-body .contenedor-facturador {
+        display: flex;
+        flex-direction: column;
+    }
+
+        #modal-facturador .modal-body .contenedor-facturador .panel-ordenes {
+            order: 2;
+        }
+
+        #modal-facturador .modal-body .contenedor-facturador .panel-facturar {
+            order: 1;
+        }*/
+}
+
+@media (max-width: 736px) and (orientation:landscape) {
+    #modal-facturador .modal-dialog {
+        width: 98% !important;
+    }
+
+    #modal-facturador .modal-header {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+        #modal-facturador .modal-header .btn-group {
+            display: block;
+        }
+
+            #modal-facturador .modal-header .btn-group .btn-primary {
+                font-size: 15px;
+                padding: 5px 12px 5px 12px;
+            }
+
+        #modal-facturador .modal-header .btn-close {
+            position: absolute;
+            right: 0;
+        }
+
+
+    #modal-facturador .modal-body .contenedor-facturador {
+        display: flex;
+        margin-right: 0;
+    }
+
+    #modal-facturador .modal-body {
+        padding-bottom: 0;
+        padding-right: 0;
+    }
+
+        #modal-facturador .modal-body .panel-ordenes {
+            width: 35%;
+        }
+
+            #modal-facturador .modal-body .panel-ordenes .contenedor-comandas {
+                min-height: 515px;
+            }
+
+
+            #modal-facturador .modal-body .panel-ordenes .cabecera-de-ordenes div:first-child {
+                min-height: 25px;
+            }
+
+            #modal-facturador .modal-body .panel-ordenes .cabecera-de-ordenes {
+                min-height: 20px
+            }
+
+                #modal-facturador .modal-body .panel-ordenes .cabecera-de-ordenes span {
+                    font-size: 20px;
+                }
+
+                #modal-facturador .modal-body .panel-ordenes .cabecera-de-ordenes div:nth-child(2) {
+                    min-height: 25px;
+                }
+
+                    #modal-facturador .modal-body .panel-ordenes .cabecera-de-ordenes div:nth-child(2) h3 {
+                        font-size: 15px;
+                        font-weight: 700;
+                    }
+
+            #modal-facturador .modal-body .panel-ordenes .box-primary {
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+
+
+
+            #modal-facturador .modal-body .panel-ordenes .box-header {
+                padding-top: 3px;
+                padding-bottom: 3px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+            #modal-facturador .modal-body .panel-ordenes .box-body {
+                min-height: 80px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+                #modal-facturador .modal-body .panel-ordenes .box-body .btn-default {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+
+                    #modal-facturador .modal-body .panel-ordenes .box-body .btn-default span {
+                        font-size: 12px;
+                    }
+
+        #modal-facturador .modal-body .panel-facturar {
+            width: 65%;
+            padding-top: 0px !important;
+        }
+
+            #modal-facturador .modal-body .panel-facturar .filtro-pagos {
+                display: none;
+            }
+
+                #modal-facturador .modal-body .panel-facturar .filtro-pagos div:first-child {
+                    display: none;
+                }
+
+                #modal-facturador .modal-body .panel-facturar .filtro-pagos div:nth-child(2) {
+                    padding: 0;
+                }
+
+            #modal-facturador .modal-body .panel-facturar .cabecera-pagos {
+                width: 100%;
+                margin: 0;
+                margin-top: 5px;
+                font-size: 10px;
+                width: 45%;
+            }
+
+                #modal-facturador .modal-body .panel-facturar .cabecera-pagos div {
+                    padding-right: 5px;
+                }
+
+                #modal-facturador .modal-body .panel-facturar .cabecera-pagos label {
+                    font-size: 15px;
+                }
+
+            #modal-facturador .modal-body .panel-facturar .contenedor-card-pagos {
+                padding-top: 10px;
+            }
+
+                #modal-facturador .modal-body .panel-facturar .contenedor-card-pagos .card-pagos {
+                    margin-right: 10px;
+                    width: 220px;
+                }
+
+            #modal-facturador .modal-body .panel-facturar .facturacion-diferenciado .contenedor-card-pagos .card-pagos-header {
+                padding: 5px 10px 5px 7px;
+                min-height: 148px;
+            }
+
+
+    #modal-facturador .card-pagos-header .btn-default {
+        padding-top: 1px;
+        padding-left: 10px;
+    }
+
+        #modal-facturador .card-pagos-header .btn-default span:first-child {
+            font-size: 11px
+        }
+
+    /*responsivo facturacion dividido*/
+    #modal-facturador .facturacion-dividido {
+        padding-top: 10px
+    }
+}
+/*#endregion COMPONENTE FACTURADOR--------------------------*/
+
+
+/*#region VISUALIZADOR COMPROBANTE*/
+.contenedorDocumentoVenta {
+    background: white;
+    min-width: 34rem;
+}
+
+
+/*#endregion VISUALIZADOR COMPROBANTE*/
+
+
+.close:hover {
+    color: red !important;
+}
+
+/*#region SKIN ADMIN PANEL SIGES*/
+:root {
+    --color-primario: #0422D8;
+    --color-secundario: #FF0071;
+    --color-dark-primario: #162343;
+    --color-primario-rgb: 4, 34, 216;
+    --color-dark-secundario: #040e4a;
+    --color-dark-texto: #94A1B7;
+    --color-conedor-principal: #d5e0f5;
+    --color-light-primario: #4359e2;
+    --color-light-secundario: #ff80b8;
+    --sombra: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    --border-redondo: 10px;
+}
+
+/*#region --seccion NAV*/
+#id-menu-sidebar-principal .main-header .logo {
+    background-color: var(--color-dark-primario) !important;
+    border: none !important;
+    height: 100%;
+    padding: 0;
+    box-shadow: var(--sombra);
+    min-height: 55px;
+}
+
+    #id-menu-sidebar-principal .main-header .logo .logo-lg .user-image {
+        max-width: 100%;
+        padding: 20px 10px 20px 10px;
+        transition: all 1s;
+    }
+
+.collapseLogo {
+    max-width: 60% !important;
+    padding: 0px !important;
+}
+
+#id-menu-sidebar-principal .main-header .navbar {
+    background-color: var(--color-dark-primario);
+    color: var(--color-dark-texto);
+    box-shadow: var(--sombra);
+    height: 55px;
+}
+
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: var(--color-dark-secundario);
+}
+
+#id-menu-sidebar-principal .main-header .navbar .sidebar-toggle {
+    font-size: 17.5px;
+}
+
+#id-menu-sidebar-principal .main-header .navbar .navbar-custom-menu {
+    height: 100%;
+}
+
+    #id-menu-sidebar-principal .main-header .navbar .navbar-custom-menu form, li, img {
+        height: 100% !important;
+    }
+
+    #id-menu-sidebar-principal .main-header .navbar .navbar-custom-menu .navbar-nav {
+        height: 100% !important;
+    }
+
+    #id-menu-sidebar-principal .main-header .navbar .navbar-custom-menu li a {
+        font-size: 21px;
+        height: 100% !important;
+    }
+
+.notifications-menu {
+    background-color: var(--color-dark-primario) !important;
+}
+
+    .notifications-menu:hover {
+        background: var(--color-secundario) !important;
+        opacity: 0.7;
+    }
+
+#id-menu-sidebar-principal .main-sidebar {
+    background-color: var(--color-dark-primario);
+    border: none;
+    box-shadow: var(--sombra);
+    padding-top: 103px;
+}
+
+    #id-menu-sidebar-principal .main-sidebar .slimScrollDiv {
+        /*border-top:1px solid var(--color-secundario);*/
+    }
+
+    #id-menu-sidebar-principal .main-sidebar li .menu-lista-cabecera i {
+        width: 0;
+        margin-right: 0.05rem;
+        display: inline-block;
+    }
+
+    #id-menu-sidebar-principal .main-sidebar li .menu-lista-cabecera span {
+        margin-left: 3rem;
+        margin-right: 1rem
+    }
+
+    #id-menu-sidebar-principal .main-sidebar li .treeview-menu {
+        background: var(--color-dark-secundario) !important;
+    }
+
+    #id-menu-sidebar-principal .main-sidebar li.active .menu-lista-cabecera {
+        background: var(--color-secundario) !important;
+        opacity: 0.7;
+        border: none !important;
+    }
+
+    #id-menu-sidebar-principal .main-sidebar .menu-open .menu-lista-cabecera {
+        background: var(--color-secundario) !important;
+        opacity: 0.7;
+    }
+
+    #id-menu-sidebar-principal .main-sidebar li:hover .menu-lista-cabecera {
+        background: var(--color-secundario) !important;
+        opacity: 0.7;
+    }
+
+.user-header {
+    background-color: var(--color-dark-primario) !important;
+}
+
+@media (max-width: 767px) {
+    #id-menu-sidebar-principal .main-header {
+        position: relative;
+    }
+
+        #id-menu-sidebar-principal .main-header .logo .logo-lg {
+            line-height: 2rem;
+        }
+
+            #id-menu-sidebar-principal .main-header .logo .logo-lg .user-image {
+                max-width: 40% !important;
+                padding: 5px !important;
+                transition: all 1s;
+            }
+
+    .collapseLogo {
+        max-width: 30% !important;
+        height: 35px;
+    }
+
+    .content-wrapper {
+        padding-top: 30px !important;
+    }
+}
+/*#endregion*/
+
+#id-menu-sidebar-principal .content-wrapper {
+    background-color: var(--color-conedor-principal);
+}
+
+.content-wrapper .content .bg-green {
+    background-color: var(--color-primario) !important;
+    box-shadow: var(--sombra);
+    border-radius: 5px;
+}
+
+.bg-primary {
+    background-color: var(--color-primario) !important;
+}
+
+.content-wrapper .content .box {
+    box-shadow: var(--sombra);
+    border-radius: var(--border-redondo);
+}
+
+.modal-body .box {
+    border-radius: var(--border-redondo);
+}
+
+.box.box-primary {
+    border-top-color: var(--color-primario);
+    box-shadow: var(--sombra);
+}
+
+.content-wrapper .content .box.box-success {
+    border-top-color: var(--color-primario);
+}
+
+.box-title {
+    color: var(--color-primario);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 15px !important;
+}
+
+.btn-primary {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+    transition: all 1s;
+}
+
+    .btn-primary:focus {
+        background-color: var(--color-primario) !important;
+        border-color: var(--color-primario);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-secundario);
+        border-color: var(--color-secundario);
+    }
+
+.btn-primary-selected {
+    background-color: var(--color-secundario);
+    border-color: var(--color-secundario);
+    color: white;
+}
+
+.btn-secundary {
+    background-color: white;
+    border-color: var(--color-secundario);
+    color: var(--color-secundario) !important;
+    transition: all 0.2s;
+}
+
+    .btn-secundary:focus {
+        background-color: var(--color-secundario) !important;
+        border-color: var(--color-secundario);
+        color: white !important;
+    }
+
+    .btn-secundary:hover {
+        background-color: var(--color-secundario) !important;
+        border-color: var(--color-secundario);
+        color: white !important;
+    }
+
+.label-primary {
+    background-color: var(--color-primario) !important;
+    border-color: var(--color-primario) !important;
+}
+
+.btn-mesa-disponible {
+    background-color: var(--color-light-primario);
+    border-color: var(--color-light-primario);
+    transition: all 1s;
+}
+
+    .btn-mesa-disponible:focus {
+        background-color: var(--color-light-primario) !important;
+        border-color: var(--color-primario);
+    }
+
+    .btn-mesa-disponible:hover {
+        background-color: var(--color-primario);
+        border-color: var(--color-primario);
+    }
+
+.btn-mesa-ocupada {
+    background-color: var(--color-light-secundario);
+    border-color: var(--color-light-secundario);
+    transition: all 1s;
+}
+
+    .btn-mesa-ocupada:focus {
+        background-color: var(--color-light-secundario) !important;
+        border-color: var(--color-secundario);
+    }
+
+    .btn-mesa-ocupada:hover {
+        background-color: var(--color-secundario);
+        border-color: var(--color-secundario);
+    }
+
+.content-wrapper .content .dataTables_wrapper {
+    /*  box-shadow: var(--sombra);*/
+    background-color: white;
+    border-radius: var(--border-redondo);
+    padding: 4px;
+}
+
+.pagination .active a {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+}
+
+.panel {
+    position: relative;
+    border: none;
+    border-radius: var(--border-redondo);
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: var(--sombra);
+    border-radius: var(--border-redondo);
+}
+
+.panel-primary {
+    border-color: transparent;
+}
+
+.panel.panel-primary {
+    border-top-color: var(--color-primario);
+}
+
+.panel-heading {
+    color: var(--color-primario) !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.5rem;
+    border-color: var(--color-primario);
+    display: block;
+    padding: 10px;
+    position: relative;
+    background-color: white !important;
+    border-top-left-radius: var(--border-redondo);
+    border-top-right-radius: var(--border-redondo);
+}
+
+    .panel-heading h3 {
+        color: var(--color-primario);
+        text-transform: uppercase;
+    }
+
+.box-header {
+    border-top-left-radius: var(--border-redondo);
+    border-top-right-radius: var(--border-redondo);
+}
+
+.modal-content {
+    border-radius: var(--border-redondo);
+}
+
+.modal-header {
+    border-top-left-radius: var(--border-redondo);
+    border-top-right-radius: var(--border-redondo);
+}
+
+
+.modal-header {
+    border-bottom-left-radius: var(--border-redondo);
+    border-bottom-right-radius: var(--border-redondo);
+    background-color: #e7e7e7;
+}
+
+.bandeja-cabecera {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(var(--color-primario-rgb),0.3);
+    overflow: hidden;
+}
+
+.bandeja-cuerpo {
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.checkbox-primary input[type="checkbox"]:checked + label::before,
+.checkbox-primary input[type="radio"]:checked + label::before {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+}
+
+.grupo-boton {
+    border-left: 1px solid grey;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+/*#endregion*/
+.select2-large .select2-container--default .select2-results > .select2-results__options {
+    max-height: 420px !important;
+}
+
+.ui-select-large .ui-select-bootstrap > .ui-select-choices, .ui-select-bootstrap > .ui-select-no-choice {
+    max-height: 420px !important;
+}
+
+.box.box-solid.box-primary > .box-header {
+    background: var(--color-primario);
+    background-color: var(--color-primario);
+    border-radius: var(--border-redondo);
+}
+
+.bg-secondary {
+    background-color: var(--color-secundario) !important;
+    color: white !important;
+}
+
+.box.box-solid.box-primary {
+    border: 1px solid var(--color-primario) !important;
+}
+
+.box {
+    margin-bottom: 10px;
+}
+
+/*#region RADIO BUTTON*/
+.radio-toolbar {
+    margin: 0px;
+}
+
+    .radio-toolbar input[type="radio"] {
+        opacity: 0;
+        position: fixed;
+        width: 0;
+    }
+
+    .radio-toolbar label {
+        display: inline-block;
+        background-color: white;
+        padding: 2px 3px;
+        font-size: 12px;
+        border: 1px solid var(--color-secundario);
+        border-radius: 3px;
+        color: var(--color-secundario);
+        margin: 0px 2px;
+    }
+
+        .radio-toolbar label:hover {
+            background-color: #a1a4ff; /*#ffccee*/
+            cursor: pointer !important;
+            color: #fff;
+        }
+
+    .radio-toolbar input[type="radio"]:focus + label {
+        border: 1px solid var(--color-secundario);
+    }
+
+    .radio-toolbar input[type="radio"]:checked + label {
+        background-color: var(--color-primario);
+        border: 1px solid var(--color-primario);
+        color: white;
+    }
+/*#endregion*/
+/*#region RADIO BUTTON ETIQUETAS*/
+.radio-toolbar-btn {
+    margin: 0px;
+}
+
+    .radio-toolbar-btn input[type="radio"] {
+        opacity: 0;
+        position: fixed;
+        width: 0;
+    }
+
+    .radio-toolbar-btn label {
+        display: inline-block;
+        background-color: #fff;
+        padding: 6px 8px;
+        font-size: 15px;
+        border: 1px solid var(--color-primario);
+        border-radius: 3px;
+        color: var(--color-primario);
+        margin: 0px 2px;
+    }
+
+        .radio-toolbar-btn label:hover {
+            background-color: #a1a4ff; /*#ffccee*/
+            cursor: pointer !important;
+            color: #fff;
+        }
+
+    .radio-toolbar-btn input[type="radio"]:focus + label {
+        border: 1px solid var(--color-primario);
+    }
+
+    .radio-toolbar-btn input[type="radio"]:checked + label {
+        background-color: var(--color-primario);
+        border: 1px solid var(--color-primario);
+        color: white;
+    }
+/*#endregion*/
+.linea-primary {
+    margin: 0px;
+    height: 1px;
+    border-width: 0;
+    background-color: var(--color-primario);
+}
+
+.error-title {
+    margin: 0 0 5px 0;
+    color: #bb1f1f;
+}
+
+
+.div-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background: #CCC;
+}
+
+.borde-delgado {
+    border: 0.5px solid #8f8b8b;
+}
+
+.bg-conedor-principal {
+    background-color: var(--color-conedor-principal);
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.contenedor-reportes {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.color-white {
+    color: white;
+}
+
+.pb-50 {
+    padding-bottom: 50px;
+}
+
+.tachado {
+    text-decoration: line-through;
+}
+
+.contenido-centro {
+    display: flex;
+    justify-content: center;
+}
+
+.contenido-izquierda {
+    display: flex;
+    justify-content: left;
+}
+
+.contenido-derecha {
+    display: flex;
+    justify-content: right;
+}
+
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #0322d8;
+    border-color: #0322d8;
+}
+
+.btn-purple {
+    color: #fff;
+    background-color: purple;
+    border-color: purple;
+}
+
+    .btn-purple:hover {
+        color: #fff;
+        background-color: purple;
+        border-color: purple;
+    }
+
+.bc-separate {
+    border-collapse: separate;
+}
+
+.select2-container--default .select2-results__option[aria-disabled=true] {
+    color: red !important;
+}
+
+.checkbox-form {
+    min-height: 25px !important;
+    padding-top: 0px !important;
+}
+
+.ui-select-bootstrap .ui-select-choices-row.active > span {
+    background-color: var(--color-primario);
+}
+
+.selectize-dropdown .active {
+    color: #fff;
+    background-color: var(--color-primario);
+}
+
+.title-box-body {
+    color: var(--color-primario) !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.form-horizontal .control-label {
+    padding-top: 5px;
+}
+
+.width-90 {
+    width: 90%;
+}
+
+.width-40 {
+    width: 40%;
+}
+
+.boton-cerrar {
+    opacity: 1;
+    color: var(--color-primario);
+    margin-top: 0px !important;
+}
+
+.fondo-color-trigo {
+    background-color: wheat;
+}
+
+.flex-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.redondo {
+    border-radius: var(--border-redondo) !important;
+}
+
+.panel-group .panel-heading {
+    border-bottom: 0;
+}
+
+.acordion > div > div .panel-heading {
+    padding: 7px;
+}
+
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+    border-top-color: var(--color-primario);
+}
+
+.panel-group {
+    margin-bottom: 15px;
+}
+
+.dataTable tbody tr:not(.lowercase) td.minuscula {
+    text-transform: lowercase;
+}
+
+.mh-0{
+    min-height: 0 !important;
+}
+
+.info-textbox {
+    font-family: 'c-book', sans-serif;
+    font-size: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.color-primario {
+    color: var(--color-primario);
+}
+
+.p-3-5{
+    padding: 3px 5px !important;
+}
+
+.mx-2 {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.accordion-multiple {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.accordion-items {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+    border-top: solid 3px var(--color-primario);
+}
+
+.accordion-item {
+    width: 100%;
+    color: white;
+    overflow: hidden;
+    border-top: solid 3px var(--color-primario);
+}
+
+.accordion-label {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    color: var(--color-primario);
+    background: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 0px;
+    font-size: 1.5rem;
+}
+
+    .accordion-label:hover {
+        /*background: var(--color-light-primario);*/
+    }
+
+    .accordion-label::after {
+        content: "+";
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        transition: all 0.8s;
+    }
+
+.accordion-content {
+    max-height: 0;
+    padding: 0 1em;
+    color: #333;
+    background: white;
+    transition: all 0.8s;
+    display: none;
+}
+
+.accordion-multiple:checked + .accordion-label {
+    /*background: var(--color-light-primario);*/
+}
+
+    .accordion-multiple:checked + .accordion-label::after {
+        content: "-";
+        /*transform: rotate(90deg);*/
+    }
+
+.accordion-multiple:checked ~ .accordion-content {
+    max-height: 100vh;
+    padding: 1em;
+    border-top: 1px solid var(--color-primario);
+    display: block;
+}
+
+.accordion-items > div:nth-child(1) {
+    border-top: none;
+}
+
+.transparente {
+    background-color: transparent !important;
+}

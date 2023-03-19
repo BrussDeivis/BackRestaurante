@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Reporte Inventario Valorizado";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/almacen/reporteInventarioValorizadoController.js")></script>
+    <script src=@Url.Content("~/Scripts/code39/jquery-barcode.min.js")></script>
+}
+
+<div class="col-xs-12" ng-controller="reporteInventarioValorizadoController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">
+                    INVENTARIO VALORIZADO ACTUAL
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>ALMACEN:</label>
+                                        <select class="select2 form-control" ng-model="almacen" ng-options="item as item.Nombre for item in listaAlmacenes track by item.Id"></select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>FAMILIA</label>
+                                        <select tabindex=1 class="select2 form-control concepto-basico" ng-model="conceptos" ng-options="item as item.Nombre for item in listaConceptos track by item.Id" multiple="multiple" ng-change="resolverIdsConceptosSeleccionados()"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label">LOTE:</label>
+                                            <div class="checkbox checkbox-primary">
+                                                <input style="height: 20px; width: 20px;" id="select-lote" type="checkbox" class="styled" ng-model="conLote" /><label style="margin-top: -11px; margin-left: 1px;" id="select-lote">Detallado por lote</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div ng-repeat="item in caracteristicas" ng-model="caracteristica" ng-change="nombreCaracteristicasSeleccionadas(caracteristica)" class="col-md-3">
+                                        <label class="ng-cloak">{{item.Nombre}}</label>
+                                        <select class="select2 form-control caracteristica" ng-model="caracteristicasSeleccionadas[$index]"
+                                                ng-options="objeto as objeto.Nombre for objeto in item.Valores track by objeto.Id"
+                                                multiple="multiple" ng-change="resolverIdsCaracteristicasSeleccionadas()"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button title="LIMPIAR FILTROS" class="btn btn-primary btn-danger" ng-click="limpiarFiltros()">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                    <button title="CONSULTAR" class="btn btn-primary btn-info" ng-disabled="datosRequeridos()" ng-click="mostrarDataTable()">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                    <button title="DESCARGAR" ng-click="export('reporte-inventario-valorizado')" class="btn btn-primary">
+                                        <span class="fa fa-file-excel-o"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive ">
+                            
+                            <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-bordered table-striped dataTable">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

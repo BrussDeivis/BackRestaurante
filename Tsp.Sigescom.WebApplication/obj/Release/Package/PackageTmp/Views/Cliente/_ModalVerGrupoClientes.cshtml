@@ -1,0 +1,139 @@
+﻿<div id="modal-ver-grupo-clientes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">VER GRUPO DE CLIENTES</h4>
+            </div>
+            <div class="modal-body">
+                <form name="verGrupoClientes">
+                    <div class="row">
+                        <div class="col-md-12 mb-15" ng-if="verGrupoClientes.EsVigente">
+                            <label>OPCIONES :</label>
+                            <a title="Dar de baja al grupo de clientes" class="btn btn-primary" data-toggle="modal" data-target="#modal-dar-baja-grupo-clientes">DAR DE BAJA</a>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-primary" ng-class="verGrupoClientes.EsVigente ? '' : 'opaco'">
+                                <div class="panel-heading">DATOS DEL GRUPO</div>
+                                <div class="panel-body" style="padding:5px;">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">CÓDIGO</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.Codigo}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">NOMBRE</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.Nombre}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">TIPO</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.Tipo}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">CLASIFICACIÓN</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.Clasificacion}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-primary" ng-class="verGrupoClientes.EsVigente ? '' : 'opaco'">
+                                <div class="panel-heading">DATOS DEL RESPONSABLE</div>
+                                <div class="panel-body" style="padding:5px;">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">N° DOC</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.DocumentoResponsable}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">NOMBRE</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.NombreResponsable}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">TELÉFONO</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.TelefonoResponsable}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-4">CORREO</label>
+                                                    <label class="col-md-8 no-padding no-bold">{{verGrupoClientes.CorreoResponsable}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="panel panel-primary" ng-class="verGrupoClientes.EsVigente ? '' : 'opaco'">
+                                <div class="panel-heading">CLIENTES ASOCIADOS AL GRUPO</div>
+                                <div class="panel-body" style="padding:5px;">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                                <table id="tabla-grupo-cliente" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>N°</th>
+                                                            <th>DOCUMENTO</th>
+                                                            <th>NOMBRE</th>
+                                                            <th>VIGENTE</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="cliente in verGrupoClientes.Clientes" ng-cloak>
+                                                            <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{$index+1}}</td>
+                                                            <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.Documento}}</td>
+                                                            <td ng-class="cliente.EsVigente ? '' : 'tachado'">{{cliente.Nombre}}</td>
+                                                            <td>{{cliente.EsVigente ? 'SI': 'NO'}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a title="Cerrar" ng-click="cerrar('modal-ver-grupo-clientes')" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-dar-baja-grupo-clientes" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title center"> DAR DE BAJA A GRUPO DE CLIENTES</h4>
+            </div>
+            <div class="modal-body">
+                <p> Dará de baja a "{{verGrupoClientes.Nombre}}" ?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary pull-left" data-dismiss="modal" ng-click="darBajaGrupoClientes(verGrupoClientes.Id)"><span class="glyphicon glyphicon-check"></span> CONFIRMAR</button>
+                <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>

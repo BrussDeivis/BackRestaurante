@@ -1,0 +1,102 @@
+﻿<div id="modal-notas" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{tituloModalNotas}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="notasForm" class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>CLIENTE:</label>
+                                <label class="form-control">{{facturacion.Cliente.RazonSocial}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>N° DOCUMENTO:</label>
+                                <label class="form-control">{{facturacion.Cliente.NumeroDocumentoIdentidad}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>T/ COMPROBANTE:</label>
+                                <select id="tipo-comprobante" class="select2 form-control" ng-model="facturacion.TipoDeComprobante" ng-options="item as item.Nombre for item in tiposDeComprobantes track by item.Id"
+                                        ng-change="cargarSeries(facturacion.TipoDeComprobante)" required></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>SERIE:</label>
+                                <select id="serie" class="select2 form-control" ng-model="facturacion.SerieDeComprobante" ng-options="item as item.NumeroSerie for item in series track by item.Id" required></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>FEC. EMISION:</label>
+                                <input class="form-control center datepicker-yyyy" ng-model="facturacion.FechaRegistro" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label>OBSERVACIÓN:</label>
+                        <textarea style="max-height:40px;font-size:12px" id="observacion" placeholder="Por favor escriba una observacion" class="form-control lowercase" ng-model="facturacion.Observacion" required></textarea>
+                    </div>
+                    <div class="col-md-12" style="padding-top:15px">
+                        <label>DOCUMENTOS</label>
+                        <table id="tabla-documentos" class="tabla-maestros row-border hover table table-stripped tabla-bandeja table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>T/C</th>
+                                    <th>N°.COMPROBANTE</th>
+                                    <th>SUBTOTAL</th>
+                                    <th>IGV</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-class="documentoIndex==$index?'fila-activa':''" ng-repeat="item in documentos" ng-click="verDetalles($index)" ng-cloak>
+                                    <td class="number width-30">{{$index+1}}</td>
+                                    <td class="center col-md-3">{{item.TipoComprobante}}</td>
+                                    <td class="left col-md-3">{{item.NumeroComprobante}}</td>
+                                    <td class="number col-md-2">{{item.SubTotal|number:2}}</td>
+                                    <td class="number col-md-2">{{item.IGV|number:2}}</td>
+                                    <td class="number col-md-2">{{item.Total|number:2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12" ng-hide="verDetalle">
+                        <label >
+                            DETALLES PARA {{tipoAccion?'ANULAR':textoColumna}}
+                        </label>
+                        <table id="tabla-maestros" class="tabla-maestros row-border hover table table-stripped tabla-bandeja table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>CONCEPTO</th>
+                                    <th>IMPORTE</th>
+                                    <th ng-hide="tipoAccion">{{textoColumna}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-class="detalleIndex==$index?'fila-activa':''" ng-repeat="item in documentos[documentoIndex].Detalles" ng-cloak>
+                                    <td class="number width-30" ng-click="verReferencias($index)">{{$index+1}}</td>
+                                    <td class="left col-md-7" ng-click="verReferencias($index)">{{item.Concepto.Nombre}}</td>
+                                    <td class="number col-md-4" ng-click="verReferencias($index)">{{item.Importe|number:2}}</td>
+                                    <td ng-hide="tipoAccion" class="width-60">
+                                        <input class="form-control number" ng-model="item.Descuento" ng-blur="textoColumna=='DESCUENTO'?validarDescuento(item):item.Descuento=formatNumber(item.Descuento,2)" ng-change="calcularDescuento(documento,$index)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="GUARDAR" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                <button data-dismiss="modal" title="CANCELAR" class="btn btn-sm btn-danger" ng-click=""><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="notas-modal" data-toggle="modal" data-target="#modal-notas" style="display:none"></a>

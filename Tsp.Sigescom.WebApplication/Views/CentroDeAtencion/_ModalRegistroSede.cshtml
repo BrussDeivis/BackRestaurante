@@ -1,0 +1,194 @@
+﻿<div id="modal-registro-sede" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE SEDE</h4>
+            </div>
+            <div class="modal-body">
+                <form name="sedeForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Datos Validación</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="tipoDocumento">Tipo Documento: </label>
+                                                    <input id="tipoDocumento" class="form-control" value="REG. ÚNICO DE CONTRIBUYENTE" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="numeroDocumento">N° Documento: *</label>
+                                                    <input id="numeroDocumento" class="form-control" placeholder="Número Documento" ng-blur="validarNumero()"
+                                                           ng-paste="removeSpacesInPaste($event.originalEvent)" ng-model="sede.NumeroDocumentoIdentidad" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="codigoEstablecimiento">Código Establecimiento: *</label>
+                                                    <input id="codigoEstablecimiento" class="form-control" ng-model="sede.CodigoEstablecimiento" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="tipoPersona">Tipo Persona:  *</label>
+                                                    <select id="tipoPersona" class="select2 form-control" ng-change="cargarDatosComplementarios()" ng-model="sede.TipoPersona" ng-options="item as item.Nombre for item in tiposDeActor track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6" ng-if="permitirRegistroCodigoDigemidEnEstableciemientoComercial">
+                                                <div class="form-group">
+                                                    <label for="codigoEstablecimientoDigemid">Código Establecimiento Digemid: *</label>
+                                                    <input id="codigoEstablecimientoDigemid" class="form-control" ng-model="sede.CodigoEstablecimientoDigemid" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="informacionPublicitaria">Información Publicitaria:</label>
+                                                    <textarea class="form-control" rows="2" id="informacionPublicitaria" style=" resize: none;" ng-model="sede.InformacionPublicitaria"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Imagen</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-xs-12" @*flow-init="{singleFile:true}"*@ @*flow-name="obj.flow"*@ flow-file-added="[processFile($file)][!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]]">
+                                            <div class="form-group">
+                                                <span class="btn btn-primary btn-flat btn-sm" ng-show="!sede.Foto.HayFoto" flow-btn="" ng-click="dasactivarBotonRestablecer()"><span class="fa fa-plus"></span> Agregar imagen<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                                <span class="btn btn-info btn-flat  btn-sm" ng-show="sede.Foto.HayFoto" flow-btn="" ng-click="dasactivarBotonRestablecer()"><span class="glyphicon glyphicon-refresh"></span> Cambiar<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                                <span class="btn btn-danger btn-flat  btn-sm" ng-show="sede.Foto.HayFoto" ng-click="$flow.cancel();eliminarFotoSede()">
+                                                    <span class="glyphicon glyphicon-trash"></span> Remover
+                                                </span>
+                                                <span class="btn btn-success btn-flat  btn-sm" ng-show="botonRestablecer" ng-click="restablecerFotoSede()">
+                                                    <span class="glyphicon glyphicon-arrow-left"></span> Restablecer
+                                                </span>
+                                            </div>
+                                            <div class="thumbnail" ng-show="!$flow.files.length">
+                                                <img src="{{sede.Foto.FotoSrc}}">
+                                            </div>
+                                            <div class="thumbnail" ng-show="$flow.files.length">
+                                                <img flow-img="$flow.files[0]">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Datos Generales</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="claseDeActor">{{denominacionClaseActor}}:  *</label>
+                                                    <select id="claseDeActor" class="select2 form-control " ng-model="sede.ClaseActor" ng-options="item as item.Nombre for item in tiposDeClaseActor track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="razonSocial">Razón Social: *</label>
+                                                    <input id="razonSocial" placeholder="Razón Social" class="form-control" uppercase-only ng-model="sede.RazonSocial" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="nombreComercial">Nombre Comercial: </label>
+                                                    <input id="nombreComercial" placeholder="Nombre Comercial" class="form-control" uppercase-only ng-model="sede.NombreComercial" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-xs-4">
+                                                <div class="form-group">
+                                                    <label for="nombreInterno">Nombre Interno: *</label>
+                                                    <input id="nombreInterno" placeholder="Nombre Interno" class="form-control" ng-model="sede.NombreInterno" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class="form-group">
+                                                    <label for="telefono">Teléfono: </label>
+                                                    <input id="telefono" placeholder="Teléfono" class="form-control" ng-model="sede.Telefono" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="correo">Correo: </label>
+                                                    <input id="correo" placeholder="Correo" class="form-control" type="email" ng-model="sede.Correo" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Dirección</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="ubigeo">Ubigeo: *</label>
+                                                    <select id="ubigeo" class="select2 form-control" ng-model="sede.Direccion.Ubigeo" ng-options="item as item.Nombre for item in ubigeosPeru track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="detalle">Detalle: *</label>
+                                                    <input id="detalle" class="form-control" placeholder="Jr. Tupac Amaru N° 234" uppercase-only ng-model="sede.Direccion.Detalle" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+                <h5>(*) Datos Obligatorios </h5>
+            </div>
+            <div class="modal-footer">
+                <button ng-disabled="sedeForm.$invalid" ng-click="crearSede()" class="btn btn-md btn-primary pull-left " title="Guardar">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    GUARDAR
+                </button>
+                <button data-dismiss="modal" title="Cerrar" ng-click="cerrarSede()" id="#cerrar-modal-registro-sede" class="btn btn-md btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    CERRAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

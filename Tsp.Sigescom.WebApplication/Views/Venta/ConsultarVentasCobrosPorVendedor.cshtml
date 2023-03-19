@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Consulta de ventas y cobros por proveedor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+    </script>
+    <script src=@Url.Content("~/Scripts/controller/venta/ventaCobroMasivoController.js")></script>
+}
+
+<div class="col-md-12" ng-controller="ventaCobroMasivoController" ng-init="iniciarBandejaVentasYCobrosMasivos()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">BANDEJA DE VENTAS Y COBROS POR VENDEDOR</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label for="dateStart" class="col-sm-12 ">Fecha Inicial</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateStart" ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label for="dateEnd" class="col-sm-12 ">Fecha Fin</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateEnd" ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-info" ng-click="listarBandejaVentasYCobrosMasivos()"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+                <div class="col-md-1">
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-ventas')" class="btn btn-md btn-info"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+                <div class="col-md-3" ng-if="permitirCanjeDeComprobante" ng-controller="canjeDeComprobanteController" ng-init="iniciarCanjeDeComprobante()">
+                    <button style="margin-top:25px" ng-click="accionCanjeDeComprobante()" class="btn btn-md btn-info" ng-if="!canjeDeComprobanteActivado"><span class="glyphicon glyphicon-retweet"></span>{{labelBotonDeCanjeDeComprobante}}</button>
+                    <button style="margin-top:25px" ng-click="realizarCanjeDeComprobante()" class="btn btn-md btn-primary" ng-if="canjeDeComprobanteActivado"><span class="glyphicon glyphicon-retweet"></span>CANJE DE COMPROBANTE</button>
+                    @*ng-controller="ventaController"
+            <button title="NUEVA VENTA" style="margin-top:25px" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modal-registro" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span>NUEVA VENTA</button>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:15px">
+            <table id="tabla-ventas" datatable="ng" dt-options="dtOptions" dt-column-defs="ventas.dtColumnDefs" class="ng-cloak row-border hover table table-stripped table-bordered">
+                <thead>
+                    <tr>
+                        <th ng-if="canjeDeComprobanteActivado"></th>
+                        <th>N°</th>
+                        <th>Fecha</th>
+                        <th>Punto Venta</th>
+                        <th>Vendedor</th>
+                        <th>Cajero</th>
+                        <th>Total Venta</th>
+                        <th>Total Cobranza</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listaVentasYCobrosMasivasPorVendedor">
+                        <td ng-if="canjeDeComprobanteActivado">
+                            <div class="checkbox checkbox-primary">
+                                <input id="check-{{$index}}" type="checkbox" data-checklist-model="comprobantesSeleccionados" data-checklist-value="item">
+                                <label for="check-{{$index}}"></label>
+                            </div>
+                            @*<div class="checkbox checkbox-primary"><input style="height: 20px; width: 20px;" type="checkbox" form="check-{{$index}}" class="styled" value="{{item}}" ng-checked="cuotasSeleccionadas.indexOf(item)>-1" ng-click="seleccionarComprobante(item)" /><label id="check-{{$index}}" style="margin-top: -11px; margin-left: 1px;"></label></div>*@
+                        </td>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.FechaEmision}}</td>
+                        <td>{{item.CentroDeAtencion}}</td>
+                        <td>{{item.Vendedor}}</td>
+                        <td>{{item.Cajero}}</td>
+                        <td>{{item.TotalVenta}}</td>
+                        <td>{{item.TotalCobranza}}</td>
+                        <td>
+                            <a title="Ver Detalle de la Venta" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-ver-venta-cobro-por-vendedor" ng-click="obtenerVentasYCobrosPorVendedor(item)"><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalVerVentaCobroPorVendedor")
+</div>

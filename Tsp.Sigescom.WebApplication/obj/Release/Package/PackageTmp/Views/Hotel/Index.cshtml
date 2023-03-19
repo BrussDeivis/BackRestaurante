@@ -1,0 +1,265 @@
+﻿@{
+    ViewBag.Title = "Planificador de Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <script src=@Url.Content("~/Scripts/controller/hotel/planificadorController.js")></script>
+
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturador/facturador.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorReserva/registradorReserva.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorHuesped/registradorHuesped.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorPago/editorPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/registradorFinanciamiento/registradorFinanciamiento.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorConsumos/registradorConsumos.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/registradorDetalles/registradorDetalles.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/selectorConceptoComercial/selectorConceptoComercial.js")></script>
+    <script>
+        var fechaDesde = '@ViewBag.fechaDesde';
+        var fechaHasta = '@ViewBag.fechaHasta';
+        var fechaActual = '@ViewBag.fechaActual';
+        var AccionesEstadoDisponible = @Html.Raw(Json.Encode(@ViewBag.AccionesEstadoDisponible));
+        var AccionesEstadoOcupada = @Html.Raw(Json.Encode(@ViewBag.AccionesEstadoOcupada));
+        var AccionesEstadoReservada = @Html.Raw(Json.Encode(@ViewBag.AccionesEstadoReservada));
+        var Establecimientos = @(Html.Raw(Json.Encode(ViewBag.Establecimientos)));
+        var EstablecimientoSesion = @(Html.Raw(Json.Encode(ViewBag.EstablecimientoSesion)));
+        var UsuarioTieneRolAdministradorDeNegocio = @ViewBag.UsuarioTieneRolAdministradorDeNegocio.ToString().ToLower();
+        var urlActionDetalleReserva = '@Url.Action("DetalleReserva", "Hotel")';
+        var MaximoDiasMostrarEnPlanificador = @ViewBag.MaximoDiasMostrarEnPlanificador;
+        var ParametrosEstadoHabitacion = @(Html.Raw(Json.Encode(ViewBag.configuracionEstadoHabitacion)));
+    </script>
+}
+<div class="col-md-12" id="bandejaPlanificador" ng-controller="planificadorController" ng-init="inicializar()">
+    <div class="row" ng-click="">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">Hotel</div>
+            </div>
+        </div>
+        @* ESTADOS DE LAS HABITACIONES *@
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border no-padding-bottom">
+                    <div class="col-sm-4 px-5" ng-if="UsuarioTieneRolAdministradorDeNegocio">
+                        <div class="col-sm-4 px-5" style="padding-top:7px">
+                            <label for="exampleInputName2">Establecimiento: </label>
+                        </div>
+                        <div class="col-sm-8 px-5">
+                            <select class="select2 input-sm" ng-model="buscador.establecimientoSeleccionado" ng-options="item as item.Nombre for item in Establecimientos track by item.Id" ng-change="cambiarEstablecimiento()">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 actualizar-fechayHora">
+                        <p>Actualizado: </p>
+                        <p style="font-size:22px;">{{planificador.HoraActualString}}</p>
+                        <p>{{planificador.FechaActualString}}</p>
+                    </div>
+                    @*</div>
+                        <div class="box-body">*@
+                    <!--CANTIDAD DE ESTADOS -->
+                    <div class="col-xs-12 col-sm-12 col-lg-12 reporte-planificador">
+                        <div class="row ">
+                            <!--box-Disponibles-->
+                            <div class="col-lg-2 col-xs-6 px-5 ">
+                                <!-- small box -->
+                                <div class="small-box box-reporte-planificador box-reporte-disponible-hotel border-radius-10">
+                                    <div class="inner">
+                                        <h3>{{planificador.Disponibles}}</h3>
+                                        <p>DISPONIBLES</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="flaticon-bedroom"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--box- por ingresar-->
+                            <div class="col-lg-2 col-xs-6 px-5">
+                                <!-- small box -->
+                                <div class="small-box box-reporte-planificador box-reporte-porIngresar-hotel border-radius-10">
+                                    <div class="inner">
+                                        <h3>{{planificador.PorIngresar}}</h3>
+                                        <p>POR INGRESAR</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="flaticon-check-in-desk"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--box-ocupado-->
+                            <div class="col-lg-2 col-xs-6 px-5 ">
+                                <!-- small box -->
+                                <div class="small-box box-reporte-planificador box-reporte-ocupado-hotel border-radius-10">
+                                    <div class="inner">
+                                        <h3>{{planificador.Ocupadas}}</h3>
+                                        <p>OCUPADAS</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="flaticon-bed"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--box-por salir-->
+                            <div class="col-lg-2 col-xs-6 px-5">
+                                <!-- small box -->
+                                <div class="small-box box-reporte-planificador box-reporte-porSalir-hotel border-radius-10">
+                                    <div class="inner">
+                                        <h3>{{planificador.PorSalir}}</h3>
+                                        <p>POR SALIR</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="flaticon-hotel"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--box- limpieza-->
+                            <div class="col-lg-2 col-xs-6 px-5">
+                                <!-- small box -->
+                                <div class="small-box box-reporte-planificador box-reporte-limpieza-hotel border-radius-10">
+                                    <div class="inner">
+                                        <h3>{{planificador.EnLimpieza}}</h3>
+                                        <p>LIMPIEZA</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="flaticon-household"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--ACTUALIZAR Y AGREGAR-->
+                            <div class="col-xs-6 col-sm-2 col-lg-2 px-5">
+                                <div class="col-md-12 px-5 margin-top-10">
+                                    <button class="btn btn-info btn-block" style="margin-top:3px" ng-click="obtenerReportePlanificador()">
+                                        <span class="fa fa-refresh"></span>
+                                    </button>
+                                </div>
+                                <div class="col-md-12 px-5">
+                                    <button class="btn btn-primary btn-block" style="margin-top:3px" ng-click="nuevaReserva()">
+                                        <span class="glyphicon glyphicon-plus"></span> Reservar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin: 5px;">
+                    </div>
+                    @*</div>
+                                </div>
+                        </div>
+                                <!--FILTRO -->
+                                <div class="col-md-12">
+                        <div class="box box-success">
+                                <div class="box-header with-border ng-cloak pb-0">*@
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                            <form name="formularioBuscarHabitaciones" id="formularioBuscarHabitaciones">
+                                <div class="col-sm-2 px-5">
+                                    <div class="form-group" ng-class="{'has-error':formularioBuscarHabitaciones.fechaDesdeTablaPlanificador.$invalid, 'has-success':formularioBuscarHabitaciones.fechaDesdeTablaPlanificador.$valid }">
+                                        <label for="fechaDesdeTablaPlanificador">Desde*</label>
+                                        <input ng-model="fechaDesde" id="fechaDesdeTablaPlanificador" name="fechaDesdeTablaPlanificador" placeholder="dd/mm/aaaa" class="form-control datepicker-yyyy" required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 px-5">
+                                    <div class="form-group" ng-class="{'has-error':formularioBuscarHabitaciones.fechaDesdeTablaPlanificador.$invalid, 'has-success':formularioBuscarHabitaciones.fechaHastaTablaPlanificador.$valid }">
+                                        <label for="fechaHastaTablaPlanificador">Hasta*</label>
+                                        <input ng-model="fechaHasta" id="fechaHastaTablaPlanificador" name="fechaHastaTablaPlanificador" placeholder="dd/mm/aaaa" class="form-control datepicker-yyyy" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 px-5">
+                                    <div class="form-group">
+                                        <label>Ambiente</label>
+                                        <select class="select2 form-control" ng-model="ambienteSeleccionado" ng-change=""
+                                                ng-options="item as item.Nombre for item in ambientes track by item.Id">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 px-5">
+                                    <div class="form-group">
+                                        <label>Tipo</label>
+                                        <select class="select2 form-control" ng-model="tipoHabitacionSeleccionado" ng-change=""
+                                                ng-options="item as item.Nombre for item in tiposDeHabitaciones track by item.Id">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 px-5" style="margin-top: 24px;">
+                                    <button type="submit" class="btn btn-primary btn-block" ng-click="obtenerPlanificadorHabitaciones()" ng-disabled="formularioBuscarHabitaciones.$invalid || deshabilitarBotonBusquedaPlanificador()">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 contenedor-filtro" style="text-align:center; padding:0;">
+                            <label>Filtrar por</label>
+                            <div class="col-md-12" style="margin-top:0.5rem;margin-bottom:0.3rem">
+                                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 px-5">
+                                    <label class="radio-inline check-estado" for="radioTodos">
+                                        <input type="radio" id="radioTodos" value="filtrarTodos" name="radioFiltros" ng-model="filtro.estado" ng-change="buscarPorFiltro()" ng-value="parametrosEstadoHabitacion.Todo"> Todos
+                                    </label>
+                                </div>
+                                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+
+                                    <label class="radio-inline check-estado" for="radioDisponibles">
+                                        <input type="radio" id="radioDisponibles" value="filtrarDisponibles" name="radioFiltros" class="radioFiltro" ng-model="filtro.estado" ng-value="parametrosEstadoHabitacion.EstadoDisponible" ng-change="buscarPorFiltro()"> Disponibles
+                                    </label>
+                                    <label class="radio-inline check-estado" for="radioReservadas">
+                                        <input type="radio" id="radioReservadas" value="filtrarReservadas" name="radioFiltros" class="radioFiltro" ng-model="filtro.estado" ng-value="parametrosEstadoHabitacion.EstadoReservado" ng-change="buscarPorFiltro()"> Reservadas
+                                    </label>
+                                    <label class="radio-inline check-estado" for="radioOcupadas">
+                                        <input type="radio" id="radioOcupadas" value="filtrarOcupadas" name="radioFiltros" class="radioFiltro" ng-model="filtro.estado" ng-value="parametrosEstadoHabitacion.EstadoOcupado" ng-change="buscarPorFiltro()"> Ocupadas
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        @*</div>*@
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="tableCalendar" class="table table-bordered tabla-planificador no-seleccionable bc-separate">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Ambiente</th>
+                                    <th rowspan="2">Tipo</th>
+                                    <th rowspan="2">Código</th>
+                                    <th rowspan="2">Tarifa</th>
+                                    <th rowspan="2">Info</th>
+                                    <th data-ng-attr-title="{{fechaPlanificador==fechaActual?'Fecha de Hoy':null}}" class="primary no-seleccionable" ng-repeat="fechaPlanificador in planificadorHabitaciones.FechasPlanificador" ng-style="fechaPlanificador == fechaActual && {'background-color':'#00c0ef'}">{{fechaPlanificador}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="fila" ng-repeat="habitacionPlanificador in habitacionesEnPlanificador" ng-cloak ng-init="hp =$index">
+                                    <th scope="row" class="info no-seleccionable">{{habitacionPlanificador.Ambiente}}</th>
+                                    <th scope="row" class="info no-seleccionable">{{habitacionPlanificador.TipoHabitacion}}</th>
+                                    <th scope="row" class="info no-seleccionable">{{habitacionPlanificador.CodigoHabitacion }}</th>
+                                    <th scope="row" class="info no-seleccionable">{{habitacionPlanificador.PrecioUnitario == 0 ? 'NO TIENE PRECIO' : habitacionPlanificador.PrecioUnitario.toFixed(2)}}</th>
+                                    <td scope="row" class="info" style="padding:2px; display:flex; justify-content:space-around">
+                                        <a title="Limpieza de Habitacion" style="font-size:3rem; color:#874421; line-height:1rem" ng-class="habitacionPlanificador.EnLimpieza?'':'boton-limpieza'" ng-click="cambiarLimpiezaDeHabitacion($index)"><i class="flaticon-broom"></i></a>
+                                        <a ng-if="habitacionPlanificador.PorIngresar" title="Por Ingresar" style="font-size:2rem; color:#008d4c"><span class="glyphicon glyphicon-log-in"></span></a>
+                                        <a ng-if="habitacionPlanificador.PorSalir" title="Por Salir" style="font-size:2rem; color:#d33724"><span class="glyphicon glyphicon-log-out"></span></a>
+                                    </td>
+                                    <td ng-repeat="estadoHabitacion in habitacionPlanificador.EstadosHabitacion" ng-class="pintarCeldaPorEstado(estadoHabitacion.EstadoHabitacion)" ng-init="eh =$index" ng-mousedown="eventoMousedown($event,estadoHabitacion)" ng-mouseover="eventoMouseover($event,estadoHabitacion)" ng-mouseup="eventoMouseup($event,estadoHabitacion,habitacionPlanificador)" ng-right-click="eventoContextMenu($event,estadoHabitacion)" ng-click="eventoClick($event,estadoHabitacion,habitacionPlanificador)" id="{{hp}}_{{eh}}">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!--Menucontextual-->
+                    <div id="context-menu">
+                        <div id="item{{accion.Id}}" class="item" ng-repeat="accion in accionesEstadoHabitacion track by accion.Id" ng-click="this[accion.Codigo]()" ng-cloak>
+                            <a><i class="{{accion.Valor}}"></i> {{accion.Nombre}}</a>
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
+            </div>
+        </div>
+        <registrador-reserva ng-if="inicializacionRealizada" id-establecimiento="buscador.establecimientoSeleccionado.Id" api="$parent.registradorReservaAPI" changed="reservaAgregada()"></registrador-reserva>
+        <registrador-consumos ng-if="inicializacionRealizada" id-establecimiento="buscador.establecimientoSeleccionado.Id" api="$parent.registradorConsumoAPI" consumo-guardado="consumoGuardado()"></registrador-consumos>
+    </div>
+
+

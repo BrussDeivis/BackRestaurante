@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FacturacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Binario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="archivoBinario" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Documento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idSigescom" Type="bigint" Nullable="false" />
+    <Property Name="codigoTipoComprobante" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="serieComprobante" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="numeroComprobante" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="fechaEmision" Type="datetime" Nullable="false" />
+    <Property Name="idBinarioDocumento" Type="bigint" Nullable="false" />
+    <Property Name="tipoComprobante" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="estado" Type="int" Nullable="false" />
+    <Property Name="estadoSigescom" Type="int" Nullable="false" />
+    <Property Name="enviado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Envio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fechaEnvio" Type="datetime" Nullable="false" />
+    <Property Name="tipoEnvio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="idBinarioEnvio" Type="bigint" Nullable="false" />
+    <Property Name="idBinarioRespuesta" Type="bigint" />
+    <Property Name="estado" Type="int" Nullable="false" />
+    <Property Name="codigoRespuesta" Type="varchar" MaxLength="50" />
+    <Property Name="observacion" Type="varchar(max)" Nullable="false" />
+    <Property Name="identificadorEnvio" Type="varchar" MaxLength="5" />
+    <Property Name="numeroTicket" Type="varchar" MaxLength="50" />
+    <Property Name="modoEnvio" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EnvioDocumento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idDocumento" Type="bigint" Nullable="false" />
+    <Property Name="idEnvio" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProgramacionEnvio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="diaSemana" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="horaInicial" Type="time" Precision="7" Nullable="false" />
+    <Property Name="duracion" Type="int" Nullable="false" />
+    <Property Name="tipoEnvioProgramado" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="idUsuario" Type="bigint" />
+  </EntityType>
+  <Association Name="FK_Documento_Binario">
+    <End Role="Binario" Type="Self.Binario" Multiplicity="1" />
+    <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Binario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Documento">
+        <PropertyRef Name="idBinarioDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Envio_Binario">
+    <End Role="Binario" Type="Self.Binario" Multiplicity="1" />
+    <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Binario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Envio">
+        <PropertyRef Name="idBinarioEnvio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Envio_Binario1">
+    <End Role="Binario" Type="Self.Binario" Multiplicity="0..1" />
+    <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Binario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Envio">
+        <PropertyRef Name="idBinarioRespuesta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EnvioDocumento_Documento">
+    <End Role="Documento" Type="Self.Documento" Multiplicity="1" />
+    <End Role="EnvioDocumento" Type="Self.EnvioDocumento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Documento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="EnvioDocumento">
+        <PropertyRef Name="idDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EnvioDocumento_Envio">
+    <End Role="Envio" Type="Self.Envio" Multiplicity="1" />
+    <End Role="EnvioDocumento" Type="Self.EnvioDocumento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Envio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="EnvioDocumento">
+        <PropertyRef Name="idEnvio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FacturacionModelStoreContainer">
+    <EntitySet Name="Binario" EntityType="Self.Binario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Envio" EntityType="Self.Envio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EnvioDocumento" EntityType="Self.EnvioDocumento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProgramacionEnvio" EntityType="Self.ProgramacionEnvio" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Documento_Binario" Association="Self.FK_Documento_Binario">
+      <End Role="Binario" EntitySet="Binario" />
+      <End Role="Documento" EntitySet="Documento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Envio_Binario" Association="Self.FK_Envio_Binario">
+      <End Role="Binario" EntitySet="Binario" />
+      <End Role="Envio" EntitySet="Envio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Envio_Binario1" Association="Self.FK_Envio_Binario1">
+      <End Role="Binario" EntitySet="Binario" />
+      <End Role="Envio" EntitySet="Envio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EnvioDocumento_Documento" Association="Self.FK_EnvioDocumento_Documento">
+      <End Role="Documento" EntitySet="Documento" />
+      <End Role="EnvioDocumento" EntitySet="EnvioDocumento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EnvioDocumento_Envio" Association="Self.FK_EnvioDocumento_Envio">
+      <End Role="Envio" EntitySet="Envio" />
+      <End Role="EnvioDocumento" EntitySet="EnvioDocumento" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

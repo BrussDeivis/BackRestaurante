@@ -1,0 +1,262 @@
+﻿@{
+    ViewBag.Title = "Registro de Venta Masiva";
+}
+@section scripts{
+    <script>
+        var fechaActual = '@ViewBag.fechaActual';
+        var idComprobantePorDefecto = @ViewBag.idComprobantePorDefecto;
+        var permitirIngresarCantidad = @ViewBag.permitirIngresarCantidad.ToString().ToLower();
+        var permitirIngresarPrecioUnitario = @ViewBag.permitirIngresarPrecioUnitario.ToString().ToLower();
+        var permitirIngresarImporte = @ViewBag.permitirIngresarImporte.ToString().ToLower();
+        var ingresarImporteCalcularCantidad = @ViewBag.ingresarImporteCalcularCantidad.ToString().ToLower();
+        var ingresarCantidadCalcularPrecioUnitario = @ViewBag.ingresarCantidadCalcularPrecioUnitario.ToString().ToLower();
+        var ingresarPrecioUnitarioCalcularImporte = @ViewBag.ingresarPrecioUnitarioCalcularImporte.ToString().ToLower();
+        var mascaraDeCalculoPorDefecto = '@ViewBag.mascaraDeCalculoPorDefecto';
+        var numeroDecimalesEnCantidad = @ViewBag.numeroDecimalesEnCantidad;
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+
+    </script>
+    <script src=@Url.Content("~/Scripts/controller/venta/ventaMasivaController.js")></script>
+
+}
+<div class="col-md-12" ng-controller="ventaMasivaController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REGISTRO DE VENTAS MASIVAS</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form name="ventaMasivaForm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-xs-12  col-sm-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="centroDeAtencion">PUNTO DE VENTA:</label>
+                                                    <select id="centroDeAtencion" class="select2 form-control" ng-model="ventaMasiva.PuntoDeVenta" ng-options="item as item.Nombre for item in puntosDeVenta track by item.Id" ng-change="cambiarPuntoDeVenta()" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12  col-sm-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="almacen">ALMACEN:</label>
+                                                    <select id="comboAlmacen" class="select2 form-control" ng-model="ventaMasiva.Almacen" ng-options="item as item.Nombre for item in listaAlmacenesGenerico track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12  col-sm-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="caja">CAJA:</label>
+                                                    <select id="comboCaja" class="select2 form-control" ng-model="ventaMasiva.Caja" ng-options="item as item.Nombre for item in listaCajasGenerico track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="vendedor">VENDEDOR: </label>
+                                                    <select class="select2 form-control" id="vendedor" ng-model="ventaMasiva.Vendedor" ng-options="item as item.Nombre for item in  listaVendedoresGenerico track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="vendedor">ALMACENERO: </label>
+                                                    <select class="select2 form-control" id="vendedor" ng-model="ventaMasiva.Almacenero" ng-options="item as item.Nombre for item in  listaAlmacenerosGenerico track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="vendedor">CAJERO: </label>
+                                                    <select class="select2 form-control" id="vendedor" ng-model="ventaMasiva.Cajero" ng-options="item as item.Nombre for item in  listaCajerosGenerico track by item.Id" required></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12  col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="almacen">DOCUMENTO:</label>
+                                                    <select id="comboDocumento" class="select2 form-control" ng-model="ventaMasiva.TipoDeComprobante" ng-change="cargarSeries(ventaMasiva.TipoDeComprobante)" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantesMasSeries  track by item.TipoComprobante.Id" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                                <label for="vendedor">SERIES: </label>
+                                                <div class="form-group">
+                                                    <div class="radio radio-primary radio-inline col-md-3" ng-init="ventaMasiva.TipoDeComprobante.SerieSeleccionada=series[0].Id" ng-repeat="item in series">
+                                                        <input type="radio" class="ng-cloak" id="radio-{{$index}}" ng-model="ventaMasiva.TipoDeComprobante.SerieSeleccionada" value="{{item.Id}}" ng-checked="ventaMasiva.TipoDeComprobante.SerieSeleccionada==item.Id">
+                                                        <label class="ng-cloak" for="radio-{{$index}}">{{item.Nombre}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="fecha">FECHA:</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input id="fecha" placeholder="dd/mm/aaaa" class="datepicker form-control" data-date-end-date='+0d' ng-model="ventaMasiva.FechaDeEmision" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1">N°</th>
+                                                    <th class="col-md-1">COD PRO</th>
+                                                    <th class="col-md-3">CONCEPTO</th>
+                                                    <th class="col-md-2">CANTIDAD</th>
+                                                    <th class="col-md-2">PRECIO</th>
+                                                    <th class="col-md-2">IMPORTE</th>
+                                                    <th class="col-md-1">OPCION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="font-size:13px" class="ng-cloak">
+                                                <tr ng-repeat="item in ventaMasiva.Detalles">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>
+                                                        <input class="form-control"
+                                                               ng-model="item.Codigo"
+                                                               ng-enter="cargarConceptoPorCodigoBarra(item)"
+                                                               onclick="this.select();" />
+                                                    </td>
+                                                    <td>{{item.Concepto}}</td>
+                                                    <td class="col-md-1 number numero-derecha" ng-if="!permitirIngresarCantidad">{{item.Cantidad|number:numeroDecimalesEnCantidad}}</td>
+                                                    <td class="col-md-1" ng-if="permitirIngresarCantidad">
+                                                        <input class="form-control numero-derecha"
+                                                               ng-model="item.Cantidad"
+                                                               ng-change="calcularValoresDetalle(1, item); calcularTotal()"
+                                                               ng-blur="item.Cantidad = formatNumber(item.Cantidad,numeroDecimalesEnCantidad); item.PrecioUnitario = formatNumber(item.PrecioUnitario,numeroDecimalesEnPrecio); item.Importe = formatNumber(item.Importe,2)"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$"
+                                                               onClick="select();"/>
+                                                    </td>
+                                                    <td class="col-md-1 number numero-derecha" ng-if="!permitirIngresarPrecioUnitario">{{item.PrecioUnitario|number:numeroDecimalesEnPrecio}}</td>
+                                                    <td class="col-md-1" ng-if="permitirIngresarPrecioUnitario">
+                                                        <input class="form-control numero-derecha"
+                                                               ng-model="item.PrecioUnitario"
+                                                               ng-change="calcularValoresDetalle(2, item); calcularTotal()"
+                                                               ng-blur="item.Cantidad = formatNumber(item.Cantidad,numeroDecimalesEnCantidad); item.PrecioUnitario = formatNumber(item.PrecioUnitario,numeroDecimalesEnPrecio); item.Importe = formatNumber(item.Importe,2)"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnPrecio}}})?)?$"
+                                                               onClick="select();" />
+                                                    </td>
+                                                    <td class="col-md-1 number numero-derecha" ng-if="!permitirIngresarImporte">{{(item.Importe)|number:2 }}</td>
+                                                    <td class="col-md-1" ng-if="permitirIngresarImporte">
+                                                        <input class="form-control numero-derecha"
+                                                               ng-model="item.Importe"
+                                                               ng-change="calcularValoresDetalle(3, item); calcularTotal()"
+                                                               ng-blur="item.Cantidad = formatNumber(item.Cantidad,numeroDecimalesEnCantidad); item.PrecioUnitario = formatNumber(item.PrecioUnitario,numeroDecimalesEnPrecio); item.Importe = formatNumber(item.Importe,2)"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                                                               onClick="select();"/>
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-danger btn-sm" ng-click="quitarItemVenta($index)"><span class="glyphicon glyphicon-remove"></span></a>
+                                                    </td>
+                                                </tr>
+                                                <tr style="background:#e9bdbd;">
+                                                    <td></td>
+                                                    <td>
+                                                        <input class="form-control"
+                                                               id="codigo"
+                                                               ng-model="itemVenta.Codigo"
+                                                               onclick="this.select();"
+                                                               ng-blur="cargarConceptoPorCodigoBarra(itemVenta);"
+                                                               ng-enter="cargarConceptoPorCodigoBarra(itemVenta); focusDespuesCodigo()"
+                                                               style="border-color:forestgreen;"
+                                                               placeholder="Codigo" />
+                                                    </td>
+                                                    <td>{{itemVenta.Concepto}}</td>
+                                                    <td class="col-md-1 number numero-derecha" ng-if="!permitirIngresarCantidad">{{itemVenta.Cantidad|number:numeroDecimalesEnCantidad}}</td>
+                                                    <td class="col-md-1" ng-if="permitirIngresarCantidad">
+                                                        <input class="form-control numero-derecha"
+                                                               id="cantidad"
+                                                               @*type="number"*@
+                                                               ng-model="itemVenta.Cantidad"
+                                                               ng-change="calcularValoresDetalle(1, itemVenta);"
+                                                               ng-blur="itemVenta.Cantidad = formatNumber(itemVenta.Cantidad,numeroDecimalesEnCantidad); itemVenta.PrecioUnitario = formatNumber(itemVenta.PrecioUnitario, numeroDecimalesEnPrecio); itemVenta.Importe = formatNumber(itemVenta.Importe,2);"
+                                                               ng-enter="focusDespuesCantidad();"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$"
+                                                               onClick="select();"
+                                                               style="border-color:forestgreen;"
+                                                               placeholder="Cantidad" />
+                                                        @*lang="en-IN"*@
+                                                    </td>
+                                                    <td class="col-md-1 number numero-derecha" ng-if="!permitirIngresarPrecioUnitario">{{itemVenta.PrecioUnitario|number:numeroDecimalesEnPrecio}}</td>
+                                                    <td class="col-md-1" ng-if="permitirIngresarPrecioUnitario">
+                                                        <input class="form-control numero-derecha"
+                                                               id="precioUnitario"
+                                                               ng-model="itemVenta.PrecioUnitario"
+                                                               ng-change="calcularValoresDetalle(2, itemVenta);"
+                                                               ng-blur="itemVenta.Cantidad = formatNumber(itemVenta.Cantidad,numeroDecimalesEnCantidad); itemVenta.PrecioUnitario = formatNumber(itemVenta.PrecioUnitario,numeroDecimalesEnPrecio); itemVenta.Importe = formatNumber(itemVenta.Importe,2);"
+                                                               ng-enter="focusDespuesPrecioUnitario();"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnPrecio}}})?)?$"
+                                                               onClick="select();" 
+                                                               style="border-color:forestgreen;"
+                                                               placeholder="Precio" />
+                                                    </td>
+                                                    <td class="numero-derecha" ng-if="!permitirIngresarImporte">{{(itemVenta.Importe)|number:2 }}</td>
+                                                    <td ng-if="permitirIngresarImporte">
+                                                        <input class="form-control numero-derecha"
+                                                               id="importe"
+                                                               ng-model="itemVenta.Importe"
+                                                               ng-change="calcularValoresDetalle(3, itemVenta);"
+                                                               ng-blur="itemVenta.Cantidad = formatNumber(itemVenta.Cantidad,numeroDecimalesEnCantidad); itemVenta.PrecioUnitario = formatNumber(itemVenta.PrecioUnitario,numeroDecimalesEnPrecio); itemVenta.Importe = formatNumber(itemVenta.Importe,2);"
+                                                               ng-enter="focusDespuesImporte();"
+                                                              ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                                                               onClick="select();" 
+                                                               style="border-color:forestgreen;"
+                                                               placeholder="Importe" />
+                                                    </td>
+
+                                                    <td>
+                                                        <a class="btn btn-success btn-sm"
+                                                           ng-click="agregarItemVenta()"
+                                                           ng-disabled="!itemVenta.Concepto||(itemVenta.Cantidad<0)||(itemVenta.PrecioUnitario<0)||(itemVenta.Importe<0)">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3"></td>
+                                                    <td colspan="2"><label> IMPORTE TOTAL </label></td>
+                                                    <td><label class="numero-derecha">{{importeTotal|number:2}}</label></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody ng-hide="ventaMasiva.Detalles.length>0">
+                                                <tr>
+                                                    <td colspan="8" style="color:#bb1f1f">No existe ningun registro de venta</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box box-danger ng-cloak" ng-show="hayinconsistencias" style="margin-top:15px">
+                            <div class="box-body">
+                                <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                <table>
+                                    <tr ng-repeat="item in inconsistencias">
+                                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <a title="GUARDAR VENTA MASIVA" class="btn btn-primary btn-md" ng-disabled="datosRequeridosParaRealizarVentaMasiva()" ng-click="verificarInconsistenciasYGuardar()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

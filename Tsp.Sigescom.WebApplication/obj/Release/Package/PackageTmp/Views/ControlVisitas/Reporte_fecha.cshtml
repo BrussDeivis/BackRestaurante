@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Consulta por fecha";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/controlVisitas/consultaFechaCtrl.js")></script>
+}
+<div ng-controller="consultaFechaCtrl">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">CONSULTA POR FECHA</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sx-12 col-sm-6 col-md-3">
+                            <label for="dateStart" class="col-sm-12 ">Fecha Inicial</label>
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStart" ng-model="FechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sx-12 col-sm-6 col-md-3">
+                            <label for="dateEnd" class="col-sm-12 ">Fecha Final</label>
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd" ng-model="FechaFinal" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end " />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a title="CONSULTAR" class="btn btn-social btn-primary btn-flat" ng-click="buscar(FechaInicio,FechaFinal)"><span class="glyphicon glyphicon-search"></span>CONSULTAR</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table id="tabla" datatable="ng" dt-options="dtOptions" dt-column-defs="persona.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Apellido y Nombre</th>
+                                        <th>Dni</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in persona.lista" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td class="left">{{item.ApellidosNombre}}</td>
+                                        <td class="left">{{item.Dni}}</td>
+                                        <td class="left">{{item.Fecha}}</td>
+                                        <td class="left">{{item.Hora}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

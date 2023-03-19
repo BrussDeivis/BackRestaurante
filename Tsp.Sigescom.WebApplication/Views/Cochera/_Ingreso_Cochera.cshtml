@@ -1,0 +1,31 @@
+﻿<div id="ingresoCochera">
+    <div class="col-md-12">
+        <div class="panel panel-success" style="margin-top: 0px">
+            <div class="panel-heading">
+                <label for="PlacaIngreso">REGISTRAR INGRESO</label>
+            </div>
+            <ng-form name="ingresoForm" novalidate class="css-form">
+                <div class="panel-body no-padding">
+                    <selector-vehiculo vehiculo="ingreso.Vehiculo" vchanged="activarRegistro()" esta-registrando="estaRegistrandoVehiculo" evict-form></selector-vehiculo>
+                    <div ng-if="estaRegistrandoIngreso && !estaRegistrandoVehiculo">
+                        <div class="group-model col-md-12 no-padding">
+                            <label class="col-md-2">TARIFA</label>
+                            <div class="radio radio-primary radio-inline " ng-repeat="item in listaDeSistemaDePagoCochera">
+                                <input type="radio" id="radio-{{item.Id}}" name="radio-tarifa" ng-model="ingreso.SistemaDePago" ng-value="item">
+                                <label for="radio-{{item.Id}}">{{item.Nombre}}</label>
+                            </div>
+                        </div>
+                        <selector-actor-comercial actor-comercial="ingreso.cliente" rol="rolCliente" changed="cambioCliente(actorComercial)" api="selectorActorComercialAPI" minimo-caracteres-buscar-actor-comercial="MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="TiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="MascaraDeVisualizacionValidacionRegistroCliente"></selector-actor-comercial>
+                        <div class="col-md-12 col-xs-12 group-model">
+                            <textarea class="col-md-12 col-xs-12 input-model textarea-model" id="ObservacionIngreso" ng-model="ingreso.Observacion" row="1" placeholder="OBSERVACIÓN"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="estaRegistrandoIngreso && !estaRegistrandoVehiculo" class="panel-footer">
+                    <button type="button" ng-disabled="!ingresoForm.$valid" class="btn btn-flat btn-primary" ng-click="registrarIngreso()"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                    <button type="reset" title="Cancelar el registro" class="btn btn-danger btn-flat" style="margin-left:10px;" ng-click="cancelarRegistrarIngreso(ingresoForm)"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+                </div>
+            </ng-form>
+        </div>
+    </div>
+</div>

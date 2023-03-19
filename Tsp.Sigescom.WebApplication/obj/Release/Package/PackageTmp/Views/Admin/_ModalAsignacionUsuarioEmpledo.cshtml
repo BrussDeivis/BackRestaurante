@@ -1,0 +1,68 @@
+﻿<div id="modal-asignacion-usuario-empleado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ASIGNACIÓN USUARIO - EMPLEADO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="asignacionUsuarioEmpleadoForm">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="usuario">USUARIO:</label>
+                                <input class="form-control" id="usuario" ng-value="usuarioEmail" ng-disabled="true" />
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="empleado">EMPLEADO:</label>
+                                <select id="empleado" class="select2 form-control" ng-model="usuariosEmpleado" ng-options="item as item.Nombre for item in listaEmpleadosConIdUsuario track by item.Id" @*track by item.Id*@ multiple="multiple"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="divListaDeEmpleadosRegistrado">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Los siguientes empleados ya tienen una cuenta de usuario: </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="alert alert-danger">
+                                        <ul id="padre"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="asignacionUsuarioEmpleadoForm.$invalid" ng-click="preguntarSiDeseaReasignarUsuario()" @*asignarUsuarioEmpleado*@ class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a id="reasignarUsuario" class="hidden" @*btn btn-flat btn-primary pull-left*@ data-toggle="modal" data-target="#modal-reasignar-usuario"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar()" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+
+            <!-- MODAL REASIGNAR USUARIO -->
+            <div id="modal-reasignar-usuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">&times;</a>
+                            <h4 class="modal-title"> Reasignar Usuario</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p> Esta seguro de reasignar usuario?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-info" data-dismiss="modal" ng-click="asignarUsuarioEmpleado()">Aceptar</a>
+                            <a class="btn btn-danger" data-dismiss="modal">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

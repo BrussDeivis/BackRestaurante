@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Exoneraciones - Cochera";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/cochera/exoneracionesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/cochera/selectorVehiculo/selectorVehiculo.js")></script>
+
+}
+
+
+<div class="col-md-12" id="modelo" ng-controller="exoneracionesCocheraController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">EXONERACIONES - COCHERA</div>
+            </div>
+        </div>
+        <div class="row form-group col-md-12">
+            <label class="col-md-2">Selección de Cochera</label>
+            <div id="exoneraciones" class="radio radio-primary radio-inline" ng-repeat="item in cocheras">
+                <input name="item_" type="radio" id="radio-{{item.Id}}" ng-model="$parent.cocheraSeleccionada" ng-value="item" ng-checked="cocheraSeleccionada.Id==item.Id">
+                <label for="radio-{{item.Id}}">{{item.Nombre}}</label>
+            </div>
+        </div>
+    </div>
+
+    @*Exoneración*@
+    <div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading titulo texto-centrado">
+                <div>NUEVA EXONERACIÓN</div>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <selector-vehiculo class="pull-left" vehiculo="vehiculoAExonerar"></selector-vehiculo>
+                    <div id="cliente" class="pull-left" style="margin-top:2px">
+                        <a title="Exonerar vehículo de cualquier pago en esta cochera" class="btn btn-md btn-primary" style="margin-right:5px" data-toggle="modal" ng-click="exonerar()"><span class="glyphicon glyphicon-plus"></span> EXONERAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @* Bandeja de COCHERA *@
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button title="CONSULTAR EXONERACIONES"  class="btn btn-md btn-primary" ng-click="listarExoneraciones()"><span class="glyphicon glyphicon-search"></span></button>
+                        <button title="DESCARGAR EN FORMATO EXCEL"  ng-click="export('tabla-exoneraciones-cochera')" class="btn btn-md btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <table id="tabla-exoneraciones-cochera" datatable="ng" dt-options="dtOptions" dt-column-defs="exoneraciones.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>PLACA</th>
+                            <th>VEHICULO</th>
+                            <th>DESDE</th>
+                            <th>HASTA</th>
+                            <th>VIGENTE</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in exoneraciones" ng-cloak>
+                            <td>{{item.Vehiculo.Placa}}</td>
+                            <td>{{item.Vehiculo.NombreCompleto}}</td>
+                            <td>{{item.DesdeString}}</td>
+                            <td>{{item.HastaString}}</td>
+                            <td>
+                                {{item.Vigente?"SI":"NO"}}
+                                @*<input type="checkbox" disabled ng-model="item.Vigente" />*@
+                            </td>
+
+
+                            <td>
+                                <a title="Retirar exoneración" ng-if="item.Vigente" class="btn btn-danger btn-xs" data-toggle="modal" ng-click="retirarExoneracion(item)"><span class="glyphicon glyphicon-remove"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Consulta por fecha";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/controlVisitas/consultaRucCtrl.js")></script>
+}
+<div ng-controller="consultaRucCtrl">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">CONSULTA RUC</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table id="tabla" datatable="ng" dt-options="dtOptions" dt-column-defs="ruc.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Razon Social</th>
+                                        <th>Ruc</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ruc.lista" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td class="left">{{item.RazonSocial}}</td>
+                                        <td class="left">{{item.Ruc}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

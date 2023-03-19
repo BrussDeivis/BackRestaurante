@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Emision de Comprobantes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/facturacionElectronica/emisionComprobantesController.js")></script>
+    <script>
+        var Desde = '@ViewBag.fechaDesde';
+        var Hasta = '@ViewBag.fechaHasta';
+        
+    </script>
+}
+
+<div class="col-md-12" ng-controller="emisionComprobantesController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">DOCUMENTOS EMITIDOS</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label for="dateStart" class="col-sm-12">Fecha Inicial</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateStar" ng-model="bandeja.FechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label for="dateEnd" class="col-sm-12">Fecha Final</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateEnd" ng-model="bandeja.FechaFinal" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <button title="Consultar" style="margin-top:25px" class="btn btn-primary btn-md" ng-click="listarBandeja(bandeja.FechaInicio,bandeja.FechaFinal)"><span class="glyphicon glyphicon-search"></span></button>
+
+                    <button title="Descargar" style="margin-top:25px; margin-left:20px" ng-click="export('tabla-comprobantesEmitidos')" class="btn btn-primary btn-md"><span class="fa fa-file-excel-o"></span></button>
+
+                    <button title="Transmitir a facturacion electronica" style="margin-top:25px; margin-left:20px" class="btn btn-primary btn-md" ng-click="transmitirAFacturacionElectronica()">TRANSMITIR</button>
+
+                    <button title="Enviar los documentos a SUNAT" style="margin-top:25px; margin-left:25px" class="btn btn-primary btn-md" ng-click="enviarDocumentos()">ENVIAR</button>
+
+                    @if (User.IsInRole("AdministradorTI"))
+                    {
+                        <button title="Regenerar json de los comprobantes que estan en la bandeja" style="margin-top:25px; margin-left:25px" class="btn btn-warning btn-md" ng-click="regenerarJsonBandeja()">REGENERACION DE JSON</button>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="margin-top:10px;">
+            <table id="tabla-comprobantesEmitidos" datatable="ng" dt-options="dtOptions" dt-column-defs="comprobantesEmitidos.dtColumnDefs" class="row-border hover table table-stripped table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fec. Emision</th>
+                        <th>Tipo Doc.</th>
+                        <th>Serie Doc.</th>
+                        <th>Num Doc.</th>
+                        <th>Estado</th>
+                        <th>Estado Sigescom</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ComprobantesEmitidos.Lista" ng-cloak>
+                        <td>{{item.Id}}</td>
+                        <td>{{item.FechaEmision}}</td>
+                        <td>{{item.TipoDocumento}}</td>
+                        <td>{{item.SerieDocumento}}</td>
+                        <td>{{item.NumeroDocumento}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td>{{item.EstadoSigescom}}</td>
+                        <td class="col-md-1">
+                            <a href="@Url.Action("DescargarDocumentoPdfA4", "Comprobante")?idOperacion={{item.IdOperacion}}" title="Descargar Documento" class="btn btn-primary btn-xs"><span class="fa fa-file-pdf-o"></span></a>
+                            <a href="@Url.Action("DescargarDocumentoXml", "Comprobante")?idOperacion={{item.IdOperacion}}" title="Descargar XML del documento" class="btn btn-info btn-xs"><span class="fa fa-file-code-o"></span></a>
+                            <a href="@Url.Action("ObtenerArchivoDocumento", "FacturacionElectronica")?idDocumento={{item.IdBinarioDocumento}}&nombreArchivo={{item.TipoDocumento + '-' + item.SerieDocumento + '-' + item.NumeroDocumento}}" title="Descargar JSON del documento" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span></a>
+                            @if (User.IsInRole("AdministradorTI"))
+                            {
+                                <a title="Regenerar Json" class="btn btn-warning btn-xs btn-flat" ng-click="regenerarJson(item)"><span class="glyphicon glyphicon-repeat"></span></a>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+    @*<div id="modal-registro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">REGISTRAR VENTA</h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Partial("_RegistroVentaPartial")
+                    </div>
+                    <div class="modal-footer">
+                        <a title="GUARDAR VENTA" class="btn btn-info btn-sm" ng-disabled="registroVenta.$invalid || venta.Detalles.length<1" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR VENTA</a>
+                        <a title="Cerrar" ng-click="close()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroNotas")
+        @Html.Partial("../Genericos/_ModalAdvertenciaPartial")*@
+</div>

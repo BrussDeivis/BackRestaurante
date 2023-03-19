@@ -1,0 +1,108 @@
+﻿<div id="modal-anular-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">ANULACION DE DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="anulacionDocumentoForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Cliente</label>
+                                            <label class="form-control">{{anulacion.Cliente}}</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="documento">Documento</label>
+                                            <select class="select2 form-control tipoDocumento" ng-model="anulacion.TipoDeComprobante" ng-change="cargarSeries(anulacion.TipoDeComprobante)" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantes  track by item.TipoComprobante.Id" required></select>
+                                        </div>
+                                        <div class="form-group" ng-show=" anulacion.TipoDeComprobante.MostrarSelectorSerie && anulacion.TipoDeComprobante.EsPropio">
+                                            <label class="col-md-12" for="serie">Serie</label>
+                                            <div class="radio radio-primary radio-inline col-md-3" ng-init="anulacion.TipoDeComprobante.SerieSeleccionada=series[0].Id" ng-repeat="item in series">
+                                                <input type="radio" id="radio-{{$index}}" ng-model="anulacion.TipoDeComprobante.SerieSeleccionada" value="{{item.Id}}" ng-checked="anulacion.TipoDeComprobante.SerieSeleccionada==item.Id">
+                                                <label for="radio-{{$index}}">{{item.Nombre}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-show="anulacion.TipoDeComprobante.MostrarEntradaSerie">
+                                            <label>Serie</label>
+                                            <input class="form-control" uppercase-only ng-model="anulacion.TipoDeComprobante.SerieIngresada" ng-blur="" ng-pattern="/^[a-zA-Z0-9][0-9]{0,3}$/" maxlength="4" ng-minlength="3" required />
+                                        </div>
+                                        <div class="form-group" ng-show="anulacion.TipoDeComprobante.MostrarEntradaNumero">
+                                            <label>N° Documento</label>
+                                            <input class="form-control" ng-model="anulacion.TipoDeComprobante.NumeroIngresado" ng-blur="" maxlength="8" ng-pattern="/^[0-9]\d{0,7}$/" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Observación</label>
+                                            <textarea class="form-control" rows="3" ng-model="anulacion.Observacion" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12" ng-init="mediopago=true">Medio de pago:</label>
+                                            <div class="radio radio-primary radio-inline col-md-3" ng-repeat="item in mediosDePago">
+                                                <input type="radio" id="radio-{{item.Id}}" ng-disabled="mediopago" ng-model="anulacion.IdMedioDePago" value="{{item.Id}}" ng-checked="anulacion.IdMedioDePago==item.Id">
+                                                <label for="radio-{{item.Id}}">{{item.Nombre}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title text-center">Detalles</h3>
+                                </div>
+                                <div class="box-body">
+                                    <table id="tabla-ver-compras" class="table table-stripped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Concepto</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Igv</th>
+                                                <th>Descuento</th>
+                                                <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in anulacion.Detalles" ng-cloak>
+                                                <td>{{$index+1}}</td>
+                                                <td>{{item.Concepto}}</td>
+                                                <td>{{item.Cantidad}}</td>
+                                                <td class="money">{{"S/. "+item.Precio}}</td>
+                                                <td class="money">{{"S/. "+item.Igv}}</td>
+                                                <td class="money">{{"S/. "+item.Descuento}}</td>
+                                                <td class="money">{{"S/. "+item.Importe}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <label class="col-md-6">Sub Total : </label>
+                                            <label class="col-md-6">{{anulacion.SubTotal}}</label>
+                                        </div>
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <label class="col-md-6">Total Igv : </label>
+                                            <label class="col-md-6">{{anulacion.Igv}}</label>
+                                        </div>
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <label class="col-md-6">Importe Total : </label>
+                                            <label class="col-md-6">{{anulacion.Total}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="anular()" ng-disabled="!anulacion.Observacion" title="Guardar" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button ng-click="cerrar()" data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

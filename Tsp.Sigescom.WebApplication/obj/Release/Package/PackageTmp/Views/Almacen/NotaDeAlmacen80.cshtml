@@ -1,0 +1,236 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.ComprobantesModel.NotaDeAlmacen
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <style>
+
+        .texto {
+            font-size: 3.1mm !important;
+        }
+
+        .texto3mm {
+            font-size: 2.7mm;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .sinespacios {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .titulo .centrado .importe .texto {
+            font-family: MS Gothic;
+            font-weight: lighter;
+        }
+
+        .lineaHorizontal {
+            margin: 0;
+        }
+
+        .resaltado {
+            font-weight: bold;
+        }
+
+        .resaltado5mm {
+            font-weight: bold;
+            font-size: 4.5mm !important;
+        }
+
+        .resaltado6mm {
+            font-weight: bold;
+            font-size: 5.4mm !important;
+        }
+
+        .sinResaltado {
+            font-size: 3.1mm !important;
+            font-weight: normal !important;
+        }
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        th, td {
+            padding-left: 1mm;
+            padding-right: 1mm;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+
+
+        body.receipt .sheet {
+            width: 70.5mm;
+            height: auto;
+        }
+        /*  sheet size */
+        @@page {
+            size: 70.5mm auto;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 70.5mm;
+                height: auto;
+            }
+        }
+        /* fix for Chro */
+    </style>
+
+
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="texto">
+            <div class="@(@Model.EsInvalidada ? "contenedor-comprobante" : "")">
+                @* Datos Emisor *@
+                @if (Model.MostrarTestigo)
+                {
+                    <div class="centrado">
+                        <div class="titulo">@(Model.Serie + "-" + Model.Numero)</div>
+                    </div>
+                }
+                @* Datos Emisor *@
+                @if (Model.MostrarLogo)
+                {
+                    <div class="centrado">
+                        <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Alternate Text" />
+                    </div>
+                }
+                <div class="centrado">
+                    <div class="titulo">@Model.Emisor.NombreComercial </div>
+                    <div class="texto3mm">
+                        <div>@Model.Emisor.RazonSocial</div>
+                        <div>RUC: @Model.Emisor.NumeroDocumentoIdentidad</div>
+                        <div>@Model.Emisor.Direccion</div>
+                        @if (Model.Emisor.EsSucursal)
+                        {
+                            <div class="negrita">SUC: @Model.Emisor.NombreSucursal</div>
+                            <div>@Model.Emisor.DireccionSucursal</div>
+                        }
+                        <div>@Model.Emisor.OtrosDatosContacto</div>
+                        <div>@Model.Emisor.Publicidad</div>
+                    </div>
+                </div>
+                @* Comprobante *@
+                <div class="centrado">
+                    <div class="texto3mm">@Model.NombreTipo </div>
+                    <div>@(Model.Serie + "-" + Model.Numero)</div>
+                    <div>Emisión: @Model.FechaEmision.ToString("dd/MM/yyyy hh:mm tt")</div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Receptor *@
+                <div>
+                    @if (Model.EsTrasladoInterno)
+                    {
+                        <div class="sinResaltado"><span>Origen:</span> @Model.Origen.RazonSocial </div>
+                        <div class="sinResaltado"><span>Responsable:</span> @Model.ResponsableOrigen.RazonSocial </div>
+                        <hr class="lineaHorizontal">
+                        <div class="sinResaltado"><span>Destino:</span> @Model.Receptor.RazonSocial </div>
+                        <div class="sinResaltado"><span>Responsable:</span> @Model.ResponsableReceptor.RazonSocial </div>
+                    }
+                    else
+                    {
+                        <div class="resaltado"><span class="sinResaltado"></span> @Model.Receptor.RazonSocial </div>
+                        <div class="resaltado"><span class="sinResaltado">@Model.Receptor.TipoDocumentoIdentidad: </span> @Model.Receptor.DocumentoIdentidad </div>
+                        <div>@(Model.Receptor.Direccion)</div>
+                    }
+                </div>
+                <hr class="lineaHorizontal">
+                @* Detalles *@
+                <div width="100%">
+                    <table width="100%">
+                        <tr>
+                            <th>Cant.</th>
+                            <th>Concepto</th>
+                        </tr>
+                        @foreach (var item in Model.Detalles)
+                        {
+                            <tr width="100%">
+                                <td width="20%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnCantidad + "}", item.Cantidad)</td>
+                                <td width="80%"> @item.Concepto</td>
+                            </tr>
+                            <tr width="100%">
+                                <td style=" width:100%" colspan=4>
+                                    <table width="100%" cellpadding="0" style="margin:0">
+                                        @for (int i = 0; i < item.CaracteristicasComunes.Count; i++)
+                                        {
+                                            <tr width="100%" class="sinmargen">
+                                                <td width="20%"></td>
+                                                <td style=" width:80%">@(item.CaracteristicasComunes[i].NombreCaracteristica + " " + item.CaracteristicasComunes[i].Valor) </td>
+                                            </tr>
+                                        }
+                                        @for (int i = 0; i < item.CaracteristicasPropias.Count; i++)
+                                        {
+                                            <tr width="100%" class="sinmargen">
+                                                <td width="20%"></td>
+                                                <td style=" width:80%">@(item.CaracteristicasPropias[i].Nombre + " " + item.CaracteristicasPropias[i].Valor )</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Mensajes *@
+                <div class="centrado">
+                    <div>Comprobante temporal, no válido para fines tributarios</div>
+                    @if (Model.MostrarMensajeNegocio)
+                    {
+                        <div>@Model.MensajeNegocio</div>
+                    }
+                </div>
+                @if (Model.EsInvalidada)
+                {
+                    <div class="marca-agua">
+                        <p class="texto-marca-agua">INVALIDADO</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</body>
+</html>

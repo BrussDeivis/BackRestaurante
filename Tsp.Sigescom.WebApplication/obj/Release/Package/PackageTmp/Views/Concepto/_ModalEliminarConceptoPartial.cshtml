@@ -1,0 +1,18 @@
+﻿        <!-- PREGUNTA ELIMINAR MERCADERIA -->
+<div id="pregunta-eliminar" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title center"> DAR DE BAJA MERCADERIA</h4>
+            </div>
+            <div class="modal-body">
+                <p> Dará de baja a "{{mercaderia.Nombre}}" ?</p>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info btn-flat pull-left" data-dismiss="modal" ng-click="eliminarMercaderia(mercaderia.Id)"><span class="glyphicon glyphicon-check"></span> CONFIRMAR</button>
+                <button class="btn btn-danger btn-flat" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>

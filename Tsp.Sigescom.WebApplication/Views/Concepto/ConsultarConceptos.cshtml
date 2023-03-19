@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Mantenimiento de conceptos";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/producto/consultarMercaderiaController.js")></script>
+    @*<script src=@Url.Content("~/Scripts/controller/producto/mercaderiaController.js")></script>*@
+    <script src=@Url.Content("~/Scripts/controller/concepto/conceptoController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/caracteristica/caracteristica_Controller.js")></script>
+
+
+    <script src=@Url.Content("~/Scripts/code39/jquery-barcode.min.js")></script>
+    <script>
+        var idUnidadDeMedidaSubUnidad =@ViewBag.IdUnidadDeMedidaSubUnidad;
+        var idPresentacionPorDefecto = @ViewBag.IdPresentacionPorDefecto;
+        var idUnidadMedidaPorDefecto = @ViewBag.IdUnidadMedidaPorDefecto;
+        var valorPrecioVentaPorDefectoQueNoSeDebeGuardar = @ViewBag.ValorPrecioVentaPorDefectoQueNoSeDebeGuardar;
+        var idPresentacionAOcultarEnNombreConceptoNegocio = @ViewBag.IdPresentacionAOcultarEnNombreConceptoNegocio;
+        var idUnidadDeMedidaComercialAOcultarEnNombreConceptoNegocio = @ViewBag.IdUnidadDeMedidaComercialAOcultarEnNombreConceptoNegocio;
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+        var modoDeSeleccionTipoFamiliaEnRegistroFamilia = @ViewBag.modoDeSeleccionTipoFamiliaEnRegistroFamilia;
+        var mostrarCampoCodigoAlRegistrarConcepto = @ViewBag.mostrarCampoCodigoAlRegistrarConcepto.ToString().ToLower();
+        var mostrarCampoCodigoDigemidAlRegistrarConcepto = @ViewBag.mostrarCampoCodigoDigemidAlRegistrarConcepto.ToString().ToLower();
+        var modulosAdicionales = @(Html.Raw(Json.Encode(@ViewBag.modulosAdicionales)));
+    </script>
+}
+<div class="col-xs-12" id="modelo-mercaderia" ng-controller="consultarMercaderiaController" ng-init="inicializarRegistroMercaderia()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette"> CONCEPTOS </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    @Html.Partial("_SeleccionConceptoBasicoCaracteristicaPartial")
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button title="Consultar" class="btn btn-primary btn-info" ng-click="obtenerConceptosNegociosComerciales()">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-mercaderia" datatable="ng" dt-options="dtOptions" dt-column-defs="productos.dtColumnDefs" class="table table-bordered table-striped dataTable ng-cloak">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th ng-show="mostrarCampoCodigoAlRegistrarConcepto">CÓDIGO</th>
+                                        <th>CÓDIGO BARRA</th>
+                                        <th>CONCEPTO</th>
+                                        <th>PRESENTACIÓN</th>
+                                        <th>U.M.</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in mercaderias.Lista">
+                                        <td>{{$index+1}}</td>
+                                        <td style="text-align:left" ng-show="mostrarCampoCodigoAlRegistrarConcepto">{{item.Codigo}}</td>
+                                        <td style="text-align:left">{{item.CodigoBarra}}</td>
+                                        <td style="text-align:left">{{item.Nombre}}</td>
+                                        <td style="text-align:left">{{item.Presentacion}}</td>
+                                        <td style="text-align:left">{{item.CodigoUnidadMedidaComercial}}</td>
+                                        <td>
+                                            @*<a title="Codigo de Barra" class="btn btn-primary btn-xs btn-flat" data-toggle="modal" data-target="#modal-codigo-barra" ng-click="verCodigoBarra(item.CodigoBarra)"><span class="glyphicon glyphicon-barcode"></span></a>*@
+                                            <a title="Editar Producto" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-mercaderia" ng-click="editarProducto(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <button title="Dar de bajar mercaderia" class="btn btn-danger btn-xs btn-flat" data-toggle="modal" data-target="#pregunta-eliminar" ng-click="cargarMercaderia(item)"><span class="glyphicon glyphicon-trash"></span></button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalCodigoBarraPartial")
+    @Html.Partial("_ModalEliminarConceptoPartial")
+    @Html.Partial("_ModalRegistroConcepto")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>
+

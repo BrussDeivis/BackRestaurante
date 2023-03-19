@@ -1,0 +1,96 @@
+﻿
+<div id="modal-nuevo-complemento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">NUEVO COMPLEMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="caracteristicaForm">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <div class="panel panel-primary shadow">
+                                <div class="panel-heading">DATOS GENERALES: </div>
+                                <div class="panel-body">
+                                   
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 ">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre: </label>
+                                                    <input class="form-control" id="nombre" uppercase-only ng-model="complemento.Nombre" placeholder="Nombre" required />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="descripcion">Descripción: </label>
+                                                    <textarea id="descripcion" ng-model="complemento.Descripcion" uppercase-only class="form-control" placeholder="Descripcion" required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="panel panel-primary shadow">
+                                <div class="panel-heading">VALORES COMPLEMENTO: </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-md-9">
+                                                    <label for="valor">Valor: </label>
+                                                    <input id="valor" class="form-control" placeholder="Valor" uppercase-only ng-model="valorComplemento.Nombre" />
+                                                </div>
+                                                <a class="btn btn-info btn-sm mt-20" ng-disabled="!valorComplemento.Nombre" ng-click="agregarValorComplemento()"><span class="glyphicon glyphicon-plus"></span></a>
+                                            </div>
+                                        </div>
+                                        <!--Mensaje de confirmacion-->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-md-12" id="container-msg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <br />
+                                            <br />
+                                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered  table-bordered  table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>Valor</th>
+                                                        <th class="noExport not-search">Op.</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in complemento.Valores">
+                                                        <td class="col-md-1">{{$index+1}}</td>
+                                                        <td class="col-md-10"><span class="width-nowrap" title="{{item.Nombre}}">{{item.Nombre}}</span></td>
+                                                        <td class="col-md-1"><a class="btn btn-danger btn-xs" ng-click="eliminarValor(item)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="complementoForm.$invalid" ng-click="guardarComplemento(complemento)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR COMPLEMENTO</a>
+                <a data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

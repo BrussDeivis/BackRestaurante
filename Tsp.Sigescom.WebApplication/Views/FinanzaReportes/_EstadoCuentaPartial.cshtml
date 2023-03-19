@@ -1,0 +1,58 @@
+﻿@*ESTADO DE CUENTA*@
+<div ng-show="reporteador.SeccionSeleccionada=='seccion4'">
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Desde </label>
+                            <div>
+                                @*<input id="Tesoreria_ingresos_fechadesde" ng-model="reporteador.Tesoreria.FechaDesde" ng-change="Tesoreria_actualizarURLs()" class="form-control datetimepicker" />*@
+                                <input type="text" datetime="dd/MM/yyyy" ng-model="reporteador.EstadoCuenta.FechaDesde" ng-change="EstadoCuenta_actualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Hasta </label>
+                            <div>
+                                @*<input id="Tesoreria_ingresos_fechahasta" ng-model="reporteador.Tesoreria.FechaHasta" ng-change="Tesoreria_actualizarURLs()" class="form-control datetimepicker" />*@
+                                <input type="text" datetime="dd/MM/yyyy" ng-model="reporteador.EstadoCuenta.FechaHasta" ng-change="EstadoCuenta_actualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Estado Cuenta por Cliente</h3>
+        </div>
+        <div class="box-body">
+            <div class="row ">
+                <div class="col-md-3 " id="input-cliente-estado-cuenta-cliente">
+                    <div class="form-group">
+                        <label for="punto1" class="title-report">Cliente</label>
+                        <select class="select2 form-control" ng-model="reporteador.EstadoCuenta.EstadoCuentaPorCliente.ClienteSeleccionado" ng-options="item as item.Nombre for item in clientes track by item.Id" required ng-change="EstadoCuenta_ClienteEstadoCuentaPorCliente()"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Estado Cuenta por Cliente" class="btn btn-primary btn-flat" ng-disabled="!reporteador.EstadoCuenta.EstadoCuentaPorCliente.ActivarBotonVer" ng-href="{{URLEstadoCuenta_EstadoCuentaPorCliente}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

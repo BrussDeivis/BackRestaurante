@@ -1,0 +1,277 @@
+﻿@{
+    ViewBag.Title = "Configuracion de Facturacion Electronica";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/facturacionElectronica/configuracionController.js")></script>
+}
+<div class="col-md-12" ng-controller="configuracionController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CONFIGURACION DE FACTURACION ELECTRONICA</div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-10 form-horizontal">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">REGISTRO DE LOS DATOS DE LA EMPRESA :</h3>
+                </div>
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-md-5" for="claveCerticado">ID DE REGISTRO DE LA EMPRESA:</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control " id="idRegistro" ng-model="configuracion.idRegistro" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5" for="directorioArchivos">SELECCIONAR CERTIFICADO DIGITAL: </label>
+                            <div class="col-md-5 ">
+                                <input id="imagenArt" type="file" class="form-control" name="imagenArt" autofocus="">
+                                <input id="txtRutaImgArt" type="text" class="form-control" name="txtRutaImgArt" autofocus="" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5" for="directorioArchivos">CLAVE DE CERTIFICADO: </label>
+                            <div class="col-md-5">
+                                <input type="password" class="form-control " id="claveCertificado" ng-model="configuracion.claveCertificado" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5" for="claveCerticado">USUARIO SOL:</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control " id="usuarioSol" ng-model="configuracion.usuarioSol" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5" for="claveCerticado">CLAVE SOL:</label>
+                            <div class="col-md-5">
+                                <input type="password" class="form-control " id="claveSol" ng-model="configuracion.claveSol" required />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">MODO DE OPERACION :</h3>
+                </div>
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-1"> </div>
+                            <div class="col-md-5">
+                                <div class="radio radio-primary radio-inline">
+                                    <input type="radio" value="1" name="modoOperacion" id="manual" ng-checked="1" ng-model="radio" ng-change="deshabilitarCampos(radio)" />
+                                    <label for="ingresocoutas">MANUAL</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="radio radio-primary radio-inline">
+                                    <input type="radio" value="2" name="modoOperacion" style="position:center" id="automatico" ng-model="radio" ng-change="deshabilitarCampos(radio)" />
+                                    <label for="generadocuotas">AUTOMATICO</label>
+                                </div>
+                            </div>
+                            <div class="col-md-1"> </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box box-primary" >
+                <div class="box-header with-border">
+                    <h3 class="box-title">PROGRAMACION DE ENVIO INDIVIDUAL DE DOCUMENTOS :</h3>
+                </div>
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label>DIAS DE ENVIO INDIVIDUAL: </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <select class="select2 form-control" id="diaIndividual" ng-model="configuracion.DiaIndividual" ng-change="cargarDiasIndividual()" ng-options="item as item.Nombre for item in diasSemama track by item.Id" multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="intervalo">INTERVALO DE ENVIO: </label>
+                            </div>
+                            <div class="col-md-1 ">
+                                <label for="A" style="position:absolute">Desde:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <label for="duracion" style="position:absolute">Duracion:</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control number" id="duracionIndividual" ng-model="configuracion.duracionIndividual" required />
+                            </div>
+                            <div class="col-md-1 ">
+                                <label for="Min" style="position:absolute">Min.</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box box-primary" >
+                <div class="box-header with-border">
+                    <h3 class="box-title">PROGRAMACION DE ENVIO RESUMEN DE DOCUMENTOS :</h3>
+                </div>
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="frecuencia">DIAS DE ENVIO RESUMEN:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <select class="select2 form-control" id="diaResumen" ng-model="configuracion.DiaResumen" ng-change="cargarDiasResumen()" ng-options="item as item.Nombre for item in diasSemama track by item.Id" multiple="multiple"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="intervalo">INTERVALO DE ENVIO: </label>
+                            </div>
+                            <div class="col-md-1 ">
+                                <label for="A" style="position:absolute">Desde:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaResumen" class="form-control timepickerResumen">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <label for="duracion" style="position:absolute">Duracion:</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control number" id="duracionResumen" ng-model="configuracion.duracionResumen" required />
+                            </div>
+                            <div class="col-md-1 ">
+                                <label for="Min" style="position:absolute">Min.</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12" style="margin-top:20px;">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <a title="GUARDAR CONFIGURACION" class="btn btn-primary " ng-click="listarBandeja(bandeja.FechaInicio,bandeja.FechaFinal)">GUARDAR CONFIGURACION</a>
+                </div>
+                <div class="col-md-2">
+                    <a title="CANCELAR" class="btn btn-danger " ng-click="listarBandeja(bandeja.FechaInicio,bandeja.FechaFinal)">CANCELAR</a>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-offset-1 col-md-4 form-group">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" value="1" name="financiamiento" id="ingresocoutas" ng-checked="1" ng-model="radio" ng-change="deshabilitarCampos(radio)" />
+                            <label for="ingresocoutas">INGRESOS DE CUOTAS</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" value="2" name="financiamiento" id="generadocuotas" ng-model="radio" ng-change="deshabilitarCampos(radio)" />
+                            <label for="generadocuotas">GENERADOR DE CUOTAS</label>
+                        </div>
+                    </div>
+                    <div class="col-sx-12 col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <label for="dateStart" class="col-sm-5 control-label">Fecha Inicial</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStar" ng-model="bandeja.FechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sx-12 col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <label for="dateEnd" class="col-sm-5 control-label">Fecha Final</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd" ng-model="bandeja.FechaFinal" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a title="CONSULTAR" class="btn btn-social btn-primary btn-flat" ng-click="listarBandeja(bandeja.FechaInicio,bandeja.FechaFinal)"><span class="glyphicon glyphicon-search"></span> CONSULTAR</a>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-2">
+                        <a title="Descargar" class="btn btn-social btn-success btn-flat"><span class="fa fa-file-excel-o"></span> DESCARGAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-6 table-options">
+                    @*<a class="btn btn-warning btn-sm btn-social" title="OPCION" ng-disabled="ventasSeleccionadas.length<1" ng-click="nuevoRegistroNotas(ventasSeleccionadas,'ANULAR VENTA(S)','anular')"><span class="glyphicon glyphicon-ban-circle"></span> OPCION</a>
+                        <a class="btn btn-warning btn-sm btn-social" title="OPCION" ng-disabled="ventasSeleccionadas.length<1" ng-click="nuevoRegistroNotas(ventasSeleccionadas,'DESCONTAR VENTA(S)','descontar')"><span class="glyphicon glyphicon-minus-sign"></span> OPCION</a>
+                        <a class="btn btn-warning btn-sm btn-social" title="OPCION" ng-disabled="ventasSeleccionadas.length<1" ng-click="nuevoRegistroNotas(ventasSeleccionadas,'NOTA DE DEBITO PARA VENTA(S)','debito')"><span class="glyphicon glyphicon-erase"></span> OPCION</a>*@
+        @*</div>
+            </div>
+            <div class="col-md-12" style="margin-top:10px;">
+                <table id="tabla-comprobantesEmitidos" datatable="ng" dt-options="dtOptions" dt-column-defs="r.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="noExport not-search">SEL</th>
+                            <th>Id</th>
+                            <th>Fecha Emision</th>
+                            <th>Tipo Doc.</th>
+                            <th>Num Doc.</th>
+                            <th>Serie Doc.</th>
+                            <th>Importe</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ComprobantesEmitidos.Lista" ng-cloak>
+                            <td><div class="checkbox checkbox-primary"><input type="checkbox" form="check-{{$index}}" class="styled" value="{{item}}" ng-checked="ventasSeleccionadas.indexOf(item)>-1" ng-click="seleccionarVenta(item)" /><label id="check-{{$index}}"></label></div></td>
+                            <td>{{item.Id}}</td>
+                            <td>{{item.FechaEmision}}</td>
+                            <td>{{item.TipoDocumento}}</td>
+                            <td>{{item.NumeroDocumento}}</td>
+                            <td>{{item.SerieDocumento}}</td>
+                            <td class="money">{{"S/. "+item.ImporteTotal}}</td>
+                            <td>{{item.Estado}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>*@
+        <div class="col-md-1"></div>
+    </div>
+</div>

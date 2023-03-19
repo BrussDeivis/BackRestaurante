@@ -1,0 +1,61 @@
+﻿@model Tsp.Sigescom.WebApplication.Models.Comprobante.RegistroTipoComprobanteViewModel
+<div id="modal-registro-tipo-de-comprobante" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE TIPO DE COMPROBANTE</h4>
+            </div>
+            <div class="modal-body">
+                <form name="tipoDeComprobanteForm" autocomplete="|off" >
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="nombre">NOMBRE:</label>
+                                <input type="text" class="form-control" id="nombre" uppercase-only placeholder="Nombre Del Tipo De Comprobante" ng-model="tipoDeComprobante.Nombre" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="nombreCorto">NOMBRE CORTO:</label>
+                                <input class="form-control" id="nombreCorto" uppercase-only placeholder="Nombre Corto" ng-model="tipoDeComprobante.NombreCorto" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="codigoSunat">CÓDIGO SUNAT:</label>
+                                <input class="form-control" id="codigoSunat" uppercase-only placeholder="Código SUNAT" ng-model="tipoDeComprobante.CodigoSunat" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 ">
+                            <label>TRANSACCIONES CON EMISIÓN PROPIA:</label>
+                            <div class="form-group pre-scrollable">
+                                <div class="checkbox checkbox-primary" ng-repeat="item in listaTiposDeTransaccionGenerico">
+                                    <input id="emsion-propia{{item.Id}}" type="checkbox" checklist-model="tipoDeComprobante.IdDeTiposDeTransaccionConEmisionPropia" checklist-value="item.Id">
+                                    <label for="emsion-propia{{item.Id}}">{{item.Nombre}}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-6 ">
+                            <label>TRANSACCIONES CON EMISIÓN DE TERCEROS:</label>
+                            <div class="form-group pre-scrollable">
+                                <div class="checkbox checkbox-primary" ng-repeat="item in listaTiposDeTransaccionGenerico">
+                                    <input id="emsion-terceros{{item.Id}}" type="checkbox" checklist-model="tipoDeComprobante.IdDeTiposDeTransaccionConEmisionTerceros" checklist-value="item.Id">
+                                    <label for="emsion-terceros{{item.Id}}">{{item.Nombre}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="tipoDeComprobanteForm.$invalid" ng-click="crearTipoDeComprobante()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-tipo-de-comprobante')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

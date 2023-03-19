@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewBag.Title = "REPORTES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/reporte/reporteController.js")></script>
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+
+}
+
+<div class="box-body" ng-controller="reporteController" ng-init="inicializarReporteGerente()">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTE DE COMPRAS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Tipo </h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="dateStart2">Fecha Inicial</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStart2" ng-model="reporte.FechaInicioReporteDeCompraPorTipo" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteDeCompraPorTipo()" class="form-control pull-right datepicker-start2" data-date-end-date="0d" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="dateEnd2">Fecha Final</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd2" ng-model="reporte.FechaFinalReporteDeCompraPorTipo" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteDeCompraPorTipo()" class="form-control pull-right datepicker-end2" data-date-end-date="0d" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="col-md-3">
+                            <div class="panel panel-primary" style="margin-bottom:0px;">
+                                <div class="panel-heading">TIPOS DE COMPROBANTE</div>
+                                <div class="panel-body" style="padding:5px;">
+                                    <div class="radio radio-primary radio-inline" style="margin-left: 10px;">
+                                        <input type="radio" id="radio1" name="todo" value="1" ng-model="reporte.TipoComprobante" ng-checked="reporte.TipoComprobante==1" ng-change="actualizarURLReporteDeCompraPorTipo()">
+                                        <label for="radio1">Todos</label>
+                                    </div>
+                                    <div class="radio radio-primary radio-inline">
+                                        <input type="radio" id="radio2" name="todo" value="2" ng-model="reporte.TipoComprobante" ng-checked="reporte.TipoComprobante==2" ng-change="actualizarURLReporteDeCompraPorTipo()">
+                                        <label for="radio2">Tributables</label>
+                                    </div>
+                                    <div class="radio radio-primary radio-inline">
+                                        <input type="radio" id="radio2" name="todo" value="3" ng-model="reporte.TipoComprobante" ng-checked="reporte.TipoComprobante==3" ng-change="actualizarURLReporteDeCompraPorTipo()">
+                                        <label for="radio2">No Tributables</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+
+                    <div class="col-md-1">
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de compra por intervalo de fecha" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeCompraPorTipo}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Comprobante </h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="dateStart">Fecha Inicial</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStart" ng-model="reporte.FechaInicioReporteDeCompraPorComprobante" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteDeCompraPorComprobante()" class="form-control pull-right datepicker-start" data-date-end-date="0d" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="dateEnd">Fecha Final</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd" ng-model="reporte.FechaFinalReporteDeCompraPorComprobante" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteDeCompraPorComprobante()" class="form-control pull-right datepicker-end" data-date-end-date="0d" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de compra por intervalo de fecha" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeCompraPorComprobante}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Concepto </h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="dateStart1">Fecha Inicio</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStart1" ng-model="reporte.FechaInicioReporteDeCompraPorConcepto" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteDeCompraPorConcepto()" class="form-control pull-right datepicker-start1" data-date-end-date="0d" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="dateEnd1">Fecha Fin</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd1" ng-model="reporte.FechaFinalReporteDeCompraPorConcepto" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteDeCompraPorConcepto()" class="form-control pull-right datepicker-end1" data-date-end-date="0d" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de compra " class="btn btn-primary btn-flat" ng-href="{{URLReporteDeCompraPorConcepto}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

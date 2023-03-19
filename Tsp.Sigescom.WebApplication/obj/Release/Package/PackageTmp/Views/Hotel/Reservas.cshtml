@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Bandeja de Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/hotel/reservasController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorReserva/registradorReserva.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/registradorHuesped/registradorHuesped.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorPago/editorPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/registradorFinanciamiento/registradorFinanciamiento.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+
+    <script type="text/javascript">
+        var fechaDesde = '@ViewBag.fechaDesde';
+        var fechaHasta = '@ViewBag.fechaHasta';
+        var usuarioTieneRolAdministradorDeNegocio = @ViewBag.UsuarioTieneRolAdministradorDeNegocio.ToString().ToLower();
+        var establecimientoSesion = @(Html.Raw(Json.Encode(ViewBag.EstablecimientoSesion)));
+        var establecimientos = @(Html.Raw(Json.Encode(ViewBag.Establecimientos)));
+    </script>
+}
+<div class="col-md-12" ng-controller="reservasController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">Reservas</div>
+            </div>
+        </div>
+        <!--Busqueda Reserva por fecha-->
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="col-md-8">
+                        <div class="row" style="padding-left:15px">
+                            <div class="col-sm-4 px-5" ng-if="usuarioTieneRolAdministradorDeNegocio">
+                                <div class="form-group">
+                                    <label>Local*:</label>
+                                    <select class="select2 input-sm" ng-model="establecimiento" ng-options="item as item.Nombre for item in establecimientos track by item.Id" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 px-5">
+                                <div class="form-group">
+                                    <label for="fechaDesde">Desde*:</label>
+                                    <input id="fechaDesde" ng-model="fechaDesde" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4 px-5">
+                                <div class="form-group">
+                                    <label for="fechaHasta">Hasta*:</label>
+                                    <input id="fechaHasta" ng-model="fechaHasta" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding-top:20px">
+                        <div class="row">
+                            <div class=" col-md-3">
+                                <button class="btn btn-primary btn-block" ng-click="obtenerReservasBandeja()" style="margin-top:3px" ng-disabled="!establecimiento || !fechaDesde || !fechaHasta">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary btn-block" style="margin-top: 3px" title="DESCARGAR" ng-click="export('tabla-reservas')">
+                                    <span class="fa fa-file-excel-o"></span>
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-primary btn-block" ng-click="nuevaReserva()" style="margin-top:3px" ng-disabled="!establecimiento || !fechaDesde || !fechaHasta">
+                                    <span class="glyphicon glyphicon-plus"></span> Reservar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Tabla de reservas-->
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive principal-tablaResponsiva">
+                            <table id="tabla-reservas" datatable="ng" dt-options="dtOptions" dt-column-defs="reservas.dtColumnDefs" class="table table-stripped table-bordered dateTable tabla-responsiva">
+                                <thead>
+                                    <tr class="filters">
+                                        <th scope="col">Cod. Res.</th>
+                                        <th scope="col">Responsable</th>
+                                        <th scope="col">Ambiente</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">Ingreso</th>
+                                        <th scope="col">Salida</th>
+                                        <th scope="col">Noches</th>
+                                        <th scope="col">Importe</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Facturado</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="reserva in reservas" ng-cloak>
+                                        <td scope="row" data-label="Codigo">{{reserva.Codigo}}</td>
+                                        <td scope="row" data-label="Usuario" class="width-100">{{reserva.Responsable}}</td>
+                                        <td scope="row" data-label="Ambiente">{{reserva.Ambiente}}</td>
+                                        <td scope="row" data-label="Tipo">{{reserva.TipoHabitacion}}</td>
+                                        <td scope="row" data-label="Codigo">{{reserva.CodigoHabitacion}}</td>
+                                        <td scope="row" data-label="Ingreso">{{reserva.FechaIngreso}}</td>
+                                        <td scope="row" data-label="Salida">{{reserva.FechaSalida}}</td>
+                                        <td scope="row" data-label="Noche">{{reserva.Noches}}</td>
+                                        <td scope="row" data-label="Importe">{{reserva.Total}}</td>
+                                        <td scope="row" data-label="Estado">{{reserva.Estado}}</td>
+                                        <td scope="row" data-label="Facturado">{{reserva.EstaFacturado}}</td>
+                                        <td scope="row" data-label="Acciones">
+                                            <a title="Ver detalles" class="btn btn-primary btn-xs btn-flat" href="@Url.Action("DetalleReserva", "Hotel")?idEstablecimiento={{establecimiento.Id}}&&idAtencionMacro={{reserva.IdAtencionMacro}}&&idAtencion={{reserva.IdAtencion}}" target="_blank"><span class="fa fa-search"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <registrador-reserva ng-if="inicializacionRealizada" id-establecimiento="establecimiento.Id" api="$parent.registradorReservaAPI" changed="reservaAgregada()"></registrador-reserva>
+</div>

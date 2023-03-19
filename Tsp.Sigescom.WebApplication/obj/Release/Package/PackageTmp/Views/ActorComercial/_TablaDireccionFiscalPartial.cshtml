@@ -1,0 +1,58 @@
+﻿<div class="col-md-12 padding-0">
+    <div class="form-group">
+        <div class="col-md-2 padding-0">
+            <div class="bloque-compacto">
+                <label class="col-md-12">Naci&oacute;n:</label>
+                <div class="col-md-12">
+                    <select class="select22 select-model" ng-disabled="deshabilitar" ng-change="cargarUbigeo()" ng-model="actorComercial.IdNacionDireccion" required>
+                        <option ng-repeat="item in naciones" value="{{item.Id}}">{{item.Nombre}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 padding-0">
+            <div class="bloque-compacto">
+                <label class="col-md-12">Ubigeo:</label>
+                <div class="col-md-12">
+                    <select class="select22 select-model" ng-disabled="deshabilitar" ng-model="actorComercial.UbigeoDireccion" ng-options="item as item.Nombre for item in (esPeru?ubigeosPeru: ubigeosOtrosPaises) track by item.Id" required></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 padding-0">
+            <div class="bloque-compacto">
+                <label class="col-md-12">Zona:</label>
+                <div class="col-md-12">
+                    <select class="select22 select-model" ng-disabled="deshabilitar" ng-model="actorComercial.IdZonaDireccion" required>
+                        <option ng-repeat="item in tipoZonas" value="{{item.Id}}">{{item.Nombre}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 padding-0">
+            <div class="bloque-compacto">
+                <label class="col-md-12">Lugar:</label>
+                <div class="col-md-12">
+                    <select class="select22 select-model" ng-disabled="deshabilitar" ng-model="actorComercial.IdViaDireccion" required>
+                        <option ng-repeat="item in tipoVias" value="{{item.Id}}">{{item.Nombre}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 padding-0">
+            <div class="bloque-compacto">
+                <label class="col-md-12">Vig.:</label>
+                <div class="col-md-12" style="margin:0 40%">
+                    <input class="checkbox" ng-disabled="deshabilitar" ng-model="actorComercial.VigenciaDireccion" type="checkbox" value="true">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 padding-0">
+            <div class="bloque-compacto">
+                <label class="col-md-12">Direcci&oacute;n</label>
+                <div class="col-md-12">
+                    <input class="form-control" ng-disabled="deshabilitar" ng-model="actorComercial.DetalleDireccion" required />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

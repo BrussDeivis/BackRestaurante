@@ -1,0 +1,97 @@
+﻿<div id="modal-anular-reserva" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form name="formularioAnularReserva" id="formularioAnularReserva">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">ANULAR RESERVA</h4>
+                </div>
+                <div class="modal-body bg-conedor-principal">
+                    <div class="row">
+                        <div class="col-sm-12" ng-show="comprobantes.length > 0">
+                            <label>Monto de anulación  : S/ {{anulacion.MontoAnulacion|number:2}}</label>
+                        </div>
+                        <div id="comprobantes-anulacion" ng-show="comprobantes.length > 0">
+                            @*<div ng-show="comprobantes.length == 1">
+                                <div class="col-sm-12 form-group">
+                                    <label for="textarea">Comprobante :&nbsp;&nbsp;</label>
+                                    <span class="bg-primary px-5" style="color:white; border-radius: 3px">{{comprobantes[0].SerieYNumeroComprobante}} : S/ {{comprobantes[0].Importe|number:2}}</span>&nbsp;
+                                </div>
+                                <div class="col-sm-12 contenido-centro" ng-show="!comprobantes[0].EsComprobanteInterno">
+                                    <div class="radio radio-primary radio-inline" ng-show="comprobantes[0].PuedeDarDeBaja">
+                                        <input type="radio" id="radio1" name="radio" ng-model="comprobantes[0].DarDeBaja" value="true">
+                                        <label for="radio1">Dar de baja</label>
+                                        <span class="fa fa-info-circle" style="color:dimgray" title="Utilice esta opción en caso no haya entregado el comprobante al cliente" ng-show="!comprobantes[0].EsComprobanteInterno"></span>
+                                    </div>
+                                    <div class="radio radio-primary radio-inline" style="margin-left:30px">
+                                        <input type="radio" id="radio2" name="radio" ng-model="comprobantes[0].DarDeBaja" value="false">
+                                        <label for="radio2">Nota de crédito</label>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="col-md-12 table-responsive">
+                                <table class="table tablamini-habitacion table-bordered table-striped tabla-sm">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%">
+                                                <input type="checkbox" ng-model="anulacion.Seleccionado" ng-checked="anulacion.Seleccionado" ng-change="seleccionarTodosComprobantesAnulacion()" ng-show="!(comprobantes.length == 1)">
+                                            </th>
+                                            <th style="width: 25%">Comprobante</th>
+                                            <th style="width: 10%">Descuento</th>
+                                            <th style="width: 10%">Saldo</th>
+                                            <th style="width: 15%">Monto</th>
+                                            <th style="width: 30%">Opción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="comprobante in comprobantes" style="height: 30px">
+                                            <td style="padding: 3px;">
+                                                <input type="checkbox" ng-model="comprobante.Seleccionado" ng-checked="comprobante.Seleccionado" ng-change="seleccionarComprobanteAnulacion($index)">
+                                            </td>
+                                            <td><span class="bg-primary px-5" style="color: white; border-radius: 3px" ng-class="comprobante.Seleccionado ? '' : 'opaco'">{{comprobante.SerieYNumeroComprobante}} : S/ {{comprobante.Importe|number:2}}</span></td>
+                                            <td><span>S/ {{comprobante.Descuento|number:2}}</span></td>
+                                            <td><span>S/ {{comprobante.Diferencia|number:2}}</span></td>
+                                            <td style="padding: 3px;">
+                                                <input ng-model="comprobante.MontoSoles" class="form-control numero-derecha" ng-disabled="!comprobante.Seleccionado || !(atencionMacro.FacturadoGlobal && !accionGlobal)" ng-blur="formatoDecimal($event)" ng-change="calcularMontoAnulacion($index)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();" />
+                                            </td>
+                                            <td>
+                                                <div class="col-sm-12 contenido-centro">
+                                                    <div class="radio radio-primary radio-inline" ng-show="comprobante.PuedeDarDeBaja && comprobante.Importe == comprobante.MontoSoles">
+                                                        <input type="radio" id="radio1{{$index}}" name="{{$index}}" ng-model="comprobante.DarDeBaja" value="true" ng-disabled="!comprobante.Seleccionado">
+                                                        <label for="radio1{{$index}}">Dar de baja</label>
+                                                        <span class="fa fa-info-circle" style="color:dimgray" title="Utilice esta opción en caso no haya entregado el comprobante al cliente" ng-show="!comprobante.EsComprobanteInterno"></span>
+                                                    </div>
+                                                    <div class="radio radio-primary radio-inline" style="margin-left:30px" ng-show="!comprobante.EsComprobanteInterno">
+                                                        <input type="radio" id="radio2{{$index}}" name="{{$index}}" ng-model="comprobante.DarDeBaja" value="false" ng-disabled="!comprobante.Seleccionado">
+                                                        <label for="radio2{{$index}}">Nota de crédito</label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-show="!(comprobantes.length == 1)">
+                                        <tr>
+                                            <th></th>
+                                            <th>TOTAL</th>
+                                            <th>S/ {{anulacion.MontoDescuento|number:2}}</th>
+                                            <th>S/ {{anulacion.MontoDiferencia|number:2}}</th>
+                                            <th>S/ {{anulacion.TotalSoles|number:2}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label>Observación</label>
+                            <textarea class="form-control" rows="3" maxlength="200" ng-model="observacionAnular"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a title="Guardar" ng-click="anularAtencion()" ng-disabled="hayInconsistenciaAnulacion() || observacionAnular.length > 200 || observacionAnular.length == 0" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                    <a title="Cerrar" ng-click="cerrarModal('modal-anular-reserva')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

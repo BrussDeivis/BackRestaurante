@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "Bandeja de cotizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/cotizacion/cotizacionController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/selectorConceptoComercial/selectorConceptoComercial.js")></script>
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+        var aplicaLeyAmazonia = @ViewBag.aplicaLeyAmazonia.ToString().ToLower();
+        var idTipoActorPersonaNatural = @ViewBag.idTipoActorPersonaNatural;
+        var tasaIGV = @ViewBag.tasaIGV;
+        var idMedioDePagoEfectivo = @ViewBag.idMedioDePagoEfectivo;
+        var ventasSujetasADisponibilidadStock = @ViewBag.ventasSujetasADisponibilidadStock.ToString().ToLower();
+        var idTipoActorPersonaJuridica =@ViewBag.idTipoActorPersonaJuridica;
+        var precioContieneIgv = @ViewBag.aplicaLeyAmazonia.ToString().ToLower();
+        var idClienteGenerico = @ViewBag.idClienteGenerico;
+        var idProveedorGenerico = @ViewBag.idProveedorGenerico;
+        var idTipoDocumentoCuandoClienteEsGenerico = @ViewBag.idTipoDocumentoCuandoClienteEsGenerico;
+        var idTipoDocumentoPorDefectoParaVenta = @ViewBag.idTipoDocumentoPorDefectoParaVenta;
+        var mostrarAliasDeClienteGenerico = @ViewBag.mostrarAliasDeClienteGenerico.ToString().ToLower();
+        var precioUnitarioCalculadoVenta = @ViewBag.precioUnitarioCalculadoVenta.ToString().ToLower();
+        var mostrarDetalleUnificado = @ViewBag.mostrarDetalleUnificado.ToString().ToLower();
+        var checketDetalleUnificado  = @ViewBag.checketDetalleUnificado.ToString().ToLower();
+        var valorDetalleUnificado = '@ViewBag.valorDetalleUnificado';
+        var aplicarCantidadPorDefectoEnVentas = @ViewBag.aplicarCantidadPorDefectoEnVentas.ToString().ToLower();
+        var cantidadPorDefectoEnVentas = '@ViewBag.cantidadPorDefectoEnVentas';
+        var idTipoPersonaSeleccionadaPorDefecto = @ViewBag.idTipoPersonaSeleccionadaPorDefecto;
+        var idTipoDocumentoSeleccionadaConTipoPersonaNatural = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaNatural;
+        var idTipoDocumentoSeleccionadaConTipoPersonaJuridica = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaJuridica;
+        var precioUnitarioIngresadoVenta = @ViewBag.precioUnitarioIngresadoVenta.ToString().ToLower();
+        var idTipoDocumentoIdentidadDni = @ViewBag.idTipoDocumentoIdentidadDni;
+        var idTipoDocumentoIdentidadRuc = @ViewBag.idTipoDocumentoIdentidadRuc;
+        var idDetalleMaestroCatalogoDocumentoBoleta = @ViewBag.idDetalleMaestroCatalogoDocumentoBoleta;
+        var idDetalleMaestroCatalogoDocumentoFactura = @ViewBag.idDetalleMaestroCatalogoDocumentoFactura;
+        var montoMaximoAVenderCuandoClienteNoEstaIdenticicado = @ViewBag.montoMaximoAVenderCuandoClienteNoEstaIdenticicado;
+        var permitirVentaAlCredito = @ViewBag.permitirVentaAlCredito.ToString().ToLower();
+        var permitirVentaConFechaPasada = @ViewBag.permitirVentaConFechaPasada.ToString().ToLower();
+        var fechaActual = '@ViewBag.fechaActual';
+        var permitirRegistroFlete = @ViewBag.permitirRegistroFlete.ToString().ToLower();
+        var idUbigeoSeleccionadoPorDefecto = @ViewBag.idUbigeoSeleccionadoPorDefecto;
+        var idUbigeoNoEspecificado = @ViewBag.idUbigeoNoEspecificado;
+        var modoIngresoCodigoBarra = @ViewBag.modoIngresoCodigoBarraEnVenta;
+        var cursorPorDefectoCodigoBarra = @ViewBag.cursorPorDefectoCodigoBarraEnVenta;
+        var permitirRegistroDeGuiasDeRemision = @ViewBag.permitirRegistroDeGuiasDeRemision.ToString().ToLower();
+        var idUbigeoSede = @ViewBag.idUbigeoSede;
+        var direccionSede = '@ViewBag.direccionSede';
+        var idModalidadTrasladoPorDefecto = @ViewBag.idModalidadTrasladoPorDefecto;
+        var idMotivoTrasladoPorDefecto = @ViewBag.idMotivoTrasladoPorDefecto;
+        var idTransportistaPorDefecto = @ViewBag.idTransportistaPorDefecto;
+        var idTipoDeComprobantePorDefecto = @ViewBag.idTipoDeComprobantePorDefecto;
+        var costoUnitarioPorBolsaDePlastico = @ViewBag.costoUnitarioPorBolsaDePlastico;
+        var permitirRegistroNumeroBolsaDePlastico = @ViewBag.permitirRegistroNumeroBolsaDePlastico.ToString().ToLower();
+        var permitirRegistroDeLoteEnDetalleDeVenta = @ViewBag.permitirRegistroDeLoteEnDetalleDeVenta.ToString().ToLower();
+        var idConceptoBasicoBolsaPlastica = @ViewBag.idConceptoBasicoBolsaPlastica;
+        var idTarifaSeleccionadoPorDefecto = @ViewBag.idTarifaSeleccionadoPorDefecto;
+        var permitirIngresarCantidad = @ViewBag.permitirIngresarCantidad.ToString().ToLower();
+        var permitirIngresarPrecioUnitario = @ViewBag.permitirIngresarPrecioUnitario.ToString().ToLower();
+        var permitirIngresarImporte = @ViewBag.permitirIngresarImporte.ToString().ToLower();
+        var ingresarImporteCalcularCantidad = @ViewBag.ingresarImporteCalcularCantidad.ToString().ToLower();
+        var ingresarCantidadCalcularPrecioUnitario = @ViewBag.ingresarCantidadCalcularPrecioUnitario.ToString().ToLower();
+        var ingresarPrecioUnitarioCalcularImporte = @ViewBag.ingresarPrecioUnitarioCalcularImporte.ToString().ToLower();
+        var modoDeSeleccionDeConceptoDeNegocio = @ViewBag.modoDeSeleccionDeConceptoDeNegocio;
+        var idComprobantePredeterminadoPorDefecto = @ViewBag.idComprobantePredeterminadoPorDefecto;
+        var mascaraDeCalculoPorDefecto = '@ViewBag.mascaraDeCalculoPorDefecto';
+        var mascaraDeCalculoPrecioUnitarioCalculado = '@ViewBag.mascaraDeCalculoPrecioUnitarioCalculado';
+        var flujoDespuesDeCodigoBarraEnVenta = @ViewBag.flujoDespuesDeCodigoBarraEnVenta;
+        var permitirRegistroConceptoServicio = @ViewBag.permitirRegistroConceptoServicio.ToString().ToLower();
+        var esPregeneracionVentaDesdeCotizacion = @ViewBag.esPregeneracionVentaDesdeCotizacion.ToString().ToLower();
+        var idOrdenCotizacionAPregenerar = @ViewBag.idOrdenCotizacionAPregenerar;
+        var numeroDecimalesEnCantidad = @ViewBag.numeroDecimalesEnCantidad;
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+        var mostrarBuscadorCodigoBarra = @ViewBag.mostrarBuscadorCodigoBarra.ToString().ToLower();
+        var modoSeleccionConcepto = @ViewBag.modoDeSeleccionDeConcepto;
+        var modoSeleccionTipoFamilia = @ViewBag.modoSeleccionTipoFamilia;
+        var minimoCaracteresBuscarConcepto = @ViewBag.minimoCaracteresBuscarConcepto;
+        var idRolCliente = @ViewBag.idRolCliente;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var minimoCaracteresBuscarActorComercial = @ViewBag.minimoCaracteresBuscarActorComercial;
+        var mascaraDeVisualizacionValidacionRegistroCliente = '@ViewBag.mascaraDeVisualizacionValidacionRegistroCliente';
+        var informacionSelectorConcepto = @ViewBag.informacionSelectorConcepto;
+        var permitirSeleccionarGrupoCliente = @ViewBag.permitirSeleccionarGrupoCliente.ToString().ToLower();
+        var permitirConvertirCotizacionAVenta = @ViewBag.permitirConvertirCotizacionAVenta.ToString().ToLower();
+        var permitirConvertirCotizacionAPedido = @ViewBag.permitirConvertirCotizacionAPedido.ToString().ToLower();
+
+    </script>
+
+    @* Register the WebClientPrint script code generated by CotizacionController. *@
+    @Html.Raw(ViewBag.WCPScript);
+
+}
+
+<div class="col-md-12" id="modelo" ng-controller="cotizacionController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">BANDEJA DE COTIZACIONES</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label>Fecha Inicial</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-2 no-padding-left">
+                    <label>Fecha Final</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding">
+                    <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="listarBandejaCotizacion()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-cotizaciones')" class="btn btn-md btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+                <div class="col-md-7">
+                    <button title="NUEVA COTIZACIÓN" style="margin-top:25px" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-cotizacion" ng-click="inicializarNuevaCotizacion()"><span class="glyphicon glyphicon-plus"></span> NUEVA COTIZACIÓN</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:10px;">
+            <table id="tabla-cotizaciones" datatable="ng" dt-options="dtOptions" dt-column-defs="cotizaciones.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Fecha</th>
+                        <th>Tipo Doc.</th>
+                        <th>Documento</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Fecha Venc.</th>
+                        <th>Estado</th>
+                        <th>Convertido</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in cotizaciones" ng-cloak>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.Fecha}}</td>
+                        <td title="{{item.TipoDocumento}}">{{item.CodigoDocumento}}</td>
+                        <td>{{item.Numero}}</td>
+                        <td>{{item.Cliente}}</td>
+                        <td class="numero-derecha">{{"S/. "+item.Total}}</td>
+                        <td>{{item.FechaVencimiento}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td><span class="label" ng-class="item.Convertido ? 'label-success' : 'label-danger'" style="font-size: 15px;color:black">{{item.Convertido ? 'SI': 'NO'}}</span></td>
+                        <td>
+                            <a title="Editar cotizacion" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-registro-cotizacion" ng-click="inicializarEdicionCotizacion(item)"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a title="Ver detalles de cotizacion" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-cotizacion" ng-click="verDocumentoDeCotizacion(item)"><span class="glyphicon glyphicon-search"></span></a>
+                            <a ng-if="permitirConvertirCotizacionAVenta" title="Pregenerar venta" class="btn btn-primary btn-xs" href="@Url.Action("PregeneracionVenta", "Venta")?idOrden={{item.IdOrden}}&&tipoOperacion=1" target="_blank"><span class="mdi mdi-cart-outline"></span></a>
+                            <a ng-if="permitirConvertirCotizacionAPedido" title="Pregenerar pedido" class="btn btn-primary btn-xs" href="@Url.Action("PregeneracionPedido", "Pedido")?idOrden={{item.IdOrden}}" target="_blank"><span class="fa fa-shopping-basket"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroCotizacion")
+    @Html.Partial("_ModalVerCotizacion")
+    @Html.Partial("../Venta/_ModalRegistroConceptoServicio")
+</div>

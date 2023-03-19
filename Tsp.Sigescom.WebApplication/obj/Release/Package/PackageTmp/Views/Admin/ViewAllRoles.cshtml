@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.title = "Bandeja de Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/admin/adminController.js")></script>
+}
+    <div class="col-md-12" ng-controller="bandejaRolesController" ng-cloak>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">BANDEJA DE ROLES Y USUARIOS</div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="input-small formulario-mediano col-md-7 table-options form-group">
+                            @Html.ActionLink("AGREGAR ROL", "AddRole", null, new { @class = "btn btn-flat btn-primary" })
+                        </div>
+                        <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Rol</th>
+                                    <th>ACCIÓN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+                                    <td>{{item.RoleName}}</td>
+                                    <td class="right">
+                                        <a class="btn btn-xs btn-danger" title="Eliminar Rol" data-toggle="modal" data-target="#modal-rol" ng-click="cargarModal(item.RoleName)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- MODAL ELIMINAR -->
+                        <div id="modal-rol" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <a class="close" data-dismiss="modal">&times;</a>
+                                        <h4 class="modal-title"> Eliminar Rol</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> Esta seguro de eliminar este Rol?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-info" data-dismiss="modal" ng-click="eliminarRol()">Aceptar</a>
+                                        <a class="btn btn-info" data-dismiss="modal">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    @*@model IEnumerable<Tsp.Sigescom.WebApplication.Models.RoleDTO>
+                    @using Tsp.Sigescom.WebApplication.Models
+
+                    @{
+                        Layout = "~/Views/Shared/_Layout.cshtml";
+                    }
+
+                    <br />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <p>
+                        @Html.ActionLink("Atras", "Index", null, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Agregar Rol", "AddRole", null, new { @class = "btn btn-default" })
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Roles
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RoleName)
+                                </td>
+                                <td>
+                                    @if (item.RoleName.ToLower() != "administrator")
+                                {
+                                        @Html.ActionLink("Eliminar", "DeleteUserRole",
+                                   new { RoleName = item.RoleName },
+                                   new
+                                   {
+                                       onclick =
+                                   "return confirm('Esta seguro de eliminar este Rol?');"
+                                   })
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </table>*@
+
+

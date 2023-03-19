@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Mantenimiento de Configuraciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/configuracion/configuracionController.js")></script>
+}
+
+<div class="col-xs-12" ng-controller="configuracionController">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">PARAMETROS DE CONFIGURACION</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <a title="Descargar" class="btn btn-success btn-flat"><i class="fa fa-file-excel-o"></i> DESCARGAR</a>
+                            <a title="Nueva Configuracion" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-configuracion" ng-click="nuevoRegistroConfiguracion()"><span class="glyphicon glyphicon-plus"></span> NUEVA CONFIGURACION</a>
+                        </div>
+                        <div class="col-xs-12">
+                            <table id="tabla-configuraciones" datatable="ng" dt-options="dtOptions" dt-column-Defs="configuraciones.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NOMBRE</th>
+                                        <th>DESCRIPCION</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  ng-repeat="item in configuraciones.Lista" ng-cloak>
+                                        <td>{{item.Id}}</td>
+                                        <td style="text-transform:none" class="left">{{item.Nombre}}</td>
+                                        <td class="left">{{item.Descripcion}}</td>
+                                        <td>
+                                            <a title="Ver Parametros de Configuracion" class="btn btn-info btn-sm btn-flat" data-toggle="modal" data-target="#modal-parametro-configuracion" ng-click="verParametros(item)"><span class="glyphicon glyphicon-search"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a style="display:none" id="modal-cambio" class="btn btn-info btn-xs" data-toggle="modal" data-target="#preguntar-cambio"><span class="glyphicon glyphicon-search"></span></a>
+    @Html.Partial("_ModalRegistroConfiguracionPartial")
+    @Html.Partial("_ModalParametroConfiguracionPartial")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>

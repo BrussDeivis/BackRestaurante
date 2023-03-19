@@ -1,0 +1,64 @@
+﻿@model Tsp.Sigescom.WebApplication.Models.Comprobante.RegistroSerieDeComprobanteViewModel
+<div id="modal-registro-serie-de-comprobante" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE SERIE DE COMPROBANTE</h4>
+            </div>
+            <div class="modal-body">
+                <form name="serieDeComprobanteForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="establecimientoComercial">ESTABLECIMIENTO COMERCIAL:</label>
+                                <select id="establecimientoComercial" class="select2 form-control" ng-model="serieDeComprobante.EstablecimientoComercial" ng-change="obtenerCentrosAtencion(serieDeComprobante.EstablecimientoComercial.Id)" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label for="centroDeAtencion">CENTRO DE ATENCIÓN:</label>
+                                <select id="centroDeAtencion" class="select2 form-control" ng-model="serieDeComprobante.CentroDeAtencion" ng-options="item as item.Nombre for item in listaCentrosDeAtencion track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="tipoDeComprobante">TIPO DE COMPROBANTE:</label>
+                                <select id="tipoDeComprobante" class="select2 form-control" ng-model="serieDeComprobante.TipoDeComprobante" ng-options="item as item.Nombre for item in listaTiposDeComprobante track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="form-group">
+                                <label for="numeroDeSerie">N° DE SERIE:</label>
+                                <input class="form-control" id="numeroDeSerie" uppercase-only placeholder="Número De Serie" ng-model="serieDeComprobante.NumeroDeSerie" minlength="1" maxlength="4" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="form-group">
+                                <label for="numeroDeComprobanteSiguiente">N° DE COMPROBANTE SIGUIENTE:</label>
+                                <input type="text" class="form-control" id="numeroDeComprobanteSiguiente" placeholder="Número De Comprobante Siguiente" ng-model="serieDeComprobante.NumeroDeComprobanteSiguiente" minlength="1" maxlength="6" min="1" max="999999" required />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 ">
+                            <div class="checkbox checkbox-primary">
+                                <input id="autonumerica" type="checkbox" ng-model="serieDeComprobante.Autonumerica" ng-checked="serieDeComprobante.Autonumerica" />
+                                <label for="autonumerica">Autonumérica</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 ">
+                            <div class="checkbox checkbox-primary">
+                                <input id="vigente" type="checkbox" ng-model="serieDeComprobante.Vigente" ng-checked="serieDeComprobante.Vigente" />
+                                <label for="vigente">Vigente</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="serieDeComprobanteForm.$invalid" ng-click="crearSerieDeComprobante()" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a title="Cerrar" ng-click="cerrar('modal-registro-serie-de-comprobante')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+

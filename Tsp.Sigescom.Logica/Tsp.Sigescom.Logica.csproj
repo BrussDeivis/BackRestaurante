@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D79D0F4-D85F-4325-A777-4C355F3A2963}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tsp.Sigescom.Logica</RootNamespace>
+    <AssemblyName>Tsp.Sigescom.Logica</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RonaldIbarra|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\RonaldIbarra\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenInvoicePeru.Comun">
+      <HintPath>..\packages\OpenInvoicePeru\OpenInvoicePeru.Comun.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenInvoicePeru.Comun.Dto, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OpenInvoicePeru\OpenInvoicePeru.Comun.Dto.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenInvoicePeru.Estructuras">
+      <HintPath>..\packages\OpenInvoicePeru\OpenInvoicePeru.Estructuras.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenInvoicePeru.Xml">
+      <HintPath>..\packages\OpenInvoicePeru\OpenInvoicePeru.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Actores\GrupoClientes_Logica.cs" />
+    <Compile Include="Core\Actores\ValidacionActorNegocio_Logica.cs" />
+    <Compile Include="Core\Almacen\OrdenAlmacen_Logica.cs" />
+    <Compile Include="Core\Almacen\AjusteInventario_Logica.cs" />
+    <Compile Include="Core\Almacen\InventarioActual_Logica.cs" />
+    <Compile Include="Core\Almacen\InventarioHistorico_Logica.cs" />
+    <Compile Include="Core\Concepto\Caracteristica_Logica.cs" />
+    <Compile Include="Core\Establecimientos\Sucursal_Logica.cs" />
+    <Compile Include="Core\Establecimientos\Sede_Logica.cs" />
+    <Compile Include="Core\Establecimientos\Establecimiento_Logica.cs" />
+    <Compile Include="Core\ConceptoLogica_Validacion.cs" />
+    <Compile Include="Core\CentroDeAtencion\CentroDeAtencion_Logica.cs" />
+    <Compile Include="Core\Empleado\Empleado_Logica.cs" />
+    <Compile Include="Core\Finanza\AjusteTesoreria_Logica.cs" />
+    <Compile Include="Core\Finanza\ArqueoCaja_Logica.cs" />
+    <Compile Include="Core\Finanza\FinanzaReporte_Logica.cs" />
+    <Compile Include="Core\LibrosElectronicos\LibrosElectronicosFoxcontLogica.cs" />
+    <Compile Include="Core\LibrosElectronicos\LibrosElectronicosAdsoftLogica.cs" />
+    <Compile Include="Core\LibrosElectronicos\LibrosElectronicosConcarLogica.cs" />
+    <Compile Include="Core\Pedido\PedidoReporte_Logica.cs" />
+    <Compile Include="Core\Pedido\Pedido_Logica.cs" />
+    <Compile Include="Core\Permisos\Permisos_Logica.cs" />
+    <Compile Include="Core\CodigosOperacion_Logica.cs" />
+    <Compile Include="Core\Session\Session_Logica.cs" />
+    <Compile Include="Core\TipoDeCambio\TipoDeCambio_Logica.cs" />
+    <Compile Include="Core\Venta\VentaReporte_Logica.cs" />
+    <Compile Include="Core\Venta\ConsultaMasivaVentaLogica.cs" />
+    <Compile Include="Core\Venta\OperacionLogica_InvalidarVenta.cs" />
+    <Compile Include="Core\Venta\OperacionLogica_CreditoVenta.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_Consulta.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_ConsultasApi.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_Envio.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_ReenvioPendientes.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_ReenvioConExcepcion.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_ReenvioRechazados.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_Transmision.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_RegeneracionJson.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica.cs" />
+    <Compile Include="EFactura\FacturacionElectronicaLogica_Qr.cs" />
+    <Compile Include="EFactura\GeneracionArchivosLogica.cs" />
+    <Compile Include="Core\ActorNegocioLogica.cs" />
+    <Compile Include="Core\ActorNegocioLogica_CentroDeAtencion.cs" />
+    <Compile Include="Core\ActorNegocioLogica_Cliente.cs" />
+    <Compile Include="Core\ActorNegocioLogica_Empleado.cs" />
+    <Compile Include="Core\ActorNegocioLogica_Proveedor.cs" />
+    <Compile Include="Core\OperacionLogica_Almacen.cs" />
+    <Compile Include="Core\Almacen\AlmacenReporte_Logica.cs" />
+    <Compile Include="Core\OperacionLogica_Caja.cs" />
+    <Compile Include="Core\OperacionLogica_Compra.cs" />
+    <Compile Include="Core\ConceptoLogica.cs" />
+    <Compile Include="Core\ConfiguracionLogica.cs" />
+    <Compile Include="Core\CotizacionLogica.cs" />
+    <Compile Include="Core\OperacionLogica_Gasto.cs" />
+    <Compile Include="Core\LibrosElectronicosLogica.cs" />
+    <Compile Include="Core\MaestroLogica.cs" />
+    <Compile Include="Core\OperacionLogica.cs" />
+    <Compile Include="Core\PrecioLogica.cs" />
+    <Compile Include="Core\OperacionLogica_Venta.cs" />
+    <Compile Include="Core\OperacionLogica_Venta2Pasos.cs" />
+    <Compile Include="Core\OperacionLogica_VentaMasiva.cs" />
+    <Compile Include="Core\VentaUtilitarioLogica.cs" />
+    <Compile Include="EFactura\IEstablecimiento_Datos.cs" />
+    <Compile Include="SigesHotel\HotelExtranet_Logica.cs" />
+    <Compile Include="SigesHotel\HotelConsumo_Logica.cs" />
+    <Compile Include="SigesHotel\HotelAtencionMacro_Logica.cs" />
+    <Compile Include="SigesHotel\HotelAtencion_Logica.cs" />
+    <Compile Include="SigesHotel\HotelPlanificador_Logica.cs" />
+    <Compile Include="SigesHotel\HotelReserva_Logica.cs" />
+    <Compile Include="SigesHotel\HotelHabitacion_Logica.cs" />
+    <Compile Include="SigesHotel\HotelFacturacion_Logica.cs" />
+    <Compile Include="SigesHotel\HotelReporte_Logica.cs" />
+    <Compile Include="SigesHotel\HotelLogica.cs" />
+    <Compile Include="SigesHotel\HotelAmbiente_Logica.cs" />
+    <Compile Include="SigesHotel\HotelUtilitario_Logica.cs" />
+    <Compile Include="SigesHotel\HotelTipoHabitacion_Logica.cs" />
+    <Compile Include="SigesParking\CocheraLogica.cs" />
+    <Compile Include="SigesRestaurant\Caja_Logica.cs" />
+    <Compile Include="SigesRestaurant\Orden_Logica.cs" />
+    <Compile Include="SigesRestaurant\Atencion_Logica.cs" />
+    <Compile Include="SigesRestaurant\RestauranteLogicaPartial.cs" />
+    <Compile Include="SigesRestaurant\RestauranteLogica.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tsp.Sigescom.Config\Tsp.Sigescom.Config.csproj">
+      <Project>{6f2560be-5acc-4d61-949f-f2f1fc088a49}</Project>
+      <Name>Tsp.Sigescom.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.Modelo\Tsp.Sigescom.Modelo.csproj">
+      <Project>{23c28715-fe7f-4718-82a9-b4b49ef1eec4}</Project>
+      <Name>Tsp.Sigescom.Modelo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tsp.Sigescom.Utilitarios\Tsp.Sigescom.Utilitarios.csproj">
+      <Project>{43f33046-0fc1-4f0d-9ff4-afad4104b0d6}</Project>
+      <Name>Tsp.Sigescom.Utilitarios</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dominio\" />
+    <Folder Include="SigesIdentifica\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

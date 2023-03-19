@@ -1,0 +1,16 @@
+﻿D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\RestauranteDatosUnitTest.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\ActorDatosUnitTest.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Dominio\Sigescom\ConceptoDatosTests.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Dominio\Sigescom\TransaccionDatosTests.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\MaestroUnitTest.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Properties\AssemblyInfo.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Sigescom\HotelDatosTests.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Sigescom\Hotel\HotelReporte_DatosTests.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\Sigescom\Transaccion\ConsultaTransaccion_DatosTests.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\TestClassAttribute.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\ReportesVentasUnitTest.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\TransaccionDatosUnitTest.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\PrecioDatosUnitTest.cs
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\App.Config
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\App.Debug.Config
+D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.UnitTestDatos\App.Release.Config

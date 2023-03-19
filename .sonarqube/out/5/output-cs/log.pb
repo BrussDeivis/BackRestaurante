@@ -1,0 +1,1 @@
+Roslyn version: 4.5.0.0Language version: CSharp7_3!Concurrent execution: enabled‘ŒFile 'D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Inyeccion\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs' was recognized as generated

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Tabla de Precios";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/precio/bonificacionController.js")></script>
+}
+
+<div class="col-md-12" ng-controller="bonificacionController">
+    <div class="row">
+        <div class="col-md-12 texto-centrado form-group">
+            <div class="titulo1">CONSULTA DE BONIFICACIONES</div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-2 form-group">
+                
+                <button title="DESCARGAR" ng-click="export('tabla-bonificacion')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+            </div>
+            <div class="col-md-offset-8 col-md-2 form-group">
+                <a title="Nuevo Precio" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-registro" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVA BONIFICACION</a>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table id="tabla-bonificacion" datatable="ng" dt-options="dtOptions" dt-column-defs="bonificaciones.dtColumnDefs" class="row-border hover table table-stripped tabla-bandeja table-bordered">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Producto</th>
+                        <th>Bonificacion</th>
+                        <th>Prod.Ref</th>
+                        <th>Cant.Min</th>
+                        <th>Cant.Max</th>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in bonificaciones.Lista" ng-cloak>
+                        <td>{{$index+1}}</td>
+                        <td class="left width-250"><span class="width-nowrap" title="{{item.Producto}}">{{item.Producto}}</span></td>
+                        <td class="width-100">{{item.Valor}}</td>
+                        <td class="left width-250"><span class="width-nowrap" title="{{item.ProductoReferencia}}">{{item.ProductoReferencia}}</span></td>
+                        <td>{{item.CantidadMinima}}</td>
+                        <td>{{item.CantidadMaxima}}</td>
+                        <td>{{item.FechaDesde}}</td>
+                        <td>{{item.FechaHasta}}</td>
+                        <td>
+                            <a title="Caducar precio" ng-show="item.EsVigente" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#pregunta-eliminar" ng-click="caducarPrecio(item)"><span class="glyphicon glyphicon-ban-circle"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @Html.Partial("_ModalRegistroBonificacionPartial")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>
+
+
+
+
+
+
+
+
+

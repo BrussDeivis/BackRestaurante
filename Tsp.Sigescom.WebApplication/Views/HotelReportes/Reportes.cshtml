@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/hotel/reportes/reportesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/reportes/reportes_HuespedesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/reportes/reportes_ReservasController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/reportes/reportes_AtencionesController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/hotel/reportes/reportes_FacturacionController.js")></script>
+
+    <script>
+        var reportData =@(Html.Raw(Json.Encode(ViewBag.Data)));
+    </script>
+
+}
+<div class="col-md-12" ng-controller="reportesController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTES DE HOTEL</div>
+
+            </div>
+        </div>
+    </div>
+    <div class="box box-success">
+        <div class="box-header with-border flex-center">
+            <div class="box-title">
+                <div class="col-md-12 ">
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio1" value="seccion1" ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion1'">
+                        <label for="radio1">Huéspedes</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio2" value="seccion2" ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion2'">
+                        <label for="radio2">Reservas</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio3" value="seccion3" ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion3'">
+                        <label for="radio3">Atenciones</label>
+                    </div>
+                    <div class="radio radio-primary radio-inline">
+                        <input type="radio" id="radio4" value="seccion4" ng-model="reporteador.SeccionSeleccionada" ng-checked="reporteador.SeccionSeleccionada=='seccion4'">
+                        <label for="radio4">Facturación</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_HuespedesPartial")
+    @Html.Partial("_ReservasPartial")
+    @Html.Partial("_AtencionesPartial")
+    @Html.Partial("_FacturacionPartial")
+</div>

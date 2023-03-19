@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Cuentas Bancarias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/finanza/cuentasBancariasController.js")></script>
+
+    <script>
+        var idEntidadBancariaNinguna = @ViewBag.idEntidadBancariaNinguna;
+    </script>
+}
+
+<div class="col-md-12" ng-controller="cuentasBancariasController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CUENTAS BANCARIAS</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-md-11">
+                </div>
+                <div class="col-md-1">
+                    <button title="AGREGAR CUENTA BANCARIA" ng-show="!estaAgregandoCuentaBancaria" ng-click="iniciarAgregarCuentaBancaria()" class="btn btn-md btn-primary"><span class="fa fa-plus"></span></button>
+                    <button title="CERRAR AGREGAR CUENTA BANCARIA" ng-show="estaAgregandoCuentaBancaria" ng-click="cancelarAgregarCuentaBancaria()" class="btn btn-md btn-danger"><span class="fa fa-close"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form name="cuentaBancariaForm">
+                <div class="col-md-12 no-padding" style="overflow-x: auto; margin-top: 15px">
+                    <table id="tabla-parametro-cuentas-bancarias" class="table table-bordered table-striped" style="margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>TIPO</th>
+                                <th>ENTIDAD FINANCIERA</th>
+                                <th>TITULAR</th>
+                                <th>MONEDA</th>
+                                <th>NÚMERO</th>
+                                <th>NÚMERO CCI</th>
+                                <th>UBIGEO</th>
+                                <th>ESTADO</th>
+                                <th class="noExport not-search">OPCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in cuentasBancarias" ng-cloak>
+                                <td>{{$index+1}}</td>
+                                <td style="font-size:14px">
+                                    <select id="select-tipo-cuenta-{{index}}" class="select2" ng-model="item.TipoCuenta" ng-options="item as item.Nombre for item in tiposCuenta track by item.Id"></select>
+                                </td>
+                                <td style="font-size:14px">
+                                    <select id="select-entidad-financiera-{{index}}" class="select2" ng-model="item.EntidadFinanciera" ng-options="item as item.Nombre for item in entidadesFinancieras track by item.Id"></select>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" style="width:300px" ng-model="item.Titular" ng-pattern-restrict="^[A-Za-z^ ]*$" />
+                                    @*<div ng-class="cuentaBancariaForm.titular{{$index}}.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                            <div class="validate_msg" ng-show="cuentaBancariaForm.titular{{$index}}.$invalid">Titular incorrecto.</div>
+                                            <input type="text" class="form-control" style="width:300px" id="titular{{$index}}" placeholder="Titular de la cuenta" ng-model="cuenta.Titular" name="titular{{$index}}" minlength="3" required ng-pattern-restrict="^[A-Za-z^ ]*$" />
+                                        </div>*@
+                                </td>
+                                <td style="font-size:14px">
+                                    <select id="select-moneda-{{index}}" class="select2" ng-model="item.Moneda" ng-options="item as item.Nombre for item in monedas track by item.Id"></select>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" style="width:250px" ng-model="item.NumeroCuenta" ng-pattern-restrict="^[0-9._-]*$" />
+                                    @*<div ng-class="cuentaBancariaForm.numeroCuenta{{$index}}.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                            <div class="validate_msg" ng-show="item.numeroCuenta{{$index}}.$invalid">Numero de cuenta incorrecto.</div>
+                                            <input type="text" class="form-control" style="width:250px" id="numeroCuenta{{$index}}" placeholder="Numero cuenta" ng-model="item.NumeroCuenta" name="numeroCuenta{{$index}}" minlength="5" required ng-pattern-restrict="^[0-9._-]*$" />
+                                        </div>*@
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" style="width:300px" ng-model="item.NumeroCCI" ng-pattern-restrict="^[0-9._-]*$" />
+                                    @*<div ng-class="cuentaBancariaForm.numeroCCI{{$index}}.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                            <div class="validate_msg" ng-show="cuentaBancariaForm.numeroCCI{{$index}}.$invalid">Numero CCI incorrecto.</div>
+                                            <input type="text" class="form-control" style="width:300px" id="numeroCCI{{$index}}" placeholder="Numero cuenta interbancaria" ng-model="cuenta.NumeroCCI" name="numeroCCI{{$index}}" minlength="5" required ng-pattern-restrict="^[0-9._-]*$" />
+                                        </div>*@
+                                </td>
+                                <td style="font-size:14px;">
+                                    <select id="select-ubigeo-{{index}}" class="select2 selectCuentaBancaria" ng-model="item.Ubigeo" ng-options="item as item.Nombre for item in ubigeos track by item.Id"></select>
+                                </td>
+                                <td>
+                                    <i class="fa fa-toggle-on " ng-model="item.EstaActivo" ng-class="item.EstaActivo ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="item.EstaActivo=!item.EstaActivo" />
+                                </td>
+                                <td>
+                                    <a title="Editar Cuenta Bancaria" class="btn btn-primary btn-sm btn-flat" ng-click="editarCuentaBancaria(item)" ng-disabled="idEntidadBancariaNinguna == item.EntidadFinanciera.Id"><span class="glyphicon glyphicon-floppy-disk"></span></a>
+                                </td>
+                            </tr>
+                            <tr style="background:#e9bdbd;" ng-show="estaAgregandoCuentaBancaria">
+                                <td>
+                                </td>
+                                <td style="font-size:14px;">
+                                    <select id="select-tipo-cuenta" class="select2" ng-model="cuenta.TipoCuenta" ng-options="item as item.Nombre for item in tiposCuenta"></select>
+                                </td>
+                                <td style="font-size:14px;">
+                                    <select id="select-entidad-financiera" class="select2" ng-model="cuenta.EntidadFinanciera" ng-options="item as item.Nombre for item in entidadesFinancieras"></select>
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" style="width:300px" id="titular" placeholder="Titular de la cuenta" ng-model="cuenta.Titular" />*@
+                                    <div ng-class="cuentaBancariaForm.titular.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                        <div class="validate_msg" ng-show="cuentaBancariaForm.titular.$invalid">Titular incorrecto.</div>
+                                        <input type="text" class="form-control" style="width:300px" id="titular" placeholder="Titular de la cuenta" ng-model="cuenta.Titular" name="titular" minlength="3" required ng-pattern-restrict="^[A-Za-z^ ]*$" />
+                                    </div>
+                                </td>
+                                <td style="font-size:14px;">
+                                    <select id="select-moneda" class="select2" ng-model="cuenta.Moneda" ng-options="item as item.Nombre for item in monedas"></select>
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" style="width:250px" id="numeroCuenta" placeholder="Numero cuenta" ng-model="cuenta.NumeroCuenta" />*@
+                                    <div ng-class="cuentaBancariaForm.numeroCuenta.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                        <div class="validate_msg" ng-show="cuentaBancariaForm.numeroCuenta.$invalid">Numero de cuenta incorrecto.</div>
+                                        <input type="text" class="form-control" style="width:250px" id="numeroCuenta" placeholder="Numero cuenta" ng-model="cuenta.NumeroCuenta" name="numeroCuenta" minlength="5" required ng-pattern-restrict="^[0-9._-]*$" />
+                                    </div>
+                                </td>
+                                <td>
+                                    @*<input type="text" class="form-control" style="width:300px" id="numeroCCI" placeholder="Numero cuenta interbancaria" ng-model="cuenta.NumeroCCI"/>*@
+                                    <div ng-class="cuentaBancariaForm.numeroCCI.$invalid ? 'input_wrapper validate_require' : 'input_wrapper'">
+                                        <div class="validate_msg" ng-show="cuentaBancariaForm.numeroCCI.$invalid">Numero CCI incorrecto.</div>
+                                        <input type="text" class="form-control" style="width:300px" id="numeroCCI" placeholder="Numero cuenta interbancaria" ng-model="cuenta.NumeroCCI" name="numeroCCI" minlength="5" required ng-pattern-restrict="^[0-9._-]*$" />
+                                    </div>
+                                </td>
+                                <td style="font-size:14px;">
+                                    <select id="select-ubigeo" class="select2" ng-model="cuenta.Ubigeo" ng-options="item as item.Nombre for item in ubigeos"></select>
+                                </td>
+                                <td>
+                                    <i class="fa fa-toggle-on" ng-model="cuenta.EstaActivo" ng-class="cuenta.EstaActivo ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="cuenta.EstaActivo=!cuenta.EstaActivo" />
+                                </td>
+                                <td>
+                                    <a ng-click="agregarCuentaBancaria()" ng-disabled="cuentaBancariaForm.$invalid || idEntidadBancariaNinguna == cuenta.EntidadFinanciera.Id" class="btn btn-info btn-sm btn-flat"><span class="glyphicon glyphicon-plus"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

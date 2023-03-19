@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Reporte kardex";
+
+    @section scripts{
+
+        <script src=@Url.Content("~/Scripts/controller/almacen/reporteAlmacenController.js")></script>
+        <script src=@Url.Content("~/Scripts/code39/jquery-barcode.min.js")></script>
+        <script>
+            var fechaHoraInicio = '@ViewBag.fechaInicio';
+                 var fechaHoraFin = '@ViewBag.fechaFin';
+        </script>
+    }
+}
+<div class="col-xs-12" ng-controller="kardexController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">
+                    REPORTE KARDEX
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <form name="formKardex">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>ALMACÉN: </label>
+                                                <select id="almacen" class="select2 form-control" ng-model="almacen" ng-options="item as item.Nombre for item in listaAlmacenes track by item.Id" ></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="control-label">FAMILIA:</label>
+                                                <select tabindex=1 id="nombre-basico" class="select2 form-control" ng-model="conceptoBasicoSeleccionado" ng-change="obtenerMercaderiasPorConceptoBasicoGenerico()" ng-options="item as item.Nombre for item in conceptos track by item.Id"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="control-label">CONCEPTO:</label>
+                                                <select class="select2 form-control" ng-model="mercaderia" ng-options="item as item.Nombre for item in mercaderias track by item.Id" ng-change="actualizarURLReporteKardex()" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="dateStart">FECHA INICIAL </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input id="dateStart" ng-model="fechaInicio" ng-change="actualizarURLReporteKardex()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-start" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="bootstrap-timepicker">
+                                                <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" id="horaIndividual" ng-model="horaInicio" ng-change="actualizarURLReporteKardex()" class="form-control timepickerIndividual">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="dateEnd">FECHA FINAL</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input id="dateEnd" ng-model="fechaFin" ng-change="actualizarURLReporteKardex()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="bootstrap-timepicker">
+                                                <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="text" id="horaIndividual" ng-model="horaFin" ng-change="actualizarURLReporteKardex()" class="form-control timepickerIndividual">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-clock-o"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label">LOTE:</label>
+                                            <div class="checkbox checkbox-primary">
+                                                <input style="height: 20px; width: 20px;" id="select-lote" type="checkbox" class="styled" ng-model="conLote" /><label style="margin-top: -11px; margin-left: 1px;" id="select-lote">Detallado por lote</label>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button title="Limpiar Filtros" class="btn btn-danger" ng-click="limpiarFiltrosReporteKardex()">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        <a id="download-report-kardex" title="Descargar el Reporte Kardex" class="btn btn-success btn-success glyphicon glyphicon-download" href=""></a>
+                                        <a id="search-report-kardex" title="Mostrar reporte kardex" class="btn btn-primary btn-info glyphicon glyphicon-search" href=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

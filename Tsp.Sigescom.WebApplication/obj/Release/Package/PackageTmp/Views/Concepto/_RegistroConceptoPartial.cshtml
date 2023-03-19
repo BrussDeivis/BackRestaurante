@@ -1,0 +1,191 @@
+﻿<form name="mercaderiaForm" id="mercaderia-form">
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">DATOS GENERALES: </div>
+                    <div class="panel-body">
+                        <div class="col-xs-12 col-md-12 no-padding">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>NOMBRE</label>
+                                        <label class="form-control ng-cloak" style="border-radius:5px; box-shadow: 0 8px 6px -6px gray; border-radius: 5px ">{{mercaderia.Nombre}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="{{classParaCodigo}}" ng-show="mostrarCampoCodigoAlRegistrarConcepto">
+                                    <div class="form-group">
+                                        <label>CÓDIGO</label>
+                                        <input ng-model="mercaderia.Codigo" uppercase-only class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="{{classParaCodigoDigemid}}" ng-show="mostrarCampoCodigoDigemidAlRegistrarConcepto">
+                                    <div class="form-group">
+                                        <label>CÓDIGO DIGEMID</label>
+                                        <input ng-model="mercaderia.CodigoDigemid" uppercase-only class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="{{classParaCodigoBarra}}">
+                                    <div class="form-group">
+                                        <label>CÓDIGO DE BARRA</label>
+                                        <input ng-model="mercaderia.CodigoBarra" uppercase-only class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="{{classParaFamilia}} no-padding">
+                                    <div ng-controller="conceptoController" class="col-md-12" ng-init="inicializarRegistroConcepto()">
+                                        <label>FAMILIA</label>
+                                        <a title="Nueva Familia" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#modal-concepto" ng-click="nuevoRegistroConceptoEnMercaderia()"><span class="glyphicon glyphicon-plus"></span></a>
+                                        @Html.Partial("../Concepto/_ModalRegistroConceptoBasico")
+                                    </div>
+                                    <div class="col-md-12">
+                                        <select id="nombre-basico" class="select2 form-control selectAtributoMercaderia" ng-model="mercaderia.Concepto" ng-change="obtenerCaracteristicasConcepto();actualizarNombre()" ng-options="item as item.Nombre for item in conceptos track by item.Id" required style="width: 300px; height: 200px"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>SUFIJO</label>
+                                        <input ng-model="mercaderia.Sufijo" uppercase-only ng-change="actualizarNombre()" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="col-md-12 no-padding">
+                                        <div class="form-group">
+                                            <label title="Unidad de medida Comercial">U. M. C.</label>
+                                            <select id="select-model" class="select2 form-control selectAtributoMercaderia" ng-model="mercaderia.UnidadDeMedidaCom" ng-change="actualizarNombre()" ng-options="item as item.Nombre for item in unidadesDeMedida track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="col-md-12 no-padding">
+                                        <div class="form-group">
+                                            <label title="Unidad de medida Referencial">U. M. R.</label>
+                                            <select id="select-model" class="select2 form-control selectAtributoMercaderia" ng-model="mercaderia.UnidadDeMedidaRef" ng-options="item as item.Nombre for item in unidadesDeMedida track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div ng-controller="caracteristica_controller_mercaderia">
+                                    <div ng-repeat="item in caracteristicas" class="col-md-4">
+                                        <div class="col-md-12 no-padding mt-20">
+                                            <label class="ng-cloak">{{item.Nombre}}</label>
+                                            <a title="NUEVA {{item.Nombre}}" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#modal-valorCaracteristica" ng-click="nuevoRegistroValorCaracteristicaEnMercaderia($index, item.Id, item.Nombre)"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </div>
+                                        <div class="col-md-12 no-padding">
+                                            <select id="select-model" class="select2 form-control caracteristica" ng-model="mercaderia.IdsCaracteristicas[$index]" ng-change="actualizarNombre()" ng-options="objeto.Id as objeto.Nombre for objeto in item.Valores"></select>
+                                        </div>
+                                    </div>
+                                    @Html.Partial("../Concepto/_ModalRegistroValorCaracteristica")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary" ng-show="modulosAdicionales.length > 0">
+                    <div class="panel-heading">MODULOS ADICIONALES: </div>
+                    <div class="panel-body">
+                        <div class="col-xs-12 col-md-12 no-padding">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>CONCEPTO ACTIVADO PARA EL MÓDULO</label>
+                                        <div class="row">
+                                            <div ng-repeat="item in modulosAdicionales">
+                                                <div class="col-md-3">
+                                                    <div class="checkbox checkbox-primary">
+                                                        <input id="modulo{{item.Id}}" type="checkbox" data-checklist-model="mercaderia.ModulosAdicionales" data-checklist-value="item.Id">
+                                                        <label for="modulo{{item.Id}}">{{item.Nombre}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">PRESENTACIÓN: </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>NOMBRE</label>
+                                    <select id="select-model" class="select2 form-control selectAtributoMercaderia" ng-model="mercaderia.Presentacion" ng-change="actualizarNombre()" ng-options="item as item.Nombre for item in presentaciones track by item.Id"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>CANTIDAD</label>
+                                    <input ng-model="mercaderia.CantidadPresentacion" class="form-control numero-derecha" type="number" ng-change="actualizarNombre()" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label title="Unidad de medida">U. M.</label>
+                                    <select id="select-model" class="select2 form-control selectAtributoMercaderia" ng-model="mercaderia.UnidadDeMedidaPres" ng-change="actualizarNombre()" ng-options="item as item.Nombre for item in unidadesDeMedida track by item.Id"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">IMAGEN: </div>
+                    <div class="panel-body">
+                        <div class="col-xs-12 ng-cloak" flow-init="{singleFile:true}" @*flow-name="obj.flow"*@ flow-file-added="[processFile($file)][!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]]">
+                            <div class="form-group ng-cloak">
+                                <span class="btn btn-primary" ng-show="!mercaderia.Foto.HayFoto" ng-click="dasactivarBotonRestablecer()" flow-btn=""><span class="fa fa-plus"></span> Agregar imagen<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                <span class="btn btn-primary" ng-show="mercaderia.Foto.HayFoto" ng-click="dasactivarBotonRestablecer()" flow-btn=""><span class="glyphicon glyphicon-refresh"></span> Cambiar<input type="file" style="visibility: hidden; position: absolute;"></span>
+                                <span class="btn btn-danger" id="remover" ng-show="mercaderia.Foto.HayFoto" ng-click="$flow.cancel(); eliminarFotoMercaderia()">
+                                    <span class="glyphicon glyphicon-remove-sign"></span> Remover
+                                </span>
+                                <span class="btn btn-primary btn-sm" ng-show="botonRestablecer" ng-click="restablecerFotoMercaderia()">
+                                    <span class="glyphicon glyphicon-arrow-left"></span> Restablecer
+                                </span>
+                            </div>
+                            <div class="thumbnail ng-cloak" ng-show="!$flow.files.length">
+                                <img src="{{mercaderia.Foto.FotoSrc}}">
+                            </div>
+                            <div class="thumbnail ng-cloak" ng-show="$flow.files.length">
+                                <img flow-img="$flow.files[0]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">DATOS COMPLEMENTARIOS: </div>
+                    <div class="panel-body">
+                        <div class="row" style="overflow-y:auto;  height: 410px">
+                            <div class=" col-xs-12 col-md-12">
+                                <div class="form-group">
+                                    <label>PRECIOS DE VENTA</label>
+                                    @Html.Partial("../Precio/_RegistroPrecioPartial")
+                                </div>
+                            </div>
+                            <div class=" col-xs-12 col-md-2">
+                                <div class="form-group">
+                                    <label>STOCK MÍNIMO</label>
+                                    <input ng-model="mercaderia.StockMinimo" ng-change="mercaderia.StockMinimo = (mercaderia.StockMinimo < 0) ? 0 : mercaderia.StockMinimo;" type="number" class="form-control numero-derecha" placeholder="Ingresé stock mínimo" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+﻿
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/controlVisitas/rucCtrl.js")></script>
+}
+<div class="col-md-12" ng-controller="rucCtrl">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REGISTRO DATOS RUC</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-offset-3">
+            <form name="reniecForm" id="reniec-form" class="form-horizontal">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="numeroRuc" class="col-sm-3 control-label">Ruc:</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input ng-model="ruc" class="form-control" id="ingreso" type="text" name="numeroRuc" maxlength="11" />
+                                    <span class="input-group-btn"><button class="btn btn-primary" ng-click="guardar(ruc)"><i class="fa fa-save"></i></button></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

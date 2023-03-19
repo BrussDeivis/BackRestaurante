@@ -1,0 +1,24 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            @if (User.IsInRole("AdministradorNegocio"))
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="establecimientoComercial" >Establecimiento comercial:</label>
+                        <select class="select2 form-control" id="establecimientoComercial" ng-model="establecimientoComercial" ng-change="obtenerCentrosDeAtencionConRolAlmacen()" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required ></select>
+                    </div>
+                </div>
+            }
+            @if (User.IsInRole("AdministradorEstablecimiento") || User.IsInRole("AdministradorNegocio"))
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="centroDeAtencion">Almacen:</label>
+                        <select class="select2 form-control" id="centroDeAtencion" ng-model="centroDeAtencion" ng-options="item as item.Nombre for item in listaCentrosDeAtencionConRolAlmacen track by item.Id" required></select>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

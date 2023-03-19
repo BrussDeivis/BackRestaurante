@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Complementos";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/hotel/complementosController.js")></script>
+}
+
+<div class="col-md-12" ng-controller="complementosController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">COMPLEMENTOS</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button title="DESCARGAR" ng-click="export('tabla-complementos')" class="btn btn-success" style="background-color: #0F7A3F"><span class="fa fa-file-excel-o"></span></button>
+                            <a title="Nueva caracteristica" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-nuevo-complemento" ng-click=""><span class="glyphicon glyphicon-plus"></span> NUEVO COMPLEMENTO</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive principal-tablaResponsiva">
+                            <table id="tabla-complementos" datatable="ng" dt-options="dtOptions" dt-column-defs="complementos.dtColumnDefs" class="table table-stripped table-bordered dateTable tabla-responsiva">
+                                <thead>
+                                    <tr class="filters">
+
+                                        <th scope="col">N°</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Descripción</th>
+                                        <th class="noExport not-search" scope="col">Acciones</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="habitacion in complementos" ng-cloak>
+                                        <td scope="row" data-label="N°">{{habitacion.Id}}</td>
+                                        <td scope="row" data-label="Nombre" class="width-100">{{habitacion.CodigoHabitacion}}</td>
+                                        <td scope="row" data-label="Descripcion">{{habitacion.Ambiente}}</td>
+                                        <td scope="row" data-label="Acciones">
+                                            <a title="Editar caracteristica" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modal-caracteristica" ng-click="editarCaracteristica(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_Nuevo_Complemento")
+    </div>
+</div>

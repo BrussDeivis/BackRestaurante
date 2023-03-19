@@ -1,0 +1,1080 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "4.5.0.0",
+        "fileVersion": "4.5.0-6.23123.11 (271ccd71)",
+        "semanticVersion": "4.5.0",
+        "language": "es-ES"
+      },
+      "results": [
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'nombre' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 20,
+                  "endLine": 77,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'sufijo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 20,
+                  "endLine": 78,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idConceptoBasico' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 79,
+                  "startColumn": 17,
+                  "endLine": 79,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idUnidadDeMedidaCom' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 17,
+                  "endLine": 80,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idUnidadDeMedidaRef' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 81,
+                  "startColumn": 17,
+                  "endLine": 81,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idPresentacion' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 83,
+                  "startColumn": 17,
+                  "endLine": 83,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'cantidadPresentacion' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 84,
+                  "startColumn": 21,
+                  "endLine": 84,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idUnidadDeMedidaPre' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 85,
+                  "startColumn": 17,
+                  "endLine": 85,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idPresentacionSubContenido' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 86,
+                  "startColumn": 18,
+                  "endLine": 86,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'foto' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 87,
+                  "startColumn": 20,
+                  "endLine": 87,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'hayFoto' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 18,
+                  "endLine": 88,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'stockMinimo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 91,
+                  "startColumn": 22,
+                  "endLine": 91,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idEmpleado' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 92,
+                  "startColumn": 17,
+                  "endLine": 92,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'nombre' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 20,
+                  "endLine": 69,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'codigo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 70,
+                  "startColumn": 20,
+                  "endLine": 70,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idConceptoBasico' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 17,
+                  "endLine": 71,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'sufijo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 72,
+                  "startColumn": 20,
+                  "endLine": 72,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idUnidadDeMedidaCom' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 73,
+                  "startColumn": 17,
+                  "endLine": 73,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idUnidadDeMedidaRef' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 17,
+                  "endLine": 74,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idPresentacion' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 17,
+                  "endLine": 77,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'cantidadPresentacion' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 21,
+                  "endLine": 78,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idUnidadDeMedidaPre' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 79,
+                  "startColumn": 17,
+                  "endLine": 79,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'stockMinimo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 82,
+                  "startColumn": 21,
+                  "endLine": 82,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idPeriodo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/LibrosElectronicosLogicaTests.cs",
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 17,
+                  "endLine": 45,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idLibroVentas' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/LibrosElectronicosLogicaTests.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 17,
+                  "endLine": 46,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idPeriodo' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/LibrosElectronicosLogicaTests.cs",
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 17,
+                  "endLine": 61,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'nombre' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConfiguracionLogicaTests.cs",
+                "region": {
+                  "startLine": 101,
+                  "startColumn": 20,
+                  "endLine": 101,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'idCentroDeAtencionPadre' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConfiguracionLogicaTests.cs",
+                "region": {
+                  "startLine": 103,
+                  "startColumn": 17,
+                  "endLine": 103,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'observacion' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/OperacionLogicaTests.cs",
+                "region": {
+                  "startLine": 1066,
+                  "startColumn": 20,
+                  "endLine": 1066,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0219",
+          "level": "warning",
+          "message": "La variable 'flete' está asignada pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/OperacionLogicaTests.cs",
+                "region": {
+                  "startLine": 1068,
+                  "startColumn": 21,
+                  "endLine": 1068,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0169",
+          "level": "warning",
+          "message": "El campo 'VentaLogicaUnitTest.ArchivoFechaE' nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/VentaLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 29,
+                  "endLine": 15,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0169",
+          "level": "warning",
+          "message": "El campo 'VentaLogicaUnitTest.ArchivoFechaL' nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/VentaLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 29,
+                  "endLine": 14,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0414",
+          "level": "warning",
+          "message": "El campo 'VentaLogicaUnitTest.idCentroAtencion' está asignado pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/VentaLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 13,
+                  "endLine": 16,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "CS0414",
+          "level": "warning",
+          "message": "El campo 'ProductoLogicaUnitTest.idCentroAtencion' está asignado pero su valor nunca se usa",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 13,
+                  "endLine": 14,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 3
+          }
+        },
+        {
+          "ruleId": "S2187",
+          "level": "warning",
+          "message": "Add some tests to this class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/RestauranteLogicaTests.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 18,
+                  "endLine": 24,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2187",
+          "level": "warning",
+          "message": "Add some tests to this class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/CotizacionLogicaTests.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 18,
+                  "endLine": 6,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2187",
+          "level": "warning",
+          "message": "Add some tests to this class.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/CompraLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 26,
+                  "endLine": 16,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/SigesRestaurant/RestauranteLogicaTests.cs",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 21,
+                  "endLine": 52,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/FacturacionLogicaUnitTests.cs",
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 21,
+                  "endLine": 18,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ActorNegocioLogicaTests.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 21,
+                  "endLine": 30,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ClienteLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 21,
+                  "endLine": 89,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ActorNegocioLogicaTests.cs",
+                "region": {
+                  "startLine": 90,
+                  "startColumn": 21,
+                  "endLine": 90,
+                  "endColumn": 51
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 21,
+                  "endLine": 66,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ProductoLogicaUnitTest.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 21,
+                  "endLine": 74,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/ConceptoLogicaTests.cs",
+                "region": {
+                  "startLine": 136,
+                  "startColumn": 21,
+                  "endLine": 136,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/LibrosElectronicosLogicaTests.cs",
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 21,
+                  "endLine": 59,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2699",
+          "level": "warning",
+          "message": "Add at least one assertion to this test case.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/Tsp.Sigescom2.3-Back/Tsp.Sigescom.UnitTestLogica/OperacionLogicaTests.cs",
+                "region": {
+                  "startLine": 855,
+                  "startColumn": 21,
+                  "endLine": 855,
+                  "endColumn": 66
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CS0169": {
+          "id": "CS0169",
+          "shortDescription": "Nunca se usa el campo",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0169)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS0219": {
+          "id": "CS0219",
+          "shortDescription": "La variable está asignada pero nunca se usa su valor",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0219)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS0414": {
+          "id": "CS0414",
+          "shortDescription": "El campo está asignado pero nunca se usa su valor",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0414)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "S2187": {
+          "id": "S2187",
+          "shortDescription": "TestCases should contain tests",
+          "fullDescription": "There’s no point in having a test class without any test methods.This could lead a maintainer to assume a class is covered by tests even though it is not.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2187",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S2699": {
+          "id": "S2699",
+          "shortDescription": "Tests should include assertions",
+          "fullDescription": "A test case without assertions ensures only that no exceptions are thrown. Beyond basic runnability, it ensures nothing about the behavior of the code under test.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2699",
+          "properties": {
+            "category": "Blocker Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

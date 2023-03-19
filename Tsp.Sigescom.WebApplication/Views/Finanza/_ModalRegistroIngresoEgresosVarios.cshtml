@@ -1,0 +1,86 @@
+﻿<div id="modal-registro-ingreso-egreso-varios" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-mg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE {{etiquetaIngresoEgreso}} VARIOS</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <form name="cobrarPagarForm" class="formulario form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="cajero">CAJERO : </label>
+                            <label>{{nombreCajero}}</label>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 no-padding">
+                                            <selector-actor-comercial ng-if="inicializacionRealizada" id="SelectorAutorizado" actor-comercial="modelo.Emisor" rol="rolEmpleado" id-sub-rol="0" etiqueta-rol="'AUTORIZADO POR'" api="$parent.selectorProveedorAPI" changed="cambioAutorizado(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroEmpleado"></selector-actor-comercial>
+                                        </div>
+                                        <div class="col-md-12 no-padding">
+                                            <div class="col-md-12 no-padding">
+                                                <div class="radio radio-primary radio-inline" style="margin-left: 10px;">
+                                                    <input type="radio" id="radio1" name="cuenta" value="1" ng-model="tipoPagadorBeneficiario" ng-checked="tipoPagadorBeneficiario==1" ng-change="obtenerPagadoresBeneficiarios()">
+                                                    <label for="radio1">Empleado</label>
+                                                </div>
+                                                <div class="radio radio-primary radio-inline">
+                                                    <input type="radio" id="radio2" name="cuenta" value="2" ng-model="tipoPagadorBeneficiario" ng-checked="tipoPagadorBeneficiario==2" ng-change="obtenerPagadoresBeneficiarios()">
+                                                    <label for="radio2">Cliente</label>
+                                                </div>
+                                                <div class="radio radio-primary radio-inline">
+                                                    <input type="radio" id="radio3" name="cuenta" value="3" ng-model="tipoPagadorBeneficiario" ng-checked="tipoPagadorBeneficiario==3" ng-change="obtenerPagadoresBeneficiarios()">
+                                                    <label for="radio3">Proveedor</label>
+                                                </div>
+                                            </div>
+                                            <selector-actor-comercial ng-if="inicializacionRealizada && tipoPagadorBeneficiario==1" id="SelectorEmpleado" actor-comercial="modelo.PagadorBeneficiario" rol="rolEmpleado" id-sub-rol="0"  etiqueta-rol="etiquetaPagadorBeneficiario" api="$parent.selectorProveedorAPI" changed="cambioPagadorBeneficiario(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="1" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroEmpleado"></selector-actor-comercial>
+                                            <selector-actor-comercial ng-if="inicializacionRealizada && tipoPagadorBeneficiario==2" id="SelectorCliente" actor-comercial="modelo.PagadorBeneficiario" rol="rolCliente" id-sub-rol="0"  etiqueta-rol="etiquetaPagadorBeneficiario" api="$parent.selectorProveedorAPI" changed="cambioPagadorBeneficiario(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroCliente"></selector-actor-comercial>
+                                            <selector-actor-comercial ng-if="inicializacionRealizada && tipoPagadorBeneficiario==3" id="SelectorProveedor" actor-comercial="modelo.PagadorBeneficiario" id-sub-rol="0"  rol="rolProveedor" etiqueta-rol="etiquetaPagadorBeneficiario" api="$parent.selectorProveedorAPI" changed="cambioPagadorBeneficiario(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroProveedor"></selector-actor-comercial>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">DOCUMENTO</label>
+                                            <select class="select2 form-control tipoDocumento" ng-model="modelo.TipoDeComprobante" ng-change="cargarSeries(modelo.TipoDeComprobante); validarModal();" ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantes  track by item.TipoComprobante.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12" ng-show="modelo.TipoDeComprobante.MostrarSelectorSerie">
+                                            <div class="row">
+                                                <label class="control-label">SERIE</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline col-md-3" ng-init="modelo.TipoDeComprobante.SerieSeleccionada=series[0].Id" ng-repeat="item in series">
+                                                <input type="radio" id="radio-{{$index}}" ng-model="modelo.TipoDeComprobante.SerieSeleccionada" value="{{item.Id}}" ng-checked="modelo.TipoDeComprobante.SerieSeleccionada==item.Id">
+                                                <label for="radio-{{$index}}">{{item.Nombre}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="importe" class="control-label">IMPORTE</label>
+                                            <input class="form-control numero-derecha" ng-model="modelo.Importe" ng-blur="modelo.Importe = formatNumber(modelo.Importe, 2); validarModal();" onClick="select();" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" required />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="observacion" class="control-label">OBSERVACIÓN</label>
+                                            <textarea class="form-control" rows="3" ng-model="modelo.Observacion" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="box box-danger" ng-show="mensajeAdvertencia.length > 0">
+                    <div class="box-body">
+                        <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                        <table>
+                            <tr ng-repeat="item in mensajeAdvertencia">
+                                <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button title="GUARDAR" ng-click="registrarIngresoEgresoVarios()" ng-disabled="mensajeAdvertencia.length > 0" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-check"></span> GUARDAR</button>
+                <button title="CANCELAR" data-dismiss="modal" ng-click="cerrar()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>

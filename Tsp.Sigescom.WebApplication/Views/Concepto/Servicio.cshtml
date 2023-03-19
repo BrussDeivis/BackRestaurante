@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Servicios";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/producto/mercaderiaController.js")></script>
+    <script>
+        var idUnidadDeMedidaSubUnidad=@ViewBag.IdUnidadDeMedidaSubUnidad;
+    </script>
+}
+<div class="col-md-12" ng-controller="mercaderiaController">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REGISTRO DE SERVICIO</div>
+            </div>
+        </div>
+        <form name="registro-servicio">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Nombre</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Nombre Basico</label>
+                                            <select id="nombre-basico" class="select444 form-control" ng-model="modelo.IdArticulo" ng-options="item.Id as item.Nombre for item in articulos track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Sufijo</label>
+                                            <input id="sufijo" placeholder="Sufijo" type="text" ng-model="modelo.Sufijo" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Datos Complementarios</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label title="Unidad de medida">Unidad Medida</label>
+                                            <select id="unidad-medida" class="select444 form-control" ng-model="modelo.IdUnidadMedidaComercial" ng-options="item.Id as item.Nombre for item in unidadesDeMedida track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Precio Venta</label>
+                                            <input id="precio" ng-model="modelo.PrecioVenta" class="form-control number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Descripcion</label>
+                                            <textarea id="informacion" ng-model="modelo.informacion" class="form-control" placeholder="Breve descripción"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <a ng-disabled="servicioForm.$invalid" title="GUARDAR" class="btn btn-primary btn-flat" ng-click="guardarVenta()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

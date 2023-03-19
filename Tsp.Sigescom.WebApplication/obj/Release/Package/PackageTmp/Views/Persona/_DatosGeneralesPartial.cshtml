@@ -1,0 +1,81 @@
+﻿<div class="col-md-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">DATOS GENERALES: </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12" ng-show="mostrarApellidoPaternoMaternoYNombre">
+                            <div class="form-group">
+                                <label for="apellidoPaterno">Apellido Paterno:  *</label>
+                                <input id="apellidoPaterno" class="form-control" placeholder="Apellido Paterno" uppercase-only ng-model="actor.ApellidoPaterno" ng-required="mostrarApellidoPaternoMaternoYNombre" />
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="!mostrarApellidoPaternoMaternoYNombre">
+                            <div class="form-group">
+                                <label for="razonSocial">Razon Social:  *</label>
+                                <input id="razonSocial" class="form-control" placeholder="Razon Social" uppercase-only ng-model="actor.RazonSocial" ng-required="!mostrarApellidoPaternoMaternoYNombre" />
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="mostrarApellidoPaternoMaternoYNombre">
+                            <div class="form-group">
+                                <label for="apellidoMaterno">Apellido Materno:  *</label>
+                                <input id="razonSocial" class="form-control" placeholder="Apellido Materno" uppercase-only ng-model="actor.ApellidoMaterno" ng-required="mostrarApellidoPaternoMaternoYNombre" />
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="mostrarApellidoPaternoMaternoYNombre">
+                            <div class="form-group">
+                                <label for="nombres">Nombres:  *</label>
+                                <input id="nombres" class="form-control" placeholder="Nombres" uppercase-only ng-model="actor.Nombres" ng-required="mostrarApellidoPaternoMaternoYNombre" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="nombreComercial">Nombre Comercial:  *</label>
+                                <input id="nombreComercial" class="form-control" placeholder="Nombre Comercial" uppercase-only ng-model="actor.NombreComercial" required />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="estado">Estado:  *</label>
+                                <select id="estado" class="select2 form-control" ng-model="actor.EstadoLegalActor" ng-options="item as item.Nombre for item in tiposDeEstadoLegal track by item.Id"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="sexo">{{denominacionClaseActor}}:  *</label>
+                                <select id="sexo" class="select2 form-control " ng-model="actor.ClaseActor" ng-options="item as item.Nombre for item in tiposDeClaseActor track by item.Id"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="nombreCorto ">Nombre Corto:</label>
+                                <input id="nombreCorto" class="form-control" placeholder="Nombre corto" uppercase-only ng-model="actor.NombreCorto" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="correo">Correo:</label>
+                                <input id="correo" placeholder="Correo" class="form-control" type="email" ng-model="actor.Correo" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="telefono">Telefono:</label>
+                                <input id="telefono" placeholder="Telefono" class="form-control" ng-model="actor.Telefono" maxlength="9" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

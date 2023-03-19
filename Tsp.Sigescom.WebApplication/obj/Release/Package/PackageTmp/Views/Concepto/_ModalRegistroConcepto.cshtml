@@ -1,0 +1,22 @@
+﻿<div  id="modal-mercaderia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRO DE CONCEPTO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.Partial("../Concepto/_RegistroConceptoPartial")
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button @*ng-disabled="mercaderiaForm.$invalid"*@ ng-click="guardar()" class="btn btn-primary btn-flat pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                <button @*ng-disabled="mercaderiaForm.$invalid"*@ ng-click="guardarYClonar()" class="btn btn-primary btn-flat pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR Y CLONAR</button>
+                <button @*ng-click="close()"*@  data-dismiss="modal" title="Cerrar" class="btn btn-flat btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

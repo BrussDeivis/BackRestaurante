@@ -1,0 +1,124 @@
+﻿
+@using Tsp.Sigescom.Modelo;
+@{
+    ViewBag.Title = "Reportes de Ejemplo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/ejemplo/reportesEjemploController.js")></script>
+    <script>
+        var fechaHoraInicio = new Date(@(((DateTime)ViewBag.fechaHoraInicio).ToJavaScriptMilliseconds()));
+        var fechaHoraFin = new Date(@(((DateTime)ViewBag.fechaHoraFin).ToJavaScriptMilliseconds()));
+        var cantidadMaximaDias = @ViewBag.cantidadMaximaDias;
+    </script>
+}
+
+
+<form name="reporteForm" novalidate>
+
+    <div class="col-md-12" ng-controller="reportesEjemploController" ng-init="inicializar()">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">REPORTES DE EJEMPLO</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">SELECCIONE PERIODO </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dateStart">Fecha y Hora Inicial </label>
+                                        <div>
+                                            <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="fechaHoraInicio" ng-change="actualizarURLReportes()" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dateEnd">Fecha y Hora Final </label>
+                                        <div>
+                                            <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="fechaHoraFin" ng-change="actualizarURLReportes()" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="punto2">Cochera </label>
+                                    <select class="select2 form-control" ng-model="cocheraSeleccionada" ng-change="actualizarURLReportes()" ng-options="item as item.Nombre for item in cocheras" required></select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">VEHICULOS INGRESADOS</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Vehículos ingresados " class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;" ng-href="{{URLReporteDeVehiculosIngresados}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">INGRESOS Y SALIDAS</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Ingresos y salidas de cochera " class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;" ng-href="{{URLReporteDeIngresosYSalidas}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border ng-cloak">
+                        <h3 class="box-title">EXONERACIONES</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <a title="Exoneraciones " class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;" ng-href="{{URLReporteDeVehiculosExonerados}}">VER</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

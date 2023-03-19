@@ -1,0 +1,72 @@
+﻿<div id="modal-vista-documento-envio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">DETALLE DE ENVIO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <a href="@Url.Action("ObtenerArchivoEnvio", "FacturacionElectronica")?idEnvio={{verEnvio.IdBinarioEnvio}}&nombreArchivo={{'E-' + verEnvio.TipoEnvio +'-'+ verEnvio.FechaEnvio}}" title="DESCARGAR ZIP ENVIO" class="btn btn-md btn-success pull-left"> ENVIO ZIP </a>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <a href="@Url.Action("ObtenerArchivoRespuesta", "FacturacionElectronica")?idRespuesta={{verEnvio.IdBinarioRespuesta}}&nombreArchivo={{'R-' + verEnvio.TipoEnvio +'-'+ verEnvio.FechaEnvio}}" title="DESCARGAR ZIP RESPUESTA" class="btn btn-md btn-success pull-right"> RESPUESTA ZIP </a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Fecha :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label>{{verEnvio.FechaEnvio}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Tipo Envio :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label>{{verEnvio.TipoEnvio}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Estado :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label>{{verEnvio.Estado}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Observacion :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label>{{verEnvio.Observacion}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Codigo Respuesta :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label>{{verEnvio.CodigoRespuesta}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Numero Ticket :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label>{{verEnvio.NumeroTicket}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" title="Cerrar" class="btn btn-flat btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>

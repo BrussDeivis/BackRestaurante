@@ -1,0 +1,80 @@
+﻿<div id="traza-pago">
+    <div class="box box-primary box-solid">
+        <div class="box-body mh-0" style="padding: 5px;">
+            <div class="col-md-12 col-xs-12 no-padding" style="margin: 3px 0px;">
+                <div id="{{'medioPago' + $ctrl.externalId}}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-primary box-solid" ng-show="$ctrl.trazaPago.MedioDePago.Id == $ctrl.parametros.IdMedioDePagoEfectivo" style="margin-top:10px; margin-bottom:0px">
+        <div class="box-body pt-5">
+            <label class="col-md-12 col-xs-12 no-padding no-margin" style="color:var(--color-secundario)">EFECTIVO</label>
+            <label class="col-md-5 col-xs-5 label-model">PAGO S/</label>
+            <label class="col-md-7 col-xs-7 label-model value-model">{{$ctrl.trazaPago.Info.ImporteAPagar|number:2}}</label>
+            <label class="col-md-5 col-xs-5 label-model">RECIBIDO S/</label>
+            <input class="col-md-7 col-xs-7 input-model numero-derecha font-size-15" ng-model="$ctrl.trazaPago.Info.ImporteEntregado" ng-change="$ctrl.calcularEfectivo(); $ctrl.cambioTrazaPago()" ng-blur="$ctrl.formatoDosDecimales($event)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();">
+            <label class="col-md-5 col-xs-5 label-model">VUELTO S/</label>
+            <label class="col-md-7 col-xs-7 label-model value-model">{{$ctrl.trazaPago.Info.Vuelto|number:2}}</label>
+            <textarea id="observacion" class="col-md-12 input-model textarea-model" ng-model="$ctrl.trazaPago.Info.Observacion" ng-change="$ctrl.cambioTrazaPago()" row="1" placeholder="OBSERVACIÓN"></textarea>
+        </div>
+    </div>
+    <div class="box box-primary box-solid" ng-show="$ctrl.trazaPago.MedioDePago.Id == $ctrl.parametros.IdMedioDePagoTarjetaCredito" style="margin-top:10px; margin-bottom:0px">
+        <div class="box-body pt-5">
+            <label class="col-md-12 no-padding no-margin" style="color:var(--color-secundario)">TARJETA DE CRÉDITO</label>
+            <label class="control-label">BANCO</label>
+            <select class="select2 form-control" id="idEntidadFinancera" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.EntidadFinanciera" ng-options="item as item.Nombre for item in $ctrl.entidadesFinancieras track by item.Id"></select>
+            <label class="control-label">TARJETA</label>
+            <select class="select2 form-control" id="idTipoTarjeta" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.OperadorTarjeta" ng-options="item as item.Nombre for item in $ctrl.operadoresDeTarjeta track by item.Id"></select>
+            <label class="control-label">INFORMACIÓN</label>
+            <textarea id="informacion" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.Observacion" class="form-control" placeholder="N° Operación, tarjeta"></textarea>
+        </div>
+    </div>
+    <div class="box box-primary box-solid" ng-show="$ctrl.trazaPago.MedioDePago.Id == $ctrl.parametros.IdMedioDePagoTarjetaDebito" style="margin-top:10px; margin-bottom:0px">
+        <div class="box-body pt-5">
+            <label class="col-md-12 no-padding no-margin" style="color:var(--color-secundario)">TARJETA DE DÉBITO</label>
+            <label class="control-label">BANCO</label>
+            <select class="select2 form-control" id="idEntidadFinancera" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.EntidadFinanciera" ng-options="item as item.Nombre for item in $ctrl.entidadesFinancieras track by item.Id"></select>
+            <label class="control-label">TARJETA</label>
+            <select class="select2 form-control" id="idTipoTarjeta" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.OperadorTarjeta" ng-options="item as item.Nombre for item in $ctrl.operadoresDeTarjeta track by item.Id"></select>
+            <label class="control-label">INFORMACIÓN</label>
+            <textarea id="informacion" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.Observacion" class="form-control" placeholder="N° Operación, tarjeta"></textarea>
+        </div>
+    </div>
+    <div class="box box-primary box-solid" ng-show="$ctrl.trazaPago.MedioDePago.Id == $ctrl.parametros.IdMedioDePagoTransferencia" style="margin-top:10px; margin-bottom:0px">
+        <div class="box-body pt-5">
+            <label class="col-md-12 no-padding no-margin" style="color:var(--color-secundario)">TRANSFERENCIA</label>
+            <label class="control-label">CUENTA BANCARIA</label>
+            <select id="cuentaBancaria" class="select2 form-control" ng-model="$ctrl.trazaPago.Info.CuentaBancaria" ng-change="$ctrl.cambioTrazaPago()" ng-options="item as item.Nombre for item in $ctrl.cuentasBancarias track by item.Id"></select>
+            <label class="control-label">INFORMACIÓN</label>
+            <textarea id="informacion" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.Observacion" class="form-control" placeholder="N° Operación, tarjeta"></textarea>
+        </div>
+    </div>
+    <div class="box box-primary box-solid" ng-show="$ctrl.trazaPago.MedioDePago.Id == $ctrl.parametros.IdMedioDePagoDepositoEnCuenta" style="margin-top:10px; margin-bottom:0px">
+        <div class="box-body pt-5">
+            <label class="col-md-12 no-padding no-margin" style="color:var(--color-secundario)">DEPÓSITO</label>
+            <label class="control-label">CUENTA BANCARIA</label>
+            <select id="cuentaBancaria" class="select2 form-control" ng-model="$ctrl.trazaPago.Info.CuentaBancaria" ng-change="validarModal();" ng-options="item as item.Nombre for item in $ctrl.cuentasBancarias track by item.Id"></select>
+            <label class="control-label">INFORMACIÓN</label>
+            <textarea id="informacion" ng-change="$ctrl.cambioTrazaPago()" ng-model="$ctrl.trazaPago.Info.Observacion" class="form-control" placeholder="N° Operación, tarjeta"></textarea>
+        </div>
+    </div>
+    <div class="box box-primary box-solid" ng-show="$ctrl.trazaPago.MedioDePago.Id == $ctrl.parametros.IdMedioDePagoPuntos" style="margin-top:10px; margin-bottom:0px">
+        <div class="box-body pt-5">
+            <label class="col-md-12 col-xs-12 no-padding no-margin" style="color:var(--color-secundario)">PUNTOS</label>
+            <label class="col-md-4 col-xs-4 label-model"></label>
+            <label class="col-md-4 col-xs-4 label-model">S/</label>
+            <label class="col-md-4 col-xs-4 label-model">Pts</label>
+            <label class="col-md-4 col-xs-4 label-model">TIENE</label>
+            <label class="col-md-4 col-xs-4 label-model value-model">{{$ctrl.trazaPago.Info.ValorPuntosPorCanjear|number:2}}</label>
+            <label class="col-md-4 col-xs-4 label-model value-model">{{$ctrl.trazaPago.Info.PuntosPorCanjear|number:0}}</label>
+            <label class="col-md-4 col-xs-4 label-model">PAGO</label>
+            <input class="col-md-4 col-xs-4 input-model numero-derecha font-size-15" ng-model="$ctrl.trazaPago.Info.MontoCajeado" ng-change="$ctrl.calcularPuntos(); $ctrl.cambioTrazaPago()" ng-blur="$ctrl.formatoDosDecimales($event)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();" />
+            <label class="col-md-4 col-xs-4 label-model value-model">{{$ctrl.trazaPago.Info.PuntosCajeados|number:0}}</label>
+            <label class="col-md-4 col-xs-4 label-model">QUEDAN</label>
+            <label class="col-md-4 col-xs-4 label-model value-model">{{$ctrl.trazaPago.Info.ValorPuntosPendientes|number:2}}</label>
+            <label class="col-md-4 col-xs-4 label-model value-model">{{$ctrl.trazaPago.Info.PuntosPendientes|number:0}}</label>
+            <textarea id="observacion" class="col-md-12 col-xs-12 input-model textarea-model" ng-model="$ctrl.trazaPago.Info.Observacion" ng-change="$ctrl.pagoChanged()" row="1" placeholder="OBSERVACIÓN"></textarea>
+        </div>
+    </div>
+</div>

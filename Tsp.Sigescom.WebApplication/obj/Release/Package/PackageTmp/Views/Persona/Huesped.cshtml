@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Bandeja de Huesped";
+}
+
+<div class="col-xs-12" ng-controller="huespedController" ng-init="listarHuespedes()">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">HUESPED</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button title="DESCARGAR" ng-click="export('tabla-huespedes')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                            <button title="Nuevo Huesped" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-Registro-Cliente" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVO HUESPED</button>
+                        </div>
+                        <div class="col-xs-12">
+                            <table id="tabla-huespedes" datatable="ng" dt-options="dtOptions" dt-column-defs="huespedes.dtColumnDefs" class="table table-stripped table-bordered dateTable">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>NOMBRE Y APELLIDOS</th>
+                                        <th>NACIONALIDAD</th>
+                                        <th>PROCEDENCIA</th>
+                                        <th>TIP.DOC.</th>
+                                        <th>NUM.DOC</th>
+                                        <th>SEXO</th>
+                                        <th class="noExport">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in huespedes.Lista" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Huesped}}</td>
+                                        <td>{{item.Nacionalidad}}</td>
+                                        <td>{{item.Procedencia}}</td>
+                                        <td>{{item.TipoDocumentoIdentidad}}</td>
+                                        <td>{{item.NumeroDocumentoIdentidad}}</td>
+                                        <td>{{item.Sexo}}</td>
+                                        <td>
+                                            <button title="Editar Huesped" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-huesped" ng-click="editar(item.Id)" ng-hide="item.Id == idClienteGenerico"><span class="glyphicon glyphicon-edit"></span></button>
+                                            <button title="Dar de Baja al Huesped" class="btn btn-danger btn-xs btn-flat" data-toggle="modal" data-target="#pregunta-eliminar" ng-click="cargarModelo(item)" ng-hide="item.Id == idClienteGenerico"><span class="glyphicon glyphicon-trash"></span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroClientePartial")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+
+    <!-- PREGUNTA ELIMINAR HUESPED -->
+    <div id="pregunta-eliminar" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title center"> DAR DE BAJA HUESPED</h4>
+                </div>
+                <div class="modal-body">
+                    <p> Dara de baja a "{{actor.RazonSocial}}" ?</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-flat pull-left" data-dismiss="modal" ng-click="eliminar(actor.Id)"><span class="glyphicon glyphicon-check"></span> CONFIRMAR</button>
+                    <button class="btn btn-danger btn-flat" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

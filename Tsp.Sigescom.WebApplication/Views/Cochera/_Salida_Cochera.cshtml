@@ -1,0 +1,100 @@
+﻿<div id="salidaCochera">
+    <div class="col-md-12">
+        <div class="panel panel-danger" style="margin-top: 0px">
+            <div class="panel-heading">
+                <label for="PlacaSalida">REGISTRAR SALIDA</label>
+            </div>
+            <ng-form name="salidaForm" novalidate class="css-form form-horizontal" isolate-form>
+                <div class="panel-body no-padding">
+                    <div class="col-md-6">
+                        <div class="col-md-12 no-padding">
+                            <div class="form-group" style="margin-top:10px;">
+                                <label class="col-md-2 col-xs-6 label-model" for="PlacaSalida">PLACA</label>
+                                <input name="PlacaSalida" placeholder="ABC-123" class="col-md-4 col-xs-6 input-model" type="text" ng-model="placaSalida" ng-enter="cargarDatosParaSalida(placaSalida)" id="PlacaSalida" ng-pattern-restrict="^[a-zA-Z0-9\+\-\s]{0,7}$" minlength="5" maxlength="7" uppercase-only style="font-size:16px; display:initial" /> <!--size="7" ng-blur="$ctrl.validarPlaca()"-->
+                                <!--<span ng-show="form.PlacaIngreso.$error.pattern">Valor no válido</span>-->
+                            </div>
+                        </div>
+                        <div ng-show="estaRegistrandoSalida">
+                            <div class="col-md-12 col-sm-12 no-padding">
+                                <div class="group-model">
+                                    <label class="control-label" style="padding-top: 0px;">VEHICULO</label>
+                                    <p class="col-md-12 form-control" style="margin-bottom: 0px;">{{salida.Vehiculo.NombreCompleto}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 no-padding">
+                                <div class="group-model">
+                                    <label class="control-label">USUARIO</label>
+                                    <p class="col-md-12 form-control">{{salida.Cliente.NombreORazonSocial}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 no-padding" style="border: 1px solid #ccc;">
+                                <div style="padding-top:10px" ng-if="salida.SistemaDePago.Id==IdSistemDePagoPlanaPorTurnos">
+                                    @Html.Partial("_Consumo_Cochera_Plana")
+                                </div>
+                                <div style="padding-top:10px" ng-if="salida.SistemaDePago.Id==IdSistemDePagoPorHora">
+                                    @Html.Partial("_Consumo_Cochera_Hora")
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="checkbox checkbox-primary">
+                                                <input id="facturacionigv" type="checkbox" class="styled" ng-model="salida.PerdidaTicket" value="{{salida.PerdidaTicket}}" ng-change="calcularCostoPerdidaTicket()" />
+                                                <label for="facturacionigv" class="negrita">Perdida de Ticket</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:right">
+                                            <label style="font-weight:100">S/ {{salida.DetallesACobrar.Ticket|number:2}}</label>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="checkbox checkbox-primary">
+                                                <input id="consolidar" type="checkbox" class="styled" ng-model="salida.VentaConsolidada" />
+                                                <label for="consolidar" class="negrita">Consolidar</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-3">
+                                                <label>Sub total</label>
+                                            </div>
+                                            <div class="col-md-3" style="text-align:right">
+                                                <label>S/ {{salida.DetallesACobrar.SubTotal|number:2}}</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-3">
+                                                <label>Igv</label>
+                                            </div>
+                                            <div class="col-md-3" style="text-align:right">
+                                                <label>S/ {{salida.DetallesACobrar.Igv|number:2}}</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-3">
+                                                <label>Total</label>
+                                            </div>
+                                            <div class="col-md-3" style="text-align:right">
+                                                <label>S/ {{salida.DetallesACobrar.Total|number:2}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 group-model">
+                                    <textarea class="col-md-12 col-xs-12 input-model textarea-model" id="observacionSalida" ng-model="$ctrl.facturacion.Orden.Observacion" row="1" placeholder="OBSERVACIÓN"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" ng-show="estaRegistrandoSalida" style="padding-top:10px; padding-right:0px">
+                        <facturacion-venta external-id="0" api="facturacionAPI" facturacion="facturacionPago" mostrar-punto-de-venta-vendedor="false" debe-seleccionar-punto-de-venta-vendedor="false" debe-seleccionar-almacen-almacenero="false" debe-seleccionar-caja-cajero="false" debe-permitir-detalle-unificado="false" permitir-registro-fecha-emision="false" permitir-registro-placa="false" id-medio-pago-default="IdMedioPagoDefault" importe-total="salida.DetallesACobrar.Total.toFixed(2)" cambio-igv="cambiarAfeccionIgv(aplicarIgv)" inicio-realizado="" serie-comprobante-enter=""></facturacion-venta> 
+                    </div>
+                </div>
+                <div class="panel-footer" ng-show="estaRegistrandoSalida">
+                    <a class="btn btn-flat btn-primary" ng-click="registrarSalida()" ng-disabled="!facturacionPago.esValido"><span class="glyphicon glyphicon-flash"></span> GUARDAR</a>
+                    <a class="btn btn-danger btn-flat" ng-click="cancelarRegistrarSalida()" style="margin-left: 10px;"><span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
+                </div>
+            </ng-form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿<div id="modal-registro-pedido" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">{{accionModal}} PEDIDO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form name="registro-venta" class="formulario form-horizontal" ctrl-enter ng-cloak>
+                        <div class="col-md-9">
+                            <div class="box box-primary">
+                                <div class="box-body no-pad-top">
+                                    <div class="row">
+                                        <div class="col-md-3" ng-if="mostrarCodigoBarraBalanza">
+                                            <label class="control-label">BALANZA:</label>
+                                            <input id="idCodigoBarraBalanza" class="form-control" ng-model="codigo.codigoBarraBalanza" ng-enter="buscarConceptoPorCodigoDeBarraBalanza()" />
+                                        </div>
+
+                                        <div class="col-md-1 mt-5" id="nuevoConceptoServicio" ng-show="permitirRegistroConceptoServicio">
+                                            <a title="Ingresar Concepto Servicio" class="btn btn-xs btn-primary pull-right" ng-click="nuevoRegistroConceptoServicio()"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </div>
+                                        <registrador-concepto-servicio api="$parent.registradorConceptoServicioAPI" concepto-servicio="conceptoServicio" changed="ingresoConceptoServicio(conceptoServicio)"></registrador-concepto-servicio>
+                                    </div>
+                                    <registrador-detalles ng-if="inicializacionRealizada && inicializacionRealizadaDatosFacturacion" api="$parent.registradorDetallesAPI" operacion="pedido.Orden" registrar-flete="permitirRegistroFlete" cursor-por-defecto-codigo-barra="cursorInicialEnCodigoBarra" cambiar-importe-total="cambiarImporteTotal_DatosFacturacion(importeTotal)" validar-registrador-detalles="validarRegistradorDetallesPedidos_DatosFacturacion()" inicio-realizado="inicioRealizadoRegistroDetalles_DatosFacturacion()" seleccionar-codigo-balanza="focusCodigoBalanza_DatosFacturacion()" set-focus-serie-comprobante="setFocusSerieComprobante_DatosFacturacion()"></registrador-detalles>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 no-padding-left">
+                            <div class="box box-primary" style="border:1px solid #ccc;">
+                                <div class="box-header  bg-primary">
+                                    <h3 class="box-title titulo-negrita-blanco">DATOS DE FACTURACIÓN</h3>
+                                    <h3 class="box-title titulo-negrita-blanco pull-right">S/ {{pedido.Orden.Total != null ? pedido.Orden.Total : 0.00 | number:2}}</h3>
+                                </div>
+
+                                <div class="box-body">
+                                    <datos-facturacion ng-if="inicializacionRealizadaFacturacion" external-id="0" api="$parent.datosFacturacionVentaAPI" datos-facturacion="pedido" mostrar-punto-de-venta-vendedor="esVentaModoCajaAlmacen" debe-seleccionar-punto-de-venta-vendedor="mostrarCodigoBarraBalanza || esVentaModoCajaAlmacen" debe-seleccionar-almacen-almacenero="false" debe-seleccionar-caja-cajero="false" debe-permitir-detalle-unificado="true" permitir-registro-fecha-emision="esVentaPorContingencia" permitir-registro-placa="permitirRegistroPlaca" id-medio-pago-default="idMedioDePagoEfectivo" importe-total="pedido.Total.toFixed(2)" cambio-igv="cambiarAfeccionIgv_DatosFacturacion(aplicarIgv)" inicio-realizado="inicioRealizado_DatosFacturacion(datosFacturacion)" carga-total-realizada="cargaRealizada_DatosFacturacion()" serie-comprobante-enter="serieComprobanteEnter_DatosFacturacion()" change-facturacion="cambio_DatosFacturacion()" tipo-comprobante-para="data.ComprobanteParaPedido" id-comprobante-por-defecto="idTipoComprobantePedido"  permitir-asignar-comprobante-por-defecto="true" change-cliente="cambioCliente_DatosFacturacion(cliente)"></datos-facturacion>
+                                    <div class="box-body mt-1 p-0">
+                                        <label for="comprobantePreteterminado" title="A Emitir" style="font-size:14px;"> A EMITIR</label>
+                                        <select id="comprobantePredeterminado" name="comprobantePredeterminado" class="select2 form-control comprobantePreteterminado" ng-model="tipoSeleccionado" ng-options="item as item.Nombre for item in tiposDeComprobantes track by item.Id"></select>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 p-0 pt-10" ng-show="parametrosParaPedidos.MostrarSeccionEntregaEnPedido  && pedido.Orden.HayBienesEnLosDetalles">
+                                        <div class="box box-primary">
+                                            <div class="box-body pt-5 pb-5">
+                                                <label class="box-title">ENTREGA</label>
+                                                <div class="pull-right">
+                                                    <div class="radio radio-primary radio-inline pt-2">
+                                                        <input type="radio" id="entrega-inmediata-pedido" name="entrega-pedido" ng-model="pedido.MovimientoAlmacen.EntregaDiferida" value="false">
+                                                        <label for="entrega-inmediata-pedido" title="Entrega Inmediata" style="font-size:14px;">INMEDIATA</label>
+                                                    </div>
+                                                    <div class="radio radio-primary radio-inline pt-2">
+                                                        <input type="radio" id="entrega-diferida-pedido" name="entrega-pedido" ng-model="pedido.MovimientoAlmacen.EntregaDiferida" value="true">
+                                                        <label for="entrega-diferida-pedido" title="Entrega Diferida" style="font-size:14px;">DIFERIDA</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                                <div class="box box-danger" ng-show="inconsistenciasRegistrarPedido.length > 0">
+                                    <div class="box-body">
+                                        <h4 class="error-title">INCONSISTENCIA(S):</h4>
+                                        <table>
+                                            <tr ng-repeat="item in inconsistenciasRegistrarPedido">  
+                                                <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-md" title="GUARDAR PEDIDO" ng-disabled="inconsistenciasRegistrarPedido.length > 0" ng-click="guardarPedido()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarPedido()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

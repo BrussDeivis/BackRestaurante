@@ -1,0 +1,57 @@
+﻿<div id="modal-registro-precio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE PRECIO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form name="precioForm" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-body">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">FAMILIA :</label>
+                                                        <select tabindex=1 id="nombre-basico" class="select2 form-control" ng-model="conceptoBasicoSeleccionado" ng-change="obtenerProductos()" placeholder="Producto básico" ng-options="item as item.Nombre for item in conceptos track by item.Id"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8" style="padding-left:50px">
+                                                    <div class="form-group">
+                                                        <label class="control-label">CONCEPTO :</label>
+                                                        <select class="select2 form-control" ng-model="conceptoSeleccionado" ng-change="obtenerPreciosDeConcepto();" ng-options="item as item.Nombre for item in productos track by item.Id"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" style="text-align:center;"><strong> REGISTRO DE PRECIOS </strong></div>
+                                        <div class="panel-body">
+                                            @Html.Partial("_RegistroPrecioPartial")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-disabled="precioForm.$invalid" ng-click="guardarPrecio(precio)" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                <a ng-click="cerrar('modal-registro-precio')" class="btn btn-danger btn-md"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

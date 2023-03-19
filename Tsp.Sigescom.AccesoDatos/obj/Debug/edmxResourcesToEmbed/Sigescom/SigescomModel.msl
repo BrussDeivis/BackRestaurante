@@ -1,0 +1,1037 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SIGESCOMModelStoreContainer" CdmEntityContainer="SigescomEntities">
+    <FunctionImportMapping FunctionImportName="BuscaValorEnBBDD" FunctionName="SIGESCOMModel.Store.BuscaValorEnBBDD" />
+    <FunctionImportMapping FunctionImportName="businessObjectStockAt" FunctionName="SIGESCOMModel.Store.businessObjectStockAt" />
+    <FunctionImportMapping FunctionImportName="feesInBusinessActionTransactionType" FunctionName="SIGESCOMModel.Store.feesInBusinessActionTransactionType" />
+    <FunctionImportMapping FunctionImportName="kardexReport" FunctionName="SIGESCOMModel.Store.kardexReport" />
+    <FunctionImportMapping FunctionImportName="stockAtReport" FunctionName="SIGESCOMModel.Store.stockAtReport" />
+    <FunctionImportMapping FunctionImportName="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRol" FunctionName="SIGESCOMModel.Store.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRol">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRol_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo_barra" ColumnName="codigo_barra" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="tipo_familia" ColumnName="tipo_familia" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConcepto" FunctionName="SIGESCOMModel.Store.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConcepto">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConcepto_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo_barra" ColumnName="codigo_barra" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="tipo_familia" ColumnName="tipo_familia" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConceptoYTipoFamilia" FunctionName="SIGESCOMModel.Store.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConceptoYTipoFamilia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConceptoYTipoFamilia_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo_barra" ColumnName="codigo_barra" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="tipo_familia" ColumnName="tipo_familia" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYFamilia" FunctionName="SIGESCOMModel.Store.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYFamilia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYFamilia_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo_barra" ColumnName="codigo_barra" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="tipo_familia" ColumnName="tipo_familia" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYTipoFamilia" FunctionName="SIGESCOMModel.Store.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYTipoFamilia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYTipoFamilia_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo_barra" ColumnName="codigo_barra" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="tipo_familia" ColumnName="tipo_familia" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accion_de_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Accion_de_negocio">
+        <MappingFragment StoreEntitySet="Accion_de_negocio">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accion_de_negocio_por_tipo_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Accion_de_negocio_por_tipo_transaccion">
+        <MappingFragment StoreEntitySet="Accion_de_negocio_por_tipo_transaccion">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_accion_de_negocio" ColumnName="id_accion_de_negocio" />
+          <ScalarProperty Name="id_tipo_transaccion" ColumnName="id_tipo_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accion_por_estado">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Accion_por_estado">
+        <MappingFragment StoreEntitySet="Accion_por_estado">
+          <ScalarProperty Name="id_siguiente_estado" ColumnName="id_siguiente_estado" />
+          <ScalarProperty Name="id_accion_posible" ColumnName="id_accion_posible" />
+          <ScalarProperty Name="id_estado_actual" ColumnName="id_estado_actual" />
+          <ScalarProperty Name="id_tipo_transaccion" ColumnName="id_tipo_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accion_por_rol">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Accion_por_rol">
+        <MappingFragment StoreEntitySet="Accion_por_rol">
+          <ScalarProperty Name="es_individual" ColumnName="es_individual" />
+          <ScalarProperty Name="id_unidad_negocio" ColumnName="id_unidad_negocio" />
+          <ScalarProperty Name="id_accion_posible" ColumnName="id_accion_posible" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_tipo_transaccion" ColumnName="id_tipo_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actor">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Actor">
+        <MappingFragment StoreEntitySet="Actor">
+          <ScalarProperty Name="id_detalle_multiproposito1" ColumnName="id_detalle_multiproposito1" />
+          <ScalarProperty Name="id_detalle_multiproposito" ColumnName="id_detalle_multiproposito" />
+          <ScalarProperty Name="informacion_multiproposito" ColumnName="informacion_multiproposito" />
+          <ScalarProperty Name="pagina_web" ColumnName="pagina_web" />
+          <ScalarProperty Name="tercer_nombre" ColumnName="tercer_nombre" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="id_estado_legal" ColumnName="id_estado_legal" />
+          <ScalarProperty Name="id_clase_actor" ColumnName="id_clase_actor" />
+          <ScalarProperty Name="id_foto" ColumnName="id_foto" />
+          <ScalarProperty Name="id_tipo_actor" ColumnName="id_tipo_actor" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+          <ScalarProperty Name="segundo_nombre" ColumnName="segundo_nombre" />
+          <ScalarProperty Name="primer_nombre" ColumnName="primer_nombre" />
+          <ScalarProperty Name="numero_documento_identidad" ColumnName="numero_documento_identidad" />
+          <ScalarProperty Name="id_documento_identidad" ColumnName="id_documento_identidad" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actor_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Actor_negocio">
+        <MappingFragment StoreEntitySet="Actor_negocio">
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="indicador1" ColumnName="indicador1" />
+          <ScalarProperty Name="id_detalle_maestro_multiproposito" ColumnName="id_detalle_maestro_multiproposito" />
+          <ScalarProperty Name="extension_json" ColumnName="extension_json" />
+          <ScalarProperty Name="id_actor_negocio_padre" ColumnName="id_actor_negocio_padre" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="codigo_negocio" ColumnName="codigo_negocio" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_actor" ColumnName="id_actor" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actor_negocio_por_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Actor_negocio_por_transaccion">
+        <MappingFragment StoreEntitySet="Actor_negocio_por_transaccion">
+          <ScalarProperty Name="extension_json" ColumnName="extension_json" />
+          <ScalarProperty Name="id_detalle_maestro" ColumnName="id_detalle_maestro" />
+          <ScalarProperty Name="id_actor_negocio" ColumnName="id_actor_negocio" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actor_negocio_rol">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Actor_negocio_rol">
+        <MappingFragment StoreEntitySet="Actor_negocio_rol">
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_actor_negocio" ColumnName="id_actor_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.AspNetRoles">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.AspNetUserClaims">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.AspNetUserLogins">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Atributo">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Atributo">
+        <MappingFragment StoreEntitySet="Atributo">
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="regexp" ColumnName="regexp" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Atributo_actor">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Atributo_actor">
+        <MappingFragment StoreEntitySet="Atributo_actor">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_atributo" ColumnName="id_atributo" />
+          <ScalarProperty Name="id_actor" ColumnName="id_actor" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Caracteristica_concepto">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Caracteristica_concepto">
+        <MappingFragment StoreEntitySet="Caracteristica_concepto">
+          <ScalarProperty Name="indicador" ColumnName="indicador" />
+          <ScalarProperty Name="es_multiple" ColumnName="es_multiple" />
+          <ScalarProperty Name="maximo" ColumnName="maximo" />
+          <ScalarProperty Name="es_requerido" ColumnName="es_requerido" />
+          <ScalarProperty Name="id_caracteristica" ColumnName="id_caracteristica" />
+          <ScalarProperty Name="id_concepto" ColumnName="id_concepto" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categoria_concepto">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Categoria_concepto">
+        <MappingFragment StoreEntitySet="Categoria_concepto">
+          <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+          <ScalarProperty Name="id_concepto" ColumnName="id_concepto" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clase_actor">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Clase_actor">
+        <MappingFragment StoreEntitySet="Clase_actor">
+          <ScalarProperty Name="id_tipo_actor" ColumnName="id_tipo_actor" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comprobante">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Comprobante">
+        <MappingFragment StoreEntitySet="Comprobante">
+          <ScalarProperty Name="numero_serie" ColumnName="numero_serie" />
+          <ScalarProperty Name="es_valido" ColumnName="es_valido" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="id_serie_comprobante" ColumnName="id_serie_comprobante" />
+          <ScalarProperty Name="id_tipo_comprobante" ColumnName="id_tipo_comprobante" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Concepto_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Concepto_negocio">
+        <MappingFragment StoreEntitySet="Concepto_negocio">
+          <ScalarProperty Name="codigo_negocio1" ColumnName="codigo_negocio1" />
+          <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+          <ScalarProperty Name="stock_minimo" ColumnName="stock_minimo" />
+          <ScalarProperty Name="id_concepto_basico" ColumnName="id_concepto_basico" />
+          <ScalarProperty Name="codigo_barra_imagen" ColumnName="codigo_barra_imagen" />
+          <ScalarProperty Name="id_unidad_medida_secundaria" ColumnName="id_unidad_medida_secundaria" />
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="id_foto" ColumnName="id_foto" />
+          <ScalarProperty Name="id_sub_contenido" ColumnName="id_sub_contenido" />
+          <ScalarProperty Name="id_unidad_medida_contenido" ColumnName="id_unidad_medida_contenido" />
+          <ScalarProperty Name="contenido" ColumnName="contenido" />
+          <ScalarProperty Name="id_presentacion" ColumnName="id_presentacion" />
+          <ScalarProperty Name="id_unidad_medida_primaria" ColumnName="id_unidad_medida_primaria" />
+          <ScalarProperty Name="propiedades" ColumnName="propiedades" />
+          <ScalarProperty Name="sufijo" ColumnName="sufijo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codigo_barra" ColumnName="codigo_barra" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Concepto_negocio_rol">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Concepto_negocio_rol">
+        <MappingFragment StoreEntitySet="Concepto_negocio_rol">
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Configuracion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Configuracion">
+        <MappingFragment StoreEntitySet="Configuracion">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cuenta_contable">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Cuenta_contable">
+        <MappingFragment StoreEntitySet="Cuenta_contable">
+          <ScalarProperty Name="id_cuenta_abono" ColumnName="id_cuenta_abono" />
+          <ScalarProperty Name="id_cuenta_cargo" ColumnName="id_cuenta_cargo" />
+          <ScalarProperty Name="id_moneda_referencia" ColumnName="id_moneda_referencia" />
+          <ScalarProperty Name="registro_manual" ColumnName="registro_manual" />
+          <ScalarProperty Name="requiere_tipo_medio_pago" ColumnName="requiere_tipo_medio_pago" />
+          <ScalarProperty Name="requiere_documento_referencia2" ColumnName="requiere_documento_referencia2" />
+          <ScalarProperty Name="requiere_conciliacion_bancos" ColumnName="requiere_conciliacion_bancos" />
+          <ScalarProperty Name="requiere_cuenta_ajuste" ColumnName="requiere_cuenta_ajuste" />
+          <ScalarProperty Name="requiere_area" ColumnName="requiere_area" />
+          <ScalarProperty Name="requiere_fecha_vencimiento" ColumnName="requiere_fecha_vencimiento" />
+          <ScalarProperty Name="requiere_documento_referencia" ColumnName="requiere_documento_referencia" />
+          <ScalarProperty Name="requiere_centro_costo" ColumnName="requiere_centro_costo" />
+          <ScalarProperty Name="tasa" ColumnName="tasa" />
+          <ScalarProperty Name="id_tipo_anexo_referencia" ColumnName="id_tipo_anexo_referencia" />
+          <ScalarProperty Name="id_tipo_anexo" ColumnName="id_tipo_anexo" />
+          <ScalarProperty Name="nivel_saldo" ColumnName="nivel_saldo" />
+          <ScalarProperty Name="tipo_cuenta" ColumnName="tipo_cuenta" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id_plan" ColumnName="id_plan" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cuota">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Cuota">
+        <MappingFragment StoreEntitySet="Cuota">
+          <ScalarProperty Name="saldo" ColumnName="saldo" />
+          <ScalarProperty Name="revocado" ColumnName="revocado" />
+          <ScalarProperty Name="pago_a_cuenta" ColumnName="pago_a_cuenta" />
+          <ScalarProperty Name="por_cobrar" ColumnName="por_cobrar" />
+          <ScalarProperty Name="id_banco" ColumnName="id_banco" />
+          <ScalarProperty Name="id_comprobante" ColumnName="id_comprobante" />
+          <ScalarProperty Name="cuota_inicial" ColumnName="cuota_inicial" />
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="letra_cambio" ColumnName="letra_cambio" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="interes" ColumnName="interes" />
+          <ScalarProperty Name="capital" ColumnName="capital" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+          <ScalarProperty Name="fecha_emision" ColumnName="fecha_emision" />
+          <ScalarProperty Name="codigo_unico_banco" ColumnName="codigo_unico_banco" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Detalle_detalle_maestro">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Detalle_detalle_maestro">
+        <MappingFragment StoreEntitySet="Detalle_detalle_maestro">
+          <ScalarProperty Name="id_detalle_maestro_secundario" ColumnName="id_detalle_maestro_secundario" />
+          <ScalarProperty Name="id_detalle_maestro_principal" ColumnName="id_detalle_maestro_principal" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Detalle_maestro">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Detalle_maestro">
+        <MappingFragment StoreEntitySet="Detalle_maestro">
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="id_foto" ColumnName="id_foto" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id_maestro" ColumnName="id_maestro" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Detalle_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Detalle_transaccion">
+        <MappingFragment StoreEntitySet="Detalle_transaccion">
+          <ScalarProperty Name="cantidad_1" ColumnName="cantidad_1" />
+          <ScalarProperty Name="version_fila" ColumnName="version_fila" />
+          <ScalarProperty Name="registro" ColumnName="registro" />
+          <ScalarProperty Name="vencimiento" ColumnName="vencimiento" />
+          <ScalarProperty Name="lote" ColumnName="lote" />
+          <ScalarProperty Name="descuento" ColumnName="descuento" />
+          <ScalarProperty Name="igv" ColumnName="igv" />
+          <ScalarProperty Name="isc" ColumnName="isc" />
+          <ScalarProperty Name="id_cuenta_contable" ColumnName="id_cuenta_contable" />
+          <ScalarProperty Name="indicadorMultiproposito" ColumnName="indicadorMultiproposito" />
+          <ScalarProperty Name="cantidad_secundaria" ColumnName="cantidad_secundaria" />
+          <ScalarProperty Name="id_precio" ColumnName="id_precio" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+          <ScalarProperty Name="detalle" ColumnName="detalle" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Direccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Direccion">
+        <MappingFragment StoreEntitySet="Direccion">
+          <ScalarProperty Name="es_activo" ColumnName="es_activo" />
+          <ScalarProperty Name="es_principal" ColumnName="es_principal" />
+          <ScalarProperty Name="id_tipo_zona" ColumnName="id_tipo_zona" />
+          <ScalarProperty Name="id_tipo_via" ColumnName="id_tipo_via" />
+          <ScalarProperty Name="id_actor" ColumnName="id_actor" />
+          <ScalarProperty Name="detalle" ColumnName="detalle" />
+          <ScalarProperty Name="id_ubigeo" ColumnName="id_ubigeo" />
+          <ScalarProperty Name="id_nacion" ColumnName="id_nacion" />
+          <ScalarProperty Name="id_tipo_direccion" ColumnName="id_tipo_direccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Documento_identidad">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Documento_identidad">
+        <MappingFragment StoreEntitySet="Documento_identidad">
+          <ScalarProperty Name="es_para_negocio" ColumnName="es_para_negocio" />
+          <ScalarProperty Name="es_primario" ColumnName="es_primario" />
+          <ScalarProperty Name="detalle_legal" ColumnName="detalle_legal" />
+          <ScalarProperty Name="mascara" ColumnName="mascara" />
+          <ScalarProperty Name="longitud" ColumnName="longitud" />
+          <ScalarProperty Name="nombre_largo" ColumnName="nombre_largo" />
+          <ScalarProperty Name="nombre_corto" ColumnName="nombre_corto" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Documento_identidad_por_tipo_actor">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Documento_identidad_por_tipo_actor">
+        <MappingFragment StoreEntitySet="Documento_identidad_por_tipo_actor">
+          <ScalarProperty Name="actorTypeId" ColumnName="actorTypeId" />
+          <ScalarProperty Name="identityDocumentId" ColumnName="identityDocumentId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado_cuota">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Estado_cuota">
+        <MappingFragment StoreEntitySet="Estado_cuota">
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_cuota" ColumnName="id_cuota" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado_legal">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Estado_legal">
+        <MappingFragment StoreEntitySet="Estado_legal">
+          <ScalarProperty Name="id_tipo_actor" ColumnName="id_tipo_actor" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Estado_transaccion">
+        <MappingFragment StoreEntitySet="Estado_transaccion">
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Evento_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Evento_transaccion">
+        <MappingFragment StoreEntitySet="Evento_transaccion">
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Existencia">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Existencia">
+        <MappingFragment StoreEntitySet="Existencia">
+          <ScalarProperty Name="version_fila" ColumnName="version_fila" />
+          <ScalarProperty Name="existencia1" ColumnName="existencia" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="id_punto_atencion" ColumnName="id_punto_atencion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Foto">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Foto">
+        <MappingFragment StoreEntitySet="Foto">
+          <ScalarProperty Name="imagen" ColumnName="imagen" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Maestro">
+        <MappingFragment StoreEntitySet="Maestro">
+          <ScalarProperty Name="idTipo" ColumnName="idTipo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mapeo_cuenta_contable_concepto">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Mapeo_cuenta_contable_concepto">
+        <MappingFragment StoreEntitySet="Mapeo_cuenta_contable_concepto">
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="id_cuenta_contable" ColumnName="id_cuenta_contable" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marca_concepto">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Marca_concepto">
+        <MappingFragment StoreEntitySet="Marca_concepto">
+          <ScalarProperty Name="id_concepto" ColumnName="id_concepto" />
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menu_aplicacion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Menu_aplicacion">
+        <MappingFragment StoreEntitySet="Menu_aplicacion">
+          <ScalarProperty Name="es_padre" ColumnName="es_padre" />
+          <ScalarProperty Name="id_padre" ColumnName="id_padre" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="icono" ColumnName="icono" />
+          <ScalarProperty Name="accion" ColumnName="accion" />
+          <ScalarProperty Name="controller" ColumnName="controller" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modo_pago">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Modo_pago">
+        <MappingFragment StoreEntitySet="Modo_pago">
+          <ScalarProperty Name="mascara" ColumnName="mascara" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pago_cuota">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Pago_cuota">
+        <MappingFragment StoreEntitySet="Pago_cuota">
+          <ScalarProperty Name="importe" ColumnName="importe" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id_cuota" ColumnName="id_cuota" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro_actor_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parametro_actor_negocio">
+        <MappingFragment StoreEntitySet="Parametro_actor_negocio">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_valor_parametro" ColumnName="id_valor_parametro" />
+          <ScalarProperty Name="id_parametro" ColumnName="id_parametro" />
+          <ScalarProperty Name="id_actor_negocio" ColumnName="id_actor_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro_concepto_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parametro_concepto_negocio">
+        <MappingFragment StoreEntitySet="Parametro_concepto_negocio">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_valor_parametro" ColumnName="id_valor_parametro" />
+          <ScalarProperty Name="id_parametro" ColumnName="id_parametro" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro_de_configuracion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parametro_de_configuracion">
+        <MappingFragment StoreEntitySet="Parametro_de_configuracion">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_configuracion" ColumnName="id_configuracion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro_por_rol">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parametro_por_rol">
+        <MappingFragment StoreEntitySet="Parametro_por_rol">
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="numero_orden" ColumnName="numero_orden" />
+          <ScalarProperty Name="id_parametro" ColumnName="id_parametro" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro_por_unidad_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parametro_por_unidad_negocio">
+        <MappingFragment StoreEntitySet="Parametro_por_unidad_negocio">
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="numero_orden" ColumnName="numero_orden" />
+          <ScalarProperty Name="id_parametro" ColumnName="id_parametro" />
+          <ScalarProperty Name="id_unidad_negocio" ColumnName="id_unidad_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parametro_transaccion">
+        <MappingFragment StoreEntitySet="Parametro_transaccion">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_valor_parametro" ColumnName="id_valor_parametro" />
+          <ScalarProperty Name="id_parametro" ColumnName="id_parametro" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parentesco">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Parentesco">
+        <MappingFragment StoreEntitySet="Parentesco">
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="id_tipo_parentesco" ColumnName="id_tipo_parentesco" />
+          <ScalarProperty Name="id_parentesco" ColumnName="id_parentesco" />
+          <ScalarProperty Name="id_actor_principal" ColumnName="id_actor_principal" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Periodo">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Periodo">
+        <MappingFragment StoreEntitySet="Periodo">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="mes" ColumnName="mes" />
+          <ScalarProperty Name="anio" ColumnName="anio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Plan_contable">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Plan_contable">
+        <MappingFragment StoreEntitySet="Plan_contable">
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Precio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Precio">
+        <MappingFragment StoreEntitySet="Precio">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id_responsable" ColumnName="id_responsable" />
+          <ScalarProperty Name="id_concepto_negocio_referencial" ColumnName="id_concepto_negocio_referencial" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="cantidad_maxima" ColumnName="cantidad_maxima" />
+          <ScalarProperty Name="cantidad_minima" ColumnName="cantidad_minima" />
+          <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="indicador_multiproposito" ColumnName="indicador_multiproposito" />
+          <ScalarProperty Name="fecha_modificacion" ColumnName="fecha_modificacion" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="id_moneda" ColumnName="id_moneda" />
+          <ScalarProperty Name="id_tarifa_d" ColumnName="id_tarifa_d" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="id_unidad_negocio" ColumnName="id_unidad_negocio" />
+          <ScalarProperty Name="id_actor_negocio" ColumnName="id_actor_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Referencia_detalle_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Referencia_detalle_transaccion">
+        <MappingFragment StoreEntitySet="Referencia_detalle_transaccion">
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id_detalle" ColumnName="id_detalle" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Registro_sucesos">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Registro_sucesos">
+        <MappingFragment StoreEntitySet="Registro_sucesos">
+          <ScalarProperty Name="id_destinatario" ColumnName="id_destinatario" />
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+          <ScalarProperty Name="suceso" ColumnName="suceso" />
+          <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rol">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Rol">
+        <MappingFragment StoreEntitySet="Rol">
+          <ScalarProperty Name="aplica_a" ColumnName="aplica_a" />
+          <ScalarProperty Name="id_rol_padre" ColumnName="id_rol_padre" />
+          <ScalarProperty Name="es_predeterminado" ColumnName="es_predeterminado" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rol_por_tipo_actor">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Rol_por_tipo_actor">
+        <MappingFragment StoreEntitySet="Rol_por_tipo_actor">
+          <ScalarProperty Name="id_tipo_actor" ColumnName="id_tipo_actor" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rol_por_unidad_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Rol_por_unidad_negocio">
+        <MappingFragment StoreEntitySet="Rol_por_unidad_negocio">
+          <ScalarProperty Name="numero_orden" ColumnName="numero_orden" />
+          <ScalarProperty Name="id_unidad_negocio" ColumnName="id_unidad_negocio" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Serie_comprobante">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Serie_comprobante">
+        <MappingFragment StoreEntitySet="Serie_comprobante">
+          <ScalarProperty Name="version_fila" ColumnName="version_fila" />
+          <ScalarProperty Name="id_modelo_comprobante" ColumnName="id_modelo_comprobante" />
+          <ScalarProperty Name="es_autonumerable" ColumnName="es_autonumerable" />
+          <ScalarProperty Name="proximo_numero" ColumnName="proximo_numero" />
+          <ScalarProperty Name="id_tipo_comprobante" ColumnName="id_tipo_comprobante" />
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="id_propietario" ColumnName="id_propietario" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_actor">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Tipo_actor">
+        <MappingFragment StoreEntitySet="Tipo_actor">
+          <ScalarProperty Name="tercera_denominacion" ColumnName="tercera_denominacion" />
+          <ScalarProperty Name="denominacion_de_clase" ColumnName="denominacion_de_clase" />
+          <ScalarProperty Name="segunda_denominacion" ColumnName="segunda_denominacion" />
+          <ScalarProperty Name="primera_denominacion" ColumnName="primera_denominacion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_cambio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Tipo_cambio">
+        <MappingFragment StoreEntitySet="Tipo_cambio">
+          <ScalarProperty Name="valorVenta" ColumnName="valorVenta" />
+          <ScalarProperty Name="valorCompra" ColumnName="valorCompra" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="idMoneda" ColumnName="idMoneda" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_parentesco">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Tipo_parentesco">
+        <MappingFragment StoreEntitySet="Tipo_parentesco">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Tipo_transaccion">
+        <MappingFragment StoreEntitySet="Tipo_transaccion">
+          <ScalarProperty Name="nombre_corto" ColumnName="nombre_corto" />
+          <ScalarProperty Name="id_tipo_comprobante_defecto" ColumnName="id_tipo_comprobante_defecto" />
+          <ScalarProperty Name="cuenta" ColumnName="cuenta" />
+          <ScalarProperty Name="id_tipo_transaccion_padre" ColumnName="id_tipo_transaccion_padre" />
+          <ScalarProperty Name="acciones_de_entrada_o_salida" ColumnName="acciones_de_entrada_o_salida" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_transaccion_tipo_comprobante">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Tipo_transaccion_tipo_comprobante">
+        <MappingFragment StoreEntitySet="Tipo_transaccion_tipo_comprobante">
+          <ScalarProperty Name="es_propio" ColumnName="es_propio" />
+          <ScalarProperty Name="id_tipo_comprobante" ColumnName="id_tipo_comprobante" />
+          <ScalarProperty Name="id_tipo_transaccion" ColumnName="id_tipo_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Transaccion">
+        <MappingFragment StoreEntitySet="Transaccion">
+          <ScalarProperty Name="id_estado_actual_1" ColumnName="id_estado_actual_1" />
+          <ScalarProperty Name="id_evento_referencia" ColumnName="id_evento_referencia" />
+          <ScalarProperty Name="informacion" ColumnName="informacion" />
+          <ScalarProperty Name="cantidad4" ColumnName="cantidad4" />
+          <ScalarProperty Name="cantidad3" ColumnName="cantidad3" />
+          <ScalarProperty Name="cantidad2" ColumnName="cantidad2" />
+          <ScalarProperty Name="cantidad1" ColumnName="cantidad1" />
+          <ScalarProperty Name="id_actor_negocio_interno1" ColumnName="id_actor_negocio_interno1" />
+          <ScalarProperty Name="importe12" ColumnName="importe12" />
+          <ScalarProperty Name="importe11" ColumnName="importe11" />
+          <ScalarProperty Name="importe10" ColumnName="importe10" />
+          <ScalarProperty Name="importe9" ColumnName="importe9" />
+          <ScalarProperty Name="importe8" ColumnName="importe8" />
+          <ScalarProperty Name="importe7" ColumnName="importe7" />
+          <ScalarProperty Name="importe6" ColumnName="importe6" />
+          <ScalarProperty Name="importe5" ColumnName="importe5" />
+          <ScalarProperty Name="importe4" ColumnName="importe4" />
+          <ScalarProperty Name="importe3" ColumnName="importe3" />
+          <ScalarProperty Name="importe2" ColumnName="importe2" />
+          <ScalarProperty Name="importe1" ColumnName="importe1" />
+          <ScalarProperty Name="indicador2" ColumnName="indicador2" />
+          <ScalarProperty Name="indicador1" ColumnName="indicador1" />
+          <ScalarProperty Name="enum1" ColumnName="enum1" />
+          <ScalarProperty Name="id_actor_negocio_externo1" ColumnName="id_actor_negocio_externo1" />
+          <ScalarProperty Name="id_estado_actual" ColumnName="id_estado_actual" />
+          <ScalarProperty Name="id_actor_negocio_externo" ColumnName="id_actor_negocio_externo" />
+          <ScalarProperty Name="id_transaccion_referencia" ColumnName="id_transaccion_referencia" />
+          <ScalarProperty Name="tipo_cambio" ColumnName="tipo_cambio" />
+          <ScalarProperty Name="id_moneda" ColumnName="id_moneda" />
+          <ScalarProperty Name="id_actor_negocio_interno" ColumnName="id_actor_negocio_interno" />
+          <ScalarProperty Name="importe_total" ColumnName="importe_total" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="fecha_registro_contable" ColumnName="fecha_registro_contable" />
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="id_comprobante" ColumnName="id_comprobante" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="es_concreta" ColumnName="es_concreta" />
+          <ScalarProperty Name="id_unidad_negocio" ColumnName="id_unidad_negocio" />
+          <ScalarProperty Name="id_tipo_transaccion" ColumnName="id_tipo_transaccion" />
+          <ScalarProperty Name="fecha_registro_sistema" ColumnName="fecha_registro_sistema" />
+          <ScalarProperty Name="id_transaccion_padre" ColumnName="id_transaccion_padre" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Traza_pago">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Traza_pago">
+        <MappingFragment StoreEntitySet="Traza_pago">
+          <ScalarProperty Name="extension_json" ColumnName="extension_json" />
+          <ScalarProperty Name="id_tipo_operador" ColumnName="id_tipo_operador" />
+          <ScalarProperty Name="id_entidad_bancaria" ColumnName="id_entidad_bancaria" />
+          <ScalarProperty Name="traza" ColumnName="traza" />
+          <ScalarProperty Name="id_medio_pago" ColumnName="id_medio_pago" />
+          <ScalarProperty Name="id_transaccion" ColumnName="id_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Turno">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Turno">
+        <MappingFragment StoreEntitySet="Turno">
+          <ScalarProperty Name="extension_json" ColumnName="extension_json" />
+          <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
+          <ScalarProperty Name="duracion_horas" ColumnName="duracion_horas" />
+          <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ubigeo">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Ubigeo">
+        <MappingFragment StoreEntitySet="Ubigeo">
+          <ScalarProperty Name="id_pais" ColumnName="id_pais" />
+          <ScalarProperty Name="descripcion_corta" ColumnName="descripcion_corta" />
+          <ScalarProperty Name="descripcion_larga" ColumnName="descripcion_larga" />
+          <ScalarProperty Name="id_distrito" ColumnName="id_distrito" />
+          <ScalarProperty Name="id_provincia" ColumnName="id_provincia" />
+          <ScalarProperty Name="id_region" ColumnName="id_region" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Valor_caracteristica">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Valor_caracteristica">
+        <MappingFragment StoreEntitySet="Valor_caracteristica">
+          <ScalarProperty Name="valor_1" ColumnName="valor_1" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_caracteristica" ColumnName="id_caracteristica" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Valor_caracteristica_concepto">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Valor_caracteristica_concepto">
+        <MappingFragment StoreEntitySet="Valor_caracteristica_concepto">
+          <ScalarProperty Name="id_valor_caracteristica" ColumnName="id_valor_caracteristica" />
+          <ScalarProperty Name="id_concepto" ColumnName="id_concepto" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Valor_caracteristica_concepto_negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Valor_caracteristica_concepto_negocio">
+        <MappingFragment StoreEntitySet="Valor_caracteristica_concepto_negocio">
+          <ScalarProperty Name="id_valor_caracteristica" ColumnName="id_valor_caracteristica" />
+          <ScalarProperty Name="id_concepto_negocio" ColumnName="id_concepto_negocio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Valor_detalle_maestro_detalle_transaccion">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Valor_detalle_maestro_detalle_transaccion">
+        <MappingFragment StoreEntitySet="Valor_detalle_maestro_detalle_transaccion">
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_valor_detalle_maestro" ColumnName="id_valor_detalle_maestro" />
+          <ScalarProperty Name="id_detalle_maestro" ColumnName="id_detalle_maestro" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="id_detalle_transaccion" ColumnName="id_detalle_transaccion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vinculo_Actor_Negocio">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.Vinculo_Actor_Negocio">
+        <MappingFragment StoreEntitySet="Vinculo_Actor_Negocio">
+          <ScalarProperty Name="es_vigente" ColumnName="es_vigente" />
+          <ScalarProperty Name="tipo_vinculo" ColumnName="tipo_vinculo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="hasta" ColumnName="hasta" />
+          <ScalarProperty Name="desde" ColumnName="desde" />
+          <ScalarProperty Name="id_actor_negocio_vinculado" ColumnName="id_actor_negocio_vinculado" />
+          <ScalarProperty Name="id_actor_negocio_principal" ColumnName="id_actor_negocio_principal" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VoucherModel">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.VoucherModel">
+        <MappingFragment StoreEntitySet="VoucherModel">
+          <ScalarProperty Name="pageWidth" ColumnName="pageWidth" />
+          <ScalarProperty Name="pageHeight" ColumnName="pageHeight" />
+          <ScalarProperty Name="upMargin" ColumnName="upMargin" />
+          <ScalarProperty Name="leftMargin" ColumnName="leftMargin" />
+          <ScalarProperty Name="columnPadding" ColumnName="columnPadding" />
+          <ScalarProperty Name="fontSize" ColumnName="fontSize" />
+          <ScalarProperty Name="fontType" ColumnName="fontType" />
+          <ScalarProperty Name="footerLinesNumber" ColumnName="footerLinesNumber" />
+          <ScalarProperty Name="resumeLinesNumber" ColumnName="resumeLinesNumber" />
+          <ScalarProperty Name="detailLinesNumber" ColumnName="detailLinesNumber" />
+          <ScalarProperty Name="headerLinesNumber" ColumnName="headerLinesNumber" />
+          <ScalarProperty Name="totalMoneyDetailWidth" ColumnName="totalMoneyDetailWidth" />
+          <ScalarProperty Name="unitPriceDetailWidth" ColumnName="unitPriceDetailWidth" />
+          <ScalarProperty Name="amountDetailWidth" ColumnName="amountDetailWidth" />
+          <ScalarProperty Name="lineHeight" ColumnName="lineHeight" />
+          <ScalarProperty Name="lineWidth" ColumnName="lineWidth" />
+          <ScalarProperty Name="linesNumber" ColumnName="linesNumber" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="new_table">
+      <EntityTypeMapping TypeName="Tsp.Sigescom.Modelo.Entidades.new_table">
+        <MappingFragment StoreEntitySet="new_table">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="Tsp.Sigescom.Modelo.Entidades.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

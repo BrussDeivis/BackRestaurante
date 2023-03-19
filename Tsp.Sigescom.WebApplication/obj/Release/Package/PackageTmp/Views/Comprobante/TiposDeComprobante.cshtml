@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "RegistroTipoDecomprobante";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/comprobante/comprobanteController.js")></script>
+} 
+<div class="col-md-12" ng-controller="comprobanteController" ng-init="obtenerTiposDeComprobanteBandeja()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">TIPOS DE COMPROBANTE</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <a title="Nuevo Tipo De Comprobante" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-tipo-de-comprobante" ng-click="nuevoRegistroTipoDeComprobante()"><span class="glyphicon glyphicon-plus"></span> NUEVO TIPO DE COMPROBANTE</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-tipo-de-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Nombre Corto</th>
+                                        <th>Código Sunat</th>
+                                        <th>Transacciones con emisión propia</th>
+                                        <th>Transacciones con emisión de terceros</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaTiposDeComprobanteBandeja" ng-cloak>
+                                        <td>{{item.Id}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>{{item.NombreCorto}}</td>
+                                        <td>{{item.CodigoSunat}}</td>
+                                        <td title="{{item.TransaccionesConEmisionPropia}}">{{item.TransaccionesConEmisionPropia.substring(0,20)+ "..."}}</td>
+                                        <td title="{{item.TransaccionesConEmisionDeTerceros}}">{{item.TransaccionesConEmisionDeTerceros.substring(0,20)+ "..."}}</td>
+                                        <td>
+                                            <a title="Editar Tipo de Comprobante" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-tipo-de-comprobante" ng-click="editarTipoDeComprobante(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroTipoDeComprobantePartial")
+    </div>
+</div>

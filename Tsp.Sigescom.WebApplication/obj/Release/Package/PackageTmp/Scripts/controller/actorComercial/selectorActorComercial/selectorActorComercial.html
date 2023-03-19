@@ -1,0 +1,70 @@
+﻿<ng-form name="selectorForm" novalidate class="css-form" isolate-form>
+    <div class="col-md-12" style="margin-top:5px">
+        <div class="col-md-12">
+            <div class="row">
+                <label class="control-label" style="text-transform:uppercase;">{{$ctrl.etiquetaRol}}</label>
+                <a ng-click="$ctrl.habilitarCreacion()" title="NUEVO {{$ctrl.etiquetaRol}}" ng-disabled="$ctrl.busqueda.busquedaActiva" style="margin-top: 4px; /*margin-right: 5px;*/" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-actor-comercial-{{$ctrl.rol.Nombre}}-{{$ctrl.externalId}}"><span class="glyphicon glyphicon-plus"></span></a>
+                <a ng-click="$ctrl.habilitarEdicion()" title="EDITAR {{$ctrl.etiquetaRol}}" ng-disabled="$ctrl.busqueda.busquedaActiva || $ctrl.actorComercial.esGenerico" style="margin-top:4px; margin-right:5px;" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-actor-comercial-{{$ctrl.rol.Nombre}}-{{$ctrl.externalId}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a ng-click="$ctrl.habilitarBusquedaGrupo()" title="BUSCAR {{$ctrl.etiquetaRol}} POR GRUPO DE {{$ctrl.etiquetaRol}}" ng-disabled="$ctrl.busqueda.busquedaActiva" ng-if="$ctrl.permitirSeleccionarGrupo" style="margin-top:4px; margin-right:5px;" class="btn btn-xs btn-primary pull-right"><span class="fa fa-users"></span> <span class="glyphicon glyphicon-search" style="font-size:2mm"></span></a>
+                <a ng-click="$ctrl.habilitarBusqueda()" title="BUSCAR {{$ctrl.etiquetaRol}} POR DOCUMENTO DE IDENTIDAD O RAZON SOCIAL" ng-disabled="$ctrl.busqueda.busquedaActiva" style="margin-top:4px; margin-right:5px;" class="btn btn-xs btn-primary pull-right"><span class="fa fa-user"></span> <span class="glyphicon glyphicon-search" style="font-size:2mm"></span></a>
+                <input placeholder="DNI/RUC" class="input-model" type="text" ng-model="$ctrl.actorComercial.NumeroDocumentoIdentidad" id="DocumentoIdentidad" name="DocumentoIdentidad" onClick="this.select();" ng-blur="$ctrl.verificarDocumentoActorComercial()" ng-enter="$ctrl.obtenerActorComercialYAvisar()" on-long-press="$ctrl.obtenerActorComercialYAvisar()" ng-show="!$ctrl.busqueda.busquedaActiva" size="12" style="font-size:17px; display:initial"><!--ng-focus="$ctrl.guardarDocumentoActorComercial()"-->
+            </div>
+            <div class="row no-padding">
+                <p class="mt-5 mb-5" ng-show="!$ctrl.busqueda.busquedaActiva">{{$ctrl.actorComercial.NombreORazonSocial}}</p>
+                <div class="mt-5" ng-show="$ctrl.mostrarBusquedaActorComercial">
+                    <div style="width:90%; float:left; padding-bottom:10px;">
+                        <ui-select ng-model="$ctrl.busqueda.ActorComercial" ng-change="$ctrl.aceptarBusquedaCliente()" theme="bootstrap" close-on-select="false">
+                            <ui-select-match placeholder="BUSCAR EN {{$ctrl.etiquetaRol}}S REGISTRADOS">{{$item.RazonSocial}}</ui-select-match>
+                            <ui-select-choices refresh="$ctrl.cargarActoresComercialesPorBusqueda($select.search)"
+                                               minimum-input-length="{{$ctrl.minimoCaracteresBuscarActorComercial}}"
+                                               refresh-delay="{{$ctrl.tiempoEsperaBusquedaSelector}}"
+                                               repeat="actorComercialBuscado in $ctrl.actoresComercialesPorBusqueda | filter:$select.search">
+                                {{actorComercialBuscado.RazonSocial}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div style="width:10%; float:left;">
+                        <a ng-click="$ctrl.cancelarBusqueda()" title="CANCELAR BUSCAR {{$ctrl.etiquetaRol}}" style="margin-top:4px; margin-left:5px;" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                </div>
+                <div class="mt-5" ng-show="$ctrl.mostrarBusquedaGrupoActorComercial">
+                    <div style="width:90%; float:left; padding-bottom:10px;">
+                        <ui-select ng-model="$ctrl.busqueda.GrupoActorComercial" ng-change="$ctrl.obtenerActoresComercialesDeActoresComerciales()" theme="selectize">
+                            <ui-select-match placeholder="BUSCAR GRUPO DE {{$ctrl.etiquetaRol}}">{{$select.selected.Nombre}}</ui-select-match>
+                            <ui-select-choices repeat="grupoActorComercial in $ctrl.busqueda.GruposActorComercial | filter: $select.search">
+                                <span ng-bind-html="grupoActorComercial.Nombre | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div style="width:10%; float:left;">
+                        <a ng-click="$ctrl.cancelarBusquedaGrupo()" title="CANCELAR BUSCAR GRUPO DE {{$ctrl.etiquetaRol}}" style="margin-top:4px; margin-left:5px;" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                </div>
+                <div class="mt-5" ng-show="$ctrl.mostrarBusquedaGrupoActorComercial">
+                    <div style="width:90%; float:left; padding-bottom:10px;">
+                        <ui-select ng-model="$ctrl.busqueda.ActorComercialGrupo" theme="selectize">
+                            <ui-select-match placeholder="BUSCAR {{$ctrl.etiquetaRol}}">{{$select.selected.Nombre}}</ui-select-match>
+                            <ui-select-choices repeat="actorComercial in $ctrl.busqueda.ActoresComerciales | filter: $select.search">
+                                <span ng-bind-html="actorComercial.Nombre | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div style="width:10%; float:left;">
+                        <a ng-click="$ctrl.aceptarClienteGrupoClientes()" ng-disabled="$ctrl.busqueda.ActorComercialGrupo == undefined" title="SELECCIONAR CLIENTE Y GRUPO DE {{$ctrl.etiquetaRol}}" style="margin-top:4px; margin-left:5px;" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-ok"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-padding" ng-show="$ctrl.actorComercial.SeleccionarGrupo && !$ctrl.busqueda.busquedaActiva">
+                <label class="col-md-6 no-padding">GRUPO</label>
+                <div class="checkbox checkbox-primary col-md-6 no-margin checkbox-form">
+                    <input id="ningunGrupoActorComercial" type="checkbox" class="styled" ng-model="$ctrl.actorComercial.NingunGrupo" ng-change="$ctrl.Seleccionar_NingunGrupoActorComercial()" />
+                    <label for="ningunGrupoActorComercial" class="negrita">NINGUNO</label>
+                </div>
+                <div class="mg-bt-10" ng-show="!$ctrl.actorComercial.NingunGrupo">
+                    <select class="select2 form-control" id="gruposActorComercial" ng-model="$ctrl.actorComercial.Grupo" ng-options="item as item.Nombre for item in $ctrl.gruposActorComercial track by item.Id"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <registrador-actor-comercial rol="$ctrl.rol" etiqueta-rol="$ctrl.etiquetaRol" mascara-visualizacion-validacion="$ctrl.mascaraVisualizacionValidacion" api="$ctrl.registradorActorComercialAPI" changed="$ctrl.cargarActorRegistardo(actorRegistrado)" id="modal-registro-actor-comercial-{{$ctrl.rol.Nombre}}-{{$ctrl.externalId}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"></registrador-actor-comercial>
+</ng-form>

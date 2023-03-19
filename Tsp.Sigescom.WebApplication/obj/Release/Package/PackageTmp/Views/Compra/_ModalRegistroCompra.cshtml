@@ -1,0 +1,22 @@
+﻿<div id="modal-registro-compra" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRAR COMPRA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.Partial("_RegistroCompraPartial")
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-md  pull-left"title="GUARDAR COMPRA"  ng-disabled="inconsistencias.length > 0" ng-click="guardarEnModal()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR COMPRA</button>
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarCompra()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroFinanciamientoPartial")
+    @Html.Partial("_ModalReiniciarFinanciamiento")
+    @Html.Partial("_ModalFijarPrecioDeVenta")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>

@@ -1,0 +1,100 @@
+﻿@*<div class="col-md-12 col-sm-12 col-12 col-lg-12 col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">
+                        <p>REGISTRO DE VENTA  POR CONTINGENCIA</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+
+@*<div></div>*@
+@*<div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="bg-green text-center" style="height: 35px; display: flex;justify-content: center;align-items: center;">
+        <label>REGISTRO DE VENTA  POR CONTINGENCIA</label><br />
+    </div>
+</div>*@
+
+
+@*<div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="bg-green text-center" style="height: 35px; display: flex;justify-content: center;align-items: center;">
+        <label>REGISTRO DE VENTA  POR CONTINGENCIA</label><br />
+    </div>
+</div>*@
+
+
+
+<div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="bg-green text-center" style="height: 40px; display: flex;justify-content: center;align-items: center;margin-top: 7px;">
+        REGISTRO DE VENTA  POR CONTINGENCIA
+    </div>
+</div>
+
+<br />
+<br />
+
+
+@*<div class="col-xs-12 col-md-12 col-12 col-lg-12 col-sm-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-12 col-12 col-lg-12 col-ms-12">
+
+                        <div class="col-xs-12 col-sm-12 col-12 form-group">
+                              <label>HOLA MUNDO</label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+<div class="col-xs-12">
+    <div class="box box-success">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12 col-12 form-group-xs form-group form-group-sm">
+                    <a title="Registrar Sucursal" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-sucursal" ng-click="nuevoRegistroSucursal()"><span class="glyphicon glyphicon-plus"></span> NUEVA SUCURSAL</a>
+                </div>
+                <br />
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                    <table id="tabla-serie-de-comprobante" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                        <thead>
+                            <tr>
+                                <th>N° </th>
+                                <th>RAZÓN SOCIAL</th>
+                                <th>TIPO DE DOCUMENTO</th>
+                                <th>N° DE DOCUMENTO</th>
+                                <th>DIRECCIÓN</th>
+                                <th>ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaSucursales" ng-cloak>
+                                <td>{{$index+1}}</td>
+                                <td>{{item.Nombre}}</td>
+                                <td>{{item.TipoDeDocumento}}</td>
+                                <td>{{item.NumeroDocumentoDeIdentidad}}</td>
+                                <td>{{item.Direccion}}</td>
+                                <td>
+                                    <a title="Editar sucursal" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-sucursal" ng-click="editarSucursal(item.Id);$flow.cancel()"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a title="Eliminar sucursal" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-dar-de-baja-sucursal" ng-click="enviarDatosParaModalDarDeBajaSucursal(item.Id,item.RazonSocial)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,228 @@
+﻿<form name="registro-compra" class="formulario form-horizontal" ng-cloak novalidate isolate-form>
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading titulo-negrita-centrado">
+                <div>S/ {{compra.Total!=null?compra.Total:0.00|number:2}}</div>
+            </div>
+            <div class="panel-body no-pad-top">
+                <div class="row">
+                    <selector-actor-comercial ng-if="inicializacionRealizada" name="SelectorProveedor" id="SelectorProveedor" actor-comercial="compra.Proveedor" rol="rolProveedor" api="$parent.selectorProveedorAPI" changed="cambioProveedor(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroProveedor" inicio-realizado="inicioRealizadoProveedor()" permitir-seleccionar-grupo="permitirSeleccionarGrupoProveedor"></selector-actor-comercial>
+                    <div class="col-md-12">
+                        <label class="control-label">FECHA</label>
+                        <input ng-model="compra.FechaRegistro" id="fechaRegistro" placeholder="dd/mm/aaaa" ng-change="verificarInconsistencias()" class="form-control datepicker-bottom" data-date-end-date="0d"/>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">DOCUMENTO</label>
+                        <select class="select2 form-control tipoDocumento" ng-model="compra.TipoDeComprobante" ng-change="cargarSeries(); " ng-options="item as item.TipoComprobante.Nombre for item in tiposDeComprobantesMasSeries  track by item.TipoComprobante.Id" required></select>
+                    </div>
+                    <div class="col-md-12 ng-cloak" ng-show=" compra.TipoDeComprobante.MostrarSelectorSerie && compra.TipoDeComprobante.EsPropio ">
+                        <label class="control-label">SERIE</label>
+                        <select id="serie" class="select2 form-control" ng-model="compra.TipoDeComprobante.SerieSeleccionada" ng-options="item.Id as item.Nombre for item in series" required></select>
+                    </div>
+                    <div class="col-md-12 ng-cloak" ng-show="compra.TipoDeComprobante.MostrarEntradaSerie">
+                        <label class="control-label">SERIE</label>
+                        <input class="form-control" uppercase-only ng-model="compra.TipoDeComprobante.SerieIngresada" ng-change="verificarInconsistencias()" ng-pattern-restrict="^[a-zA-Z0-9]{0,4}$" minlength="3" maxlength="4" required />
+                    </div>
+                    <div class="col-md-12 ng-cloak" ng-show="compra.TipoDeComprobante.MostrarEntradaNumero">
+                        <label class="control-label">N° DOCUMENTO</label>
+                        <input class="form-control" ng-model="compra.TipoDeComprobante.NumeroIngresado" ng-change="verificarInconsistencias()" maxlength="8" ng-pattern-restrict="^[0-9]{0,8}$" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">OBSERVACION</label>
+                        <textarea class="form-control" id="observacion" rows="2" value="Observacion" ng-model="compra.Observacion" placeholder="OBSERVACIÓN" required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="realizaCompraAlCredito">
+            <div class="panel panel-primary">
+                <div class="panel-heading">COMPRA AL CRÉDITO</div>
+                <div class="panel-body" style="padding:5px;">
+                    <div class="col-md-12">
+                        <div class=" checkbox checkbox-primary checkbox-inline">
+                            <input id="credito" type="checkbox" ng-disabled="compra.Total==0" ng-model="compra.EsCompraACredito" ng-click="iniciarFinanciamiento()" />
+                            <label for="credito">AL CREDITO</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="radio1" name="credito" ng-disabled="compra.Total==0" value="true" ng-model="compra.EsCreditoRapido" ng-checked="compra.EsCreditoRapido == true" ng-click="seleccionarEsCredito(); seleccionarCreditoRapido();">
+                            <label for="radio1">Rapido</label>
+                        </div>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="radio2" name="credito" ng-disabled="compra.Total==0" value="false" ng-model="compra.EsCreditoRapido" ng-click="seleccionarEsCredito(); financiamientoConfigurado()" ng-checked="compra.EsCreditoRapido == false">
+                            <label for="radio2">Configurar</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="aplicaLeyAmazonia">
+            <div class="panel panel-primary">
+                <div class="panel-heading">TIPO DE COMPRA</div>
+                <div class="panel-body" style="padding:5px;">
+                    <div class="col-md-12">
+                        <div class="radio radio-primary radio-inline col-md-12">
+                            <input type="radio" name="q" id="radio-1" ng-model="compra.TipoCompra" ng-value="1" ng-change="cambioDeExoneradoIgv(compra.Detalles);" ng-checked="compra.TipoCompra==1">
+                            <label class="col-md-12" title="EXONERADAS IGV" for="radio-1">EXONERADAS IGV</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 panel-body">
+                        <label style="font-weight:normal">GRAVADAS DESTINADAS A VENTAS:</label>
+                        <div class="radio radio-primary radio-inline col-md-12">
+                            <input type="radio" name="q" id="radio-2" ng-model="compra.TipoCompra" ng-value="2" ng-change="cambioDeExoneradoIgv(compra.Detalles);" ng-checked="compra.TipoCompra==2">
+                            <label class="col-md-3" title="GRAVADAS " for="radio-2">G</label>
+                            <input type="radio" name="q" id="radio-3" ng-model="compra.TipoCompra" ng-value="3" ng-change="cambioDeExoneradoIgv(compra.Detalles);" ng-checked="compra.TipoCompra==3">
+                            <label class="col-md-4" title="NO GRAVADAS" for="radio-3">NG</label>
+                            <input type="radio" name="q" id="radio-4" ng-model="compra.TipoCompra" ng-value="4" ng-change="cambioDeExoneradoIgv(compra.Detalles);" ng-checked="compra.TipoCompra==4">
+                            <label class="col-md-5" title="GRAVADAS Y NO GRAVADAS" for="radio-4">G Y NG</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 no-padding-left">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                </div>
+                <div class="col-md-12" id="modelo-mercaderia" ng-controller="consultarMercaderiaController" ng-init="inicializarRegistroMercaderia()">
+                    <a title="Registrar una Nueva Mercaderia" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#modal-mercaderia" ng-click="nuevoRegistroMercaderiaEnCompras()"><span class="glyphicon glyphicon-plus"></span></a>
+                    @Html.Partial("../Concepto/_ModalRegistroConcepto")
+                </div>
+                <div class="col-md-12">
+                    <selector-concepto-comercial ng-if="inicializacionRealizada" concepto-comercial="conceptoComercial" api="$parent.selectorConceptoComercialAPI" modo-seleccion-tipo-familia="modoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="mostrarBuscadorCodigoBarra" modo-seleccion-concepto="modoSeleccionConcepto" complemento-stock="false" complemento-precio="false" minimo-caracteres-buscar-concepto="minimoCaracteresBuscarConcepto" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" informacion-a-mostrar="informacionSelectorConcepto" changed="seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+                </div>
+
+                    <div class="col-xs-12 no-padding" style="margin-top: 10px;">
+                        <table class="table table-height-small table-bordered ng-cloak">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>PRODUCTO</th>
+                                    <th>CANT</th>
+                                    <th>V.U</th>
+                                    <th>V.COMP</th>
+                                    <th>DSCTO</th>
+                                    <th>NETO</th>
+                                    <th>I.G.V</th>
+                                    <th>IMPORTE</th>
+                                    <th ng-if="permitirLoteEnDetalleDeCompra">LOTE</th>
+                                    <th ng-if="permitirRegistroEnDetalleDeCompra">VENC.</th>
+                                    <th ng-if="permitirVencimientoEnDetalleDeCompra">REG. SAN.</th>
+                                    <th ng-if="permitirCambioPrecio">P. VENTA</th>
+                                    <th>OPCIÓN</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="compra.Detalles.length>0">
+                                <tr ng-repeat="item in compra.Detalles">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.Producto.Nombre}}</td>
+                                    <td>
+                                        <input id="cantidad-{{$index}}"
+                                               type="number"
+                                               class="form-control height-34  number numero-derecha"
+                                               ng-model="item.Cantidad"
+                                               ng-change="calcularImporteDesdeCantidad(compra.Detalles,$index)"
+                                               ng-blur="formatoDecimalCantidad($event);"
+                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$"
+                                               onClick="select();"
+                                               lang="en-IN" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control height-34 numero-derecha"
+                                               ng-model="item.PrecioUnitario"
+                                               ng-change="calcularImporteDesdePrecio(compra.Detalles,$index);"
+                                               ng-blur="item.PrecioUnitario=formatNumber(item.PrecioUnitario,numeroDecimalesEnPrecio);"
+                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnPrecio}}})?)?$"
+                                               onClick="select();" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control height-34 numero-derecha"
+                                               ng-model="item.ValorCompra"
+                                               ng-change="calcularValoresIngresadoValorCompra(compra.Detalles,$index);"
+                                               ng-blur="item.ValorCompra=formatNumber(item.ValorCompra,2);"
+                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                                               onClick="select();" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control height-34 numero-derecha"
+                                               ng-model="item.Descuento"
+                                               ng-change="calcularImporteDesdeDescuento(compra.Detalles,$index);"
+                                               ng-blur="item.Descuento=formatNumber(item.Descuento,2);"
+                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                                               onClick="select();" />
+                                    </td>
+                                    <td class="number">{{item.Neto|number:2}}</td>
+                                    <td class="number">{{item.Igv|number:2}}</td>
+                                    <td>
+                                        <input class="form-control height-34 numero-derecha"
+                                               ng-model="item.Importe"
+                                               ng-change="calcularValoresIngresadoImporte(compra.Detalles,$index);"
+                                               ng-blur="item.Importe=formatNumber(item.Importe,2)"
+                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                                               onClick="select();" />
+                                    </td>
+                                    <td ng-if="permitirLoteEnDetalleDeCompra">
+                                        <input type="text" class="form-control height-34" id="lote" ng-model="item.Lote" />
+                                    </td>
+                                    <td ng-if="permitirRegistroEnDetalleDeCompra">
+                                        <input ng-model="item.Vencimiento" id="fechaVencimiento-{{$index}}" placeholder="dd/mm/aaaa" class="form-control height-34 td-datepicker" />
+                                    </td>
+                                    <td ng-if="permitirVencimientoEnDetalleDeCompra">
+                                        <input type="text" class="form-control height-34" id="registrosanitario" ng-model="item.Registro" />
+                                    </td>
+                                    <td ng-if="permitirCambioPrecio">
+                                        <a title="Fijar precio de venta" class="btn btn-xs btn-primary" ng-click="abrirModalFijarPrecioDeVenta(item.Producto.Id,item.PrecioUnitario,item.Producto.Nombre)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    </td>
+                                    <td>
+                                        <a title="Quitar producto" class="btn btn-xs btn-danger" ng-click="quitarDetalle($index)"><span class="glyphicon glyphicon-remove"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody ng-hide="compra.Detalles.length>0">
+                                <tr>
+                                    <td colspan="12" style="color:#bb1f1f">No existe ningún registro en el carrito</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" ng-show="permitirRegistroFlete">
+                            <div class="col-md-3">
+                                <label class="control-label">FLETE:</label>
+                                <input class="form-control numero-derecha" id="flete" ng-model="compra.Flete" onClick="this.select();" ng-blur="compra.Flete=formatNumber(compra.Flete,2); compra.Flete = compra.Flete < 0 ? 0 : compra.Flete" ng-change="calcularTotal(compra.Detalles)" />
+                            </div>
+                        </div>
+                        <table ng-show="compra.Detalles.length>0" class="table table-bordered table-striped ng-cloak">
+                            <thead>
+                                <tr>
+                                    <th>SUBTOTAL</th>
+                                    <th>DESCUENTO</th>
+                                    <th>IGV</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td ng-cloak>{{compra.SubTotal|number:2}}</td>
+                                    <td ng-cloak>{{compra.Descuento|number:2}}</td>
+                                    <td ng-cloak>{{compra.Igv|number:2}}</td>
+                                    <td ng-cloak>{{compra.Total|number:2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <div class="box box-danger ng-cloak" ng-show="inconsistencias.length > 0">
+            <div class="box-body">
+                <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                <table>
+                    <tr ng-repeat="item in inconsistencias">
+                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

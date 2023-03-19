@@ -1,0 +1,56 @@
+﻿<div id="modal-ver-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <div class="col-md-12">
+                    <h4 class="modal-title">DOCUMENTO {{verDocumento.SerieNumeroDocumento}} (S/ {{verDocumento.Total|number:2}})</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button ng-show="verDocumento.AccionInvalidar" title="INVALIDAR DOCUMENTO" ng-click="iniciarInvalidacion()" ng-disabled="hayRegistroDeNota == true" class="btn btn-md btn-warning" data-toggle="modal" data-target="#modal-invalidar-documento">INVALIDAR</button>
+                        <button ng-show="verDocumento.AccionEmitirNota" title="EMITIR NOTA DE DEBITO" ng-disabled="hayRegistroDeNota == true" ng-click="iniciarEmisionDeNotaDeDebito()" class="btn btn-md btn-primary">NOTA DE DEBITO</button>
+                        <button ng-show="verDocumento.AccionEmitirNota" title="EMITIR NOTA DE CREDITO" ng-disabled="hayRegistroDeNota == true" ng-click="iniciarEmisionDeNotaDeCredito()" class="btn btn-md btn-primary">NOTA DE CREDITO</button>
+                    </div>
+                    <div class="col-md-12" ng-hide="hayRegistroDeNota" style="padding-top:15px">
+                        <div id="pdfDocumento" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; margin:auto; margin-top:20px"></div>
+                    </div>
+                    <div class="col-md-12" ng-show="hayRegistroDeNota" style="padding-top:15px">
+                        <uib-accordion close-others="oneAtATime">
+                            <div uib-accordion-group class="panel-primary accordion-panel gl" is-open="notaDeOperacionAcordion">
+                                <uib-accordion-heading>
+                                    <span ng-click="accionNotaDeOperacion(notaDeOperacionAcordion)">
+                                        REGISTRO DE NOTA DE {{etiquetaDeNota}} <i class="pull-right glyphicon" ng-class="{'glyphicon-minus-sign': notaDeOperacionAcordion, 'glyphicon-plus-sign': !notaDeOperacionAcordion}"></i>
+                                    </span>
+                                </uib-accordion-heading>
+                                <div class="row">
+                                    @Html.Partial("../NotaCreditoDebito/_RegistroDeNotaPartial")
+                                </div>
+                            </div>
+                        </uib-accordion>
+                    </div>
+                    <div class="col-md-12" ng-show="hayRegistroDeNota">
+                        <uib-accordion close-others="oneAtATime">
+                            <div uib-accordion-group class="panel-primary accordion-panel gl" is-open="detalleDocumentoAcordion">
+                                <uib-accordion-heading>
+                                    <span ng-click="accionDetalleDocumento(detalleDocumentoAcordion)">
+                                        VER DOCUMENTO {{verDocumento.SerieNumeroDocumento}} <i class="pull-right glyphicon" ng-class="{'glyphicon-minus-sign': detalleDocumentoAcordion, 'glyphicon-plus-sign': !detalleDocumentoAcordion}"></i>
+                                    </span>
+                                </uib-accordion-heading>
+                                <div class="row">
+                                    <div id="pdfDocumento1" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; font-family: auto; margin:auto; margin-top:15px"></div>
+                                </div>
+                            </div>
+                        </uib-accordion>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarVerDocumento()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+

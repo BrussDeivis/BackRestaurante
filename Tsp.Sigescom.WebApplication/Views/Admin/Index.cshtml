@@ -1,0 +1,148 @@
+﻿@*@model PagedList.IPagedList<Tsp.Sigescom.WebApplication.Models.ExpandedUserDTO>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+
+@{
+    ViewBag.title = "Bandeja de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/admin/adminController.js")></script>
+}
+    <div class="col-md-12" ng-controller="bandejaUsuariosController" ng-cloak  ng-init="init()">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">BANDEJA DE ROLES Y USUARIOS</div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="input-small formulario-mediano col-md-7 table-options form-group">
+                            @Html.ActionLink("NUEVO USUARIO", "Create", null, new { @class = "btn btn-primary btn-flat" })
+                            @Html.ActionLink("EDITAR ROLES", "ViewAllRoles", null, new { @class = "btn  btn-flat btn-success" })
+                            @*@Html.ActionLink("Inicio", "../", "Home", null, new { @class = "btn btn-default" })*@
+                            <button title="DESCARGAR" ng-click="export('tabla-correos')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                        </div>
+                        <table id="tabla-correos" datatable="ng" dt-options="dtOptions" dt-column-defs="elementos.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                            <thead>
+                                <tr>
+
+                                    <th>EMPLEADO</th>
+                                    <th>USUARIO</th>
+                                    <th>ROLES</th>
+                                    @*<th>BLOQUEADO</th>*@
+                                    <th>ACCIÓN</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in elementos.lista" ng-cloak class="lowercase">
+
+                                    <td>{{item.NombreEmpleado}}</td>
+                                    <td>{{item.Email}}</td>
+                                    <td>{{item.NombresRoles}}</td>
+                                    @*<td>{{item.LockoutEndDateUtc}}</td>*@
+
+                                    <td class="right">
+                                        <a title="Asignar usuario a un empleado" class="btn btn-xs btn-info" data-toggle="modal" data-target="#modal-asignacion-usuario-empleado" ng-click="cargarModalAsignarUsuarioEmpleado(item.IdUsuario,item.Email)"><span class="glyphicon glyphicon-user"></span></a>
+                                        <a title="Editar Usuario" class="btn btn-xs btn-warning" data-ng-href="@Url.Action("EditUser", "Admin")?UserName={{item.UserName}}"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a ng-show="item.EsUsuarioPrincipal" class="btn btn-xs btn-danger" title="Eliminar Usuario" data-toggle="modal" data-target="#modal-usuario" ng-click="cargarModal(item.UserName)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      
+
+                        <!-- MODAL ELIMINAR -->
+                        <div id="modal-usuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <a class="close" data-dismiss="modal">&times;</a>
+                                        <h4 class="modal-title"> Eliminar Usuario</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> Esta seguro de eliminar este Usuario?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-info" data-dismiss="modal" ng-click="eliminar()">Aceptar</a>
+                                        <a class="btn btn-info" data-dismiss="modal">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<br />
+        @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+        {
+
+            <div class="form-group">
+                Buscar:&nbsp; @Html.TextBox("searchStringUserNameOrEmail", ViewBag.CurrentFilter as string)
+
+                <input type="submit" value="Buscar" />
+            </div>
+        }*@
+
+                        @*<br />
+
+        <table class="table table-stripped table-height-small table-bordered">
+            <thead style="text-transform:uppercase">
+                <tr>
+                    <th>
+                        Correo Electronico
+                    </th>
+                    <th>
+                        Bloqueado
+                    </th>
+                    <th>Acci&oacute;n</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td class="left">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+                        </td>
+                        <td class="right">
+                            @Html.ActionLink("Editar", "EditUser", new { UserName = item.UserName }) |
+                            @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
+                    {
+                                @Html.ActionLink("Eliminar", "DeleteUser", new { UserName = item.UserName },
+                        new { onclick = "return confirm('Esta seguro de eliminar este Usuario?');" })
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+
+        </table>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model,
+        page => Url.Action("Index",
+        new
+        {
+            page,
+            searchStringUserNameOrEmail = ViewBag.searchStringUserNameOrEmail,
+            currentFilter = ViewBag.CurrentFilter
+        }))
+        <hr />*@
+                    </div>
+                </div>
+            </div>
+            @Html.Partial("_ModalAsignacionUsuarioEmpledo");
+
+        </div>
+    </div>
+

@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Ambientes";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/hotel/ambienteController.js")></script>
+    <script type="text/javascript">
+        var idEstablecimientoPorDefecto = @ViewBag.idEstablecimientoPorDefecto;
+    </script>
+}
+
+<div class="col-md-12 no-padding" id="ambiente" ng-controller="ambienteController" ng-init="inicializar()">
+    <div class="col-md-12">
+        <div class="color-palette-set">
+            <div class="bg-green color-palette">Ambientes</div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="col-md-8">
+                    <div class="row" style="padding-left:15px">
+                        <div class="col-sm-4 px-5">
+                            <div class="form-group">
+                                <label>Establecimiento:</label>
+                                <select class="select2 input-sm" id="establecimientoAmbiente" ng-model="establecimientoSeleccionado" ng-change="obtenerAmbientes()" ng-options="item as item.Nombre for item in establecimientos track by item.Id" required>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="padding-top:20px">
+                    <div class="row">
+                        <div class=" col-md-3">
+                            <button class="btn btn-primary btn-block" ng-click="obtenerAmbientes()" style="margin-top:3px">
+                                <span class="fa fa-search"></span>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-block" style="margin-top: 3px" title="DESCARGAR" ng-click="export('tabla-ambientes')">
+                                <span class="fa fa-file-excel-o"></span>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary btn-block" style="margin-top:3px" ng-click="abrirNuevoAmbiente()">
+                                <span class="glyphicon glyphicon-plus"></span> Ambiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="row">
+                    <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive principal-tablaResponsiva">
+                        <table id="tabla-ambientes" datatable="ng" dt-options="dtOptions" dt-column-defs="ambientes.dtColumnDefs" class="table table-stripped table-bordered dateTable tabla-responsiva">
+                            <thead>
+                                <tr class="filters">
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Vigente</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="ambiente in ambientes" ng-cloak>
+                                    <td scope="row" data-label="Item">{{$index+1}}</td>
+                                    <td scope="row" data-label="Codigo" class="width-100">{{ambiente.Codigo}}</td>
+                                    <td scope="row" data-label="Nombre" class="width-100">{{ambiente.Nombre}}</td>
+                                    <td scope="row" data-label="Vigente"><div class="hide">{{ambiente.EsVigente ? 'SI' : 'NO'}}</div>
+                                        <i title="{{ambiente.EsVigente ? 'SI' : 'NO'}}" class="fa fa-toggle-on" ng-model="ambiente.EsVigente" ng-class="ambiente.EsVigente ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="cambiarEstadoAmbiente(ambiente.Id)" />
+                                    </td>
+                                    <td scope="row" data-label="Acciones">
+                                        <button title="Editar" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" ng-click="editarAmbiente(ambiente)" style="background-color: #EB5C24"><span class="fa fa-pencil"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_Nuevo_Ambiente")
+</div>
+

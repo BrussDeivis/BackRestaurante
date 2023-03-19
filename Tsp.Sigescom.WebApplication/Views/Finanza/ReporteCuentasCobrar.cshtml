@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Regenracion de Registros";
+    Layout = "~/Views/Shared/_LayoutTema.cshtml";
+}
+@section scripts{
+<script src=@Url.Content("~/Scripts/Finanza/cuentasCobrarYPagarController.js")></script>
+
+}
+
+<div ng-controller="cuentasCobrarYPagarController">
+
+    <h3 class="titulo1">Reportes</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+           
+            @using (Html.BeginForm("GenerarReporteCuentaPorCobrar", "cuentasCobrarYPagar", FormMethod.Post))
+            {
+                <div class="form-group col-md-12">
+                    <label for="email">Fecha </label>
+                    <input name="fecha" ng-model="fecha" class="datepicker-yyyy"/>
+                </div>
+                <input type="submit" class="btn btn-success button" ng-disabled="!fecha"  name="btnExportLicensing" style="width: 140px; margin-top:10px"
+                       value="Descargar" id="exportLicensing" />
+            }
+        </div>
+    </div>
+</div>

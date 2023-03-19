@@ -1,0 +1,922 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{23C28715-FE7F-4718-82A9-B4B49EF1EEC4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tsp.Sigescom.Modelo</RootNamespace>
+    <AssemblyName>ºº</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RonaldIbarra|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\RonaldIbarra\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Humanizer, Version=2.5.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.5.1\lib\netstandard1.0\Humanizer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenInvoicePeru.Comun">
+      <HintPath>..\packages\OpenInvoicePeru\OpenInvoicePeru.Comun.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenInvoicePeru.Comun.Dto, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OpenInvoicePeru\OpenInvoicePeru.Comun.Dto.dll</HintPath>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf">
+      <HintPath>..\packages\Select.HtmlToPdf.18.3.1\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="zxing, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClasesDatos\EFactura\Binario.cs">
+      <DependentUpon>FacturacionElectronicaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\EFactura\Documento.cs">
+      <DependentUpon>FacturacionElectronicaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\EFactura\Envio.cs">
+      <DependentUpon>FacturacionElectronicaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\EFactura\EnvioDocumento.cs">
+      <DependentUpon>FacturacionElectronicaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\EFactura\FacturacionElectronicaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FacturacionElectronicaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\EFactura\ProgramacionEnvio.cs">
+      <DependentUpon>FacturacionElectronicaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\EFactura\partial\Documento.cs" />
+    <Compile Include="ClasesDatos\EFactura\partial\DocumentoAvanzado.cs" />
+    <Compile Include="ClasesDatos\Principal\Accion_de_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Accion_de_negocio_por_tipo_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Accion_por_estado.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Accion_por_rol.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Actor.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Actor_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Actor_negocio_por_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Actor_negocio_rol.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\AspNetRoles.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\AspNetUserClaims.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\AspNetUserLogins.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\AspNetUsers.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Atributo.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Atributo_actor.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Caracteristica_concepto.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Categoria_concepto.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Clase_actor.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Comprobante.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Concepto_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Concepto_negocio_rol.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Configuracion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Cuenta_contable.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Cuota.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\C__MigrationHistory.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Detalle_detalle_maestro.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Detalle_maestro.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Detalle_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Direccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Documento_identidad.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Documento_identidad_por_tipo_actor.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Estado_cuota.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Estado_legal.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Estado_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Evento_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Existencia.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Foto.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Maestro.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Mapeo_cuenta_contable_concepto.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Marca_concepto.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Menu_aplicacion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Modo_pago.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\new_table.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConceptoYTipoFamilia_Result.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYBusquedaConcepto_Result.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYFamilia_Result.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\ObtenerConceptosDeNegociosComercialesConStockPrecioPorRolYTipoFamilia_Result.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\ObtenerConceptosDeNegociosComercialesConStockPrecioPorRol_Result.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Pago_cuota.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parametro_actor_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parametro_concepto_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parametro_de_configuracion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parametro_por_rol.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parametro_por_unidad_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parametro_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Parentesco.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\partial\Periodo.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Tipo_cambio.cs" />
+    <Compile Include="ClasesDatos\Principal\Periodo.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Plan_contable.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Precio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Referencia_detalle_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Registro_sucesos.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Rol.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Rol_por_tipo_actor.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Rol_por_unidad_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Serie_comprobante.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\SigescomModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Tipo_actor.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Tipo_cambio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Tipo_parentesco.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Tipo_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Tipo_transaccion_tipo_comprobante.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Traza_pago.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Turno.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Ubigeo.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Valor_caracteristica.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Valor_caracteristica_concepto.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Valor_caracteristica_concepto_negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Valor_detalle_maestro_detalle_transaccion.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\Vinculo_Actor_Negocio.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesDatos\Principal\VoucherModel.cs">
+      <DependentUpon>SigescomModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClasesNegocio\Core\Actor\ResumenCliente.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\MiembroGrupoClientes.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\GrupoClientesResumen.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\GrupoClientes.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\JsonCentroDeAtencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\JsonEstablecimientoComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Almacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Establecimiento.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\OrdenAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\OrdenAlmacenResumen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\InventarioHistorico.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\InventarioValorizado.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\PrincipalOrdenAlmacenData.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\StockMinMax.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\DetalleKardexValorizado.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\DetalleKardexFisico.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\VencimientoConceptoNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\ConceptoLote.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\InventarioVencimiento.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\InventarioSemaforo.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\InventarioEnAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\InventarioFisico.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\EntradaAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\SalidaAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\ReportData\PrincipalReportData.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\ComprobanteDeOperacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\DocumentoDePedido.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\DocumentoMovimientoDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeCreditoInterna.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeDebitoInterna.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaInvalidacionCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaInvalidacionVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\TipoTransaccionTipoComprobante.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ConceptoConSusCaracteristicas.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Concepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ReporteDigemid.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionDePedido.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionesLogica.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionNota.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionRegistroDetalle.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionPago.cs" />
+    <Compile Include="ClasesNegocio\Core\Facturacion\Atencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Facturacion\DetalleOrdenAtencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Facturacion\Envios.cs" />
+    <Compile Include="ClasesNegocio\Core\Facturacion\OrdenAtencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\DetalleCuotaPago.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\FlujoIngresoEgreso.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\DetalleFlujo.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\OperacionFamiliaGrupo.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\OperacionGrupoDetallado.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\OperacionGrupo.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\ResumenFlujo.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\PlainModel\IngresoEgreso.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\ReportData\PrincipalReportData.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\CajaInicializar.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\SerieComprobante_.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\ItemGenericoConSubItems.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\ItemEstado.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Adsoft\VentaClienteAdsoft.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Adsoft\ReporteVentaClienteAdsoft.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Concar\OperacionVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Concar\DetalleAsientoContableConcar.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Concar\RegistroCliente.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Concar\LibroElectronicoConcar.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Concar\RegistroClienteConcar.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Foxcont\VentaClienteFoxcom.cs" />
+    <Compile Include="ClasesNegocio\Core\LibrosElectronicos\PlainModel\Foxcont\ReporteVentaClienteFoxcom.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\ResumenDeTransaccionGeneral.cs" />
+    <Compile Include="ClasesNegocio\Core\Pedido\OrdenDePedido.cs" />
+    <Compile Include="ClasesNegocio\Core\Pedido\PlainModel\PedidosInvalidados.cs" />
+    <Compile Include="ClasesNegocio\Core\Pedido\PrincipalPedidoData.cs" />
+    <Compile Include="ClasesNegocio\Core\Pedido\ReportData\PrincipalReportData.cs" />
+    <Compile Include="ClasesNegocio\Core\Pedido\ResumenOrdenPedido.cs" />
+    <Compile Include="ClasesNegocio\Core\Sesion\MaestroSesion.cs" />
+    <Compile Include="ClasesNegocio\Core\TipoCambio\TipoCambio.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ConsultaComprobanteParameter.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ItemDetalladoOperacionComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ItemAgrupadoOperacionComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ItemOperacionComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\InvalidarVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\OperacionInvalidacionVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ReportData\PrincipalReportData.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionPorSerieDeComprobanteYConcepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionPorSerieDeComprobanteYCategoria.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\VentaConceptoCliente.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\Custom\LibroCompras.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\Custom\LibroComprasNoDomiciliadas.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\Custom\LibroElectronico.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\Custom\LibroVentasIngresos.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\EBooksViewModel.cs" />
+    <Compile Include="ClasesNegocio\EFactura\DocumentoBajaAvanzado.cs" />
+    <Compile Include="ClasesNegocio\EFactura\DocumentoImprimible.cs" />
+    <Compile Include="ClasesNegocio\EFactura\EnvioGuiaRemision.cs" />
+    <Compile Include="ClasesNegocio\EFactura\EnvioLigero.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\AmbienteHotel.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Anotacion.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ComprobanteAtencion.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Complemento.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Configuraciones\ConfiguracionHuesped.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Configuraciones\ConfiguracionFacturar.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Configuraciones\ConfiguracionEstadoHabitacion.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Configuraciones\ConfiguracionReserva.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\AtencionHotel.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\MensajesTransaccion.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\EstadoAtencionHotel.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\EstadoHabitacionEnPlanificador.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Habitacion.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\HabitacionBandeja.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ConsumoSimple.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\HabitacionEnPlanificador.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Huesped.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\DetalleConsumo.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ModeloExtranet\Booking.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ModeloExtranet\PaymentInfo.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ModeloExtranet\PaymentTrace.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ModeloExtranet\DateBooking.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ModeloExtranet\PersonalData.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ModeloExtranet\RoomType.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Anulada.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\EventoIncidente.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Reserva.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Incidente.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Facturada.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Huesped.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Ingreso.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\NoFacturada.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\RegistroHuesped.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\FormularioT1.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\PlainModel\Salida.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ReportePlanificador.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Planificador.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\AtencionMacroHotel.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ReportData\PrincipalReportData.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ReservaBandeja.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\Consumo.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\JsonHuesped.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\TipoHabitacion.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\TipoHabitacionesBandeja.cs" />
+    <Compile Include="ClasesNegocio\SigesHotel\ConsumoHabitacion.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\ConfiguracionTurnoCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\EntradaSalida.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\EntradaSalidaUsuario.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Exceptions\VehiculoNoExiste.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Exceptions\VehiculoNoIngresado.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Exceptions\VehiculoYaIngresadoException.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\TicketSalidaCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\TurnoCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\ConfiguracionCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\ExoneracionDeVehiculo.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\AtencionSinMesa.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\CentroAtencionRestaurante.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\AtencionRestaurante.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\CobroAtencion.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Complemento.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Comprobantes\ComprobanteCuentaAtencion.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Comprobantes\ComprobanteOrden.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Configuraciones\ConfiguracionRestauranteCaja.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Configuraciones\ConfiguracionRestauranteFacturacion.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Configuraciones\ConfiguracionRestauranteReportes.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Consultas\OrdenPorModoAtencion_Consulta.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Consultas\OrdenAtencion_Consulta.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Detalle_Orden.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Familia.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Detalle_Complemento.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\InformacionDePago.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\ItemRestaurante.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\OrdenAtencion.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Data_Ambiente.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Data_Mesa.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\ResumenAtencion.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\SesionRestaurante.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\CentroDeAtencion_.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\ComboActorComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ConceptoBasico.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ConceptoDeNegocioParaVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionGuiaRemision.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Configuraciones\ConfiguracionRestauranteDetalleOrden.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Configuraciones\ConfiguracionRestauranteOrden.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Configuraciones\ConfiguracionRestauranteAtencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionRegistroActorComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionTrazaDePago.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\CuentaBancaria.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\DetalleDeOperacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\EstadoCuentaCliente_VentaCobro\DetalleEstadoCuentaCliente_VentaCobro.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\EstadoCuentaCliente_VentaCobro\EstadoCuentaCliente_VentaCobro.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\EstadoCuentaCliente_VentaCobro\ResumenEstadoCuentaCliente_VentaCobro.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\FacturacionPagoVenta.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Ambiente.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Mesa.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\ItemJerarquico.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Pago_cuota.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Reporte_Caja.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Consultas\DetalleOrden_Consulta.cs" />
+    <Compile Include="ClasesNegocio\Core\Puntos\Reporte_Puntos_Canjeados.cs" />
+    <Compile Include="ClasesNegocio\Core\Puntos\Reporte_Puntos_Pendientes.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Consultas\ResumenOrdenesPorMozo_Consulta.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Consultas\ResumenOrden_Consulta.cs" />
+    <Compile Include="ClasesNegocio\SigesRestaurant\Consultas\ItemRestaurante_Consulta.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\CostoUtilidadPorConcepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\PrecioParaRegistroDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\RegistroCaracteristicaPropia.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\RegistroDeFinanciamiento.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\RegistroTransacciones.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\RegistroDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\RegistroMovimientoAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\AfectacionInventarioFisico.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\ResultadoRegistroMovimientoCochera.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\ComprobanteDeNegocio_.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Empleado_.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\ActorComercial_.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Comprobante.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Comprobantes\TicketIngresoCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Comprobantes\TicketSalidaCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\DetallesACobrar.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\TicketIngresoCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Ingreso.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\MovimientoCocheraBasico.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\MovimientoCochera.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\TipoDocumento.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\Vehiculo.cs" />
+    <Compile Include="ClasesNegocio\Core\Accion\AccionOperativa.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\BoletaDeCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\DocumentoDeCotizacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\DocumentoDePercepcion.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\DocumentoDeRetencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\FacturaCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\GuiaDeRemision.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeCreditoCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeDebitoCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeDebito.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\OrdenDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\ReciboDeIngresoEgreso.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeCredito.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\NotaDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\Factura.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\DocumentoElectronico.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\Templates\BoletaDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\EstablecimientoComercial_.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Direccion_.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\ItemGenerico.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionDeCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\DetalleDeOperacion_.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\MontoNotaDeCredito.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\ParametroDeTransaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Reporte_Stock_General.cs" />
+    <Compile Include="ClasesNegocio\Core\Compra\Resumen_Compra.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ReporteVentaDetalladoSinConcepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\ImporteConcepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Rol\RolDeNegocio_.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\SelectorTipoDeComprobante.cs" />
+    <Compile Include="ClasesNegocio\Core\Configuraciones\ConfiguracionFacturacionPagoVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\TrazaDePago_.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Turno.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\_Existencia.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Complemento_Concepto_Negocio_Comercial.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Valor_detalle_maestro_detalle_transaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ValorCaracteristica.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Caracteristica.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\CarteraDeClientes.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\DetalleOrdenDeNota.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\InventarioConceptoNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\MovimientoDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Deuda.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\OperacionClasificada.cs" />
+    <Compile Include="ClasesNegocio\Core\Cotizacion\OrdenDeCotizacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Cobro_Pago.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Concepto_Basico.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\Precio_Concepto_Negocio_Comercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Concepto_Negocio_Comercial_Venta.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Concepto_Negocio_Comercial_Compra.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Cuenta_Cobrar_Pagar.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Entrada_Salida_Almacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Orden_Recibir_Entregar.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Reporte_Concepto_Negocio_Proximo_A_Vencer_Por_Almacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Reporte_Venta_Concepto_Basico.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\Concepto_Negocio_Comercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Reporte_Pago.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Reporte_Deuda.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\Precio_Compra_Venta_Concepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\Precio_Concepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Reporte_Venta_Consolidado.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\Ultimo_Precio_Compra_Venta.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\PlainModel\MovimientoAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Detalle_Transaccion_Por_Modalidad.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Venta_Cliente.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Evento_transaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_Venta.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Reporte_Inventario_Valorizado.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\EstablecimientoComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Resumen_Transaccion_Kardex.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_Transaccion_Por_Modalidad.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\Codigo.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ValorDetalleMaestroDetalleTransaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionPorComprobante.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\TrasladoInterno.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\DetalleMovimientoEconomico.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\DetalleCobranzaMasiva.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\IngresoDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\FlujoDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Movimientos_concepto_negocio_actor_negocio_interno.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Reporte_Transaccion_Deuda_A_Proveedor_Por_Cuotas.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\DetalleTransaccionPorVendedor.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ResumenTransaccionPorVendedor.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Deuda_Actor_Negocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Resumen_Transaccion_Inventario_Fisico_Valorado.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_Transaccion_Venta_PorConceptoBasico_Y_ConceptoDeNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionAgrupadoPorSerieConNumeracionConcatenada.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionAgrupadoPorSerieConNumeracionInicioFin.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_transaccion_Venta_PorConcepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionPorSerieDeComprobanteYConceptoBasico.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\EstadoDeCuenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\VentaCobranzaEnBloque.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\VentaMasiva.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\VentaMonoDetalle.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\CobranzaMasiva.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Cobro.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\VentaYCobranzaMasivaCarteraDeClientes.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\VentaMasivaMonoConcepto.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Sucursal.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Sede.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\CentroDeAtencion.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\OrdenDeMovimientoDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Gasto\OperacionDeGasto.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\OrdenDeAnulacionDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\Reporte_Transaccion_Deuda_A_Proveedor.cs" />
+    <Compile Include="ClasesNegocio\Core\Gasto\Reporte_Transaccion_Gasto_Por_Comprobante.cs" />
+    <Compile Include="ClasesNegocio\Core\Gasto\Resumen_Transaccion_Gasto_Por_ConceptoBasico.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_Transaccion_Por_Serie_y_ConceptoBasico.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_Transaccion_Consolidado.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\TransaccionConsolidada.cs" />
+    <Compile Include="ClasesNegocio\Core\Compra\OrdenDeAnulacionDeCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Gasto\OrdenDeGasto.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Parametro_transaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Resumen_Transaccion_Por_Serie_y_Concepto_Negocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Rol\RolDeNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\Stock.cs" />
+    <Compile Include="ClasesNegocio\Core\Sesion\SesionDeNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\TipoDeComprobante.cs" />
+    <Compile Include="ClasesNegocio\Core\Accion\AccionDeNegocioPorTipoTransaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\TipoDeTransaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\OrdenDeTrasladoInterno.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\DetalleOrdenDesplazamiento.cs" />
+    <Compile Include="ClasesNegocio\Core\Accion\AccionDeNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\TurnoDeEmpleado.cs" />
+    <Compile Include="Diccionarios\Diccionario.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\ActorComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\ComprobanteDeNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ConceptoComercial.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ConceptoDeServicio.cs" />
+    <Compile Include="ClasesNegocio\Core\Cotizacion\Cotizacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Contabilidad\CuentaContable.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\CuentaPorCobrarPagar.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\CuentaPorPagar.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\OrdenDeVentaCompraParaDescuentoDebito.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Empleado.cs" />
+    <Compile Include="ClasesNegocio\Core\Gasto\Gasto.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\OperacionGenericaNivel3.cs" />
+    <Compile Include="ClasesNegocio\Core\Compra\OperacionDeCompra.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\OperacionDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Compra\OrdenDeCompra.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Accion_por_estado.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Accion_por_rol.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Actor_negocio_rol.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Caracteristica.cs" />
+    <Compile Include="ClasesNegocio\Core\Generico\DetalleGenerico.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\DetalleOrdenDeOperacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Almacen\SalidaDeAlmacen.cs" />
+    <Compile Include="ClasesNegocio\Core\Operacion\Operacion.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\OrdenDeVenta.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\MovimientoEconomico.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Comprobante.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Concepto_negocio.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Cuota.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Detalle_transaccion.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Direccion.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Estado_cuota.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Estado_transaccion.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Existencia.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Parametro_concepto_negocio.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Parametro_actor_negocio.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Precio.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Transaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\PreciosComerciales.cs" />
+    <Compile Include="ClasesNegocio\Core\Finanza\TrazaDePago.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Traza_pago.cs" />
+    <Compile Include="ClasesNegocio\Core\Precio\PrecioDeServicio.cs" />
+    <Compile Include="ClasesNegocio\Core\Conceptos\ConceptoDeNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Proveedor.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\RespuestaVerificacionActorNegocio.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\SerieDeComprobante.cs" />
+    <Compile Include="ClasesNegocio\Core\Rol\Servicio.cs" />
+    <Compile Include="ClasesNegocio\Core\Comprobante\TipoDeComprobanteParaTransaccion.cs" />
+    <Compile Include="ClasesNegocio\Core\Compra\Compra.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\Venta.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\IeBook.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\EBookVentasIngresosModel.cs" />
+    <Compile Include="ClasesNegocio\EBookViewModel\EbookComprasModel.cs" />
+    <Compile Include="Diccionarios\DiccionarioHotel.cs" />
+    <Compile Include="Enums\EnumeradosConceptos.cs" />
+    <Compile Include="Enums\Enumerados.cs" />
+    <Compile Include="Enums\EnumeradosRestaurant.cs" />
+    <Compile Include="Enums\EnumeradosHotel.cs" />
+    <Compile Include="Exceptions\ComprobanteException.cs" />
+    <Compile Include="Exceptions\NohayMovimientosDeBienesException.cs" />
+    <Compile Include="Exceptions\PreciosNotFoundException.cs" />
+    <Compile Include="Exceptions\DetallleTransaccionException.cs" />
+    <Compile Include="Exceptions\ExistenciaException.cs" />
+    <Compile Include="Exceptions\GenericException.cs" />
+    <Compile Include="ClasesNegocio\Core\Venta\ReporteVentaCliente.cs" />
+    <Compile Include="Interfaces\Datos\Actores\IConsultaActor_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Actores\IVinculoActor_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Actores\IActor_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Almacen\IOrdenAlmacen_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Concepto\ICaracteristica_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Establecimiento\ISucursal_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Establecimiento\ISede_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Establecimiento\IEstablecimiento_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\CentroDeAtencion\ICentroDeAtencion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Empleado\IEmpleado_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Hotel\IHotelReporte_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\LibrosElectronicos\ILibrosElectronicosFoxcontRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\LibrosElectronicos\ILibrosElectronicosAdsoftRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\Pedido\IPedidoRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\Restaurant\IMesa_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Restaurant\IAmbiente_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Restaurant\IAtencion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\IConsultaDetalleTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\IEliminarDetalleTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\ICrearDetalleTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Venta\IVentaReporte_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Venta\IMaestrosVenta_Repositorio.cs" />
+    <Compile Include="Interfaces\Negocio\Actores\IGrupoClientes_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Almacen\IOrdenAlmacen_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Almacen\IAjusteInventario_Logica.cs" />
+    <Compile Include="Interfaces\Datos\Almacen\IInventarioActual_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Compras\IConsultaCompras_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\IConsultaTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\IActualizarTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\ICrearTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Transaccion\IActualizarDetalleTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Almacen\IMaestrosAlmacen_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Almacen\IMovimientos_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Almacen\IInventarioHistorico_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Concepto\IConcepto_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Finanzas\IArqueoCaja_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\ICodigosTransaccion_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\IRoles_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\LibrosElectronicos\ILibrosElectronicosConcarRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\Finanzas\IFinanzaReporte_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\Almacen\IInventario_Repositorio.cs" />
+    <Compile Include="Interfaces\Datos\IHotelRepositorio.cs" />
+    <Compile Include="Interfaces\Infraestructura\IBarCodeUtil.cs" />
+    <Compile Include="Interfaces\Infraestructura\IPdfUtil.cs" />
+    <Compile Include="Interfaces\Infraestructura\IMailer.cs" />
+    <Compile Include="Interfaces\Negocio\Almacen\IInventarioActual_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Almacen\IInventarioHistorico_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Actores\IValidacionActorNegocio_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Concepto\ICaracteristica_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Establecimientos\ISucursal_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Establecimientos\ISede_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Establecimientos\IEstablecimiento_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\CentroDeAtencion\ICentroDeAtencion_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Finanzas\IAjusteTesoreria_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Finanzas\IArqueoCaja_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Finanzas\IFinanzaReporte_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Almacen\IAlmacenReporte_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\EFactura\IFacturacionElectronicaLogica.cs" />
+    <Compile Include="Interfaces\Negocio\EFactura\IGeneracionArchivosLogica.cs" />
+    <Compile Include="Interfaces\Datos\EFactura\IFacturacionRepositorio.cs" />
+    <Compile Include="Interfaces\Negocio\Hotel\IHotelUtilitario_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Hotel\IHotelReporte_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\IHotelLogica.cs" />
+    <Compile Include="Interfaces\Negocio\ICodigosOperacion_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\LibrosElectronicos\ILibrosElectronicosFoxcontLogica.cs" />
+    <Compile Include="Interfaces\Negocio\LibrosElectronicos\ILibrosElectronicosAdsoftLogica.cs" />
+    <Compile Include="Interfaces\Negocio\LibrosElectronicos\ILibrosElectronicosConcarLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IVentaUtilitarioLogica.cs" />
+    <Compile Include="Interfaces\Negocio\Pedido\IPedidoReporte_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Pedido\IPedido_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\TipoDeCambio\ITipoDeCambio_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Restaurant\ICaja_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Session\ISession_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Empleado\IEmpleado_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Restaurant\IOrden_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Restaurant\IConcepto_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Restaurant\IAmbiente_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Restaurant\IAtencion_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Venta\IVentaReporte_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\Venta\IConsultaMasivaVentaLogica.cs" />
+    <Compile Include="Utilitarios\OperationResult.cs" />
+    <Compile Include="ClasesNegocio\SigesParking\SesionCochera.cs" />
+    <Compile Include="ClasesNegocio\Core\Sesion\UserProfileSessionData.cs" />
+    <Compile Include="ClasesNegocio\Core\Actor\Cliente.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Actor.cs" />
+    <Compile Include="ClasesDatos\Principal\partial\Actor_negocio.cs" />
+    <Compile Include="Interfaces\Entidades\IOperacionNegocio.cs" />
+    <Compile Include="Interfaces\Negocio\IActorNegocioLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IAplicacionLogica.cs" />
+    <Compile Include="Interfaces\Negocio\Restaurant\IRestauranteLogica.cs" />
+    <Compile Include="Interfaces\Negocio\ICocheraLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IConceptoLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IConfiguracionLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IContabilidadLogica.cs" />
+    <Compile Include="Interfaces\Negocio\ICotizacionLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IGastoLogica.cs" />
+    <Compile Include="Interfaces\Negocio\ILibrosElectronicosLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IMaestroLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IOperacionAlmacenLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IOperacionCajaLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IOperacionCompraLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IOperacionLogica.cs" />
+    <Compile Include="Interfaces\Negocio\IOperacionVentaLogica.cs" />
+    <Compile Include="Interfaces\Negocio\Permisos\IPermisos_Logica.cs" />
+    <Compile Include="Interfaces\Negocio\IPrecioLogica.cs" />
+    <Compile Include="Interfaces\Datos\IActorRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\IConceptoRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\IConfiguracionRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\IMaestroRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\IPrecioRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\IRepositorioBase.cs" />
+    <Compile Include="Interfaces\Datos\ICocheraRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\Restaurant\IRestauranteRepositorio.cs" />
+    <Compile Include="Interfaces\Datos\ITransaccionRepositorio.cs" />
+    <Compile Include="Utilitarios\Converter.cs" />
+    <Compile Include="Utilitarios\DateTimeUtil.cs" />
+    <Compile Include="Utilitarios\Util.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilitarios\Mailer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClasesDatos\EFactura\FacturacionElectronicaModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FacturacionElectronicaModel.cs</LastGenOutput>
+      <CustomToolNamespace>Tsp.Sigescom.Modelo.Entidades.EFactura</CustomToolNamespace>
+    </Content>
+    <Content Include="ClasesDatos\Principal\SigescomModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SigescomModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tsp.Sigescom.Config\Tsp.Sigescom.Config.csproj">
+      <Project>{6f2560be-5acc-4d61-949f-f2f1fc088a49}</Project>
+      <Name>Tsp.Sigescom.Config</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClasesNegocio\Core\Configuracion\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Restaurante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/cajaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorPago/editorPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/finanza/registradorFinanciamiento/registradorFinanciamiento.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/facturadorRestaurante/facturadorRestaurante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/restaurante/visualizadorFacturador/visualizadorFacturador.js")></script>
+
+    <script type="text/javascript">
+        var Configuracion = @(Html.Raw(Json.Encode(ViewBag.Configuracion)));
+    </script>
+    @Html.Raw(ViewBag.WCPScript);
+
+}
+
+<div class="col-md-12" ng-controller="cajaController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CAJA</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label class="col-sm-12 ">Fecha Inicial</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div> 
+                        <input id="fechaInicio" ng-model="fechaInicio" class="form-control datetimepicker" />
+
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label class="col-sm-12 ">Fecha Final</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        
+                        <input id="fechaFin" ng-model="fechaFin" class="form-control datetimepicker" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="obtenerAtencionesCerradas()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-caja')" class="btn btn-md btn-success"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 table-responsive" style="margin-top:15px">
+            <table id="tabla-caja" datatable="ng" dt-options="dtOptions" dt-column-defs="atenciones.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Fecha</th>
+                        <th>Ambiente</th>
+                        <th>Mozo</th>
+                        <th>Mesa</th>
+                        <th>Importe (S/)</th>
+                        <th>Facturado</th>
+                        <th>Confirmado</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in atenciones" ng-cloak>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.FechaAtencionString}}</td>
+                        <td>{{item.NombreAmbiente}}</td>
+                        <td>{{item.NombreMozo}}</td>
+                        <td>{{item.NombreMesa}}</td>
+                        <td>{{item.Total}}</td>
+                        <td>
+                            <span class="label" ng-hide="item.ImporteTotalCero" ng-class="item.Facturado ? 'label-success' : 'label-danger'" style="font-size: 15px;">{{item.EstaFacturado}}</span>
+                        </td>
+                        <td>
+                            <span class="label" ng-hide="item.ImporteTotalCero" ng-class="item.Confirmado ? 'label-success' : 'label-danger'" style="font-size: 15px;">{{item.EstaConfirmado}}</span>
+                        </td>
+                        <td>
+                            <a title="Facturar Atención" class="btn btn-success btn-sm" ng-hide="item.Facturado || item.ImporteTotalCero" ng-click="iniciarFacturacion(item)"><span class="fa fa-file-text-o"></span></a>
+                            <a ng-if="configuracion.UsuarioTieneRolCajero" title="Confirmar cobro" class="btn btn-success btn-sm" ng-hide="item.Confirmado || item.ImporteTotalCero" ng-disabled="!item.Facturado" ng-click="confirmarPagoAtencion(item)"><span class="glyphicon glyphicon-ok"></span></a>
+                            <a title="Ver Atención" class="btn btn-info btn-sm" ng-hide="item.ImporteTotalCero" ng-click="verAtencion(item)"><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <facturador-restaurante name="FacturadorRestaurante" id="FacturadorRestaurante" atencion="atencionAFacturar" api="facturadorRestauranteAPI" cerrar-facturacion="cerrarFacturacion(seFacturo)"></facturador-restaurante>
+    <visualizador-facturador name="VisualizadorFacturador" id="VisualizadorFacturador" atencion="atencionAVisualizar" api="visualizadorFacturadorAPI" cerrar-visualizador="cerrarVisualizador()"></visualizador-facturador>
+</div>

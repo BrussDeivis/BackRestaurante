@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Reporte de conceptos proximos a vencer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/almacen/reporteAlmacenController.js")></script>
+    <script>
+               var fechaHoraInicio = '@ViewBag.fechaInicio';
+                 var fechaHoraFin = '@ViewBag.fechaFin';
+    </script>
+}
+<div class="col-md-12" ng-controller="kardexController" ng-init="inicializadorReporteConceptosProximosAVencer()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTE DE CONCEPTOS PRÓXIMOS A VENCER</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">SELECCIONE PERIODO </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateStart">Fecha y Hora Inicial: </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStart" ng-model="reporteConceptosProximosAVencer.FechaInicio" ng-change="actualizarURLReporteDeConceptosProximosAVencer()" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporteConceptosProximosAVencer.HoraInicio" ng-change="actualizarURLReporteDeConceptosProximosAVencer()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateEnd">Fecha y Hora Final: </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="reporteConceptosProximosAVencer.FechaFin" ng-change="actualizarURLReporteDeConceptosProximosAVencer()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="reporteConceptosProximosAVencer.HoraFin" ng-change="actualizarURLReporteDeConceptosProximosAVencer()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Seleccione el establecimiento comercial y almacenes</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row ">
+                                        <div class="col-md-3">
+                                            <label class="control-label">ESTABLECIMIENTO COMERCIAL:</label>
+                                            <select class="select2 form-control" ng-model="reporte.EstablecimientoComercial" ng-change="obtenerAlmacenes(reporte.EstablecimientoComercial.Id)" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required></select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">ALMACENES:</label>
+                                            <select class="select2 form-control" ng-model="reporteConceptosProximosAVencer.AlmacenesAObtener" ng-change="actualizarURLReporteDeConceptosProximosAVencer()" ng-options="item as item.Nombre for item in listaAlmacenes track by item.Id" required multiple="multiple"></select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <a title="Reporte conceptos proximos a vencer " class="btn btn-primary btn-flat mt-20" ng-href="{{URLReporteDeConceptosProximosAVencer}}">VER</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

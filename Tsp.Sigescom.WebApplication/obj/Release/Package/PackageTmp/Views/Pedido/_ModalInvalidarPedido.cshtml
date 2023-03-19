@@ -1,0 +1,30 @@
+﻿<div id="modal-invalidar-pedido" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">INVALIDAR DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="invalidacionDeDocumentoForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <label class="control-label">Observación :</label>
+                                <textarea class="form-control" rows="3" ng-model="invalidacion.Observacion"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-center mt-10"><strong>¿Está seguro que invalidar el documento?</strong></p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="margin flex-space-around">
+                                    <a class="col-md-2 btn btn-lg btn-primary" ng-disabled="!invalidacion.Observacion" ng-click="invalidarPedido()">SI</a>
+                                    <a class="col-md-2 btn btn-lg btn-danger ml-25" data-dismiss="modal" aria-label="close" ng-click="limpiarInvalidarPedido()">NO</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

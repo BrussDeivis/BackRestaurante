@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Consulta - Conceptos";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/gasto/conceptoGastoController.js")></script>
+}
+<div class="col-md-12" ng-controller="conceptoGastoController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">CONCEPTOS DE GASTOS</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a title="DESCARGAR" ng-click="export('tabla-conceptos')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></a>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-8 col-md-2">
+                            <div class="form-group">
+                                <a title="Nuevo Concepto" class="btn btn-md btn-primary pull-right" data-toggle="modal" data-target="#modal-registro-concepto-gasto" ng-click="nuevoRegistro()"><span class="glyphicon glyphicon-plus"></span> NUEVO CONCEPTO</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="tabla-conceptos" datatable="ng" dt-options="dtOptions" dt-column-defs="conceptos.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>NOMBRE</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in conceptosDeGasto" ng-cloak>
+                                        <td class="width-40">{{$index+1}}</td>
+                                        <td class="left">{{item.Nombre}}</td>
+                                        <td class="width-40">
+                                            <a title="Editar Concepto" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-registro-concepto-gasto" ng-click="editarConcepto(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroConceptoGasto")
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "RegistroDePresentaciones";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/maestro/maestroController.js")></script>
+    <script>
+        var idMaestroPresentacionConcepto=@ViewBag.IdMaestroPresentacionConcepto;
+    </script>
+}
+<div class="col-md-12" ng-controller="presentacionController" ng-init="obtenerPresentaciones()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">PRESENTACIÓN</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <a title="Nuevo Presentación" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-presentacion" ng-click="nuevoRegistroPresentacion()"><span class="glyphicon glyphicon-plus"></span> NUEVA PRESENTACIÓN</a>
+                        </div>
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-presentacion" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>CÓDIGO</th>
+                                        <th>NOMBRE</th>
+                                        <th>VALOR</th>
+                                        <th>ACCIÓN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaPresentaciones" ng-cloak>
+                                        <td>{{item.Id}}</td>
+                                        <td>{{item.Codigo}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>{{item.Valor}}</td>
+
+                                        <td>
+                                            <a title="Editar Presentación" class="btn btn-primary btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-presentacion" ng-click="editarPresentacion(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroPresentacionPartial")
+    </div>
+</div>

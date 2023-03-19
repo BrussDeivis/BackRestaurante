@@ -1,0 +1,42 @@
+﻿<div id="modal-ver-traslado-mercaderia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">VER TRASLADO DE MERCADERIA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="col-md-12 ">Formato :</label>
+                        <div class="col-md-12">
+                            <select class="select2 form-control" id="comboFormato" ng-model="formato" ng-change="verTrasladoMercaderia();" ng-options="item as item.Nombre for item in formatosDeImpresion track by item.Id"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="col-md-12 ">Acciones :</label>
+                        <button title="IMPRIMIR EL DOCUMENTO" class="btn btn-md btn-primary" ng-click="imprimirTrasladoMercaderia()"><span class="glyphicon glyphicon-print"></span></button>
+                        <a title="DESCARGAR EN PDF" class="btn btn-md btn-primary" href="@Url.Action("DescargarMovimientoDeAlmacen", "Almacen")?idMovimiento={{idMovimiento}}&&formato={{formato.Id}}"><span class="glyphicon glyphicon-save-file"></span></a>
+                        @*<button title="ENVIAR POR CORREO ELECTRONICO" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-envio-documento" ng-click="inicializarEnvioCorreoElectronico()"><span class="glyphicon glyphicon-envelope"></span></button>*@
+                    </div>
+                    <div class="col-md-12" style="padding-top:15px">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form name="comprobante" class="form-horizontal">
+                                            <div id="pdfMovimiento" style="width:{{tamanioComprobante}}; border:solid; border-width: thin; font-family: auto; margin:auto; margin-top:15px"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarVerTrasladoMercaderia()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,32 @@
+﻿<div id="modal-invalidar-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">INVALIDACION DE DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="anulacionInternaForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12 padding-5">
+                            <div class="col-md-12">
+                                <p class="text-center"><strong>¿Esta seguro que desea invalidar la compra?</strong></p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="margin text-center">
+                                    <a class="btn btn-md btn-primary" ng-disabled="!invalidacion.observacion" ng-click="EsOrdenDeCompra==true?invalidar():invalidarAnulacionDeCompra()">Aceptar</a>
+                                    <a class="btn btn-md btn-danger" data-dismiss="modal" aria-label="close">Cancelar</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <label>Observación:</label>
+                                    <textarea class="form-control" rows="3" ng-model="invalidacion.observacion"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

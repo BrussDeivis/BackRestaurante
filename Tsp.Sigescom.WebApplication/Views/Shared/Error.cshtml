@@ -1,0 +1,37 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">@(Model.ControllerName + " - " + Model.ActionName )  </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h1 class="box-title">ERROR</h1>
+        </div>
+        <div class="box-body">
+            <div>@Model.Exception.Message</div>
+        </div>
+
+    </div>
+    <div class="">
+        <uib-accordion close-others="oneAtATime">
+            <div uib-accordion-group class=" panel-primary accordion-panel gl" is-open="true">
+                <uib-accordion-heading>
+                    <span class="box-title">
+                        DETALLES
+                    </span>
+                </uib-accordion-heading>
+                <div>@Model.Exception.StackTrace</div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

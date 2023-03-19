@@ -1,0 +1,147 @@
+﻿<div id="modal-nuevo-tipo-habitacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:1200px">
+        <div class="modal-content">
+            <form ng-app="fileUpload" name="formNuevoTipoHabitacion" id="formNuevoTipoHabitacion">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">REGISTRO TIPO DE HABITACIÓN</h4>
+                </div>
+                <div class="modal-body">
+                    <!--CUERPO-->
+                    <div class="row">
+                        <div class="col-sm-7 col-xs-12 no-padding">
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="row box box-primary box-solid shadow">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title color-white">Datos Generales</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group" ng-class="{'has-error':formNuevoTipoHabitacion.nombre.$invalid, 'has-success':formNuevoTipoHabitacion.nombre.$valid }">
+                                                    <label for="nombreTipoHabitacion">Nombre: </label>
+                                                    <input class="form-control" name="nombre" id="nombre" uppercase-only ng-model="tipoHabitacion.Nombre" placeholder="Nombre" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error':formNuevoTipoHabitacion.aforoAdultos.$invalid, 'has-success':formNuevoTipoHabitacion.aforoAdultos.$valid }">
+                                                    <div class="col-md-12 no-padding">
+                                                        <label style="text-transform:capitalize">{{aforoAdultos.Nombre}}:</label>
+                                                    </div>
+                                                    <div class="col-md-12 no-padding">
+                                                        <select id="aforoAdultos" class="select2 form-control caracteristica" ng-model="tipoHabitacion.AforoAdultos" name="aforoAdultos" ng-options="item as item.Nombre for item in aforoAdultos.Valores track by item.Id" required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error':formNuevoTipoHabitacion.aforoNinos.$invalid, 'has-success':formNuevoTipoHabitacion.aforoNinos.$valid }">
+                                                    <div class="col-md-12 no-padding">
+                                                        <label style="text-transform:capitalize">{{aforoNinos.Nombre}}:</label>
+                                                    </div>
+                                                    <div class="col-md-12 no-padding">
+                                                        <select id="aforoNinos" class="select2 form-control caracteristica" ng-model="tipoHabitacion.AforoNinos" name="aforoNinos" ng-options="item as item.Nombre for item in aforoNinos.Valores track by item.Id" required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group" ng-class="{'has-error':formNuevoTipoHabitacion.descripcion.$invalid, 'has-success':formNuevoTipoHabitacion.descripcion.$valid }">
+                                                    <label>Descripción:</label>
+                                                    <textarea class="form-control" name="descripcion" ng-model="tipoHabitacion.Descripcion" required placeholder="Descripción"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--SERVICIOS-->
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="row box box-primary box-solid shadow">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title color-white">Servicios</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div ng-repeat="caracteristica in caracteristicas" class="col-sm-6">
+                                                <div class="form-group" ng-class="{'has-error':formNuevoTipoHabitacion.caracteristica{{caracteristica.Id}}.$invalid, 'has-success':formNuevoTipoHabitacion.caracteristica{{caracteristica.Id}}.$valid }">
+                                                    <div class="col-sm-12 no-padding">
+                                                        <label style="text-transform:capitalize">{{caracteristica.Nombre}}:</label>
+                                                    </div>
+                                                    <div class="col-sm-12 no-padding">
+                                                        <select class="select2 input-sm form-control caracteristica" ng-model="caracteristicasSeleccionadas[$index]" ng-options="item as item.Nombre for item in caracteristica.Valores track by item.Id" name="caracteristica{{caracteristica.Id}}" required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--FOTOS-->
+                        <div class="col-sm-5 col-xs-12 px-10">
+                            <div class="row box box-primary box-solid shadow">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title color-white">Foto</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                        <div class="add-new-photo first" id="add-photo" ng-click="abrirArchivo()">
+                                            <span><i class="fa fa-camera"></i></span>
+                                        </div>
+                                        <input class="form-control" type="file" id="fileFoto" multiple ngf-max-files="{{maximaCantidadFotoTipoHabitacion}}" accept="image/png, .jpeg, .jpg, image/gif" ngf-max-size="{{tamanioMaximoFotoTipoHabitacion}}MB" ngf-select="processFile($files)">
+                                        <div class="col-md-12 fotosAgregadas px-5" id="fotosAgregadas">
+                                            <div class="col-md-6 py-10" ng-repeat="foto in tipoHabitacion.Fotos">
+                                                <div class="imagen-container no-padding" ng-click="eliminarFoto(foto)">
+                                                    <figure>
+                                                        <img id="file{{$index}}" src="{{foto.Foto}}"/>
+                                                        <figcaption>
+                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">DATOS COMPLEMENTARIOS: </div>
+                                <div class="panel-body" style="padding-top: 0;">
+                                    <div class="row">
+                                        <div class=" col-xs-12 col-md-12">
+                                            <div class="form-group">
+                                                <h4>
+                                                    <span class="label label-info">PRECIOS DE VENTA</span>
+                                                </h4>
+                                                @Html.Partial("../Precio/_RegistroPrecioPartial")
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--ALERTAS-->
+                        <div>
+                            <div class="col-xs-12 row">
+                                <span class="col-xs-12" ng-show="formNuevoTipoHabitacion.nombre.$invalid" style="color:red">Es necesario ingresar el nombre.</span>
+                                <span class="col-xs-12" ng-show="formNuevoTipoHabitacion.aforoAdultos.$invalid" style="color:red">Es necesario seleccionar el aforo de adultos.</span>
+                                <span class="col-xs-12" ng-show="formNuevoTipoHabitacion.aforoNinos.$invalid" style="color:red">Es necesario seleccionar el aforo de niños.</span>
+                                <span class="col-xs-12" ng-show="formNuevoTipoHabitacion.descripcion.$invalid" style="color:red">Es necesario ingresar la descripción.</span>
+                                <span class="col-xs-12" ng-show="formNuevoTipoHabitacion.caracteristicas.$invalid" style="color:red">Es necesario seleccionar todas las caracteristicas.</span>
+                                <span class="col-xs-12" ng-repeat="caracteristica in caracteristicas" ng-show="formNuevoTipoHabitacion.caracteristica{{caracteristica.Id}}.$invalid" style="color:red">Es necesario seleccionar el servicio {{caracteristica.Nombre}}.</span>
+                                <span class="col-xs-12" ng-show="noHayPrecioIngresado()" style="color:red">Es necesario ingresar al menos 1 precio.</span>
+                                <span class="col-xs-12" ng-show="hayInconsistenciasPrecioIngresado()" style="color:red">Es necesario que no haya incosistencias en el registro de precios.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="guardarTipoHabitacion()" ng-disabled="formNuevoTipoHabitacion.$invalid" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                    <a title="Cerrar" ng-click="cerrarRegistroTipoHabitacion()" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

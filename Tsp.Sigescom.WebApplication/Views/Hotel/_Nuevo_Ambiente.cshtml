@@ -1,0 +1,43 @@
+﻿<div id="modal-nuevo-ambiente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form name="formularioNuevoAmbiente" id="formularioNuevoAmbiente">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">REGISTRO AMBIENTE</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="col-sm-12 no-padding">
+                                <div class="form-group" ng-class="{'has-error':formularioNuevoAmbiente.establecimientoModal.$invalid, 'has-success':formularioNuevoAmbiente.establecimientoModal.$valid }">
+                                    <label>Establecimiento:</label>
+                                    <select class="select2 input-sm" ng-model="establecimientoSeleccionadoModal" ng-options="item as item.Nombre for item in establecimientos track by item.Id" name="establecimientoModal" id="establecimientoModal" required>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 no-padding">
+                                <div class="form-group" ng-class="{'has-error':formularioNuevoAmbiente.codigoAmbiente.$invalid, 'has-success':formularioNuevoAmbiente.codigoAmbiente.$valid }">
+                                    <label for="codigoAmbiente">Código: </label>
+                                    <input class="form-control" name="codigoAmbiente" id="codigoAmbiente" uppercase-only ng-model="ambiente.Codigo" placeholder="Código" required />
+                                </div>
+                            </div>
+                            <div class="col-sm-12 no-padding">
+                                <div class="form-group" ng-class="{'has-error':formularioNuevoAmbiente.nombreAmbiente.$invalid, 'has-success':formularioNuevoAmbiente.nombreAmbiente.$valid }">
+                                    <label for="nombreAmbiente">Nombre: </label>
+                                    <input class="form-control" name="nombreAmbiente" id="nombreAmbiente" uppercase-only ng-model="ambiente.Nombre" placeholder="Nombre" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                       
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="guardarAmbiente()" ng-disabled="formularioNuevoAmbiente.$invalid" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                    <a title="Cerrar" ng-click="cerrarModal('modal-nuevo-ambiente')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

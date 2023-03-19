@@ -1,0 +1,174 @@
+﻿<form name="facturacionVentaForm" class="formulario form-horizontal css-form" ng-cloak novalidate isolate-form>
+    <div class="box box-primary" style="border: 1px solid #ccc;">
+        <div class="box-header bg-primary">
+            <h3 class="box-title titulo-negrita-blanco">FACTURACIÓN</h3>
+            <h3 class="box-title titulo-negrita-blanco pull-right">S/ {{$ctrl.facturacion.Orden.Total != null ? $ctrl.facturacion.Orden.Total : 0.00 | number:2}}</h3>
+        </div>
+        <div class="box-body no-pad-top">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="col-md-6 col-xs-6" ng-show="$ctrl.parametros.AplicaLeyAmazonia && $ctrl.parametros.MostrarCheckIgvEnVentas">
+                        <div class="checkbox checkbox-primary">
+                            <input id="ventaigv{{$ctrl.externalId}}" type="checkbox" class="styled" ng-model="$ctrl.facturacion.Orden.AplicarIGVCuandoEsAmazonia" ng-change="$ctrl.cambioModoIGV();" />
+                            <label for="ventaigv{{$ctrl.externalId}}" class="negrita">CON IGV</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 p-0" ng-show="$ctrl.parametros.PermitirDetalleUnificado && $ctrl.debePermitirDetalleUnificado">
+                        <div class="checkbox checkbox-primary">
+                            <input id="detalleunificado{{$ctrl.externalId}}" type="checkbox" class="detalleunificado styled" ng-model="$ctrl.facturacion.Orden.UnificarDetalles" ng-checked="$ctrl.facturacion.Orden.UnificarDetalles" ng-change="$ctrl.seleccionarDetalleUnificado(); " />
+                            <label for="detalleunificado{{$ctrl.externalId}}" class="negrita">DET. UNIF.</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <div class="group-model mt-5" ng-show=" $ctrl.facturacion.Orden.UnificarDetalles && $ctrl.parametros.ActivarDetalleUnificadoPersonalizado">
+                        <input class="col-md-12 col-xs-12 input-model" uppercase-only ng-model="$ctrl.facturacion.Orden.ValorDetalleUnificado" placeholder="Detalle unificado" ng-blur="$ctrl.verificarInconsistenciasFacturacion()" />
+                    </div>
+                </div>
+                <div ng-show="$ctrl.mostrarPuntoDeVentaVendedor">
+                    <div class="col-md-12 col-xs-12">
+                        <label class="control-label">PUNTO DE VENTA</label>
+                        <select id="puntoDeVenta" class="select2 form-control" ng-model="$ctrl.facturacion.Orden.PuntoDeVenta" ng-options="item as item.Nombre for item in $ctrl.puntosDeVenta track by item.Id"></select>
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <label class="control-label">VENDEDOR</label>
+                        <select id="vendedor" class="select2 form-control" ng-model="$ctrl.facturacion.Orden.Vendedor" ng-options="item as item.Nombre for item in $ctrl.vendedores track by item.Id"></select>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.debeSeleccionarCajaCajero">
+                    <div class="col-md-12 col-xs-12">
+                        <label class="control-label">CAJA:</label>
+                        <select id="caja" class="select2 form-control" ng-model="$ctrl.facturacion.Pago.Caja" ng-options="item as item.Nombre for item in $ctrl.almacenes track by item.Id"></select>
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <label class="control-label">CAJERO:</label>
+                        <select id="cajero" class="select2 form-control" ng-model="$ctrl.facturacion.Pago.Cajero" ng-options="item as item.Nombre for item in $ctrl.almaceneros track by item.Id"></select>
+                    </div>
+                </div>
+                <div ng-show="$ctrl.debeSeleccionarAlmacenAlmacenero">
+                    <div class="col-md-12 col-xs-12">
+                        <label class="control-label">ALMACEN</label>
+                        <select id="almacen" class="select2 form-control" ng-model="$ctrl.facturacion.MovimientoAlmacen.Almacen" ng-options="item as item.Nombre for item in $ctrl.almacenes track by item.Id"></select>
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <label class="control-label">ALMACENERO</label>
+                        <select id="cajero" class="select2 form-control" ng-model="$ctrl.facturacion.MovimientoAlmacen.Almacenero" ng-options="item as item.Nombre for item in $ctrl.almaceneros track by item.Id"></select>
+                    </div>
+                </div>
+                <selector-actor-comercial ng-if="$ctrl.inicializacionRealizadaPago && $ctrl.inicializacionRealizada" name="SelectorCliente" id="SelectorCliente" ng-model="$ctrl.facturacion.Orden.Cliente" actor-comercial="$ctrl.facturacion.Orden.Cliente" rol="$ctrl.parametros.RolCliente" api="$ctrl.selectorClienteAPI" changed="$ctrl.cambioCliente(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroCliente" inicio-realizado="$ctrl.inicioRealizadoCliente()" permitir-seleccionar-grupo="$ctrl.parametros.PermitirSeleccionarGrupoCliente"></selector-actor-comercial>
+                <div class="col-md-12 col-xs-12 group-model" ng-show="$ctrl.facturacion.Orden.Cliente.Id == $ctrl.parametros.IdClienteGenerico && $ctrl.parametros.PermitirAliasDeClienteGenerico">
+                    <label class="col-md-2 label-model">ALIAS</label>
+                    <input class="col-md-10 col-xs-12 input-model" uppercase-only ng-model="$ctrl.facturacion.Orden.Cliente.Alias" />
+                </div>
+                <div class="col-md-12 col-xs-12 group-model" ng-if="$ctrl.permitirRegistroPlaca">
+                    <label class="col-md-2 col-xs-2 label-model">PLACA</label>
+                    <input class="col-md-10 col-xs-10 input-model" uppercase-only ng-model="$ctrl.facturacion.Orden.Placa" ng-change="$ctrl.verificarInconsistenciasFacturacion()" maxlength="8" />
+                </div>
+                <div class="col-md-12 col-xs-12 group-model" ng-if="$ctrl.permitirRegistroFechaEmision">
+                    <label class="col-md-3 label-model" title="FECHA DE EMISIÓN">EMISIÓN</label>
+                    <input id="fechaEmision" class="col-md-9 col-xs-12 input-model datepicker-bottom td-datepicker" ng-model="$ctrl.facturacion.Orden.FechaEmision" ng-change="$ctrl.verificarInconsistenciasFacturacion()" placeholder="dd/mm/aaaa" data-date-start-date='-90d' data-date-end-date="0d" />
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <selector-comprobante name="SelectorComprobanteFacturacion" id="SelectorComprobanteFacturacion" ng-if="$ctrl.inicializacionRealizada" ng-model="$ctrl.facturacion.Orden.Comprobante" comprobante="$ctrl.facturacion.Orden.Comprobante" external-id="$ctrl.externalId" api="$ctrl.selectorComprobanteAPI" changed="$ctrl.cambioComprobante(comprobante)" comprobante-para="$ctrl.permitirRegistroFechaEmision ? $ctrl.parametros.ComprobanteParaVentaPorContingencia : $ctrl.parametros.ComprobanteParaVenta" id-comprobante-default="$ctrl.parametros.IdComprobantePredeterminadoPorDefecto" serie-comprobante-enter="$ctrl.serieComprobante_enter()"></selector-comprobante>
+                    <div class="col-md-12 col-xs-12 group-model p-0">
+                        <textarea class="col-md-12 col-xs-12 input-model textarea-model" id="observacion" ng-model="$ctrl.facturacion.Orden.Observacion" row="1" placeholder="OBSERVACIÓN"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12" ng-if="($ctrl.parametros.MostrarSeccionEntregaEnVenta || $ctrl.permitirRegistroGuiaRemision) && $ctrl.facturacion.Orden.HayBienesEnLosDetalles">
+                    <div class="box box-primary">
+                        <div class="box-body mh-0 pt-5 pb-5">
+                            <label class="box-title">ENTREGA</label>
+                            <div class="box-title p-0 pull-right" ng-show="$ctrl.parametros.MostrarSeccionEntregaEnVenta">
+                                <div class="radio radio-primary radio-inline pt-2">
+                                    <input type="radio" id="radioEntrega1" name="entrega" ng-model="$ctrl.facturacion.MovimientoAlmacen.EntregaDiferida" value="false">
+                                    <label for="radioEntrega1" title="Entrega Inmediata" style="font-size:14px;">INMEDIATA</label>
+                                </div>
+                                <div class="radio radio-primary radio-inline pt-2">
+                                    <input type="radio" id="radioEntrega2" name="entrega" ng-model="$ctrl.facturacion.MovimientoAlmacen.EntregaDiferida" value="true">
+                                    <label for="radioEntrega2" title="Entrega Diferida" style="font-size:14px;" ng-click="$ctrl.verificarEntregaDiferida()">DIFERIDA</label>
+                                </div>
+                            </div>
+                            <div class="p-0 pull-right" id="registroGuiaRemision" ng-show="$ctrl.permitirRegistroGuiaRemision" ng-class="($ctrl.parametros.MostrarSeccionEntregaEnVenta && $ctrl.facturacion.Orden.HayBienesEnLosDetalles) ? 'col-md-12' : 'box-title'">
+                                <a title="Registar Guia Remision" class="btn btn-md btn-primary pull-right" id="id-registro-guia-remision" ng-disabled="$ctrl.facturacion.Orden.Detalles.length < 1 || $ctrl.facturacion.Orden.Cliente.Id == $ctrl.parametros.IdClienteGenerico || $ctrl.facturacion.MovimientoAlmacen.EntregaDiferida == 'true'" ng-class="$ctrl.facturacion.MovimientoAlmacen.HayComprobanteDeSalidaDeMercaderia ? 'btn-primary-selected' : 'btn-primary' " data-toggle="modal" data-target="#modal-registro-guia-remision" ng-click="$ctrl.inicializarRegistroGuiaRemision()">GUÍA</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <editor-pago name="EditorPago" id="EditorPago" external-id="$ctrl.externalId" ng-if="$ctrl.inicializacionRealizada" ng-model="$ctrl.facturacion.Pago" pago="$ctrl.facturacion.Pago" api="$ctrl.editorPagoAPI" id-medio-pago-default="$ctrl.idMedioPagoDefault" permitir-venta-al-credito="$ctrl.parametros.PermitirVentaAlCredito" id-cliente="$ctrl.facturacion.Orden.Cliente.Id" changed="$ctrl.cambioPago(pago)" inicio-realizado="$ctrl.inicioRealizadoPago()"></editor-pago>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-danger" ng-show="$ctrl.inconsistenciasFacturacion.length > 0">
+        <div class="box-body">
+            <h4 class="error-title">INCONSISTENCIA(S):</h4>
+            <table>
+                <tr ng-repeat="item in $ctrl.inconsistenciasFacturacion">
+                    <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+<div id="modal-registro-guia-remision" class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE GUIA DE REMISION</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8;">
+                <div class="row">
+                    <registrador-guia-remision ng-if="$ctrl.inicializarGuiaRemision" name="RegistradorGuiaRemision" id="RegistradorGuiaRemision" guia-remision="$ctrl.guiaRemisionVenta" api="$ctrl.registradorGuiaRemisionApi" permitir-seleccion-concepto="false" permitir-documento-referencia="false" vinculado-venta="true" venta="$ctrl.facturacion" hay-inconsitencias-guia-remision="$ctrl.hayInconsitenciasGuiaRemision" iniciado-pendiente="true"></registrador-guia-remision>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a title="CANCELAR GUIA DE REMISION" class="btn btn-md btn-danger pull-right" ng-click="$ctrl.cancelarGuiaRemision();" style="margin-left:10px"><span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
+                <a title="GUARDAR GUIA DE REMISION" class="btn btn-primary btn-md pull-right" ng-click="$ctrl.aceptarGuiaRemision()" ng-disabled="$ctrl.hayInconsitenciasGuiaRemision"><span class="glyphicon glyphicon-floppy-save"></span> ACEPTAR</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-confirmar-borrar-guia-remision" class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">CONFIRMAR</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-center mt-10"><strong>Al cambiar la entrega a DIFERIDA, se borrarán todos los datos de la guía de remisión. ¿Desea continuar?</strong></p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="margin flex-space-around">
+                            <a class="col-md-2 btn btn-lg btn-primary" ng-click="$ctrl.cancelarGuiaRemisionAdvertencia()">SI</a>
+                            <a class="col-md-2 btn btn-lg btn-danger ml-25" ng-click="$ctrl.mantenerGuiaRemisionAdvertencia()">NO</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-borrar-guia-remision" class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">AVISO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-center mt-10"><strong>Al cambiar los detalles de la venta, se borrarán todos los datos de la guía de remisión.</strong></p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="margin flex-space-around">
+                            <a class="col-md-3 btn btn-lg btn-primary" data-dismiss="modal" aria-label="close">ACEPTAR</a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

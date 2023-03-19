@@ -1,0 +1,208 @@
+﻿<div class="modal-dialog modal-lg" id="modal-registro-actor-comercial">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">REGISTRO DE {{$ctrl.etiquetaRol}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <form id="form_actor_comercial" name="ActorComercialForm" novalidate class="css-form" isolate-form>
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">DATOS VALIDACIÓN: </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6" ng-hide="$ctrl.mascaraArray[0] == $ctrl.parametros.MascaraNoMostrar">
+                                        <div class="form-group">
+                                            <label for="tipoDocumento">Tipo Documento: {{$ctrl.mascaraArray[0] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                            <select id="tipoDocumento" class="select2 form-control tipoDocumento" ng-model="$ctrl.actorComercial.TipoDocumentoIdentidad" ng-change="$ctrl.establecerlongitudCaracteresTipoDocumentoIdentidad(); $ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.tiposDeDocumentoDeIdentidad track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" ng-hide="$ctrl.mascaraArray[1] == $ctrl.parametros.MascaraNoMostrar">
+                                        <label class="control-label">N° Documento: {{$ctrl.mascaraArray[1] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                        <a title="Buscar Actor" ng-show="$ctrl.parametros.MostrarBotonCargarActorEnRegistroActorComercial" class="btn btn-xs btn-primary pull-right" ng-click="$ctrl.establecerTipoPersonaPorTipoDocumentoIdentidad(); $ctrl.obtenerActorComercial(); $ctrl.verificarRegistradorActorComercial()" ng-disabled="$ctrl.actorComercial.NumeroDocumentoIdentidad == undefined || $ctrl.actorComercial.NumeroDocumentoIdentidad == ''"><span class="glyphicon glyphicon-search"></span> </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input id="numeroDocumento" placeholder="Número de documento" class="form-control numeroDocumento" ng-model="$ctrl.actorComercial.NumeroDocumentoIdentidad" ng-enter="$ctrl.establecerTipoPersonaPorTipoDocumentoIdentidad(); $ctrl.obtenerActorComercial(); $ctrl.verificarRegistradorActorComercial()" ng-change="$ctrl.verificarRegistradorActorComercial()" ng-paste="$ctrl.removeSpacesInPaste($event.originalEvent)" ng-pattern-restrict="^[0-9]*$" maxlength="{{$ctrl.longitudCaracteresTipoDocumentoIdentidad}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">DATOS GENERALES: </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8" ng-hide="$ctrl.mascaraArray[2] == $ctrl.parametros.MascaraNoMostrar" ng-show="$ctrl.mostrarRazonSocial">
+                                                <div class="form-group">
+                                                    <label for="razonSocial">Razon Social: {{$ctrl.mascaraArray[2] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="razonSocial" class="form-control" placeholder="Razón Social" uppercase-only ng-model="$ctrl.actorComercial.NombreORazonSocial" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[3] == $ctrl.parametros.MascaraNoMostrar" ng-if="$ctrl.mostrarRazonSocial">
+                                                <div class="form-group">
+                                                    <label for="tipoSociedad">Tipo Sociedad: {{$ctrl.mascaraArray[3] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="tipoSociedad" class="select2 form-control tipoSociedad" ng-model="$ctrl.actorComercial.ClaseActor" ng-change="$ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.tiposDeSociedad track by item.Id"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[4] == $ctrl.parametros.MascaraNoMostrar" ng-show="!$ctrl.mostrarRazonSocial">
+                                                <div class="form-group">
+                                                    <label for="apellidoPaterno">Apellido Paterno: {{$ctrl.mascaraArray[4] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="apellidoPaterno" class="form-control" placeholder="Apellido Paterno" uppercase-only ng-model="$ctrl.actorComercial.ApellidoPaterno" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[5] == $ctrl.parametros.MascaraNoMostrar" ng-show="!$ctrl.mostrarRazonSocial">
+                                                <div class="form-group">
+                                                    <label for="apellidoMaterno">Apellido Materno: {{$ctrl.mascaraArray[5] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="apellidoMaterno" class="form-control" placeholder="Apellido Materno" uppercase-only ng-model="$ctrl.actorComercial.ApellidoMaterno" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[6] == $ctrl.parametros.MascaraNoMostrar" ng-show="!$ctrl.mostrarRazonSocial">
+                                                <div class="form-group">
+                                                    <label for="nombres">Nombres: {{$ctrl.mascaraArray[6] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="nombres" class="form-control" placeholder="Nombres" uppercase-only ng-model="$ctrl.actorComercial.Nombres" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="$ctrl.rol.Id == $ctrl.parametros.IdRolCliente || $ctrl.rol.Id == $ctrl.parametros.IdRolProveedor">
+                                        <div class="row">
+                                            <div class="col-md-12" ng-hide="$ctrl.mascaraArray[7] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="nombreComercial">Nombre Comercial: {{$ctrl.mascaraArray[7] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="nombreComercial" class="form-control" placeholder="Nombre Comercial" uppercase-only ng-model="$ctrl.actorComercial.NombreComercial" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="$ctrl.actorComercial.TipoPersona.Id == $ctrl.parametros.IdTipoActorPersonaNatural">
+                                        <div class="row">
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[8] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="nacionalidad">Nacionalidad: {{$ctrl.mascaraArray[8] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="nacionalidad" class="select2 form-control nacionalidad" ng-model="$ctrl.actorComercial.Nacionalidad" ng-change="$ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.naciones track by item.Id"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[9] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="fechaNacimiento">Fecha Nacimiento: {{$ctrl.mascaraArray[9] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="fechaNacimiento" ng-model="$ctrl.actorComercial.FechaNacimiento" ng-change="$ctrl.verificarRegistradorActorComercial()" placeholder="dd/mm/aaaa" class="form-control td-datepicker" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[10] == $ctrl.parametros.MascaraNoMostrar" ng-if="$ctrl.actorComercial.TipoPersona.Id == $ctrl.parametros.IdTipoActorPersonaNatural">
+                                                <div class="form-group">
+                                                    <label for="sexo">Sexo: {{$ctrl.mascaraArray[10] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="sexo" class="select2 form-control sexo" ng-model="$ctrl.actorComercial.ClaseActor" ng-change="$ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.sexos track by item.Id"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[11] == $ctrl.parametros.MascaraNoMostrar" ng-show="$ctrl.actorComercial.TipoPersona.Id == $ctrl.parametros.IdTipoActorPersonaNatural">
+                                                <div class="form-group">
+                                                    <label for="estadoCivil">Estado Civil: {{$ctrl.mascaraArray[11] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="estadoCivil" class="select2 form-control estadoCivil" ng-model="$ctrl.actorComercial.EstadoLegal" ng-change="$ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.estadosCiviles track by item.Id"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[12] == $ctrl.parametros.MascaraNoMostrar" ng-show="$ctrl.actorComercial.TipoPersona.Id == $ctrl.parametros.IdTipoActorPersonaJuridica">
+                                                <div class="form-group">
+                                                    <label for="nombreCorto">Nombre Corto: {{$ctrl.mascaraArray[12] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="nombreCorto" class="form-control" ng-model="$ctrl.actorComercial.NombreCorto" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[13] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="email">Email: {{$ctrl.mascaraArray[13] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="email" class="form-control" placeholder="ejemplo@email.com" ng-model="$ctrl.actorComercial.Correo" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[14] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="telefono">Teléfono: {{$ctrl.mascaraArray[14] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="telefono" class="form-control" uppercase-only ng-model="$ctrl.actorComercial.Telefono" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="$ctrl.rol.Id == $ctrl.parametros.IdRolEmpleado">
+                                        <div class="row">
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[15] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="codigo">Código: {{$ctrl.mascaraArray[15] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="codigo" class="form-control" placeholder="Código" uppercase-only ng-model="$ctrl.actorComercial.Codigo" ng-change="$ctrl.verificarRegistradorActorComercial()" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-hide="$ctrl.mascaraArray[16] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="rolEmpleado">Roles: {{$ctrl.mascaraArray[16] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="rolEmpleado" class="select2 form-control rolEmpleado" ng-model="$ctrl.actorComercial.Roles" ng-options="item as item.Nombre for item in $ctrl.rolesPersonal track by item.Id" multiple="multiple"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">DIRECCIÓN:</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6" ng-hide="$ctrl.mascaraArray[17] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="pais">País: {{$ctrl.mascaraArray[17] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="pais" class="select2 form-control pais" ng-model="$ctrl.actorComercial.DomicilioFiscal.Pais" ng-change="$ctrl.establecerUbigeoYDetalle(); $ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.naciones track by item.Id"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" ng-hide="$ctrl.mascaraArray[18] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="ubigeo">Ubigeo: {{$ctrl.mascaraArray[18] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <select id="ubigeo" class="select2 form-control ubigeo" ng-model="$ctrl.actorComercial.DomicilioFiscal.Ubigeo" ng-change="$ctrl.verificarRegistradorActorComercial()" ng-options="item as item.Nombre for item in $ctrl.ubigeosPeru track by item.Id"></select>
+                                                    <!--<h5 style="color:#bb1f1f" ng-if="$ctrl.ubigeoSeleccionadoNoEspecificado">Seleccionar ubigeo.</h5>-->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" ng-hide="$ctrl.mascaraArray[19] == $ctrl.parametros.MascaraNoMostrar">
+                                                <div class="form-group">
+                                                    <label for="detalle">Detalle: {{$ctrl.mascaraArray[19] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                                    <input id="detalle" class="form-control" placeholder="INGRESE DIRECCIÓN" ng-change="$ctrl.verificarRegistradorActorComercial()" uppercase-only ng-model="$ctrl.actorComercial.DomicilioFiscal.Detalle" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-show="$ctrl.rol.Id == $ctrl.parametros.IdRolCliente && $ctrl.parametros.PermitirComprobantePorDefectoEnCliente">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6" ng-hide="$ctrl.mascaraArray[20] == $ctrl.parametros.MascaraNoMostrar">
+                                        <div class="form-group">
+                                            <label for="comprobantePreteterminado">Seleccionar comprobante predeterminado: {{$ctrl.mascaraArray[20] == $ctrl.parametros.MascaraObligatorio ? '*' : ''}}</label>
+                                            <select id="comprobantePreteterminado" class="select2 form-control comprobantePreteterminado" ng-model="$ctrl.actorComercial.ComprobantePredeterminado" ng-options="item as item.Nombre for item in $ctrl.tiposDeComprobantes track by item.Id"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <h5>(*) Datos Obligatorios </h5>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-md btn-primary pull-left" title="Guardar" ng-disabled="$ctrl.inconsitencias > 0" ng-click="$ctrl.guardar()" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+            <a class="btn btn-md btn-danger" title="Cerrar" data-dismiss="modal" ng-click="$ctrl.cerrar()"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+        </div>
+    </div>
+</div>

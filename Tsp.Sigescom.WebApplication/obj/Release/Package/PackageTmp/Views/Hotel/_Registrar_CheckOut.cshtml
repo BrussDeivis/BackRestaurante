@@ -1,0 +1,24 @@
+﻿<div id="modal-registrar-checkOut" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form name="formularioRegistrarCheckOut" id="formularioRegistrarCheckOut">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">REGISTRAR CHECK OUT</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label for="textarea">Observación</label>
+                            <textarea class="form-control" rows="3" maxlength="250" ng-model="observacionCheckOut"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a title="Guardar" ng-click="checkOutAtencion()" ng-disabled="observacionCheckOut == undefined || observacionCheckOut.length == 0 || observacionCheckOut.length > 250" class="btn btn-flat btn-primary pull-left"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</a>
+                    <a title="Cerrar" ng-click="cerrarModal('modal-registrar-checkOut')" class="btn btn-danger btn-flat"><span class="glyphicon glyphicon-remove"></span> CERRAR</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

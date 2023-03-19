@@ -1,0 +1,80 @@
+﻿<div id="modal-anular-venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{tituloModalNotas}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="notasForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>COMPROBANTE:</label>
+                            <label class="form-control">{{ventaSeleccionada.TipoComprobante +  ventaSeleccionada.SerieComprobante + ventaSeleccionada.NumeroComprobante}}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>FECHA</label>
+                            <label class="form-control">{{ventaSeleccionada.Fecha}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>CLIENTE:</label>
+                            <label class="form-control">{{ventaSeleccionada.Cliente}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table class="table table-height-small table-bordered">
+                            <thead>
+                                <tr>
+
+                                    <th>ITEM</th>
+                                    <th>CONCEPTO</th>
+                                    <th>P.U</th>
+                                    <th>CANTIDAD</th>
+                                    <th>IMPORTE</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="ventaSeleccionada.Detalles.length>0">
+                                <tr ng-repeat="item in ventaSeleccionada.Detalles">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.Concepto}}</td>
+                                    <td>{{item.Precio|number:2}}</td>
+                                    <td>{{item.Cantidad|number:2}}</td>
+                                    <td>{{item.Importe|number:2}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody ng-hide="venta.Detalles.length>0">
+                                <tr>
+                                    <td colspan="8" style="color:#bb1f1f">No existe ningun registro en el carrito</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>COMPROBANTE</label>
+                                <select class="select444 form-control" ng-model="venta.TipoDeComprobante" ng-change="cargarSeries(venta.TipoDeComprobante)" ng-options="item as item.Nombre for item in tiposDeComprobantes  track by item.Id"
+                                        required></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>SERIE</label>
+                                <select id="serie" class="select444 form-control" ng-model="venta.SerieDeComprobante" ng-options="item as item.Nombre for item in series track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <label>OBSERVACIÓN:</label>
+                                <textarea style="max-height:40px;font-size:12px" id="observacion" placeholder="Por favor escriba una observacion" class="form-control lowercase" ng-model="facturacion.Observacion" required></textarea>
+                            </div>
+
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="GUARDAR" class="btn btn-sm btn-primary" ng-click="guardarAnulacionVenta()" ng-disabled="registroVenta.$invalid || venta.Detalles.length<1"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                <button data-dismiss="modal" title="CANCELAR" class="btn btn-sm btn-danger" ng-click=""><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="anularventa-modal" data-toggle="modal" data-target="#modal-anularventa" style="display:none"></a>

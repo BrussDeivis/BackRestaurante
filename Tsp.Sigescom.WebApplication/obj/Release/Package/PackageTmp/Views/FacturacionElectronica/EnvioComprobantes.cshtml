@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Envio de Comprobantes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/facturacionElectronica/envioComprobantesController.js")></script>
+    <script>
+        var Desde = '@ViewBag.fechaEnvioDesde';
+        var Hasta = '@ViewBag.fechaEnvioHasta';
+    </script>
+
+}
+<div class="col-md-12" ng-controller="envioComprobantesController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">ENVIO DE DOCUMENTOS A SUNAT</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label for="dateStart" class="col-sm-12">Fecha Inicial</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateStar" ng-model="bandeja.FechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label for="dateEnd" class="col-sm-12">Fecha Final</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateEnd" ng-model="bandeja.FechaFinal" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button title="CONSULTAR" style="margin-top:25px" ng-click="listarBandeja(bandeja.FechaInicio,bandeja.FechaFinal)" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+                <div class="col-md-1">
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-comprobantes-enviados')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+                <div class="col-md-2">
+                    <button title="CONSULTAR SUNAT" style="margin-top:25px" ng-click="consultarTickets()" class="btn btn-primary"><span class="	glyphicon glyphicon-paste"></span> CONSULTAR SUNAT</button>
+                </div>
+                <div class="col-md-2">
+                    <button title="Reenvia los envíos que se encuentran en excepcion" style="margin-top:25px" ng-click="resolverResumenDiarioConExcepcion()" class="btn btn-primary"><span class="glyphicon glyphicon-paste"></span> REENVIAR</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal" style="margin-top:10px">
+            <div class="row">
+                <div class="col-md-4" ng-show="hayPendientes">
+                    <div class="callout callout-info">
+                        <h4><i class="icon fa fa-ban"></i> ENVIOS PENDIENTES!</h4>
+                        <em>Se comprobó que existen envíos pendientes</em>
+                        <a class="btn btn-info btn-xs" ng-click="verSoloEnviosPendientes()">Verificar</a>
+                    </div>
+                </div>
+                <div class="col-md-4" ng-show="hayRechazados">
+                    <div class="callout callout-danger">
+                        <h4><i class="icon fa fa-ban"></i> ENVIOS RECHAZADOS!</h4>
+                        <em>Se comprobó que existen envíos rechazados</em>
+                        <a class="btn btn-danger btn-xs" ng-click="verSoloEnviosRechazados()">Verificar</a>
+                    </div>
+                </div>
+                <div class="col-md-4" ng-show="hayObservados">
+                    <div class="callout callout-warning">
+                        <h4><i class="icon fa fa-warning"></i> ENVIOS OBSERVADOS!</h4>
+                        <em>Se comprobó que existen envíos observados</em>
+                        <a class="btn btn-warning btn-xs" ng-click="verSoloEnviosObservados()">Verificar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="margin-top:10px;">
+            <table id="tabla-comprobantes-enviados" datatable="ng" dt-options="dtOptions" dt-column-defs="comprobantesEnviados.dtColumnDefs" class="row-border hover table table-stripped table-bordered" data-page-length='100'>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fec. Envio</th>
+                        <th>Fec. Emision</th>
+                        <th>Doc. Enviados</th>
+                        <th>Tipo Envio</th>
+                        <th>Modo Envio</th>
+                        <th>Identificador</th>
+                        <th>N° Ticket</th>
+                        <th>Cod. Respuesta</th>
+                        <th>Estado</th>
+                        <th>Observacion</th>
+                        <th>Ver Rpta.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ComprobantesEnviados.Lista" ng-cloak ng-class="{'danger': item.EsRechazado,'warning': item.EsObservado}">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.FechaEnvio}}</td>
+                        <td>{{item.FechaEmision}}</td>
+                        <td>{{item.DocumentosEnviados}}</td>
+                        <td>{{item.TipoEnvio}}</td>
+                        <td>{{item.ModoEnvio}}</td>
+                        <td>{{item.IdentificadorEnvio}}</td>
+                        <td>{{item.NumeroTicket}}</td>
+                        <td>{{item.CodigoRespuesta}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td>{{item.Observacion}}</td>
+                        <td class="col-md-1">
+                            <a title="Ver Detalles" class="btn btn-info btn-xs btn-flat" data-toggle="modal" data-target="#modal-vista-documento-envio" ng-click="cargarVerEnvio(item)"><span class="glyphicon glyphicon-search"></span></a>
+                            @if (User.IsInRole("AdministradorTI"))
+                            {
+                                <a title="Regenerar y reenviar pendiente" class="btn btn-warning btn-xs btn-flat" ng-click="reenviarEnvioPendiente(item)" ng-show="item.EsPendiente"><span class="glyphicon glyphicon-repeat"></span></a>
+                                <a title="Regenerar y reenviar rechazado" class="btn btn-warning btn-xs btn-flat" ng-click="reenviarEnvioRechazado(item)" ng-show="item.EsRechazado"><span class="glyphicon glyphicon-repeat"></span></a>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalVistaDocumentoEnvio")
+</div>

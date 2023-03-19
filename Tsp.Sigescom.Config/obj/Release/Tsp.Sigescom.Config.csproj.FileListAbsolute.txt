@@ -1,0 +1,6 @@
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\bin\Release\Tsp.Sigescom.Config.dll
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\bin\Release\Tsp.Sigescom.Config.pdb
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Release\Tsp.Sigescom.Config.csproj.AssemblyReference.cache
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Release\Tsp.Sigescom.Config.csproj.CoreCompileInputs.cache
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Release\Tsp.Sigescom.Config.dll
+C:\Users\Tsol\source\Workspaces\Sigescom\Tsp.Sigescom2.3\Tsp.Sigescom.Config\obj\Release\Tsp.Sigescom.Config.pdb

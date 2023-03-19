@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "Bandeja de Compras Corporativas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/compra/compraController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/proveedor/proveedorController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/producto/consultarMercaderiaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/conceptoController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/caracteristica/caracteristica_Controller.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/ordenDeAlmacenController.js")></script>
+
+
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+        var tasaIGV = @ViewBag.tasaIGV;
+        var aplicaLeyAmazonia = @ViewBag.aplicaLeyAmazonia.ToString().ToLower();
+        var comprasDestinadasAPorDefecto = @ViewBag.comprasDestinadasAPorDefecto;
+        var idTipoActorPersonaNatural =@ViewBag.idTipoActorPersonaNatural;
+        var idTipoActorPersonaJuridica = @ViewBag.idTipoActorPersonaJuridica;
+        var realizaCompraAlCredito = @ViewBag.realizaCompraAlCredito.ToString().ToLower();
+         var permitirLoteEnDetalleDeCompra = @ViewBag.permitirLoteEnDetalleDeCompra.ToString().ToLower();
+        var permitirRegistroEnDetalleDeCompra = @ViewBag.permitirRegistroEnDetalleDeCompra.ToString().ToLower();
+        var permitirVencimientoEnDetalleDeCompra = @ViewBag.permitirVencimientoEnDetalleDeCompra.ToString().ToLower();
+        var idProveedorGenerico = @ViewBag.idProveedorGenerico;
+        var idTipoPersonaSeleccionadaPorDefecto = @ViewBag.idTipoPersonaSeleccionadaPorDefecto;
+        var idTipoDocumentoSeleccionadaConTipoPersonaNatural = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaNatural;
+        var idTipoDocumentoSeleccionadaConTipoPersonaJuridica = @ViewBag.idTipoDocumentoSeleccionadaConTipoPersonaJuridica;
+        var idTipoDocumentoIdentidadDni = @ViewBag.idTipoDocumentoIdentidadDni;
+        var idTipoDocumentoIdentidadRuc = @ViewBag.idTipoDocumentoIdentidadRuc;
+        var fechaActual = '@ViewBag.fechaActual';
+        var permitirRegistroFlete = @ViewBag.permitirRegistroFlete.ToString().ToLower();
+        var idDocumentoNotaAlamacenInterna = @ViewBag.idDocumentoNotaAlamacenInterna;
+        var idUbigeoSede = @ViewBag.idUbigeoSede;
+        var direccionSede = '@ViewBag.direccionSede';
+        var idModalidadTrasladoPorDefecto = @ViewBag.idModalidadTrasladoPorDefecto;
+        var idMotivoTrasladoPorDefecto = @ViewBag.idMotivoTrasladoPorDefecto;
+        var idUbigeoSeleccionadoPorDefecto = @ViewBag.idUbigeoSeleccionadoPorDefecto;
+        var idUbigeoNoEspecificado = @ViewBag.idUbigeoNoEspecificado;
+        var permitirMultipleIngresoDelMismoDetalle = @ViewBag.permitirMultipleIngresoDelMismoDetalle.ToString().ToLower();
+        var idDetalleMaestroMedioDePagoEfectivo = @ViewBag.idDetalleMaestroMedioDePagoEfectivo;
+        var idDetalleMaestroEntidadBancariaNinguna = @ViewBag.idDetalleMaestroEntidadBancariaNinguna;
+        var valorPrecioVentaPorDefectoQueNoSeDebeGuardar = @ViewBag.ValorPrecioVentaPorDefectoQueNoSeDebeGuardar;
+        var idEstablecimientoPorDefecto = @ViewBag.idEstablecimientoPorDefecto;
+        var idCentroDeAtencionPorDefecto = @ViewBag.idCentroDeAtencionPorDefecto;
+        var idPresentacionPorDefecto = @ViewBag.IdPresentacionPorDefecto;
+        var idUnidadMedidaPorDefecto = @ViewBag.IdUnidadMedidaPorDefecto;
+        var idPresentacionAOcultarEnNombreConceptoNegocio = @ViewBag.IdPresentacionAOcultarEnNombreConceptoNegocio;
+        var idUnidadDeMedidaComercialAOcultarEnNombreConceptoNegocio = @ViewBag.IdUnidadDeMedidaComercialAOcultarEnNombreConceptoNegocio;
+        var numeroDecimalesEnCantidad = @ViewBag.numeroDecimalesEnCantidad;
+        var numeroDecimalesEnPrecio = @ViewBag.numeroDecimalesEnPrecio;
+    </script>
+}
+
+<div class="col-md-12" id="modelo" ng-controller="compraController" ng-init="iniciarBandejaComprasCorporativas()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">COMPRAS CORPORATIVAS</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label class="col-sm-12">  Fecha Inicial:  </label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control datepicker-start2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label class="col-sm-12 "> Fecha Final:  </label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control datepicker-end2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="listarBandejaComprasCorporativas()"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-compras-corporativas')" class="btn btn-md btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group" @*ng-controller="compraController"*@>
+                        <a title="NUEVA COMPRA" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="inicializarCompraCorporativa()" data-toggle="modal" data-target="#modal-registro-compra-corporativa"><span class="glyphicon glyphicon-plus"></span> NUEVA COMPRA</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <table id="tabla-compras-corporativas" datatable="ng" dt-options="dtOptions" dt-column-defs="comprasCorporativas.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Fecha</th>
+                            <th>Tipo Doc.</th>
+                            <th>Documento</th>
+                            <th>Proveedor</th>
+                            <th>RUC</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in comprasCorporativas" ng-cloak>
+                            <td>{{$index+1}}</td>
+                            <td>{{item.Fecha}}</td>
+                            <td title="{{item.TipoDocumento}}">{{item.CodigoDocumento}}</td>
+                            <td>{{item.Numero}}</td>
+                            <td>{{item.Proveedor}}</td>
+                            <td>{{item.Ruc}}</td>
+                            <td>{{item.Total}}</td>
+                            <td>{{item.Estado}}</td>
+                            <td>
+                                <a title="Ver Detalles de Compra" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-ver-compra-corporativa" ng-click="verDetallesCompraCorporativa(item)"><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroCompraCorporativa")
+    @Html.Partial("_ModalVerCompraCorporativa")
+    @Html.Partial("_ModalAnulacionInterna")
+    @Html.Partial("_ModalAnulacionNotaCredito")
+    @Html.Partial("_ModalRegistroComprobanteCompraCorporativa")
+</div>

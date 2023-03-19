@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Reporte de deuda por cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/reporte/reporteController.js")></script>
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+}
+<div class="col-md-12" ng-controller="reporteController" ng-init="inicializadorReporteDeudaPorCliente()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTE DE DEUDA POR CLIENTE</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">SELECCIONE PERIODO </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateStart">Fecha y Hora Inicial: </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStart" ng-model="reporteDeudaPorCliente.FechaInicio" ng-change="actualizarURLReporteDeDeudaPorCliente()" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporteDeudaPorCliente.HoraInicio" ng-change="actualizarURLReporteDeDeudaPorCliente()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateEnd">Fecha y Hora Final: </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="reporteDeudaPorCliente.FechaFinal" ng-change="actualizarURLReporteDeDeudaPorCliente()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="reporteDeudaPorCliente.HoraFinal" ng-change="actualizarURLReporteDeDeudaPorCliente()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-init="obtenerClientes()" class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">ESTADO DE CUENTA</h3>
+                    ( DESDE: {{reporteDeudaPorCliente.HoraInicio}}
+                    HASTA: {{reporteDeudaPorCliente.HoraFinal}} )
+
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="punto2">Cliente: </label>
+                                <select class="select2 form-control" ng-model="reporteDeudaPorCliente.Cliente" ng-change="actualizarURLReporteDeDeudaPorCliente()" ng-options="item as item.Nombre for item in listaClientes  track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a title="Reporte estado de cuenta " class="btn btn-primary btn-flat ng-cloak" style="margin-top: 20px;" ng-href="{{URLReporteDeDeudaPorCliente}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--====================================================REPORTE DE ESTADO DE CUENTA POR CARTERA DE CLIENTE==============================================-->
+
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">ESTADO DE CUENTA POR CARTERA DE CLIENTE</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="punto">Punto de Venta: </label>
+                                <select class="select2 form-control" ng-model="reporteDeudaPorCliente.PuntoDeVentaDeCartera" ng-change="obtenerClientesDeCartera(); actualizarURLReporteDeDeudaPorCarteraCliente()" ng-options="item as item.Nombre for item in listaPuntosDeVenta  track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cliente">Cliente: </label>
+                                <select class="select2 form-control" ng-model="reporteDeudaPorCliente.ClienteDeCartera" ng-change="actualizarURLReporteDeDeudaPorCarteraCliente()" ng-options="item as item.Nombre for item in listaClientesDeCartera  track by item.Id" required></select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a title="Muestra Reporte de estado de cuenta del cliente" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeEstadoCuentaPorCarteraDeCliente}}">DESCARGAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

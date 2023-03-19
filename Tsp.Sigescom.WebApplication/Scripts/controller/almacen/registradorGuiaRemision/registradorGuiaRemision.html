@@ -1,0 +1,165 @@
+﻿<form class="formulario form-horizontal">
+    <div class="col-md-4">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <label class="col-md-12 title-box-body">DATOS GENERALES</label>
+                    <selector-actor-comercial ng-if="$ctrl.inicializacionRealizada" name="SelectorTercero" id="SelectorTercero" actor-comercial="$ctrl.guiaRemision.Tercero" rol="$ctrl.rolTercero" etiqueta-rol="$ctrl.etiquetaTercero" api="$ctrl.selectorTerceroAPI" changed="$ctrl.cambioTercero(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="10" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroProveedor" inicio-realizado="$ctrl.inicioRealizadoTercero()" permitir-seleccionar-grupo="false"></selector-actor-comercial>
+                    <div class="col-md-12">
+                        <label class="control-label" style="padding-top:0px !important">DOCUMENTO </label>
+                        <select id="documento" class="select2 form-control tipoDocumento" ng-model="$ctrl.guiaRemision.TipoDeComprobante" ng-change="$ctrl.cargarSeries($ctrl.guiaRemision.TipoDeComprobante); $ctrl.validarGuiaRemision()" ng-options="item as item.TipoComprobante.Nombre for item in $ctrl.comprobantesDeGuiaRemision track by item.TipoComprobante.Id"></select>
+                    </div>
+                    <div class="col-md-12" ng-show="$ctrl.guiaRemision.TipoDeComprobante.MostrarSelectorSerie && $ctrl.guiaRemision.TipoDeComprobante.EsPropio ">
+                        <label class="control-label">SERIE </label>
+                        <select id="serie" class="select2 form-control" ng-model="$ctrl.guiaRemision.TipoDeComprobante.SerieSeleccionada" ng-change="$ctrl.validarGuiaRemision()" ng-options="item.Id as item.Nombre for item in $ctrl.series"></select>
+                    </div>
+                    <div class="col-md-12" ng-show="$ctrl.guiaRemision.TipoDeComprobante.MostrarEntradaSerie">
+                        <label class="control-label">SERIE </label>
+                        <input id="serieIngresada" class="form-control" ng-model="$ctrl.guiaRemision.TipoDeComprobante.SerieIngresada" ng-change="$ctrl.validarGuiaRemision()" ng-pattern="/^[a-zA-Z0-9][0-9]{0,3}$/" maxlength="4" ng-minlength="3" uppercase-only/>
+                    </div>
+                    <div class="col-md-12" ng-show="$ctrl.guiaRemision.TipoDeComprobante.MostrarEntradaNumero">
+                        <label class="control-label">N° DOCUMENTO </label>
+                        <input id="numeroIngresado" class="form-control" ng-model="$ctrl.guiaRemision.TipoDeComprobante.NumeroIngresado" ng-change="$ctrl.validarGuiaRemision()" maxlength="8" ng-pattern="/^[0-9]\d{0,7}$/"/>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">FECHA INICIO TRASLADO </label>
+                        <input id="fechaInicioTraslado" class="form-control datepicker-yyyy td-datepicker" ng-model="$ctrl.guiaRemision.FechaInicioTraslado" ng-change="$ctrl.validarGuiaRemision()" placeholder="dd/mm/aaaa" data-date-start-date="0d" />
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">PESO BRUTO TOTAL (KGM) </label>
+                                <input id="pesobrutototal" class="form-control" ng-model="$ctrl.guiaRemision.PesoBrutoTotal" ng-change="$ctrl.validarGuiaRemision()" ng-blur="$ctrl.formatoDosDecimales($event);" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,3})?)?$" onClick="select();"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">NÚMERO DE BULTOS </label>
+                                <input id="detalle" class="form-control" ng-model="$ctrl.guiaRemision.NumeroBultos" ng-change="$ctrl.validarGuiaRemision()" ng-pattern-restrict="^[+0-9]*$" onClick="select();"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-if="$ctrl.permitirDocumentoReferencia">
+                        <label class="control-label">DOC. REFERENCIA (SERIE Y NUMERO)</label>
+                        <input ng-if="!$ctrl.registroDesdeOrdenAlmacen" id="DocReferencia" class="form-control" ng-model="$ctrl.guiaRemision.DocumentoReferencia" uppercase-only/>
+                        <label ng-if="$ctrl.registroDesdeOrdenAlmacen" class="form-control" style="border: none; margin-bottom:0px">{{$ctrl.guiaRemision.DocumentoReferencia}}</label>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="control-label">OBSERVACION </label><br>
+                        <textarea class="form-control" id="observacion" rows="2" value="Observacion" ng-model="$ctrl.guiaRemision.Observacion"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <label class="col-md-12 title-box-body">DATOS DE TRANSPORTE</label>
+                    <selector-actor-comercial ng-if="$ctrl.inicializacionRealizada" ng-show="$ctrl.guiaRemision.ModalidadTransporte.Id == $ctrl.parametros.IdModalidadTrasladoPublico" name="SelectorTranportista" id="SelectorTranportista" actor-comercial="$ctrl.guiaRemision.Transportista.Transportista" rol="$ctrl.rolTransportista" etiqueta-rol="'TRANSPORTISTA'" api="$ctrl.selectorTransportistaAPI" changed="$ctrl.cambioTransportista(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="20" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroProveedor" inicio-realizado="$ctrl.inicioRealizadoTranportista()" permitir-seleccionar-grupo="false"></selector-actor-comercial>
+                    <selector-actor-comercial ng-if="$ctrl.inicializacionRealizada" ng-show="$ctrl.guiaRemision.ModalidadTransporte.Id == $ctrl.parametros.IdModalidadTrasladoPrivado" name="SelectorConductor" id="SelectorConductor" actor-comercial="$ctrl.guiaRemision.Conductor.Conductor" rol="$ctrl.rolConductor" etiqueta-rol="'CONDUCTOR'" api="$ctrl.selectorConductorAPI" changed="$ctrl.cambioConductor(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="30" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroProveedor" inicio-realizado="$ctrl.inicioRealizadoConductor()" permitir-seleccionar-grupo="false"></selector-actor-comercial>
+                    <div class="col-md-12" ng-show="$ctrl.guiaRemision.ModalidadTransporte.Id == $ctrl.parametros.IdModalidadTrasladoPrivado">
+                        <label class="control-label">N° LICENCIA </label>
+                        <input id="nLicencia" class="form-control" ng-model="$ctrl.guiaRemision.Conductor.NumeroLicencia" ng-change="$ctrl.validarGuiaRemision()" uppercase-only ng-pattern-restrict="^[+A-Za-z0-9]*$"/>
+                    </div>
+                    <div class="col-md-12" ng-show="$ctrl.guiaRemision.ModalidadTransporte.Id == $ctrl.parametros.IdModalidadTrasladoPrivado">
+                        <label class="control-label">PLACA </label>
+                        <input id="marcaPlaca" class="form-control" ng-model="$ctrl.guiaRemision.Transportista.Placa" ng-change="$ctrl.validarGuiaRemision()" ng-pattern-restrict="^[+A-Za-z0-9]*$" uppercase-only/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">MODALIDAD DE TRANSPORTE </label>
+                        <select id="modalidad" class="select2 form-control" ng-model="$ctrl.guiaRemision.ModalidadTransporte" ng-change="$ctrl.validarGuiaRemision()" ng-options="item as item.Nombre for item in $ctrl.modalidadesTraslado track by item.Id"></select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">MOTIVO DE TRASLADO </label>
+                        <select id="motivo" class="select2 form-control" ng-model="$ctrl.guiaRemision.MotivoTraslado" ng-change="$ctrl.cambioMotivoTraslado(); $ctrl.validarGuiaRemision()" ng-options="item as item.Nombre for item in $ctrl.motivosTraslado track by item.Id"></select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">DETALLE </label>
+                        <input id="detalle" class="form-control" ng-model="$ctrl.guiaRemision.DescripcionMotivo" ng-change="$ctrl.validarGuiaRemision()" ng-disabled="$ctrl.guiaRemision.MotivoTraslado.Id != $ctrl.parametros.IdMotivoTrasladoOtros" uppercase-only/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="row">
+                            <label class="col-md-12 title-box-body">DIRECCIÓN ORIGEN </label>
+                            <div class="col-md-12" style="padding-bottom:5px">
+                                <label class="control-label">UBIGEO :</label>
+                                <select id="ubigeoOrigen" class="select2 form-control" ng-model="$ctrl.guiaRemision.UbigeoOrigen" ng-change="$ctrl.validarGuiaRemision()" ng-options="item as item.Nombre for item in $ctrl.ubigeosPeru track by item.Id"></select>
+                                <label class="control-label">DETALLE :</label>
+                                <input id="direccionOrigen" class="form-control" uppercase-only ng-model="$ctrl.guiaRemision.DireccionOrigen" ng-change="$ctrl.validarGuiaRemision()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="row">
+                            <label class="col-md-12 title-box-body">DIRECCIÓN DESTINO </label>
+                            <div class="col-md-12" style="padding-bottom:5px">
+                                <label class="control-label">UBIGEO :</label>
+                                <select id="ubigeoDestino" class="select2 form-control" ng-model="$ctrl.guiaRemision.UbigeoDestino" ng-change="$ctrl.validarGuiaRemision()" ng-options="item as item.Nombre for item in $ctrl.ubigeosPeru track by item.Id"></select>
+                                <label class="control-label">DETALLE :</label>
+                                <input id="direccionDestino" class="form-control" uppercase-only ng-model="$ctrl.guiaRemision.DireccionDestino" ng-change="$ctrl.validarGuiaRemision()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-body">
+                <selector-concepto-comercial ng-if="$ctrl.permitirSeleccionConcepto && $ctrl.inicializacionRealizada" concepto-comercial="$ctrl.conceptoComercial" api="$ctrl.selectorConceptoComercialAPI" modo-seleccion-tipo-familia="$ctrl.parametros.ModoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="$ctrl.parametros.MostrarBuscadorCodigoBarra" modo-seleccion-concepto="$ctrl.parametros.ModoSeleccionConcepto" complemento-stock="true" complemento-precio="false" minimo-caracteres-buscar-concepto="$ctrl.parametros.MinimoCaracteresBuscarConcepto" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" informacion-a-mostrar="$ctrl.parametros.InformacionSelectorConcepto" changed="$ctrl.seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+                <div class="pull-right" ng-if="$ctrl.registroDesdeOrdenAlmacen">
+                    <a ng-click="$ctrl.cargarHistorialOrdenAlmacen()" class="btn btn-primary">HISTORIAL</a>
+                </div>
+                <div class="col-md-12" style="margin-top:15px">
+                    <table id="table-detalle-guia-remision" class="table table-stripped table-height-small table-bordered">
+                        <tr>
+                            <th class="col-md-1">N°</th>
+                            <th class="col-md-8">CONCEPTO</th>
+                            <th class="col-md-1" ng-if="$ctrl.registroDesdeOrdenAlmacen && $ctrl.permitirMostrarStockActual">STOCK ACTUAL</th>
+                            <th class="col-md-1" ng-if="$ctrl.registroDesdeOrdenAlmacen">PENDIENTE</th>
+                            <th class="col-md-1">CANTIDAD</th>
+                            <th class="col-md-1" ng-if="$ctrl.permitirSeleccionConcepto">OPCIONES</th>
+                        </tr>
+                        <tr ng-repeat="item in $ctrl.guiaRemision.Detalles">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.Descripcion}}</td>
+                            <td ng-if="$ctrl.registroDesdeOrdenAlmacen && $ctrl.permitirMostrarStockActual">{{item.StockActual|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                            <td ng-if="$ctrl.registroDesdeOrdenAlmacen">{{item.Pendiente|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                            <td style="vertical-align:initial">
+                                <input type="number" ng-if="$ctrl.permitirSeleccionConcepto || $ctrl.permitirRegistroIngresoSalidaActual" class="form-control input-md number height-34 numero-derecha" ng-model="item.IngresoSalidaActual" ng-change="$ctrl.validarGuiaRemision()" style="height:34px" onClick="select();" ng-blur="$ctrl.formatoDecimalCantidad($event)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{$ctrl.parametros.NumeroDecimalesEnCantidad}}})?)?$" lang="en-IN" />
+                                <label ng-if="!$ctrl.permitirSeleccionConcepto && !$ctrl.permitirRegistroIngresoSalidaActual" style="height:20px">{{item.IngresoSalidaActual|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</label>
+                            </td>
+                            <td ng-if="$ctrl.permitirSeleccionConcepto">
+                                <a title="Quitar producto" class="btn btn-xs btn-danger" ng-click="$ctrl.quitarDetalle($index)"><span class="glyphicon glyphicon-remove"></span></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="box box-danger" ng-show="$ctrl.inconsistenciasGuiaRemision.length > 0">
+            <div class="box-body">
+                <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                <table>
+                    <tr ng-repeat="item in $ctrl.inconsistenciasGuiaRemision">
+                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

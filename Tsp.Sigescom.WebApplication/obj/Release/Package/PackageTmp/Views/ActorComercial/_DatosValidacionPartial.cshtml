@@ -1,0 +1,39 @@
+﻿<div class="col-md-12">
+    <h5>Datos Validaci&oacute;n:</h5>
+    <div class="panel panel-default">
+        <div class="panel-body ">
+            <div class="col-md-12 padding-top-bottom5">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-md-3">Tipo Persona:</label>
+                        <div class="col-md-5">
+                            <select class="select22" ng-model="actorComercial.TipoPersona" ng-options="item as item.Nombre for item in tipoActor track by item.Id" ng-change="cambiarTipo()" required>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-md-4">Tipo Documento:</label>
+                        <div class="col-md-5">
+                            <select class="select22" ng-model="actorComercial.TipoDocumentoIdentidad"
+                                    ng-options="item as item.Nombre for item in tipoDocumentoDeIdentidad track by item.Id"  required>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-md-5">N&uacute;mero Documento:</label>
+                        <div class="col-md-4">
+                            <input class="form-control" @*ng-blur="validarNumero()"*@ ng-model="actorComercial.NumeroDocumentoIdentidad" ng-minlength="actorComercial.TipoDocumentoIdentidad.Longitud" maxlength="{{actorComercial.TipoDocumentoIdentidad.Longitud}}" ng-pattern="/^[0-9a-zA-Z]\w{0,12}$/" required />
+                            @*<span ng-show="actorComercialForm.documento.$error.pattern" style="color:red">Simbolo no permitido</span>*@
+                        </div>
+                        @*<button class="btn btn-success" style="padding:2px 6px;" title="Validar N&uacute;mero" ng-click="validarNumero()" ng-disabled="!actorComercial.NumeroDocumentoIdentidad||!actorComercial.TipoDocumentoIdentidad"> <span>Validar</span> </button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

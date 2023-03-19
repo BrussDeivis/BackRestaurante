@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "RegistroDeTurno";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/empleado/turnoController.js")></script>
+} 
+<div class="col-md-12" ng-controller="turnoController"  ng-init="obtenerTurnosBandeja()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">ASIGNACIÓN DE EMPLEADOS A CENTROS DE ATENCIÓN</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <a title="Nuevo Turno" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-turno" ng-click="nuevoRegistroTurno()"><span class="glyphicon glyphicon-plus"></span> NUEVO TURNO</a>
+                        </div> 
+                        <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                            <table id="tabla-turno" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-striped dataTable" ng-cloak>
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Establecimiento comercial</th>
+                                        <th>Centro de atención</th>
+                                        <th>Empleado</th>
+                                        <th>Correo</th>
+                                        <th>Desde</th>
+                                        <th>Hasta</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listaTurnos" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.EstablecimientoComercial}}</td>
+                                        <td>{{item.CentroDeAtencion}}</td>
+                                        <td>{{item.Empleado}}</td>
+                                        <td>{{item.Usuario}}</td>
+                                        <td>{{item.Desde}}</td>
+                                        <td>{{item.Hasta}}</td>
+                                        <td>
+                                            <a title="Editar Turno" class="btn btn-primary btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-turno" ng-click="editarTurno(item.Id)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_ModalRegistroTurnoPartial")
+    </div>
+</div>

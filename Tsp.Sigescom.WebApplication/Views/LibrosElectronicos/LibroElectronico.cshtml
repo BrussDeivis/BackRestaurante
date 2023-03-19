@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Libros electronicos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/libroElectronico/librosElectronicosController.js")></script>
+}
+<div class="col-md-12 no-padding" ng-controller="librosElectronicosController">
+    <!--=====================================================================    INPUTS PERIODO =========================================================================-->
+    <div class="col-md-12 date-fixed-cus padding-left-15">
+        <div class="box">
+            <div class="color-palette-set margin-top-15">
+                <div class="bg-green color-palette">LIBROS ELECTRÓNICO</div>
+            </div>
+            <div class="box-header with-border">
+                <h3 class="box-title">Seleccione Periodo</h3>
+            </div>
+            <div class="box-body">
+                <form autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-3 no-padding">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="documento">Periodo</label>
+                                    <select class="select2 form-control" ng-model="periodoSeleccionado" ng-options=" item as item.Nombre for item in listaDePeriodos track by item.Id" required" title="Es necesario seleccionar un periodo."></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--===========================================================REGISTRO DE VENTAS EXCEL==============================================================-->
+    <div class="col-md-12 after-date-fixed-200">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registro de Ventas - Excel</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <a href="@Url.Action("ObtenerReporteVentasExcel", "LibrosElectronicos")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)" title="Obtiene Libro Electrónico de Registro de Ventas en Excel" class="btn btn-primary btn-flat">DESCARGAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===========================================================REGISTRO DE VENTAS DETALLADO POR CONCEPTO====================================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registro de Ventas Detallado por Concepto</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <a title="Muestra Reporte de Ventas e Ingresos con Concepto" class="btn btn-primary btn-flat" href="@Url.Action("ReporteDeVentasEIngresos", "LibrosElectronicos")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===========================================================REGISTRO DE VENTAS PLE EN TXT Y EXCEL=================================================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registro de Ventas PLE - Txt y Excel</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <!--Genera el libro electronico-->
+                    @*<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                            <a href="" title="Genera Libro Electrónico" class="btn btn-success btn-flat" ng-click="generarLibrosElectronicos()" ng-disabled="!(periodoSeleccionado.Id > 0)">GENERAR</a>
+                        </div>*@
+                    <!--Obtiene el libro electronico PLE-->
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <a href="@Url.Action("ObtenerReportesPLE", "LibrosElectronicos")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)" title="Obtiene Libro Electrónico PLE" class="btn btn-primary btn-flat">PLE EN TXT</a>
+                    </div>
+                    <!--Obtiene el libro electronico en Excel-->
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <a href="@Url.Action("ObtenerReportesExcelPLE", "LibrosElectronicos")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)" title="Obtiene Libro Electrónico en Excel" class="btn btn-primary btn-flat">PLE EN EXCEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===============================================================REGISTRO DE VENTAS ADSOFT - EXCEL=======================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registro de Ventas Adsoft - Excel</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-lg-5 col-md-12">
+                        <a title="Muestra Reporte de ventas formato ADSOFT" class="btn btn-primary btn-flat" href="@Url.Action("ReporteVentaFormatoAdsoft", "LibrosElectronicosAdsoft")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)">DESCARGAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===========================================================REGISTRO DE VENTAS FOXCONT BV FAC - EXCEL========================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registro de Ventas Foxcont de Boletas de Venta y Facturas - Excel</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-lg-5 col-md-12">
+                        <a title="Muestra Reporte de ventas formato FOXCONT BOV FAC" class="btn btn-primary btn-flat" href="@Url.Action("ReporteVentaFormatoFoxcontBoletaVentaFactura", "LibrosElectronicosFoxcont")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)">DESCARGAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===========================================================REGISTRO DE VENTAS FOXCONT NC ND - EXCEL========================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registro de Ventas Foxcont de Notas de Crédito y Notas de Débito - Excel</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-lg-5 col-md-12">
+                        <a title="Muestra Reporte de ventas formato FOXCONT NC ND" class="btn btn-primary btn-flat" href="@Url.Action("ReporteVentaFormatoFoxcontNotaCreditoDebito", "LibrosElectronicosFoxcont")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)">DESCARGAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--===============================================================LIBROS ELECTRONICOS - CONCAR=======================-->
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Libros electronicos - CONCAR</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-lg-5 col-md-12">
+                        <a title="Descardar libros electronicos de CONCAR" class="btn btn-primary btn-flat" href="@Url.Action("ObtenerLibrosElectronicosConcar", "LibrosElectronicosConcar")?idPeriodo={{periodoSeleccionado.Id}}" ng-disabled="!(periodoSeleccionado.Id > 0)">DESCARGAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

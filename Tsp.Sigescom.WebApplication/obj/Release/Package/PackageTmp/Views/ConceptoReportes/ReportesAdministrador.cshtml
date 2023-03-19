@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "ReporteStock";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/concepto/reporteConceptoController.js")></script>
+}
+
+    <div class="box-body" ng-controller="reporteConceptoController" ng-init="obtenerAlmacenes()">
+        @* controlador del javaScript *@
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">REPORTE DE PRODUCTO</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Productos</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-4">
+
+
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a title="Muestra Reporte de Productos vigente" class="btn btn-primary btn-flat" ng-href="@Url.Action("ReporteDeProductoConCodigoDeBarra","ConceptoReportes")">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

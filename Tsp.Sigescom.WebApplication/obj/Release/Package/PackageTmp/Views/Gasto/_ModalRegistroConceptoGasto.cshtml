@@ -1,0 +1,69 @@
+﻿<div id="modal-registro-concepto-gasto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">{{accionModal}} CONCEPTO DE GASTO</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <div class="row">
+                    <form name="ConceptoForm" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12" ng-if="!concepto.ConceptoBasicoSeleccionado">
+                                                <div class="col-xs-12 col-sm-12 col-md-2 ">
+                                                    <div class="mt-10">
+                                                        <label>TIPO: </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-3 ">
+                                                    <div class="form-group">
+                                                        <div class="radio radio-primary">
+                                                            <input type="radio" id="radio-bien" ng-model="concepto.Valor" ng-value="'1'" name="tipoConcepto" required>
+                                                            <label for="radio-bien">
+                                                                BIEN
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-3 ">
+                                                    <div class="form-group">
+                                                        <div class="radio radio-primary">
+                                                            <input type="radio" id="radio-servicio" ng-model="concepto.Valor" ng-value="'0'" name="tipoConcepto" required>
+                                                            <label for="radio-servicio">
+                                                                SERVICIO
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="nombre-basico" class="control-label">FAMILIA</label>
+                                                <a title="Ingresar Concepto Basico" class="btn btn-xs btn-primary pull-right" ng-click="ingresarConceptoBasico()" ng-if="concepto.ConceptoBasicoSeleccionado"><span class="glyphicon glyphicon-plus"></span></a>
+                                                <a title="Seleccionar Concepto Basico" class="btn btn-xs btn-primary pull-right" ng-click="seleccionarConceptoBasico()" ng-if="!concepto.ConceptoBasicoSeleccionado"><span class="glyphicon glyphicon-minus"></span></a>
+                                                <div id="conceptoBasico" ng-show="concepto.ConceptoBasicoSeleccionado">
+                                                    <select id="selectorConceptoBasico" class="select2 form-control selectAtributoMercaderia" ng-model="concepto.ConceptoBasico" ng-options="item as item.Nombre for item in conceptosBasicos track by item.Id"></select>
+                                                </div>
+                                                <input id="nombreConceptoBasico" ng-model="concepto.NombreConceptoBasico" ng-if="!concepto.ConceptoBasicoSeleccionado" uppercase-only class="form-control" placeholder="Concepto Basico" required />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="sufijo" class="control-label">SUFIJO</label>
+                                                <input id="sufijo" ng-model="concepto.Sufijo" uppercase-only class="form-control" placeholder="Sufijo" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button title="GUARDAR" class="btn btn-primary btn-md " ng-disabled="ConceptoForm.$invalid" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button title="CERRAR" ng-click="cerrar()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

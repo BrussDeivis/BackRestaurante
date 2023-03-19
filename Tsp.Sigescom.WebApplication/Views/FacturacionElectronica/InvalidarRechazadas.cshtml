@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Comprobantes rechazados por sunat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/facturacionElectronica/invalidarRechazadasController.js")></script>
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+    </script>
+
+}
+<div class="col-md-12" ng-controller="invalidarRechazadasController" ng-init="iniciarBandejaDeComprobantesRechazados()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">COMPROBANTES RECHAZADOS POR SUNAT</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label for="dateStart" class="col-sm-12">Fecha Inicial</label>
+
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateStar" ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label for="dateEnd" class="col-sm-12">Fecha Final</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="dateEnd" ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button title="CONSULTAR" style="margin-top:25px" ng-click="listarBandeja()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+                <div class="col-md-1">
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-comprobantesRechazados')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <button title="Invalidar y Reemitir los comprobantes rechazados por limite de tiempo en SUNAT" style="margin-top:25px" ng-click="invalidarYReemitirComprobantesRechazados()" class="btn btn-primary"><span class="glyphicon glyphicon-paste"></span> INVALIDAR Y REEMITIR</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:10px;">
+            <table id="tabla-comprobantesRechazados" datatable="ng" dt-options="dtOptions" dt-column-defs="comprobantesRechazados.dtColumnDefs" class="row-border hover table table-stripped table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fec. Envio</th>
+                        <th>Fec. Emision</th>
+                        <th>Doc. Enviado</th>
+                        <th>Tipo Envio</th>
+                        @*<th>Identificador</th>
+                        <th>N° Ticket</th>*@
+                        <th>Cod. Respuesta</th>
+                        <th>Estado</th>
+                        <th>Observacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in comprobantesRechazados" ng-cloak>
+                        <td>{{item.Id}}</td>
+                        <td>{{item.FechaEnvio}}</td>
+                        <td>{{item.FechaEmision}}</td>
+                        <td>{{item.DocumentosEnviados}}</td>
+                        <td>{{item.TipoEnvio}}</td>
+                        @*<td>{{item.IdentificadorEnvio}}</td>
+                        <td>{{item.NumeroTicket}}</td>*@
+                        <td>{{item.CodigoRespuesta}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td>{{item.Observacion}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

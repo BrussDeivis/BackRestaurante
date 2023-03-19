@@ -1,0 +1,158 @@
+﻿<div id="modal-registro-traslado-interno-mercaderia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 85%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRAR TRASLADO</h4>
+            </div>
+            <div class="modal-body" style="background-color:#d5e0f5">
+                <div class="row">
+                    <form name="registroTrasladoInterno" class="form-horizontal">
+                        <div class="col-md-3">
+                            @*<div class="panel panel-primary" style="text-align:left">
+                                <div class="panel-heading" style="padding-left:20px">
+                                    <label>ALMACEN ORIGEN</label>
+                                </div>
+                                <div class="panel-body no-pad-top">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">DESTINO</label>
+                                            <select tabindex=1 class="select2 form-control" ng-model="traslado.AlmacenDestino" ng-change="verificarInconsistencias()" ng-options="item as item.Nombre for item in almacenesDestino  track by item.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">DOCUMENTO</label>
+                                            <select class="select2 form-control" ng-model="traslado.TipoDeComprobante" ng-change="cargarSeries(traslado.TipoDeComprobante); verificarInconsistencias()" ng-options="item as item.TipoComprobante.Nombre for item in comprobantesDeAlmacen  track by item.TipoComprobante.Id" required></select>
+                                        </div>
+                                        <div class="col-md-12" ng-show=" traslado.TipoDeComprobante.MostrarSelectorSerie && traslado.TipoDeComprobante.EsPropio ">
+                                            <label class="control-label">SERIE</label>
+                                            <select id="serie" class="select2 form-control" ng-model="traslado.TipoDeComprobante.SerieSeleccionada" ng-change="verificarInconsistencias()" ng-options="item.Id as item.Nombre for item in series" required></select>
+                                        </div>
+                                        <div class="col-md-12" ng-show="traslado.TipoDeComprobante.MostrarEntradaSerie">
+                                            <label class="control-label">SERIE</label>
+                                            <input class="form-control" uppercase-only ng-model="traslado.TipoDeComprobante.SerieIngresada" ng-pattern="/^[a-zA-Z0-9][0-9]{0,3}$/" maxlength="4" ng-minlength="3" required />
+                                        </div>
+                                        <div class="col-md-12" ng-show="traslado.TipoDeComprobante.MostrarEntradaNumero">
+                                            <label class="control-label">N° DOCUMENTO</label>
+                                            <input class="form-control" ng-model="traslado.TipoDeComprobante.NumeroIngresado" maxlength="8" ng-pattern="/^[0-9]\d{0,7}$/" required />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">OBSERVACIÓN</label><br>
+                                            <textarea class="form-control" rows="3" ng-model="traslado.Observacion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="col-md-12">
+                                <div class="panel panel-primary" style="text-align:left">
+                                    <div class="panel-heading" style="padding-left:20px">
+                                        <label>ORIGEN</label>
+                                    </div>
+                                    <div class="panel-body no-pad-top">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label">Almacén</label>
+                                                <p>{{nombreCentroDeAtencion}}</p>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label">Emisor</label>
+                                                <p>{{nombreEmpleadoDeSesion}}</p>
+</div>
+                                            <div class="col-md-12">
+                                                <label class="control-label">DOCUMENTO</label>
+                                                <select class="select2 form-control" ng-model="traslado.TipoDeComprobante" ng-change="cargarSeries(traslado.TipoDeComprobante); verificarInconsistencias()" ng-options="item as item.TipoComprobante.Nombre for item in comprobantesDeAlmacen  track by item.TipoComprobante.Id" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel panel-primary" style="text-align:left">
+                                    <div class="panel-heading" style="padding-left:20px">
+                                        <label>Destino</label>
+                                    </div>
+                                    <div class="panel-body no-pad-top">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label">Almacén</label>
+                                                <select tabindex=1 class="select2 form-control" ng-model="traslado.AlmacenDestino" ng-change="obtenerEmpleadosPorAlmacen(); verificarInconsistencias()" ng-options="item as item.Nombre for item in almacenesDestino  track by item.Id" required></select>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label">Receptor</label>
+                                                <select class="select2 form-control" ng-model="traslado.ResponsableDestino" ng-change="verificarInconsistencias()" ng-options="item as item.Nombre for item in empleadosPorAlmacen  track by item.Id" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 no-padding-left">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="col-md-12 no-padding">
+                                        <div class="col-md-12">
+                                            <selector-concepto-comercial ng-if="inicializacionRealizada" concepto-comercial="conceptoComercial" api="selectorConceptoComercialAPI" modo-seleccion-tipo-familia="modoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="mostrarBuscadorCodigoBarra" modo-seleccion-concepto="modoSeleccionConcepto" complemento-stock="true" complemento-precio="false" minimo-caracteres-buscar-concepto="minimoCaracteresBuscarConcepto" informacion-a-mostrar="informacionSelectorConcepto" changed="seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+                                        </div>
+
+                                            <div class="col-md-12 no-padding" style="margin-top: 10px;">
+                                                <table id="tabla-cotizaciones" class="table table-height-small table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-1">ÍTEM</th>
+                                                            <th class="col-md-5">CONCEPTO</th>
+                                                            <th class="col-md-1">STOCK</th>
+                                                            <th class="col-md-1">CANTIDAD</th>
+                                                            <th class="col-md-3">OBSERVACIÓN</th>
+                                                            <th class="col-md-1">OPCIÓN</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-show="traslado.Detalles.length>0">
+                                                        <tr ng-repeat="item in traslado.Detalles">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{item.Producto.NombreDetalle}}</td>
+                                                            <td>{{item.Producto.Stock|number:numeroDecimalesEnCantidad}}</td>
+                                                            <td>
+                                                                @*<input class="form-control height-34 numero-derecha" type="number" ng-model="item.Cantidad" ng-change="verificarInconsistencias()" onClick="select();" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$" ng-blur="item.Cantidad = formatNumber(item.Cantidad, numeroDecimalesEnCantidad)" />*@
+                                                                <input class="form-control height-34 numero-derecha"
+                                                                       type="number"
+                                                                       ng-model="item.Cantidad"
+                                                                       ng-change="verificarInconsistencias()"
+                                                                       ng-blur="formatoDecimalCantidad($event)"
+                                                                       ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$"
+                                                                       onClick="select();"
+                                                                       lang="en-IN" />
+                                                            </td>
+                                                            <td>
+                                                                <input class="text form-control height-34" ng-model="item.Observacion" />
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-xs btn-danger" ng-click="quitarDetalle($index); verificarInconsistencias()"><span class="glyphicon glyphicon-remove"></span></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="box box-danger" ng-show="inconsistencias.length > 0">
+                                <div class="box-body">
+                                    <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                    <table>
+                                        <tr ng-repeat="item in inconsistencias">
+                                            <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button title="GUARDAR" class="btn btn-primary btn-md " ng-click="guardarTraslado()" ng-disabled="inconsistencias.length > 0"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button title="CERRAR" ng-click="cerrar()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+

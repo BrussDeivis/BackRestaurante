@@ -1,0 +1,27 @@
+﻿<div class="col-md-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">DATOS VALIDACION: </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="tipoPersona">Tipo Persona  *</label>
+                        <select id="tipoPersona" class="select2 form-control tipoPersona" ng-model="actor.TipoPersona" ng-change="cargarDatosComplementarios()" ng-options="item as item.Nombre for item in tiposDeActor track by item.Id" required></select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="tipoDocumento">Tipo Documento:  *</label>
+                        <select id="tipoDocumento" class="select2 form-control tipoDocumento" ng-model="actor.TipoDocumentoIdentidad" ng-change="validarLongitudNumero()" ng-options="item as item.Nombre for item in tiposDeDocumentoDeIdentidad track by item.Id" required></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="numeroDocumento">N° Documento:  *</label>
+                        <input id="numeroDocumento" placeholder="Numero de documento" class="form-control numeroDocumento" ng-model="actor.NumeroDocumentoIdentidad" uppercase-only ng-blur="cambiarElTiPoDocumentoYElTipoDePersona();validarNumero();" ng-paste="removeSpacesInPaste($event.originalEvent)" maxlength="{{longitudCaracteresTipoDocumentoIdentidad}}" ng-pattern="/^[0-9a-zA-Z]\w{0,12}$/" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

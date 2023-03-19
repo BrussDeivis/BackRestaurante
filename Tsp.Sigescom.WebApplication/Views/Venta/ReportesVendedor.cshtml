@@ -1,0 +1,255 @@
+﻿@{
+    ViewBag.Title = "REPORTES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/venta/reporteVentaController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/cliente/clienteController.js")></script>
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin = '@ViewBag.fechaHoraFin';
+        var diasAntesDisponibles = '@ViewBag.diasAntesDisponibles';
+        var parametrosReportesVendedor=@(Html.Raw(Json.Encode(ViewBag.parametrosReportesVendedor)));
+
+    </script>
+}
+<div ng-controller="reporteVentaController" ng-init="nuevoReporte()">
+    <!--=====================================================================    INPUTS DATETIME =========================================================================-->
+    <div class="date-fixed">
+        <div class="box box-success">
+            <div class="color-palette-set" style="margin-bottom: 0px;">
+                <div class="bg-green color-palette">REPORTE DE VENTAS</div>
+            </div>
+            @*<div class="box-header with-border">
+                    <h3 class="box-title">Seleccione periodo  </h3>
+                </div>*@
+            <div class="box-body" style="padding-left: 15px; padding-bottom: 0px;">
+                <form autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-6">
+                            <div class="form-group">
+                                <label for="dateStart">Fecha y Hora Inicial </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateStart" ng-model="reporte.FechaInicio" ng-change="actualizarURLsVendedor()" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                </div>
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" id="horaIndividual" ng-model="reporte.HoraInicio" ng-change="actualizarURLsVendedor()" class="form-control timepickerIndividual">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <div class="form-group">
+                                <label for="dateEnd">Fecha y Hora Final</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input id="dateEnd" ng-model="reporte.FechaFinal" ng-change="actualizarURLsVendedor()" placeholder="dd/mm/aaaa" class="form-control pull-right  datepicker-end" data-date-start-date='@ViewBag.diasAntesDisponibles' data-date-end-date="0d" />
+                                </div>
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" id="horaIndividual" ng-model="reporte.HoraFinal" ng-change="actualizarURLsVendedor()" class="form-control timepickerIndividual">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--===========================================================REPORTE DE PUNTO DE VENTA POR COMPROBANTE ============cambio==================================================-->
+    <div class="col-xs-12  after-date-fixed">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Comprobante </h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta agrupado por Comprobante" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorComprobanteDetalladoDeUnSoloPuntoDeVenta}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===========================================================REPORTE DE PUNTO DE VENTA POR CONCEPTO=========cambio===================================================-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por  Concepto</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta agrupado por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorConceptoDeUnSoloPuntoDeVenta}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===============================================================REPORTE DE VENDEDOR POR CONCEPTO====================cambio==============================================-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Concepto y Vendedor</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta por concepto del vendedor" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorConceptoDelVendedor}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===========================================================REPORTE DE PUNTO DE VENTA POR SERIE Y CATEGORIA==(Del Punto De Venta Por Serie y Categoria)================CAMBIO= POR CATEGORIA Y SERIE=====================================-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Familia Y Serie</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <a title="Muestra Reporte agrupado Por Serie y categoria" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorSerieYConceptoBasicoResumidoDeUnSoloPuntoDeVenta}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===========================================================REPORTE DE PUNTO DE VENTA POR SERIE Y CONCEPTO=======(Del Punto De Venta Por Serie y Concepto)==================CA,BIO= POR CONCEPTO YB SERIE==============================-->
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Concepto y Serie</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <a title="Muestra Reporte de venta  agrupado Por Serie y Concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentaPorSerieYConceptoDeUnSoloPuntoDeVenta}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Modalidad y Concepto</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-modalidad-consolidado-concepto-modalidades">
+                        <div class="form-group">
+                            <label for="tipo-venta"> Modalidad: * </label>
+                            <select id="tipo-venta" class="select2 form-control" ng-model="reporte.Modalidades1" ng-change="actualizarURLReporteDeVentasPorModalidadConsolidadoPorConceptoDelVendedor()" ng-options="item as item.Nombre for item in listaDeModalidadesGenerico  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-md-offset-1 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-7" title="Ventas por modalidad consolidado por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasPorModalidadConsolidadoPorConceptoDelVendedor}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Por Modalidad, Concepto y Precio Unitario</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4" id="input-report-venta-modalidad-consolidado-precio-unitario-modalidades">
+                        <div class="form-group">
+                            <label for="tipo-venta"> Modalidad: * </label>
+                            <select id="tipo-venta" class="select2 form-control" ng-model="reporte.Modalidades2" ng-change="actualizarURLReporteDeVentasPorModalidadConsolidadoPorPrecioUnitarioDelVendedor()" ng-options="item as item.Nombre for item in listaDeModalidadesGenerico  track by item.Id" required multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-md-offset-1 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-8" title="Ventas por modalidad consolidado por concepto" class="btn btn-primary btn-flat" ng-href="{{URLReporteDeVentasPorModalidadConsolidadoPorPrecioUnitarioDelVendedor}}" disabled>VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Invalidaciones</h3>
+            </div>
+            <div class="box-body">
+                <div class="row ">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-1 col-md-offset-1 mt-20">
+                        <div class="form-group">
+                            <a id="btn-see-in-report-9" title="Comprobantes de venta invalidados" class="btn btn-primary btn-flat" ng-href="{{URLReporteInvalidacionesVendedor}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="red-text">{{reporte.MensajeErrorInvalidaciones}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <h5 class="col-xs-12">(*) Datos Obligarios</h5>
+    </div>
+</div>

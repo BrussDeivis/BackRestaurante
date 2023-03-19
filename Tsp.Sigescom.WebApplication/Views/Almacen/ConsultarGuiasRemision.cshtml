@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Bandeja de guias de remision";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/almacen/guiaRemisionController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/selectorConceptoComercial/selectorConceptoComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/almacen/registradorGuiaRemision/registradorGuiaRemision.js")></script>
+    <script>
+    var fechaInicio = '@ViewBag.fechaInicio';
+    var fechaFin = '@ViewBag.fechaFin';
+    var idEstablecimientoPorDefecto = @ViewBag.idEstablecimientoPorDefecto;
+    var idCentroDeAtencionPorDefecto = @ViewBag.idCentroDeAtencionPorDefecto;
+
+    </script>
+    @Html.Raw(ViewBag.WCPScript);
+}
+
+<div class="col-md-12" id="modelo" ng-controller="guiaRemisionController" ng-init="inicializarBandejaGuiaRemision()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">BANDEJA DE GUIAS DE REMISION</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label for="dateStart">  Fecha Inicial </label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-2 no-padding-left">
+                    <label for="dateEnd"> Fecha Final </label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                    </div>
+                </div>
+                @if (User.IsInRole("AdministradorNegocio"))
+                {
+                    <div class="col-md-3 no-padding-left">
+                        <label>Establecimiento comercial</label>
+                        <select class="select2 form-control" id="establecimientoComercial" ng-model="establecimientosComerciales" ng-change="obtenerCentrosDeAtencionConRolAlmacen()" ng-options="item as item.Nombre for item in listaEstablecimientosComerciales track by item.Id" required multiple="multiple"></select>
+                    </div>
+                }
+                @if (User.IsInRole("AdministradorEstablecimiento") || User.IsInRole("AdministradorNegocio"))
+                {
+                    <div class="col-md-3 no-padding-left">
+                        <label>Almacenes</label>
+                        <select class="select2 form-control" id="centroDeAtencion" ng-model="centrosDeAtencion" ng-options="item as item.Nombre for item in listaCentrosDeAtencionConRolAlmacen track by item.Id" required multiple="multiple"></select>
+                    </div>
+                }
+                <div class="col-md-1 no-padding">
+                    @*<div class="form-group">*@
+                    <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="listarBandejaGuiasRemision()" ng-disabled="centrosDeAtencion == undefined"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-guia-remision')" class="btn btn-md btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                    @*</div>*@
+                </div>
+                <div class="col-md-1 no-padding-left">
+                    <button title="NUEVA GUÍA DE REMISIÓN" style="margin-top:25px;padding-left:5px;" class="btn btn-md btn-primary" data-toggle="modal" data-target="#modal-registro-guia-remision" ng-click="inicializarRegistroGuiaRemision()"><span class="glyphicon glyphicon-plus"></span> NUEVO</button>
+                </div>
+                @if (User.IsInRole("AdministradorTI"))
+                {
+                    <div class="col-md-12">
+                        <button title="ENVIAR GUÍA DE REMISIÓN A SUNAT" style="margin-top:10px" class="btn btn-md btn-primary" ng-click="enviarGuiasRemision()">ENVIAR</button>
+                        <button title="CONSULTAR GUÍA DE REMISIÓN EN SUNAT" style="margin-top:10px" class="btn btn-md btn-primary" ng-click="consultarEnvioGuiasRemision()">CONSULTAR</button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:10px">
+            <table id="tabla-guia-remision" datatable="ng" dt-options="dtOptions" dt-column-defs="guiaRemision.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Fecha</th>
+                        <th>Documento</th>
+                        <th>Nro. Doc</th>
+                        <th>Tercero</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                        <th>Enviado</th>
+                        <th>Aceptado</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in guiasRemision" ng-cloak>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.FechaEmision}}</td>
+                        <td>{{item.NumeroComprobante}}</td>
+                        <td>{{item.DocumentoTercero}}</td>
+                        <td>{{item.NombreTercero}}</td>
+                        <td>{{item.Motivo}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td>{{item.EstaEnviado}}</td>
+                        <td>{{item.EstaAceptado}}</td>
+                        <td>
+                            <a title="Ver guia de remision" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-guia-remision" ng-click="inicializarVerGuiaRemision(item)"><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroGuiaRemision")
+    @Html.Partial("_ModalVerGuiaRemision")
+</div>

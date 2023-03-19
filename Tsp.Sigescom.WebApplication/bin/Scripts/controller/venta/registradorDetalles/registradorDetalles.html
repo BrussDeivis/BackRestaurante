@@ -1,0 +1,125 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <selector-concepto-comercial ng-if="$ctrl.inicializacionRealizada" concepto-comercial="$ctrl.conceptoComercial" api="$ctrl.selectorConceptoComercialAPI" modo-seleccion-tipo-familia="$ctrl.parametros.ModoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="$ctrl.parametros.MostrarBuscadorCodigoBarra" modo-seleccion-concepto="$ctrl.parametros.ModoSeleccionConcepto" complemento-stock="true" complemento-precio="true" minimo-caracteres-buscar-concepto="$ctrl.parametros.MinimoCaracteresBuscarConcepto" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" informacion-a-mostrar="$ctrl.parametros.InformacionSelectorConcepto" changed="$ctrl.seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+    </div>
+    <div class="col-md-12 table-responsive" style="margin-top:10px">
+        <table id="tabla-detalles" class="table table-height-small table-bordered">
+            <thead>
+                <tr>
+                    <th style="width:5%">ITEM</th>
+                    <th style="width:35%">CONCEPTO</th>
+                    <th style="width:5%">STOCK</th>
+                    <th style="width:12%">TARIFA</th>
+                    <th style="width:8%">CANTIDAD</th>
+                    <th style="width:8%">P.U</th>
+                    <th style="width:8%">V. VENTA</th>
+                    <th style="width:6%">I.G.V</th>
+                    <th style="width:8%">IMPORTE</th>
+                    <th style="width:5%">OPCIÓN</th>
+                </tr>
+            </thead>
+            <tbody ng-show="$ctrl.operacion.Detalles.length>0">
+                <tr ng-repeat="item in $ctrl.operacion.Detalles" id="item-{{$index}}">
+                    <!--ITEM-->
+                    <td>{{$index+1}}</td>
+                    <!--CONCEPTO-->
+                    <td>{{item.Producto.NombreDetalle}}</td>
+                    <!--STOCK-->
+                    <td class="numero-derecha fs-15">{{$ctrl.parametros.SalidaBienesSujetasADisponibilidadStock && item.Producto.EsBien ? item.Producto.Stock : 'n'}}</td>
+                    <!--TARIFA-->
+                    <td>
+                        <div>
+                            <select id="tarifa-{{$index}}"
+                                    class="select2 form-control no-padding"
+                                    style="font-size:12px;"
+                                    ng-model="item.PrecioTarifa"
+                                    ng-change="$ctrl.calcularDesdeTarifa($ctrl.operacion.Detalles, $index)"
+                                    ng-options="itemPrecio as itemPrecio.Tarifa +' '+ itemPrecio.ValorString for itemPrecio in item.Producto.Precios track by itemPrecio.Id">
+                            </select>
+                        </div>
+                    </td>
+                    <!--CANTIDAD-->
+                    <td class="number numero-derecha fs-15" ng-hide="$ctrl.parametros.PermitirIngresarCantidad">{{item.Cantidad|number:$ctrl.parametros.NumeroDecimalesEnCantidad}}</td>
+                    <td class="width-20" ng-show="$ctrl.parametros.PermitirIngresarCantidad">
+                        <input id="cantidad-{{$index}}"
+                               class="form-control input-md number height-34 numero-derecha"
+                               type="number"
+                               ng-model="item.Cantidad"
+                               ng-change="$ctrl.calcularValoresDetalle(1, $ctrl.operacion.Detalles, $index)"
+                               ng-blur="$ctrl.formatoDecimalCantidad($event);"
+                               ng-enter="$ctrl.focusSelectNext('importe-'+{{$index}})"
+                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$"
+                               onClick="select();"
+                               lang="en-IN" />
+                    </td>
+                    <!--PRECIO UNITARIO-->
+                    <td class="number numero-derecha fs-15" ng-hide="$ctrl.parametros.PermitirIngresarPrecioUnitario">{{item.PrecioUnitario|number:$ctrl.parametro.NumeroDecimalesEnPrecio}}</td>
+                    <td class="width-20 " ng-show="$ctrl.parametros.PermitirIngresarPrecioUnitario">
+                        <input id="precio-{{$index}}"
+                               class="form-control input-md number height-34 numero-derecha"
+                               ng-model="item.PrecioUnitario"
+                               ng-change="$ctrl.calcularValoresDetalle(2, $ctrl.operacion.Detalles, $index)"
+                               ng-blur="$ctrl.formatoDecimalPrecioUnitario($event);"
+                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{$ctrl.parametro.NumeroDecimalesEnPrecio}}})?)?$"
+                               onClick="select();" />
+                    </td>
+                    <!--VALOR DE VENTA-->
+                    <td class="number numero-derecha fs-15">{{(item.Importe-item.Igv)|number:2}}</td>
+                    <!--IGV-->
+                    <td class="number numero-derecha fs-15">{{item.Igv|number:2}}</td>
+                    <!--IMPORTE-->
+                    <td class="number numero-derecha fs-15" ng-hide="$ctrl.parametros.PermitirIngresarImporte">{{item.Importe|number:2}}</td>
+                    <td class="width-20" ng-show="$ctrl.parametros.PermitirIngresarImporte">
+                        <input id="importe-{{$index}}"
+                               class="form-control input-md number height-34 numero-derecha"
+                               ng-model="item.Importe"
+                               ng-change="$ctrl.calcularValoresDetalle(3, $ctrl.operacion.Detalles, $index)"
+                               ng-blur="$ctrl.formatoDosDecimales($event);"
+                               ng-enter="$ctrl.establecerFocusDesdeImporte()"
+                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                               onClick="select();" />
+                    </td>
+                    <!--OPCIONES-->
+                    <td>
+                        <a class="btn btn-xs btn-danger" ng-click="$ctrl.quitarDetalle($index); $ctrl.verificarInconsistencias()"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-hide="$ctrl.operacion.Detalles.length>0">
+                <tr>
+                    <td colspan="8" style="color:#bb1f1f">No existe ningún registro en el carrito</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3" ng-show="$ctrl.parametros.PermitirRegistroFlete">
+            <div class="form-group">
+                <div class="col-md-12 row">
+                    <label class="control-label">FLETE:</label>
+                </div>
+                <div class="col-md-8 row">
+                    <input class="form-control numero-derecha" id="flete" ng-model="$ctrl.operacion.Flete" ng-blur="$ctrl.formatoDosDecimales($event);" ng-change="$ctrl.calcularTotal($ctrl.operacion.Detalles)" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();" />
+                </div>
+            </div>
+        </div>
+        <table ng-show="$ctrl.operacion.Detalles.length>0" class="table table-bordered table-height-small">
+            <thead>
+                <tr style="font-size:11px">
+                    <th>SUBTOTAL</th>
+                    <th>IGV</th>
+                    <th>ICBPER</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="font-size:15px; font-weight:bold">
+                    <td>{{$ctrl.operacion.SubTotal|number:2}}</td>
+                    <td>{{$ctrl.operacion.Igv|number:2}}</td>
+                    <td>{{$ctrl.operacion.Icbper|number:2}}</td>
+                    <td>{{$ctrl.operacion.Total|number:2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

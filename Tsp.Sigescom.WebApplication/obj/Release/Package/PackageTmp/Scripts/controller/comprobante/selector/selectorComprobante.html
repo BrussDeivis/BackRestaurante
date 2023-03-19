@@ -1,0 +1,28 @@
+﻿<div id="comprobante">
+    <ng-form name="comprobanteForm" novalidate class="css-form" isolate-form>
+        <div class="col-md-12 group-model p-0">
+            <label class="col-xs-3 col-md-2 label-model" title="DOCUMENTO">DOC.</label>
+            <div class="col-xs-9 col-md-10 no-padding">
+                <select class="select2 form-control tipoDocumento" name="TipoComprobante" ng-model="$ctrl.tipoSeleccionado" ng-options="item as item.TipoComprobante.Nombre for item in $ctrl.tiposDeComprobantes track by item.TipoComprobante.Id" ng-value="item" ng-change="$ctrl.cambioTipoComprobante()"></select>
+            </div>
+        </div>
+        <div class="col-md-12" ng-show="$ctrl.tipoSeleccionado.MostrarSelectorSerie">
+            <div class="row">
+                <span class="col-md-4 no-padding" ng-repeat="item in $ctrl.tipoSeleccionado.Series" ng-init="$ctrl.comprobante.Serie=$ctrl.tipoSeleccionado.Series[0]">
+                    <label style="font-weight:bold; font-size:18px">
+                        <input type="radio" id="radio-{{$ctrl.externalId}}-{{$index}}" name="radio-{{$ctrl.externalId}}-{{$index}}" ng-model="$ctrl.comprobante.Serie" ng-value="item" ng-enter="$ctrl.serieComprobante_enter()">
+                        {{item.Nombre}}
+                    </label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12 group-model" ng-if="$ctrl.tipoSeleccionado.TipoDeComprobante.MostrarEntradaSerie">
+            <label class="col-md-3 label-model">SERIE</label>
+            <input class="col-md-9 col-xs-12 input-model" ng-model="$ctrl.comprobante.Serie.Nombre" uppercase-only ng-pattern="/^[a-zA-Z0-9]{0,4}$/" minlength="3" maxlength="4" />
+        </div>
+        <div class="col-md-12 group-model" ng-if="$ctrl.tipoSeleccionado.TipoDeComprobante.MostrarEntradaNumero || ($ctrl.comprobante.Serie && !$ctrl.comprobante.Serie.EsAutonumerica)">
+            <label class="col-md-3 label-model">N° DOC</label>
+            <input class="col-md-9 col-xs-12 input-model" ng-model="$ctrl.comprobante.Numero" maxlength="8" ng-pattern="/^[0-9]{0,8}$/" />
+        </div>
+    </ng-form>
+</div>

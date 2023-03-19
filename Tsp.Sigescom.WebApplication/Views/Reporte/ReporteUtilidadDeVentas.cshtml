@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "REPORTE DE UTILIDAD DE VENTAS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/reporte/reporteController.js")></script>
+
+    <script>
+        var fechaHoraInicio = '@ViewBag.fechaHoraInicio';
+        var fechaHoraFin= '@ViewBag.fechaHoraFin';
+    </script>
+}
+<div class="col-md-12" ng-controller="reporteController" ng-init="inicializarReporteUtilidadVenta()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">REPORTE DE UTILIDAD DE VENTAS</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">SELECCIONE PERIODO </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateStart">Fecha Inicial </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateStart" ng-model="reporte.FechaInicio" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteUtilidadVenta()" class="form-control pull-right datepicker-start" data-date-end-date="0d" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporte.HoraInicio" ng-change="actualizarURLReporteUtilidadVenta()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dateEnd">Fecha Final</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="dateEnd" ng-model="reporte.FechaFinal" placeholder="dd/mm/aaaa" ng-change="actualizarURLReporteUtilidadVenta()" class="form-control pull-right datepicker-end" data-date-end-date="0d" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu"><table><tbody><tr><td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td><td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-up"></i></a></td></tr><tr><td><span class="bootstrap-timepicker-hour">05</span></td> <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">45</span></td> <td class="separator">&nbsp;</td><td><span class="bootstrap-timepicker-meridian">PM</span></td></tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><i class="glyphicon glyphicon-chevron-down"></i></a></td></tr></tbody></table></div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" id="horaIndividual" ng-model="reporte.HoraFinal" ng-change="actualizarURLReporteUtilidadVenta()" class="form-control timepickerIndividual">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="col-md-12 radio radio-primary radio-inline" style="margin-left: 10px;">
+                                <input type="radio" id="radio1" name="cuenta" value="1" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==1" ng-change="actualizarURLReporteUtilidadVenta()">
+                                <label for="radio1">Global</label>
+                            </div>
+                            <div class="col-md-12 radio radio-primary radio-inline" style="margin-top: 10px;">
+                                <input type="radio" id="radio2" name="cuenta" value="2" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==2">
+                                <label for="radio2">Establecimiento</label>
+                            </div>
+                            <div class="col-md-12 radio radio-primary radio-inline" style="margin-top: 10px;">
+                                <input type="radio" id="radio3" name="cuenta" value="3" ng-model="modoSelectorReporte" ng-checked="modoSelectorReporte==3">
+                                <label for="radio3">Centro atención</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" ng-show="modoSelectorReporte == 2 || modoSelectorReporte == 3">
+                            <label class="col-md-12">Establecimiento:</label>
+                            <select class="select2 form-control" id="establecimientoComercial" ng-model="establecimiento" ng-change="cargarCentrosAtencionYActualizarURLReporteUtilidadVenta()" ng-options="item as item.Nombre for item in listaEstablecimientos track by item.Id"></select>
+                        </div>
+                        <div class="col-md-3" ng-show="modoSelectorReporte == 3">
+                            <label class="col-md-12">Punto de venta:</label>
+                            <select class="select2 form-control" id="centroDeAtencion" ng-model="centroAtencion" ng-options="item as item.Nombre for item in listaCentrosAtencion track by item.Id" ng-change="actualizarURLReporteUtilidadVenta()"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====================================================REPORTE DE UTILIDAD POR FAMILIA DE CONCEPTO==============================================-->
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">DETALLADO POR POR FAMILIA</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row ">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <a title="Reporte de utilidad de ventas por familia" class="btn btn-primary btn-flat" ng-href="{{URLReporteUtilidadVentaPorFamilia}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====================================================REPORTE DE UTILIDAD POR CONCEPTO==============================================-->
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border ng-cloak">
+                    <h3 class="box-title">DETALLADO POR CONCEPTO</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Concepto"> Familia:</label>
+                                <select id="" class="select2 form-control" ng-model="familias" ng-change="actualizarURLReporteUtilidadVenta()" ng-options="item as item.Nombre for item in listaFamilias track by item.Id" multiple></select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <a title="Reporte de utilidad de ventas" class="btn btn-primary btn-flat" ng-href="{{URLReporteUtilidadVentaPorConcepto}}">VER</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

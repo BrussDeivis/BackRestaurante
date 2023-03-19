@@ -1,0 +1,254 @@
+﻿<div id="modal-registro-cotizacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">{{accionModal}} COTIZACIÓN</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form name="registro-cotizacion" class="formulario form-horizontal" ctrl-enter ng-cloak>
+                        <div class="col-md-9">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                    <selector-concepto-comercial ng-if="inicializacionRealizada" concepto-comercial="conceptoComercial" api="selectorConceptoComercialAPI" modo-seleccion-tipo-familia="modoSeleccionTipoFamilia" mostrar-buscador-codigo-barra="mostrarBuscadorCodigoBarra" modo-seleccion-concepto="modoSeleccionConcepto" complemento-stock="true" complemento-precio="true" minimo-caracteres-buscar-concepto="minimoCaracteresBuscarConcepto" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" informacion-a-mostrar="informacionSelectorConcepto" changed="seleccionConcepto(conceptoComercial)"></selector-concepto-comercial>
+                                    </div>
+                                    <div class="col-md-12 no-padding" style="margin-top: 10px;">
+                                        <table id="tabla-cotizaciones" class="table table-height-small table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:5%">ÍTEM</th>
+                                                    <th style="width:35%">CONCEPTO</th>
+                                                    <th style="width:5%">STOCK</th>
+                                                    <th style="width:12%">TARIFA</th>
+                                                    <th style="width:8%">CANTIDAD</th>
+                                                    <th style="width:8%">P.U</th>
+                                                    <th style="width:8%">V. VENTA</th>
+                                                    <th style="width:6%">I.G.V</th>
+                                                    <th style="width:8%">IMPORTE</th>
+                                                    <th style="width:5%">OPCIÓN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-show="cotizacion.Detalles.length>0">
+                                                <tr ng-repeat="item in cotizacion.Detalles">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{item.Producto.NombreDetalle}}</td>
+                                                    <td class="numero-derecha">{{ventasSujetasADisponibilidadStock ? item.Producto.Stock : 'n'}}</td>
+                                                    @*Precios / Tarifas*@
+                                                    <td>
+                                                        <div>
+                                                            <select id="tarifa-{{$index}}"
+                                                                    class="select2 form-control tarifa-precio"
+                                                                    ng-model="item.PrecioTarifa"
+                                                                    ng-change="calcularImporteIngresandoPrecio(cotizacion.Detalles,$index,false); verificarInconsistencias()"
+                                                                    ng-options="itemPrecio as itemPrecio.Tarifa +' '+ itemPrecio.Valor for itemPrecio in item.Producto.Precios track by itemPrecio.Id">
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    @*Cantidad*@
+                                                    <td>
+                                                        <input id="cantidad-{{$index}}"
+                                                               class="form-control input-md height-34 numero-derecha"
+                                                               type="number"
+                                                               ng-model="item.Cantidad"
+                                                               ng-change="calcularImporteIngresandoCantidad(cotizacion.Detalles,$index); verificarInconsistencias()"
+                                                               ng-enter="focusSelectNext('importe')"
+                                                               ng-blur="formatoDecimalCantidad($event)"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnCantidad}}})?)?$"
+                                                               onClick="select();"
+                                                               lang="en-IN" />
+                                                    </td>
+                                                    @*Precio Unitario*@
+                                                    <td class="numero-derecha" ng-hide="permitirIngresarPrecioUnitario">{{item.PrecioUnitario|number:numeroDecimalesEnPrecio}}</td>
+                                                    <td ng-show="permitirIngresarPrecioUnitario">
+                                                        <input id="precio-unitario-{{$index}}"
+                                                               class="form-control input-md height-34 numero-derecha"
+                                                               ng-model="item.PrecioUnitario"
+                                                               ng-change="calcularImporteIngresandoPrecio(cotizacion.Detalles,$index,true); verificarInconsistencias()"
+                                                               ng-blur="item.PrecioUnitario = formatNumber(item.PrecioUnitario, numeroDecimalesEnPrecio);"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,{{numeroDecimalesEnPrecio}}})?)?$"
+                                                               onClick="select();" />
+                                                    </td>
+                                                    @*Valor de Venta / IGV*@
+                                                    <td class="numero-derecha">{{item.Importe-item.Igv|number:2}}</td>
+                                                    <td class="numero-derecha">{{item.Igv|number:2}}</td>
+                                                    @*Importe*@
+                                                    <td class="numero-derecha" ng-hide="permitirIngresarImporte">{{item.Importe|number:2}}</td>
+                                                    <td ng-show="permitirIngresarImporte">
+                                                        <input id="importe-{{$index}}"
+                                                               class="form-control height-34 numero-derecha"
+                                                               ng-model="item.Importe"
+                                                               ng-change="calcularValoresIngresadoImporte(cotizacion.Detalles,$index)"
+                                                               ng-blur="item.Importe = formatNumber(item.Importe,2)"
+                                                               ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$"
+                                                               onClick="select();" />
+                                                    </td>
+                                                    @*Accion*@
+                                                    <td>
+                                                        <a class="btn btn-xs btn-danger" ng-click="quitarDetalle($index); verificarInconsistencias()"><span class="glyphicon glyphicon-remove"></span></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody ng-hide="cotizacion.Detalles.length>0">
+                                                <tr>
+                                                    <td colspan="8" style="color:#bb1f1f">No existe ningún registro en el carrito</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="col-md-12" ng-show="permitirRegistroFlete">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">FLETE:</label>
+                                                    <input class="form-control" id="flete" ng-model="cotizacion.Flete" onClick="this.select();" ng-blur="cotizacion.Flete=formatNumber(cotizacion.Flete,2)" ng-change="calcularTotal(cotizacion.Detalles)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table ng-show="cotizacion.Detalles.length>0" class="table table-bordered table-height-small">
+                                            <thead>
+                                                <tr>
+                                                    <th>SUBTOTAL</th>
+                                                    <th>IGV</th>
+                                                    <th>TOTAL</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="font-size:15px; font-weight:bold">
+                                                    <td>{{cotizacion.SubTotal|number:2}}</td>
+                                                    <td>{{cotizacion.Igv|number:2}}</td>
+                                                    <td>{{cotizacion.Total|number:2}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-left:0">
+                            <div class="box box-primary" style="border: 1px solid #ccc;">
+                                <div class="box-header bg-primary">
+                                    <h3 class="box-title titulo-negrita-blanco">S/ {{cotizacion.Total!=null?cotizacion.Total:0.00|number:2}}</h3>
+                                </div>
+                                <div class="box-body no-pad-top">
+                                    <div class="row">
+                                        <div class="col-md-12" ng-if="aplicaLeyAmazonia">
+                                            <div class="checkbox checkbox-primary">
+                                                <input id="cotizacionigv"
+                                                       type="checkbox"
+                                                       class="styled"
+                                                       ng-model="cotizacion.GrabaIgv"
+                                                       ng-change="cambioDeGrabarIgv(cotizacion.Detalles);" />
+                                                <label for="cotizacionigv">COTIZACIÓN CON IGV</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-if="!aplicaLeyAmazonia">
+                                            <div class="checkbox checkbox-primary">
+                                                <input id="cotizacionigv"
+                                                       type="checkbox"
+                                                       class="styled"
+                                                       ng-model="cotizacion.NoGrabaIgv"
+                                                       ng-change="cambioDeNoGrabarIgv(cotizacion.Detalles);" />
+                                                <label for="cotizacionigv">COTIZACIÓN SIN IGV</label>
+                                            </div>
+                                        </div>
+                                        <selector-actor-comercial ng-if="inicializacionRealizada" name="SelectorCliente" id="SelectorCliente" actor-comercial="cotizacion.Cliente" rol="rolCliente" api="$parent.selectorClienteAPI" changed="cambioCliente(actorComercial)" minimo-caracteres-buscar-actor-comercial="minimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="tiempoEsperaBusquedaSelector" external-id="0" mascara-visualizacion-validacion="mascaraDeVisualizacionValidacionRegistroCliente" permitir-seleccionar-grupo="permitirSeleccionarGrupoCliente"></selector-actor-comercial>
+                                        @*<div class="table-responsive">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " id="cliente" ng-controller="clienteController">
+                                                    <label>CLIENTE</label>
+                                                    <a title="Editar Cliente"
+                                                       class="btn btn-xs btn-success pull-right"
+                                                       data-toggle="modal"
+                                                       data-target="#modal-registro-cliente"
+                                                       ng-click="editarClienteEnCotizacion(cotizacion.Cliente.Id)"
+                                                       ng-disabled="cotizacion.Cliente == null || cotizacion.Cliente.Id == idClienteGenerico"><span class="glyphicon glyphicon-edit"></span> </a>
+                                                    <a title="Nuevo Cliente"
+                                                       class="btn btn-xs btn-primary pull-right"
+                                                       style="margin-right:5px"
+                                                       data-toggle="modal"
+                                                       data-target="#modal-registro-cliente"
+                                                       ng-click="nuevoRegistroClienteEnCotizacion()"><span class="glyphicon glyphicon-plus"></span> </a>
+                                                    @Html.Partial("../Persona/_ModalRegistroClientePartial")
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <select id="selector-cliente"
+                                                        class="select2-min form-control"
+                                                        ng-model="cotizacion.Cliente"
+                                                        ng-change="verificarInconsistencias()"
+                                                        ng-options="item as item.NumeroDocumentoIdentidad+' | '+ item.RazonSocial for item in clientes track by item.Id">
+                                                </select>
+                                            </div>*@
+                                        <div class="col-md-12" ng-show="cotizacion.Cliente.Id == idClienteGenerico && mostrarAliasDeClienteGenerico == true">
+                                            <label class="control-label">ALIAS</label>
+                                            <input class="form-control" uppercase-only ng-model="cotizacion.Alias" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">DOCUMENTO</label>
+                                            <select class="select2 form-control tipoDocumento"
+                                                    ng-model="cotizacion.TipoDeComprobante"
+                                                    ng-change="cargarSeries(cotizacion.TipoDeComprobante)"
+                                                    ng-options="item as item.TipoComprobante.Nombre for item in selectorTiposDeComprobantesMasSeries  track by item.TipoComprobante.Id">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12" ng-show=" cotizacion.TipoDeComprobante.MostrarSelectorSerie">
+                                            <label class="control-label">SERIE</label>
+                                            <div class="radio radio-primary radio-inline col-md-3" @*ng-init="cotizacion.TipoDeComprobante.SerieSeleccionada=series[0].Id"*@ ng-repeat="item in series">
+                                                <input id="radio-{{$index}}"
+                                                       type="radio"
+                                                       value="{{item.Id}}"
+                                                       ng-model="cotizacion.TipoDeComprobante.SerieSeleccionada"
+                                                       ng-change="verificarInconsistencias()"
+                                                       ng-enter="guardarCotizacion()"
+                                                       ng-checked="cotizacion.TipoDeComprobante.SerieSeleccionada==item.Id">
+                                                <label for="radio-{{$index}}">{{item.Nombre}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-show="modelo.TipoDeComprobante.MostrarEntradaSerie">
+                                            <label class="control-label">SERIE</label>
+                                            <input class="form-control"
+                                                   uppercase-only
+                                                   ng-model="cotizacion.TipoDeComprobante.SerieIngresada"
+                                                   ng-change="verificarInconsistencias()"
+                                                   ng-pattern="/^[a-zA-Z0-9]{0,4}$/"
+                                                   minlength="3"
+                                                   maxlength="4" />
+                                        </div>
+                                        <div class="col-md-12" ng-show="modelo.TipoDeComprobante.MostrarEntradaNumero">
+                                            <label class="control-label">N° DOCUMENTO</label>
+                                            <input class="form-control"
+                                                   ng-model="cotizacion.TipoDeComprobante.NumeroIngresado"
+                                                   ng-change="verificarInconsistencias()"
+                                                   maxlength="8"
+                                                   ng-pattern="/^[0-9]{0,8}$/" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">FECHA VENCIMIENTO</label>
+                                            <input ng-model="cotizacion.FechaVencimiento" id="fechaVencimiento" placeholder="dd/mm/aaaa" ng-change="verificarInconsistencias()" class="form-control datepicker-yyyy"  data-date-start-date="0d"/>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="control-label">OBSERVACIÓN</label>
+                                            <textarea class="form-control" id="observacion" rows="2" value="Observacion" ng-model="cotizacion.Observacion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box box-danger" ng-show="inconsistencias.length > 0">
+                                <div class="box-body">
+                                    <h4 style="color:#bb1f1f">INCONSISTENCIA(S):</h4>
+                                    <table>
+                                        <tr ng-repeat="item in inconsistencias">
+                                            <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-md" title="GUARDAR COTIZACIÓN" ng-disabled="inconsistencias.length > 0" ng-click="guardarCotizacion()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarCotizacion()" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

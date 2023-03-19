@@ -1,0 +1,138 @@
+﻿@*VENTAS POR GRUPOS*@
+<div ng-show="reporteador.SeccionSeleccionada=='seccion1'">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3 " id="input-establecimiento">
+                    <div class="form-group">
+                        <label for="punto1" class="title-report">Establecimiento*</label>
+                        <select id="" class="select2 form-control" ng-model="reporteador.PorGrupos.EstablecimientoSeleccionado" ng-options="item as item.Nombre for item in data.Establecimientos  track by item.Id" required ng-change="PorGrupos_EstablecimientoChanged()"></select>
+                    </div>
+                </div>
+                <div class="col-md-3" id="input-caja">
+                    <div class="form-group">
+                        <label for="documento">Punto de Venta*</label>
+                        <select class="select2 form-control" ng-model="reporteador.PorGrupos.PuntoVentaSeleccionado" ng-change="PorGrupos_ActualizarURLs()" ng-options="item as item.Nombre for item in reporteador.PorGrupos.EstablecimientoSeleccionado.CentrosAtencion  track by item.Id"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Desde </label>
+                            <div>
+                                @*<input id="PorGrupos_ingresos_fechadesde" ng-model="reporteador.PorGrupos.FechaDesde" ng-change="PorGrupos_actualizarURLs()" class="form-control datetimepicker" />*@
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.PorGrupos.FechaDesde" ng-change="PorGrupos_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="dateEnd">Fecha y Hora Hasta </label>
+                            <div>
+                                @*<input id="PorGrupos_ingresos_fechahasta" ng-model="reporteador.PorGrupos.FechaHasta" ng-change="PorGrupos_actualizarURLs()" class="form-control datetimepicker" />*@
+                                <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.PorGrupos.FechaHasta" ng-change="PorGrupos_ActualizarURLs()" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ventas Por Familias y Grupos</h3>
+        </div>
+        <div class="box-body">
+            <div class="row ">
+                <div class="col-md-3" id="input-familia-venta-por-familia-grupo">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Familias</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="PorGrupos_todasfamilias_VentasPorFamiliasGrupos" type="checkbox" class="styled" ng-model="reporteador.PorGrupos.VentasPorFamiliasGrupos.SeleccionarTodasLasFamilias" ng-change="PorGrupos_TodasLasFamiliasVentasPorFamiliasGruposChanged();" />
+                                <label class="negrita">Todos</label>
+                            </div>
+                        </div>
+                        <select id="PorGrupos_familias_VentasPorFamiliasGrupos" class="select2 form-control" ng-model="reporteador.PorGrupos.VentasPorFamiliasGrupos.FamiliasSeleccionadas" ng-change="PorGrupos_FamiliasVentasPorFamiliasGruposChanged()" ng-options="item as item.Nombre for item in data.Familias track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-3" id="input-grupo-venta-por-familia-grupo">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Grupos</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="PorGrupos_todosgrupos_VentasPorFamiliasGrupos" type="checkbox" class="styled" ng-model="reporteador.PorGrupos.VentasPorFamiliasGrupos.SeleccionarTodosLosGrupos" ng-change="PorGrupos_TodosLosGruposVentasPorFamiliasGruposChanged();" />
+                                <label class="negrita">Todos</label>
+                            </div>
+                        </div>
+                        <select id="PorGrupos_grupos_VentasPorFamiliasGrupos" class="select2 form-control" ng-model="reporteador.PorGrupos.VentasPorFamiliasGrupos.GruposSeleccionados" ng-change="PorGrupos_GruposVentasPorFamiliasGruposChanged()" ng-options="item as item.Nombre for item in grupos track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Ventas Por Grupos" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorGrupos.VentasPorFamiliasGrupos.ActivarBotonVer" ng-href="{{URLPorGrupos_VentasPorFamiliasGrupos}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ventas Por Grupos</h3>
+        </div>
+        <div class="box-body">
+            <div class="row ">
+                <div class="col-md-3" id="input-grupo-venta-por-grupo">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Grupos</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="PorGrupos_todosgrupos_VentasPorGrupos" type="checkbox" class="styled" ng-model="reporteador.PorGrupos.VentasPorGrupos.SeleccionarTodosLosGrupos" ng-change="PorGrupos_TodosLosGruposVentasPorGruposChanged();" />
+                                <label class="negrita">Todos</label>
+                            </div>
+                        </div>
+                        <select id="PorGrupos_grupos_VentasPorGrupos" class="select2 form-control" ng-model="reporteador.PorGrupos.VentasPorGrupos.GruposSeleccionados" ng-change="PorGrupos_GruposVentasPorGruposChanged()" ng-options="item as item.Nombre for item in grupos track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Ventas Por Grupos" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorGrupos.VentasPorGrupos.ActivarBotonVer" ng-href="{{URLPorGrupos_VentasPorGrupos}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ventas Por Grupo Detallado</h3>
+        </div>
+        <div class="box-body">
+            <div class="row ">
+                <div class="col-md-3" id="input-grupo-venta-por-grupo-detallado">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="title-report">Grupo</label>
+                            <select class="select2 form-control" ng-model="reporteador.PorGrupos.VentasPorGrupoDetallado.GrupoSeleccionado" ng-change="PorGrupos_GrupoVentasPorGrupoDetalladoChanged()" ng-options="item as item.Nombre for item in grupos track by item.Id"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Ventas Por Grupo Detallado" class="btn btn-primary btn-flat" ng-disabled="!reporteador.PorGrupos.VentasPorGrupoDetallado.ActivarBotonVer" ng-href="{{URLPorGrupos_VentasPorGrupoDetallado}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿<div id="modal-registro-movimiento-orden-almacen" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <div class="col-md-9">
+                    <h4 class="modal-title">REGISTRAR {{principal.SeleccionadoPorIngresar ? 'ENTRADA' : 'SALIDA'}}</h4>
+                </div>
+                <div class="col-md-2">
+                    <a ng-if="atencion.TipoDePago == parametros.TipoDePagoGeneral" title="REGISTRAR SALIDA" ng-click="guardarRegistroMovimientoOrdenAlmacen()" ng-disabled="hayInconsitenciasGuiaRemision" class="btn btn-success pull-right"><span class="fa fa-file-text-o"></span> GUARDAR</a>
+                </div>
+                <div class="col-md-1 pull-right btn-close">
+                    <button type="button" class="close" style="opacity: 1; color: white; margin-top: 0px !important;" ng-click="cerrarRegistroMovimientoOrdenAlmacen()">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <registrador-guia-remision id="registroMovimientoOrdenAlmacen" guia-remision="registroMovimientoOrdenAlmacen" api="registradorGuiaRemisionApi" permitir-seleccion-concepto="false" permitir-documento-referencia="true" hay-inconsitencias-guia-remision="hayInconsitenciasGuiaRemision" ver-historial-orden-almacen="verHistorialOrdenAlmacen(id)" vinculado-orden-almacen="true" orden-almacen="ordenAlmacenDeRegistro" permitir-mostrar-stock-actual="true" registro-desde-orden-almacen="true" permitir-registro-ingreso-salida-actual="true" nombre-etiqueta-tercero="principal.EtiquetaTercero" seleccionado-por-ingresar="principal.SeleccionadoPorIngresar" permitir-nota-almacen="true"></registrador-guia-remision>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

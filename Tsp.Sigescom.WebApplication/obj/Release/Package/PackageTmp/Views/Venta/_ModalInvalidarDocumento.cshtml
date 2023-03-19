@@ -1,0 +1,56 @@
+﻿<div id="modal-invalidar-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">INVALIDAR DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="invalidacionDeDocumentoForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <div class="col-md-12" ng-show="verDocumento.MostrarEntregaAlmacen">
+                                <div class="box box-primary">
+                                    <div class="box-body mh-0 pt-5 pb-5">
+                                        <label class="box-title">ENTREGA</label>
+                                        <div class="box-title p-0 pull-right" ng-show="verDocumento.HayMovimientoAlmacen">
+                                            <div class="radio radio-primary radio-inline pt-2">
+                                                <input type="radio" id="radioInvalidar1" name="entregaInvalidar" ng-model="invalidacion.EntregaDiferida" value="false">
+                                                <label for="radioInvalidar1" title="Entrega Inmediata" style="font-size:14px;">INMEDIATA</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline pt-2">
+                                                <input type="radio" id="radioInvalidar2" name="entregaInvalidar" ng-model="invalidacion.EntregaDiferida" value="true">
+                                                <label for="radioInvalidar2" title="Entrega Diferida" style="font-size:14px;">DIFERIDA</label>
+                                            </div>
+                                        </div>
+                                        <label class="p-5" ng-show="verDocumento.EstadoAlmacenCompletada" style="border-radius: 8px 8px 8px 8px; border: 1px solid var(--color-primario) !important; color: var(--color-primario);">Debido a que la mercadería ya fue entregada, se generará una orden de ingreso de almacén para la devolución.</label>
+                                        <label class="p-5" ng-show="verDocumento.EstadoAlmacenPendiente" style="border-radius: 8px 8px 8px 8px; border: 1px solid var(--color-primario) !important; color: var(--color-primario);">Debido a que no se produjo entrega de mercadería, se revocará la orden de salida de almacén original.</label>
+                                        <div class="p-5" ng-show="verDocumento.EstadoAlmacenParcial" style="border-radius: 8px 8px 8px 8px; border: 1px solid var(--color-primario) !important; color: var(--color-primario);">
+                                            <label>Debido que se realizo una entrega parcial, se revocará la orden de salida de almacén pendiente.</label>
+                                            <label>Además se generará una orden de entrada a partir de esta invalidación de la cantidad restante para la devolución de la mercadería que ya fue entregada.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-show="verDocumento.HayMovimientoEconomico">
+                                <editor-pago name="EditorPagoInvalidar" id="EditorPagoInvalidar" external-id="200" ng-model="invalidacion.Pago" pago="invalidacion.Pago" api="editorPagoInvalidarAPI" id-medio-pago-default="idMedioDePagoEfectivo" permitir-venta-al-credito="permitirVentaAlCredito" id-cliente="verDocumento.IdCliente" changed="cambioPago(pago)" inicio-realizado="inicioRealizadoPago()"></editor-pago>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Observación :</label>
+                                <textarea class="form-control" rows="3" ng-model="invalidacion.Observacion"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-center mt-10"><strong>¿Está seguro que invalidar el documento?</strong></p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="margin flex-space-around">
+                                    <a class="col-md-2 btn btn-lg btn-primary" ng-disabled="hayInconsistenciasInvalidacion() || !invalidacion.Observacion" ng-click="invalidarDocumento()">SI</a>
+                                    <a class="col-md-2 btn btn-lg btn-danger ml-25" data-dismiss="modal" aria-label="close">NO</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

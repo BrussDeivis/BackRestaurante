@@ -1,0 +1,46 @@
+﻿<div id="modal-registro-concepto-servicio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRAR CONCEPTO DE SERVICIO</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8">
+                <div class="row">
+                    <form name="ConceptoServicioForm" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="box box-success">
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label">FAMILIA:</label>
+                                                <a title="Ingresar Concepto Basico" class="btn btn-xs btn-primary pull-right" ng-click="ingresarConceptoBasicoServicio(); actualizarNombreConceptoServicio();" ng-if="conceptoServicio.ConceptoBasicoSeleccionado"><span class="glyphicon glyphicon-plus"></span></a>
+                                                <a title="Seleccionar Concepto Basico" class="btn btn-xs btn-primary pull-right" ng-click="seleccionarConceptoBasicoServicio(); actualizarNombreConceptoServicio();" ng-if="!conceptoServicio.ConceptoBasicoSeleccionado"><span class="glyphicon glyphicon-minus"></span></a>
+                                                <div id="conceptoBasicoServicio" ng-show="conceptoServicio.ConceptoBasicoSeleccionado">
+                                                    <select id="selectorConceptoBasico" class="select2 form-control selectAtributoMercaderia" ng-model="conceptoServicio.ConceptoBasico" ng-change="actualizarNombreConceptoServicio()" ng-options="item as item.Nombre for item in listaConceptosBasicosServicio track by item.Id"></select>
+                                                </div>
+                                                <input id="nombreConceptoBasico" ng-model="conceptoServicio.NombreConceptoBasico" ng-if="!conceptoServicio.ConceptoBasicoSeleccionado" ng-change="actualizarNombreConceptoServicio()" uppercase-only class="form-control" placeholder="Concepto Basico" required />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label">SUFIJO:</label>
+                                                <textarea id="sufijo" ng-model="conceptoServicio.Sufijo" ng-change="actualizarNombreConceptoServicio()" uppercase-only class="form-control" placeholder="Sufijo" rows="3" required ></textarea>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label">CONCEPTO:</label>
+                                                <label class="form-control ng-cloak" style="border-radius:5px; box-shadow: 0 8px 6px -6px gray; border-radius: 5px; height: 100px;">{{conceptoServicio.NombreCompleto}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button title="GUARDAR" class="btn btn-primary btn-md" ng-disabled="ConceptoServicioForm.$invalid" ng-click="guardarConceptoServicio()"><span class="glyphicon glyphicon-floppy-save"></span> GUARDAR</button>
+                <button title="CERRAR" ng-click="cerrar()" class="btn btn-md btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

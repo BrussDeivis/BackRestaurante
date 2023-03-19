@@ -1,0 +1,78 @@
+﻿<div id="modal-ver-gasto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">DETALLE DE GASTO</h4>
+            </div>
+            <div class="modal-body">
+                <form name="ordenGastoForm" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12 padding-5">
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <p><b>N° DOC: </b>{{verGasto.DocumentoIdentidadProveedor}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p><b>PROVEEDOR: </b>{{verGasto.Proveedor}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p><b>DIRECCIÓN: </b>{{verGasto.DireccionProveedor}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <p><b>COMPROBANTE: </b>{{verGasto.NombreDocumento}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p><b>DOCUMENTO: </b>{{verGasto.SerieNumeroDocumento}}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p><b>OBSERVACIÓN: </b>{{verGasto.Observacion}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:10px"></div>
+                            <div class="col-md-12">
+                                <table id="tabla-ver-Gastos" class="table table-stripped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Concepto</th>
+                                            <th>Cantidad</th>
+                                            <th>Igv</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in verGasto.Detalles" ng-cloak>
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.Detalle}}</td>
+                                            <td>{{item.Cantidad|number:2}}</td>
+                                            <td class="money">S/. {{item.Igv|number:2}}</td>
+                                            <td class="money">S/. {{item.Importe|number:2}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-5 col-md-offset-7">
+                                <label class="col-md-6">Sub Total : </label>
+                                <label class="col-md-6">S/. {{verGasto.SubTotal|number:2}}</label>
+                            </div>
+                            <div class="col-md-5 col-md-offset-7">
+                                <label class="col-md-6">Total Igv : </label>
+                                <label class="col-md-6">S/. {{verGasto.Igv|number:2}}</label>
+                            </div>
+                            <div class="col-md-5 col-md-offset-7">
+                                <label class="col-md-6">Importe Total : </label>
+                                <label class="col-md-6">S/. {{verGasto.Total|number:2}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="cerrarVerGasto()" data-dismiss="modal" title="Cerrar" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Ingreso de datos Dni";
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/controlVisitas/reniecCtrl.js")></script>
+}
+    <div class="col-md-12" ng-controller="reniecCtrl">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="color-palette-set">
+                    <div class="bg-green color-palette">REGISTRO DE ACCESO POR DNI</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-offset-3">
+                <form name="reniecForm" id="reniec-form" class="form-horizontal">
+                    <div class="box box-success">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="numeroDni" class="col-sm-3 control-label">Dni:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input ng-model="dni" class="form-control" @*id="ingreso"*@ auto-focus type="text" name="numeroDni" maxlength="8" />
+                                        <span class="input-group-btn"><button class="btn btn-primary" ng-click="guardar(dni)"><i class="fa fa-save"></i></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+

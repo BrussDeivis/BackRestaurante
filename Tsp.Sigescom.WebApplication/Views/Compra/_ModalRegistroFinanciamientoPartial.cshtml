@@ -1,0 +1,78 @@
+﻿<div id="modal-cuotas" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">FINANCIAMIENTO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="importepagar">A PAGAR</label>
+                                        <label class="form-control number">{{montoTotal|number:2}}</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="inicial">INICIAL</label>
+                                        <input class="form-control number" id="inicial" ng-model="financiamientodetalle.inicial" ng-blur="financiamientodetalle.inicial=formatNumber(financiamientodetalle.inicial,2)" ng-change="calcularTotalFinanciamiento()" ng-pattern-restrict="^(?:[0-9]+(?:\.[0-9]{0,2})?)?$" onClick="select();" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>TOTAL</label>
+                                        <label class="form-control">{{financiamientodetalle.total|number:2}}</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="couta">CUOTA(S)</label>
+                                        <input type="number" min="1" class="form-control" id="cuota" ng-model="financiamientodetalle.cuota" ng-init="financiamientodetalle.cuota=1" ng-change="limpiarCronogramaDePagos()" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="diavencimiento">DIA DE PAGO</label>
+                                        <div ng-show="financiamientodetalle.cuota == 1" ng-hide="financiamientodetalle.cuota > 1">
+                                            <input ng-model="financiamientodetalle.fechaRegistro" placeholder="dd/mm/aaaa" class="datepicker form-control" ng-change="limpiarCronogramaDePagos()" />
+                                        </div>
+                                        <div ng-show="financiamientodetalle.cuota > 1" ng-hide="financiamientodetalle.cuota==1">
+                                            <select ng-model="financiamientodetalle.diavencimiento" class="select2 form-control" id="diavencimiento" ng-options="item.id as item.nombre for item in diaVencimiento.Lista" ng-change="limpiarCronogramaDePagos()"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button ng-click="generarCuota()" style="margin-top:25px" title="Generar cuota(s)" ng-disabled="deshabilitarBotonGenerar(financiamientodetalle.fechaRegistro,financiamientodetalle.diavencimiento)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-refresh"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h4 align="center">CRONOGRAMA DE PAGOS</h4>
+                        <table class="table table-stripped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>N° CUOTA</th>
+                                    <th>IMPORTE</th>
+                                    <th>FEC. VENC</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="cuotasdetalle.length>0">
+                                <tr ng-repeat="item in cuotasdetalle">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.ImporteCuota|number:2}}</td>
+                                    <td>{{item.FechaVencimiento}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody ng-hide="cuotasdetalle.length>0">
+                                <tr>
+                                    <td colspan="3" style="color:#bb1f1f">No existen coutas agregadas</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="ACEPTAR" ng-disabled="cuotasdetalle.length<=0" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-check"></span> ACEPTAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-sm btn-danger" ng-click="finalizarCredito()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="cuota-modal" data-toggle="modal" data-target="#modal-cuotas" style="display:none"></a> 

@@ -1,0 +1,86 @@
+﻿
+    @*Kardex*@
+<div ng-show="reporteador.SeccionSeleccionada=='seccion4'">
+
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-2" id="input-establecimiento">
+                    <div class="form-group">
+                        <label for="punto1" class="title-report">Establecimiento*</label>
+                        <select id="" class="select2 form-control" ng-model="reporteador.Kardex.EstablecimientoSeleccionado" ng-options="item as item.Nombre for item in data.Establecimientos  track by item.Id" required ng-change="Kardex_EstablecimientoChanged()"></select>
+                    </div>
+                </div>
+                <div class="col-md-2" id="input-almacen">
+                    <div class="form-group">
+                        <label for="documento">Almacén*</label>
+                        <select class="select2 form-control" ng-model="reporteador.Kardex.AlmacenSeleccionado" ng-change="Kardex_actualizarURLs()" ng-options="item as item.Nombre for item in reporteador.Kardex.EstablecimientoSeleccionado.CentrosAtencion  track by item.Id"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="dateEnd">Desde </label>
+                        <div>
+                            <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.Kardex.FechaDesde" ng-change="Kardex_actualizarURLs()" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="dateEnd">Hasta </label>
+                        <div>
+                            <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.Kardex.FechaHasta" ng-change="Kardex_actualizarURLs()" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" id="concepto">
+                    <div class="form-group">
+                        <label class="col-md-6">Concepto</label>
+                        <select class="select2 form-control" ng-model="reporteador.Kardex.ConceptoSeleccionado" ng-change="Kardex_actualizarURLs()" ng-options="item as item.Nombre for item in data.Conceptos  track by item.Id"></select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Fisico</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-2">
+
+                    <div class="form-group">
+                        <a title="Kardex Fisico" class="btn btn-primary btn-flat mt-20" ng-disabled="!reporteador.Kardex.Fisico.ActivarBotonVer" ng-href="{{URLKardex_Fisico}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Valorizado</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <div class="form-group">
+                            <a title="Kardex Valorizado" class="btn btn-primary btn-flat mt-20" ng-disabled="!reporteador.Kardex.Valorizado.ActivarBotonVer" ng-href="{{URLKardex_Valorizado}}">VER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+

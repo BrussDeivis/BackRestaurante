@@ -1,0 +1,25 @@
+﻿<div id="modal-registro-compra-corporativa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{esEdicion == true ? 'EDITAR' : 'REGISTRAR'}} COMPRA CORPORATIVA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.Partial("_RegistroCompraPartial")
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-md btn-primary pull-left" title="REGISTAR" ng-disabled="hayInconsistencias" ng-click="registarCompraEnModal()"><span class="glyphicon glyphicon-check"></span> REGISTAR</button>
+                <button class="btn btn-md btn-primary pull-left" title="CONFIRMAR" ng-disabled="hayInconsistencias" ng-click="iniciarTrazaPago()" ng-show="!esEdicion" data-toggle="modal" data-target="#modal-registro-traza-pago"><span class="glyphicon glyphicon-floppy-disk"></span> CONFIRMAR</button>
+                <button class="btn btn-md btn-danger" title="CERRAR" ng-click="cerrarCompraCorporativa()" data-dismiss="modal" ><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroFinanciamientoPartial")
+    @Html.Partial("_ModalReiniciarFinanciamiento")
+    @Html.Partial("_ModalRegistroTrazaPago")
+    @Html.Partial("_ModalRegistroMovimientoMercaderia")
+    @Html.Partial("_ModalFijarPrecioDeVenta")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")
+</div>

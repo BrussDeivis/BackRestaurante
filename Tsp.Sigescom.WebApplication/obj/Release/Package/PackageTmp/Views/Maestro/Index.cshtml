@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Mantenimiento de Maestros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/maestro/maestroController.js")></script>
+}
+
+<div class="col-xs-12" ng-controller="maestroController">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">MAESTROS</div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 form-group">                           
+                            <button title="DESCARGAR" auto-focus ng-click="export('tabla-maestros')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                            <a title="Nuevo Maestro" class="btn btn-primary btn-flat pull-right" data-toggle="modal" data-target="#modal-registro-maestro" ng-click="nuevoRegistroMaestro()"><span class="glyphicon glyphicon-plus"></span> NUEVO MAESTRO</a>
+                        </div>
+                        <div class="col-xs-12">
+                            <table id="tabla-maestros" datatable="ng" dt-options="dtOptions" dt-column-Defs="maestros.dtColumnDefs" class="table table-bordered table-striped dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>CÓDIGO</th>
+                                        <th>NOMBRE</th>
+                                        <th class="noExport not-search">OPCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in maestros.Lista" ng-cloak>
+                                        <td>{{item.Id}}</td>
+                                        <td class="left">{{item.Codigo}}</td>
+                                        <td class="left">{{item.Nombre}}</td>
+                                        <td>
+                                            <a title="Editar Maestro" class="btn btn-warning btn-xs btn-flat" data-toggle="modal" data-target="#modal-registro-maestro" ng-click="editarMaestro(item)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a title="Ver Detalles" class="btn btn-info btn-xs btn-flat" data-toggle="modal" data-target="#modal-detalle-maestro" ng-click="verDetalles(item)"><span class="glyphicon glyphicon-search"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a style="display:none" id="modal-cambio" class="btn btn-info btn-xs" data-toggle="modal" data-target="#preguntar-cambio"><span class="glyphicon glyphicon-search"></span></a>
+    @Html.Partial("_ModalRegistroMaestroPartial")
+    @Html.Partial("_ModalDetalleMaestroPartial")
+    @Html.Partial("_ModalRegistroDetalleMaestroPartial")
+    @Html.Partial("../Genericos/_ModalAdvertenciaPartial")    
+</div>

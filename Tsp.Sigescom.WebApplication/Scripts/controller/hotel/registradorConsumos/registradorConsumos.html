@@ -1,0 +1,116 @@
+﻿<div id="modal-registrador-consumo" class="modal fade modal-responsive" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog" style="width:90%;">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <div class="col-md-12">
+                    <div class="col-xs-6 col-md-6 no-padding">
+                        <div class="row">
+                            <h4 class="modal-title">REGISTRAR CONSUMOS | S/. {{$ctrl.importeTotalDeConsumos.toFixed(2)}}</h4>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-2 pull-right no-padding">
+                        <div style="display:flex; justify-content:space-between; align-items:center">
+                            <button type="submit" class="btn btn-success pull-left" ng-click="$ctrl.confirmarConsumo()" ng-disabled="$ctrl.inconsistenciasConsumo.length > 0"><span class="glyphicon glyphicon-floppy-disk"></span> GUARDAR</button>
+                            <button type="button" class="close" style="opacity:1; color:white" ng-click="$ctrl.cerrarRegistrarConsumos()"><span aria-hidden="true">x</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body py-0" style="background-color:#f8f8f8">
+                <!--height:80vh-->
+                <div class="row" style="height:100%">
+                    <div class="col-md-8" style="box-shadow: 2px 0px 4px #b5b5b5; height:100%">
+                        <div class="row mt-1r">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Habitación</label>
+                                    <select class="select2 form-control" id="atencionSeleccionada" ng-model="$ctrl.atencionSeleccionada" ng-change="$ctrl.obtenerConsumosDeHabitacion()" ng-options="item as item.Nombre for item in $ctrl.atencionesCheckedIn track by item.Id"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Responsable</label>
+                                    <p style="font-size:1.6rem;text-transform:uppercase">{{$ctrl.consumoHabitacion.Titular}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Atención</label>
+                                    <p style="font-size:1.6rem">{{$ctrl.consumoHabitacion.FechaAtencion}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Huésped</label>
+                                    <select class="select2 form-control" ng-model="$ctrl.consumoHabitacion.HuespedConsumo" ng-change="$ctrl.verificarInconsistencias()" ng-options="item as item.Nombre for item in $ctrl.consumoHabitacion.Huespedes"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-body no-pad-top">
+                                        <registrador-detalles ng-if="$ctrl.inicializacionRealizada" operacion="$ctrl.consumoHabitacion" api="$ctrl.registradorDetallesAPI" registrar-flete="false" cursor-por-defecto-codigo-barra="cursorInicialEnCodigoBarra" cambiar-importe-total="$ctrl.cambioImporteTotal(importeTotal)" inicio-realizado="$ctrl.inicioRealizadoRegistroDetalles()" seleccionar-codigo-balanza="$ctrl.focusCodigoBalanza()" set-focus-serie-comprobante="$ctrl.setFocusSerieComprobante()"></registrador-detalles>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box box-danger" ng-show="$ctrl.inconsistenciasConsumo.length > 0">
+                            <div class="box-body">
+                                <h4 class="error-title">INCONSISTENCIA(S):</h4>
+                                <table>
+                                    <tr ng-repeat="item in $ctrl.inconsistenciasConsumo">
+                                        <td colspan="1" style="color:#bb1f1f">{{item}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding-top:1rem; height:100%; overflow:auto">
+                        <div class="row contenedor-comandas" style="max-height:67rem;">
+                            <div class="col-md-12" ng-repeat="consumo in $ctrl.consumoHabitacion.Consumos" ng-init="consumoIndex = $index">
+                                <div class="box box-primary" style="border-radius:10px; box-shadow: 1px 2px 4px 1px #c7c7c7;">
+                                    <div class="box-header with-border p-5 pb-0" style="border-bottom: 1px solid #3c8dbc;">
+                                        <div class="col-md-8" style="text-transform:uppercase">
+                                            <div class="row m-0">
+                                                <p class="m-0" style="font-weight:bold">{{consumo.FechaString}}</p>
+                                            </div>
+                                            <div class="row m-0">
+                                                <p class="m-0" style="font-size:1.25rem">{{consumo.Huesped}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="margin-top:1rem">
+                                            <h3 class="box-title pull-right ng-binding">S/. {{consumo.Importe.toFixed(2)}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="box-body p-0">
+                                        <div class="col-md-12">
+                                            <table class="table table-condensed m-0">
+                                                <tr style="font-weight:bold">
+                                                    <td>Concepto</td>
+                                                    <td>Cant.</td>
+                                                    <td>P.U.</td>
+                                                    <td>Imp.</td>
+                                                </tr>
+                                                <tr id="detalleconsumo*{{consumoIndex}}+{{detalleconsumoIndex}}_{{detalleconsumo.Id}}" ng-repeat="detalleConsumo in consumo.DetallesConsumo" n>
+                                                    <td>{{detalleConsumo.Nombre}}</td>
+                                                    <td>{{detalleConsumo.Cantidad|number:2}}</td>
+                                                    <td>{{detalleConsumo.PrecioUnitario|number:2}}</td>
+                                                    <td>{{detalleConsumo.Importe|number:2}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

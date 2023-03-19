@@ -1,0 +1,124 @@
+﻿<div id="modal-registrar-facturacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="modal-title" style="font-size:22px">REALIZAR FACTURACION</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-danger btn-flad" style="width:55px" ng-click="cerrarModalRegistrarFacturacionReserva()"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button title="Anular a todos" class="btn btn-warning btn-flad btn-lg" style="width:55px" ng-click="facturaGeneral()" ng-if="!reserva.FacturaTotal"><span class="fa fa-calendar-times-o"></span></button>
+                        <button title="Reservas anulados" type="button" class="btn btn-warning" ng-if="reserva.FacturaTotal" disabled="true">
+                            ANULADOS
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-9 col-lg-9">
+                        <div class="row no-padding-bottom margin-bottom mx-10" style="border-bottom: solid white; border-bottom-color: #3c8dbc ">
+                            <div class="col-md-6">
+                                <div class="form-group no-margin-bottom">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <label>Responsable:</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div id="nombre-responsable" class="col-md-12 ng-animate">
+                                            <h4>{{responsable.NombreCompleto}}</h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group no-margin-bottom">
+                                    <label>Fecha de registro:</label>
+                                    <h4>{{responsable.FechaDeRegistro}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 tabla-accordion">
+                                <table class="table tabla-acordion">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Habitacion</th>
+                                            <th>Noches</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            <th>Huesped</th>
+                                            <th>Facturado</th>
+                                            <th>Opcion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="accordion" ng-repeat="reserva in responsable.Reservas">
+                                        <tr>
+                                            <td>{{reserva.Id}}</td>
+                                            <td>{{reserva.Habitacion}} ({{reserva.FechaIngreso}}-{{reserva.FechaSalida}})</td>
+                                            <td>{{reserva.Noches}}</td>
+                                            <td>{{reserva.PrecioDeLTipoHabitacion}}</td>
+                                            <td>{{reserva.Importe}}</td>
+                                            <td>{{reserva.CantidadHuesped}}</td>
+                                            <td><span class="label" ng-class="{'label-danger': reserva.Facturado == 'NO','label-success': reserva.Facturado == 'SI'}" style="font-size:13px">{{reserva.Facturado}}</span></td>
+                                            <td>
+                                             
+                                                <button title="CheckIn" type="button" class="btn btn-warning" ng-click="reserva.CheckOut = true" ng-if="!reserva.CheckOut" ng-disabled="reserva.Facturado == 'NO'">
+                                                    <i class="fa fa-sign-out"></i>
+                                                </button>
+                                                <button title="CheckIn Confirmado" type="button" class="btn btn-warning" ng-if="reserva.CheckOut" disabled="true">
+                                                    Confirmado
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr id="collapse{{reserva.Id}}" class="collapse" ng-repeat-end>
+                                            <td colspan="8" class="acordion-contenido">
+
+                                                <div class="col-md-12">
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>DNI</th>
+                                                                <th>Nombre</th>
+                                                                <th>Eliminar</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="huesped in reserva.Huespedes">
+                                                                <td>{{huesped.NumDocIdentidad}}</td>
+                                                                <td>{{huesped.NombreCompletos}}</td>
+                                                                <td>
+                                                                    <button title="Quitar" class="btn btn-danger btn-xs btn-flat" data-toggle="modal" ng-click="eliminarHuesped(huesped.Id)"><span class="fa fa-trash"></span></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3" ng-if="facturar==true">
+                        <facturacion-venta id="fac" class="form-group" facturacion="facturacionPago" debe-seleccionar-punto-de-venta-y-vendedor="false" debe-seleccionar-almacen-y-almacenero="false" api="facturacionAPI" id-medio-pago-default="IdMedioPagoDefault" debe-permitir-detalle-unificado="false">   </facturacion-venta>
+                    </div>
+                </div>
+            </div>
+            <!--footer-->
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+﻿<div id="modal-preguntar-si-desea-reiniciar-su-financiamiento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Reiniciar financimiento</h4>
+            </div>
+            <div class="modal-body">
+                <p>Ud. modificó la compra, por lo tanto su financimiento sera restablecido. Desea realizar un nuevo financimiento?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-info" data-dismiss="modal" ng-click="agregarCuotas()">Aceptar</a>
+                <a class="btn btn-danger" ng-click="finalizarCredito()" data-dismiss="modal">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a id="reiniciar-financimiento" data-toggle="modal" data-target="#modal-preguntar-si-desea-reiniciar-su-financiamiento" style="display:none"></a>

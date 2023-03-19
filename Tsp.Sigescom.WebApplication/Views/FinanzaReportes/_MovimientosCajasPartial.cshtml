@@ -1,0 +1,98 @@
+﻿@*MOVIMIENTOS CAJAS*@
+<div ng-show="reporteador.SeccionSeleccionada=='seccion2'">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Criterios y filtros </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="dateEnd">Fecha y Hora Desde </label>
+                        <div>
+                            @*<input id="MovimientosCajas_CobrosClientes_fechadesde" ng-model="reporteador.MovimientosCajas.FechaDesde" ng-change="MovimientosCajas_actualizarURLs()" class="form-control datetimepicker" />*@
+                            <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.MovimientosCajas.FechaDesde" ng-change="MovimientosCajas_actualizarURLs()" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="dateEnd">Fecha y Hora Hasta </label>
+                        <div>
+                            @*<input id="MovimientosCajas_CobrosClientes_fechahasta" ng-model="reporteador.MovimientosCajas.FechaHasta" ng-change="MovimientosCajas_actualizarURLs()" class="form-control datetimepicker" />*@
+                            <input type="text" datetime="dd/MM/yyyy HH:mm:ss a" ng-model="reporteador.MovimientosCajas.FechaHasta" ng-change="MovimientosCajas_actualizarURLs()" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" id="input-caja">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Cajas</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="MovimientosCajas_todascajas" type="checkbox" class="styled" ng-model="reporteador.MovimientosCajas.SeleccionarTodasLasCajas" ng-change="MovimientosCajas_TodasLasCajasChanged()" />
+                                <label class="negrita">Todos</label>
+                            </div>
+                        </div>
+                        <select id="MovimientosCajas_cajas" class="select2 form-control" ng-model="reporteador.MovimientosCajas.CajasSeleccionadas" ng-change="MovimientosCajas_CajasChanged()" ng-options="item as item.Nombre for item in data.Cajas track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Cobros a clientes</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3" id="input-cliente-cobro-cliente">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Clientes</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="MovimientosCajas_todosclientes_CobrosClientes" type="checkbox" class="styled" ng-model="reporteador.MovimientosCajas.CobrosClientes.SeleccionarTodosLosClientes" ng-change="MovimientosCajas_TodosLosClientesCobrosClientesChanged()" />
+                                <label class="negrita">Todos</label>
+                            </div>
+                        </div>
+                        <select id="MovimientosCajas_clientes_CobrosClientes" class="select2 form-control" ng-model="reporteador.MovimientosCajas.CobrosClientes.ClientesSeleccionados" ng-change="MovimientosCajas_ClientesCobrosClientesChanged()" ng-options="item as item.Nombre for item in clientes track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Cobros a Clientes" class="btn btn-primary btn-flat" ng-disabled="!reporteador.MovimientosCajas.CobrosClientes.ActivarBotonVer" ng-href="{{URLMovimientosCajas_CobrosClientes}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Pagos a Proveedores</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3" id="input-proveedor-pago-proveedor">
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-6">Proveedores</label>
+                            <div class="checkbox checkbox-primary col-md-6 no-margin ">
+                                <input id="MovimientosCajas_todosproveedores_PagosProveedores" type="checkbox" class="styled" ng-model="reporteador.MovimientosCajas.PagosProveedores.SeleccionarTodosLosProveedores" ng-change="MovimientosCajas_TodosLosProveedoresPagosProveedoresChanged()" />
+                                <label class="negrita">Todos</label>
+                            </div>
+                        </div>
+                        <select id="MovimientosCajas_proveedores_PagosProveedores" class="select2 form-control" ng-model="reporteador.MovimientosCajas.PagosProveedores.ProveedoresSeleccionados" ng-change="MovimientosCajas_ProveedoresPagosProveedoresChanged()" ng-options="item as item.Nombre for item in proveedores track by item.Id" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <br />
+                        <a title="Pagos a Proveedores" class="btn btn-primary btn-flat" ng-disabled="!reporteador.MovimientosCajas.PagosProveedores.ActivarBotonVer" ng-href="{{URLMovimientosCajas_PagosProveedores}}">VER</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

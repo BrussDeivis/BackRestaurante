@@ -1,0 +1,45 @@
+﻿<div id="modal-ver-cuota" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 90%;">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">NOTA DE CREDITO</h4>
+                <h4 class="modal-title">NOTA DE DEBITO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-xs-12">
+                                <table id="tabla-empleados" datatable="ng" dt-options="dtOptions" dt-column-defs="empleados.dtColumnDefs" class="table table-stripped table-bordered dateTable ">
+                                    <thead>
+                                        <tr>
+                                            <th class="noExport not-search">SEL</th>
+                                            <th>NOTA CREDITO</th>
+                                            <th>IMPORTE</th>
+                                            <th>DEPOSITANTE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in empleados.lista" ng-cloak>
+                                            <td><div class="checkbox checkbox-primary"><input style="height: 20px; width: 20px;" type="checkbox" form="check-{{$index}}" class="styled" value="{{item}}" ng-checked="cuotasSeleccionadas.indexOf(item)>-1" ng-click="seleccionarCuota(item)" /><label style="margin-top: -11px; margin-left: 1px;" id="check-{{$index}}"></label></div>  </td>
+                                            <td>{{item.Comprobante}}</td>
+                                            <td>{{item.Saldo}}</td>
+                                            <td>{{item.}}</td>
+                                            <td>{{item.}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="ACEPTAR" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-check"></span> ACEPTAR</button>
+                @*<button data-dismiss="modal" title="CANCELAR" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<a id="ver-cuota-modal" data-toggle="modal" data-target="#modal-ver-cuota" style="display:none"></a>

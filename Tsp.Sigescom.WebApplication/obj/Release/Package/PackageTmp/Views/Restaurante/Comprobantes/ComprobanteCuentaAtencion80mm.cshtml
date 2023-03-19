@@ -1,0 +1,184 @@
+﻿@model Tsp.Sigescom.Modelo.ClasesNegocio.SigesRestaurant.Comprobantes.ComprobanteCuentaAtencion
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    @*<link rel="stylesheet" href="~/Content/comprobantesimpresos.css">*@
+    <meta name="viewport" content="width=device-width" />
+    @*<link href="~/Content/default.css" type="text/css" rel="stylesheet" />*@
+    @*@Styles.Render("~/Content/comprobantesimpresos.css")*@
+    <style>
+        .texto {
+            font-size: 3.1mm !important;
+        }
+
+        .texto3mm {
+            font-size: 2.7mm !important;
+        }
+
+        .negrita {
+            font-weight: bolder;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 4.5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .texto-derecha {
+            text-align: left;
+        }
+
+        .sinespacios {
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        .lineaHorizontal {
+            margin: 0;
+        }
+
+        .resaltado {
+            font-weight: bold;
+        }
+
+        .resaltado5mm {
+            font-weight: bold;
+            font-size: 4.5mm !important;
+        }
+
+        .resaltado6mm {
+            font-weight: bold;
+            font-size: 5.4mm !important;
+        }
+
+        .sinResaltado {
+            font-size: 3.1mm !important;
+            font-weight: normal !important;
+        }
+
+        .fondoresaltado {
+            background-color: #cbcbcb;
+        }
+
+        body.receipt .sheet {
+            width: 70.5mm;
+            height: auto;
+        }
+        /*  sheet size */
+        @@page {
+            size: 70.5mm auto;
+            margin: 0mm;
+        }
+        /* output size */
+        @@media print {
+            body.receipt {
+                width: 70.5mm;
+                height: auto;
+            }
+        }
+        /* fix for Chro */
+
+        .contenedor-comprobante {
+            position: relative;
+            z-index: 1;
+        }
+
+        .marca-agua {
+            position: absolute;
+            z-index: -1;
+            font-size: 4em;
+            font-family: Arial;
+            color: white;
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-60deg)
+        }
+    </style>
+
+    <title></title>
+</head>
+
+<body class="receipt">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="texto">
+            <div class="">
+                <div class="centrado">
+                    <div class="titulo">@Model.NombreRestaurant</div>
+                </div>
+                @* Comprobante *@
+                <div class="centrado">
+                    <div class="resaltado">
+                        (Mesa @(Model.Atencion.Mesa.Nombre))
+                    </div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Receptor *@
+                <div>
+                    <div class="resaltado">@("Mozo: "+ Model.Mozo) </div>
+                    <div>@(Model.FechaHora)</div>
+                </div>
+                <hr class="lineaHorizontal">
+                @* Detalles *@
+                <div width="100%">
+                    @foreach (var orden in Model.Atencion.Ordenes)
+                    {
+                        <table width="100%">
+                            <tr>
+                                <th colspan="3" class="centrado fondoresaltado">@(orden.Codigo + " ("+orden.FechaHoraRegistro.ToShortTimeString()+")")</th>
+                                @*<th class="importe">@("S/ "+ String.Format("{0:N2}", orden.ImporteOrden))</th>*@
+                            </tr>
+                            <tr>
+                                <th class="centrado">Cant.</th>
+                                <th class="centrado">P.U.</th>
+                                <th class="centrado">Importe</th>
+                            </tr>
+                            @foreach (var detalle in orden.DetallesDeOrden)
+                            {
+                                <tr width="100%">
+                                    <td width="100%" colspan="3"> @detalle.NombreItem </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="30%" class="importe">@String.Format("{0:N2}", detalle.Cantidad)</td>
+                                    <td width="30%" class="importe">@String.Format("{0:N2}", detalle.Precio)</td>
+                                    <td width="40%" class="importe">@String.Format("{0:N2}", detalle.Importe)</td>
+                                </tr>
+                            }
+                        </table>
+                        @*<hr class="lineaHorizontal">*@
+                    }
+                </div>
+                <hr class="lineaHorizontal">
+                <div class="titulo importe">@("Total: "+ "S/"+ String.Format("{0:N2}", Model.Atencion.ImporteAtencion))</div>
+                <hr class="lineaHorizontal">
+                @*<hr class="lineaHorizontal">*@
+                @* Mensajes *@
+                @*<div class="centrado texto3mm">Siges-Restaurant</div>
+                        <div class="centrado texto3mm">Siges|www.siges.tsolperu.com|</div>
+                    <div class="centrado texto3mm"> - </div>*@
+            </div>
+        </div>
+    </section>
+</body>
+</html>

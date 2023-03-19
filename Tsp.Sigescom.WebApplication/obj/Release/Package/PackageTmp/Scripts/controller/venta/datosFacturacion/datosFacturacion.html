@@ -1,0 +1,74 @@
+<form name="datosFacturacionForm" class="formulario form-horizontal css-form" ng-cloak novalidate isolate-form>
+    <div class="box-body no-pad-top p-0">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="col-md-6 col-xs-6" ng-show="$ctrl.parametros.AplicaLeyAmazonia && $ctrl.parametros.MostrarCheckIgvEnVentas">
+                    <div class="checkbox checkbox-primary">
+                        <input id="ventaigv{{$ctrl.externalId}}" type="checkbox" class="styled" ng-model="$ctrl.datosFacturacion.Orden.AplicarIGVCuandoEsAmazonia" ng-change="$ctrl.cambioModoIGV();" />
+                        <label for="ventaigv{{$ctrl.externalId}}" class="negrita">CON IGV</label>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-6 p-0" ng-show="$ctrl.parametros.PermitirDetalleUnificado && $ctrl.debePermitirDetalleUnificado">
+                    <div class="checkbox checkbox-primary">
+                        <input id="detalleunificado{{$ctrl.externalId}}" type="checkbox" class="detalleunificado styled" ng-model="$ctrl.datosFacturacion.Orden.UnificarDetalles" ng-checked="$ctrl.datosFacturacion.Orden.UnificarDetalles" ng-change="$ctrl.seleccionarDetalleUnificado(); " />
+                        <label for="detalleunificado{{$ctrl.externalId}}" class="negrita">DET. UNIF.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <div class="group-model mt-5" ng-show=" $ctrl.datosFacturacion.Orden.UnificarDetalles && $ctrl.parametros.ActivarDetalleUnificadoPersonalizado">
+                    <input class="col-md-12 col-xs-12 input-model" uppercase-only ng-model="$ctrl.datosFacturacion.Orden.ValorDetalleUnificado" placeholder="Detalle unificado" ng-blur="$ctrl.verificarInconsistenciasFacturacion()" />
+                </div>
+            </div>
+            <div ng-show="$ctrl.mostrarPuntoDeVentaVendedor">
+                <div class="col-md-12 col-xs-12">
+                    <label class="control-label">PUNTO DE VENTA</label>
+                    <select id="puntoDeVenta" class="select2 form-control" ng-model="$ctrl.datosFacturacion.Orden.PuntoDeVenta" ng-options="item as item.Nombre for item in $ctrl.puntosDeVenta track by item.Id"></select>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <label class="control-label">VENDEDOR</label>
+                    <select id="vendedor" class="select2 form-control" ng-model="$ctrl.datosFacturacion.Orden.Vendedor" ng-options="item as item.Nombre for item in $ctrl.vendedores track by item.Id"></select>
+                </div>
+            </div>
+            <div ng-if="$ctrl.debeSeleccionarCajaCajero">
+                <div class="col-md-12 col-xs-12">
+                    <label class="control-label">CAJA:</label>
+                    <select id="caja" class="select2 form-control" ng-model="$ctrl.datosFacturacion.Pago.Caja" ng-options="item as item.Nombre for item in $ctrl.almacenes track by item.Id"></select>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <label class="control-label">CAJERO:</label>
+                    <select id="cajero" class="select2 form-control" ng-model="$ctrl.datosFacturacion.Pago.Cajero" ng-options="item as item.Nombre for item in $ctrl.almaceneros track by item.Id"></select>
+                </div>
+            </div>
+            <div ng-show="$ctrl.debeSeleccionarAlmacenAlmacenero">
+                <div class="col-md-12 col-xs-12">
+                    <label class="control-label">ALMACEN</label>
+                    <select id="almacen" class="select2 form-control" ng-model="$ctrl.datosFacturacion.MovimientoAlmacen.Almacen" ng-options="item as item.Nombre for item in $ctrl.almacenes track by item.Id"></select>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <label class="control-label">ALMACENERO</label>
+                    <select id="cajero" class="select2 form-control" ng-model="$ctrl.datosFacturacion.MovimientoAlmacen.Almacenero" ng-options="item as item.Nombre for item in $ctrl.almaceneros track by item.Id"></select>
+                </div>
+            </div>
+            <selector-actor-comercial ng-if="$ctrl.inicializacionRealizada" name="SelectorClienteDatosFacturacion" id="SelectorClienteDatosFacturacion" ng-model="$ctrl.datosFacturacion.Orden.Cliente" actor-comercial="$ctrl.datosFacturacion.Orden.Cliente" rol="$ctrl.parametros.RolCliente" api="$ctrl.selectorClienteAPI" changed="$ctrl.cambioCliente(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="$ctrl.externalId" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroCliente" inicio-realizado="$ctrl.inicioRealizadoCliente()" permitir-seleccionar-grupo="$ctrl.parametros.PermitirSeleccionarGrupoCliente"></selector-actor-comercial>
+            <div class="col-md-12 col-xs-12 group-model" ng-show="$ctrl.datosFacturacion.Orden.Cliente.Id == $ctrl.parametros.IdClienteGenerico && $ctrl.parametros.PermitirAliasDeClienteGenerico">
+                <label class="col-md-2 label-model">ALIAS</label>
+                <input class="col-md-10 col-xs-12 input-model" uppercase-only ng-model="$ctrl.datosFacturacion.Orden.Cliente.Alias" ng-change="$ctrl.cambioFacturacion()" />
+            </div>
+            <div class="col-md-12 col-xs-12 group-model" ng-if="$ctrl.permitirRegistroPlaca">
+                <label class="col-md-2 col-xs-2 label-model">PLACA</label>
+                <input class="col-md-10 col-xs-10 input-model" uppercase-only ng-model="$ctrl.datosFacturacion.Orden.Placa" ng-change="$ctrl.verificarInconsistenciasFacturacion()" maxlength="8" />
+            </div>
+            <div class="col-md-12 col-xs-12 group-model" ng-if="$ctrl.permitirRegistroFechaEmision">
+                <label class="col-md-3 label-model" title="FECHA DE EMISIÓN">EMISIÓN</label>
+                <input id="fechaEmision" class="col-md-9 col-xs-12 input-model datepicker-bottom td-datepicker" ng-model="$ctrl.datosFacturacion.Orden.FechaEmision" ng-change="$ctrl.verificarInconsistenciasFacturacion()" placeholder="dd/mm/aaaa" data-date-start-date='-90d' data-date-end-date="0d" />
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <selector-comprobante name="SelectorComprobanteDatosFacturacion" id="SelectorComprobanteDatosFacturacion" ng-if="$ctrl.inicializacionRealizada" ng-model="$ctrl.datosFacturacion.Orden.Comprobante" comprobante="$ctrl.datosFacturacion.Orden.Comprobante" external-id="$ctrl.externalId" api="$ctrl.selectorComprobanteAPI" changed="$ctrl.cambioComprobante(comprobante)" comprobante-para="$ctrl.tipoComprobantePara" id-comprobante-default="$ctrl.idComprobantePorDefecto" serie-comprobante-enter="$ctrl.serieComprobante_enter()"></selector-comprobante>
+                <div class="col-md-12 col-xs-12 group-model p-0">
+                    <textarea class="col-md-12 col-xs-12 input-model textarea-model" id="observacion" ng-model="$ctrl.datosFacturacion.Orden.Observacion" row="1" placeholder="OBSERVACI&Oacute;N"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

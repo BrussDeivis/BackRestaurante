@@ -1,0 +1,10 @@
+D
+;D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\PdfUtil.csutf-8C
+:D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\Mailer.csutf-8K
+BD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\NumerosALetras.csutf-8G
+>D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\RestHelper.csutf-8H
+?D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\TextManager.csutf-8H
+?D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\FileManager.csutf-8H
+?D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\BarCodeUtil.csutf-8T
+KD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\Properties\AssemblyInfo.csutf-8v
+kD:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.Utilitarios\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.csutf-8

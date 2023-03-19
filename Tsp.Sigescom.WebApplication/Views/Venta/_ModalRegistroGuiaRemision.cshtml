@@ -1,0 +1,18 @@
+﻿<div id="modal-registro-guia-remision" class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-cloak>
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">REGISTRO DE GUIA DE REMISION</h4>
+            </div>
+            <div class="modal-body" style="background-color:#f8f8f8;">
+                <div class="row">
+                    <registrador-guia-remision name="RegistradorGuiaRemision" id="RegistradorGuiaRemision" guia-remision="guiaRemisionVenta" api="registradorGuiaRemisionApi" permitir-seleccion-concepto="false" permitir-documento-referencia="false" vinculado-venta="true" venta="venta" hay-inconsitencias-guia-remision="hayInconsitenciasGuiaRemision"></registrador-guia-remision>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a title="CANCELAR GUIA DE REMISION" class="btn btn-md btn-danger pull-right" ng-click="cancelarGuiaRemision();" style="margin-left:10px"><span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
+                <a title="GUARDAR GUIA DE REMISION" class="btn btn-primary btn-md pull-right" ng-click="aceptarGuiaRemision()" ng-disabled="hayInconsitenciasGuiaRemision"><span class="glyphicon glyphicon-floppy-save"></span> ACEPTAR</a>
+            </div>
+        </div>
+    </div>
+</div>

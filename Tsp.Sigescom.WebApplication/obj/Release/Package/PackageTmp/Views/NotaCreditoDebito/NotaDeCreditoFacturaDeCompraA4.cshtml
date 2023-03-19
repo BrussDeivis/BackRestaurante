@@ -1,0 +1,246 @@
+﻿@model Tsp.Sigescom.Modelo.Entidades.ComprobantesModel.NotaDeCreditoCompra
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+
+        .texto {
+            font-size: 4mm;
+        }
+
+        .titulo {
+            font-weight: bolder;
+            font-size: 8mm;
+        }
+
+        .subtitulo {
+            font-weight: bolder;
+            font-size: 5mm;
+        }
+
+        .centrado {
+            text-align: center;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .contorno {
+            border: solid;
+        }
+
+        .contorno_fino {
+            border: solid;
+            border-width: thin;
+        }
+
+        th, td {
+            padding: 1mm;
+            line-height: 1.2;
+        }
+
+        .lineaHorizontal {
+            margin: 5px;
+        }
+    </style>
+
+
+    <title></title>
+</head>
+
+<body class="texto">
+    <section class="sheet" style="font-family:Consolas">
+        <div class="sheet texto">
+            @* Datos Emisor *@
+            <div width="100%">
+                <table width="100%">
+                    <tr>
+                        @*<td width="25%">
+                                @if (Model.MostrarLogo)
+                                {
+                                    <div class="centrado">
+                                        <img style="max-height:120px; max-width:230px;" src=@Model.Emisor.LogoSrc alt="Alternate Text" />
+                                    </div>
+                                }
+                            </td>*@
+                        <td width="65%">
+                            <div class="centrado">
+                                <div class="titulo">@Model.Emisor.NombreComercial </div>
+                                <div>@Model.Emisor.RazonSocial</div>
+                                <div>@Model.Emisor.Direccion</div>
+                                <div>@Model.Emisor.OtrosDatosContacto</div>
+                            </div>
+                        </td>
+                        <td width="35%" class="contorno">
+                            <div class="titulo centrado">@Model.Emisor.TipoDocumentoIdentidad @Model.Emisor.NumeroDocumentoIdentidad</div>
+                            @* Comprobante *@
+                            <div class="subtitulo centrado">
+                                <div class="subtitulo">@Model.NombreTipo </div>
+                                <div>@(Model.Serie + "-" + Model.Numero)</div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="centrado" colspan="3">@Model.Emisor.Publicidad</div>
+                        </td>
+                    </tr>
+
+
+
+
+
+                </table>
+            </div>
+            <hr class="lineaHorizontal">
+            @* Fecha emisión *@
+            @* Receptor  *@
+            <div>
+                <table width="100%">
+                    <tr>
+                        <td width="100%" colspan="2">
+                            <div>Fecha de emisión:@Model.FechaEmision.ToString("dd/MM/yyyy")</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60%">
+                            <div>Cliente: @Model.Receptor.RazonSocial </div>
+                        </td>
+                        <td width="40%">
+                            <div>@(Model.Receptor.TipoDocumentoIdentidad + " " + Model.Receptor.DocumentoIdentidad)</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" colspan="2">
+                            <div>Dirección: @(Model.Receptor.Direccion)</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            @* Documento que modifica *@
+            <hr class="lineaHorizontal">
+            <div>
+                <table width="100%">
+                    <tr>
+                        <td width="100%">
+                            <div>Tipo de Nota: @Model.Discrepancia.Tipo - @Model.TipoDeNotaCredito</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%">
+                            <div>Documento que modifica: @Model.Discrepancia.NroReferencia</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%">
+                            <div>Motivo o sustento: @Model.Discrepancia.Descripcion</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            @* Detalles *@
+            <div width="100%">
+                <table width="100%">
+                    <tr>
+                        <th class="contorno_fino">Cant.</th>
+                        <th class="contorno_fino">Concepto</th>
+                        <th class="contorno_fino">P.U.</th>
+                        <th class="contorno_fino">Importe</th>
+                    </tr>
+                    @foreach (var item in Model.Detalles)
+                    {
+                        <tr width="100%">
+                            <td width="10%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnCantidad + "}", item.Cantidad)</td>
+                            <td width="65%">  @item.Concepto   @(Model.MostrarTrazabilidadConceptoNegocio ? item.Trazabilidad : "")</td>
+                            <td width="10%" class="importe">@string.Format("{0:N" + Model.NumeroDecimalesEnPrecio + "}", item.ImporteUnitario)</td>
+                            <td width="15%" class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", item.ImporteTotal)</td>
+                        </tr>
+
+                        <tr width="100%">
+                            <td style=" width:100%" colspan=4>
+                                <table width="100%" cellpadding="0" style="margin:0">
+                                    @for (int i = 0; i < item.CaracteristicasComunes.Count; i++)
+                                    {
+                                        <tr width="100%">
+                                            <td width="15%"></td>
+                                            <td style=" width:50%">@(item.CaracteristicasComunes[i].NombreCaracteristica + " " + item.CaracteristicasComunes[i].Valor) </td>
+                                            <td width="15%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    }
+                                    @for (int i = 0; i < item.CaracteristicasPropias.Count; i++)
+                                    {
+                                        <tr width="100%">
+                                            <td width="15%"></td>
+                                            <td style=" width:50%">@(item.CaracteristicasPropias[i].Nombre + " " + item.CaracteristicasPropias[i].Valor )</td>
+                                            <td width="15%"></td>
+                                            <td width="20%"></td>
+                                        </tr>
+                                    }
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            @* Resumen *@
+            <div>
+                <table width="100%">
+                    <tr width="100%">
+                        <td width="20%">
+                            <div class="centrado">
+                                @*<img height="150" src=@Model.CodigoQRSrc alt="Alternate Text" />*@
+                            </div>
+                        </td>
+                        <td width="35%">
+                            <div class="centrado">
+                            </div>
+                        </td>
+                        <td width="25%">
+                            <div class="importe">Op. Gravadas S/</div>
+                            <div class="importe">Op. Inafectas S/</div>
+                            <div class="importe">Op. Exoneradas S/</div>
+                            <div class="importe">IGV S/</div>
+                            <div class="importe">ICBPER S/</div>
+                            <div class="importe subtitulo">Importe Total S/</div>
+                        </td>
+                        <td width="20%">
+                            <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionGravada)</div>
+                            <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionInafecta)</div>
+                            <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteOperacionExonerada)</div>
+                            <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.Igv)</div>
+                            <div class="importe">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.Icbper)</div>
+                            <div class="importe subtitulo">@string.Format("{0:" + Model.FormatoNumericoDecimal + "}", Model.ImporteTotal)</div>
+                        </td>
+                    </tr>
+
+                </table>
+                <div>Son: @Model.ImporteTotalEnLetras</div>
+                <div>Observaciones: @Model.Observacion</div>
+            </div>
+            <hr class="lineaHorizontal">
+            @* Mensajes *@
+            <div class="centrado">
+                @if (Model.MostrarMensajeAmazonia)
+                {
+                    <div>@Model.MensajeAmazonia</div>
+                }
+            <div>Representación impresa de la Nota de Crédito</div>
+                @*<div>Autorizado mediante resolución: @Model.ResolucionAutorizacionSunat</div>*@
+
+                <div>@Model.MensajeNegocio</div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

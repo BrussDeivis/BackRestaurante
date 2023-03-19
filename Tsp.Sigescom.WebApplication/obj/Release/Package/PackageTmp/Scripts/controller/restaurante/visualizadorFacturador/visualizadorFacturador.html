@@ -1,0 +1,74 @@
+﻿<div id="modal-visualizador-facturador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" ng-esc="$ctrl.closeVisualizador()">
+    <div class="modal-dialog" style="width: 90%;">
+        <div class="modal-content">
+            <div class="modal-header bg-primary" style="border-bottom-width:0;">
+                <button type="button" class="close" style="opacity:1; color:white" ng-click="$ctrl.closeVisualizador()">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title">DOCUMENTOS DE ATENCION DE LA MESA: {{$ctrl.atencion.Mesa.Nombre}} - S/. {{$ctrl.atencion.ImporteAtencion.toFixed(2)}}</h4>
+            </div>
+            <div class="modal-body" style="padding-top:0">
+                <div class="row contenedor-facturarRestaurante">
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 panel-ordenes">
+                        <div class="col-xs-12 col-md-12" style="padding-top:10px; display:flex; flex-direction:column; justify-content:center; align-items:center">
+                            <label>Acciones: </label>
+                            <div class="padding-0">
+                                <button title="IMPRIMIR EL DOCUMENTO" class="btn btn-md btn-default" ng-click="$ctrl.imprimirDocumentoAtencion()"><span class="glyphicon glyphicon-print"></span></button>
+                                <a title="DESCARGAR EN PDF" class="btn btn-md btn-default" href="/Restaurante/ObtenerAtencionPDF?idAtencion={{$ctrl.atencion.Id}}" target='_blank'><span class="fa fa-file-pdf-o"></span></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="documentoDeAtencion" style='width:80mm; border:solid; border-width: thin; margin:auto; margin-top:80px'> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7 panel-facturar" style="padding-top:10px">
+                        <div class="row" style="overflow-x:auto; display:flex;">
+                            <div id="documentosDeVenta">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-envio-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ENVIO DE DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="table-e-mail" class="table table-stripped table-height-small table-bordered">
+                            <tr>
+                                <th class="col-md-10">Correo</th>
+                                <th class="col-md-2"></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="correoImput" class="form-control" style="height:30px" ng-model="$ctrl.correoElectronico" />
+                                </td>
+                                <td>
+                                    <a ng-click="$ctrl.agregarCorreoElectronico()" ng-disabled="$ctrl.correoElectronico == ''" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in $ctrl.correosElectronicos">
+                                <td>{{item}}</td>
+                                <td>
+                                    <a ng-click="$ctrl.eliminarCorreoElectronico($index)" class="btn btn-danger btn-sm"> <span class="glyphicon glyphicon-remove"></span> </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" title="ENVIAR" class="btn btn-sm btn-primary" ng-disabled="$ctrl.correosElectronicos.length < 1" ng-click="$ctrl.enviarCorreoElectronico()"><span class="glyphicon glyphicon-check"></span> ENVIAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-sm btn-danger" ng-click="$ctrl.limpiarEnvioDeCorrero()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

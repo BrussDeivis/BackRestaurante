@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Restaurante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/restaurante/complementosController.js")></script>
+}
+<div class="col-md-12" ng-controller="complementosController">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="color-palette-set">
+                <div class="color-palette bg-green">COMPLEMENTOS</div>
+            </div>
+        </div>
+        <div class="col-xs-12 form-horizontal">
+            <div class="box box-success">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table id="tabla-complementos" class="row-border hover table table-stripped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Familia</th>
+                                        <th>Complemento</th>
+                                        <th>Modo Selección</th>
+                                        <th>Para Restaurante</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in complementos" ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td ng-if="item.MostrarFamilia" rowspan="{{item.NumeroComplementos}}">{{item.Familia}}</td>
+                                        <td>{{item.Nombre}}</td>
+                                        <td>
+                                            <div class="radio radio-primary radio-inline pt-2">
+                                                <input type="radio" id="simple{{$index}}" name="filtro{{$index}}" ng-model="item.EsMultiple" ng-click="actualizarComplemento(item)" value="false">
+                                                <label for="simple{{$index}}" title="Simple" style="font-size:14px;">SIMPLE</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline pt-2">
+                                                <input type="radio" id="multiple{{$index}}" name="filtro{{$index}}" ng-model="item.EsMultiple" ng-click="actualizarComplemento(item)" value="true">
+                                                <label for="multiple{{$index}}" title="Multiple" style="font-size:14px;">MULTIPLE</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-toggle-on" ng-model="item.EstaActivoRestaurante" ng-class="item.EstaActivoRestaurante ? 'activo' : 'fa-rotate-180 inactivo'" ng-click="cambiarComplementoActivoRestaurante(item)" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Atenciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <script src=@Url.Content("~/Scripts/controller/cochera/atencionesController.js")></script>
+
+
+
+    <script src=@Url.Content("~/Scripts/controller/cochera/selectorVehiculo/selectorVehiculo.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/venta/facturacionVenta/facturacionVenta.js")></script>
+
+    <script src=@Url.Content("~/Scripts/controller/Finanza/editorTrazaPago/editorTrazaPago.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/comprobante/selector/selectorComprobante.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/selectorActorComercial/selectorActorComercial.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/actorComercial/registradorActorComercial/registradorActorComercial.js")></script>
+
+
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+        var IdSistemDePagoPlanaPorTurnos = @ViewBag.IdSistemDePagoPlanaPorTurnos;
+        var IdSistemDePagoPorHora = @ViewBag.IdSistemDePagoPorHora;
+        var IdSistemDePagoAbonados = @ViewBag.IdSistemDePagoAbonados;
+        var IdEstadoIngresado = @ViewBag.IdEstadoIngresado;
+        var IdEstadoFinalizado = @ViewBag.IdEstadoFinalizado;
+        var PrecioPerdidaTicket = @ViewBag.PrecioPerdidaTicket;
+        var IdMedioPagoDefault = @ViewBag.IdMedioPagoDefault;
+        var IdRolCliente = @ViewBag.IdRolCliente;
+        var NombreRolCliente = '@ViewBag.NombreRolCliente';
+
+        var clienteGenerico = @(Html.Raw(Json.Encode(ViewBag.clienteGenerico)));
+    </script>
+}
+<div class="col-md-12" id="modelo" ng-controller="atencionesController" ng-init="iniciarBandejaDeCochera()">
+    <div class="row">
+        @* Cabecera de la cochera, "falta incluir la fecha y hora" *@
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">COCHERA</div>
+            </div>
+        </div>
+        @* Botones de INGRESO y SALIDA *@
+        <div class="col-md-12 row">
+            <div class="col-md-4">
+                @Html.Partial("_Ingreso_Cochera")
+            </div>
+            <div class="col-md-8">
+                @Html.Partial("_Salida_Cochera")
+            </div>
+        </div>
+        <div class="col-xs-12">
+
+
+            <ui-select ng-model="multipleDemo.colors" theme="bootstrap" ng-disabled="disabled"close-on-select="false">
+                <ui-select-match placeholder="Select colors...">{{$item.Nombre}}</ui-select-match>
+                <ui-select-choices refresh="funcAsync($select.search)" 
+                                   minimum-input-length="3" 
+                                   refresh-delay="0" 
+                                   repeat="color in availableColors | filter:$select.search">
+                    {{color.Nombre}}
+                </ui-select-choices>
+            </ui-select>
+            <p>Selected: {{multipleDemo.colors}}</p>
+            <hr>
+            <h3>Array of strings</h3>
+            <ui-select multiple ng-model="multipleDemo.colors" theme="bootstrap" ng-disabled="disabled" close-on-select="false" style="width: 300px;" title="Choose a color">
+                <ui-select-match placeholder="Select colors...">{{$item}}</ui-select-match>
+                <ui-select-choices repeat="color in ctrl.availableColors | filter:$select.search">
+                    {{color}}
+                </ui-select-choices>
+            </ui-select>
+            <p>Selected: {{multipleDemo.colors}}</p>
+
+
+            <ui-select multiple ng-model="multipleDemo.selectedPeople" theme="bootstrap" ng-disabled="disabled" close-on-select="false" style="width: 800px;">
+                <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+                <ui-select-choices repeat="person in people | propsFilter: {name: $select.search, age: $select.search}">
+                    <div ng-bind-html="person.name | highlight: $select.search"></div>
+                    <small>
+                        email: {{person.email}}
+                        age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+            <p>Selected: {{multipleDemo.selectedPeople}}</p>
+            @*<ui-select ng-model="person.selected" theme="select2" on-select="someFunction($item, $model)" ng-disabled="disabled" style="min-width: 300px;">
+                    <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="person.email as person in people | propsFilter: {name: $select.search, age: $select.search}">
+                        <div ng-bind-html="person.name | highlight: $select.search"></div>
+                        <small>
+                            email: {{person.email}}
+                            age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                <div>{{availableColors}}</div>
+                <div>{{color.selected}}</div>*@
+
+            @*<ui-select ng-model="color.selected" theme="select2" ng-disabled="disabled">
+                    <ui-select-match placeholder="Select colors...">{{$select.selected.Nombre}}</ui-select-match>
+                    <ui-select-choices refresh="funcAsync($select.search)" refresh-delay="0" repeat="color.Nombre as color in availableColors | filter:$select.search">
+                        <div ng-bind-html="color.Nombre"></div>
+                    </ui-select-choices>
+                </ui-select>*@
+
+
+        </div>
+
+
+        @* Bandeja de COCHERA *@
+        <div class="col-md-12 form-horizontal" style="margin-top: 15px">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label class="col-sm-12">  Fecha Inicial:  </label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control datepicker-start" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-3">
+                    <label class="col-sm-12 "> Fecha Final:  </label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control datepicker-end" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button title="CONSULTAR" style="margin-top:25px" class="btn btn-md btn-primary" ng-click="listarBandejaCochera()"><span class="glyphicon glyphicon-search"></span></button>
+                        <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-cochera')" class="btn btn-md btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <table id="tabla-cochera" datatable="ng" dt-options="dtOptions" dt-column-defs="exoneraciones.dtColumnDefs" class="row-border hover table table-stripped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>PLACA</th>
+                            <th>VEHICULO</th>
+                            <th>ESTADO</th>
+                            <th>INGRESO</th>
+                            <th>SALIDA</th>
+                            <th>TARIFA</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in movimientosCochera" ng-cloak>
+                            <td>{{$index+1}}</td>
+                            <td>{{item.Vehiculo.Placa}}</td>
+                            <td>{{item.Vehiculo.NombreCompleto}}</td>
+                            <td>{{item.Estado.Nombre}}</td>
+                            <td>{{item.IngresoString}}</td>
+                            <td>{{item.Estado.Id== IdEstadoFinalizado? item.SalidaString:""}}</td>
+                            <td>{{item.SistemaDePago.Nombre}}</td>
+                            <td>
+                                <a ng-if="item.PuedeVer" title="Ver detalles de vehiculo" class="btn btn-info btn-xs" data-toggle="modal" data-target="" ng-click=""><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade">
+            <div id="htmlStringDocumento"></div>
+        </div>
+    </div>
+</div>
+
+

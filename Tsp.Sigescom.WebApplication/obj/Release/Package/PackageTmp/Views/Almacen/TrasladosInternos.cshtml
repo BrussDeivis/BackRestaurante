@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Traslado de mercaderia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src=@Url.Content("~/Scripts/controller/almacen/trasladoInternoController.js")></script>
+    <script src=@Url.Content("~/Scripts/controller/concepto/selectorConceptoComercial/selectorConceptoComercial.js")></script>
+
+    <script>
+        var fechaInicio = '@ViewBag.fechaInicio';
+        var fechaFin = '@ViewBag.fechaFin';
+        var NombreEmpleadoDeSesion = '@ViewBag.NombreEmpleadoDeSesion';
+        var NombreCentroDeAtencion = '@ViewBag.NombreCentroDeAtencion';
+        var idCentroDeAtencionSeleccionado = @ViewBag.idCentroDeAtencionSeleccionado;
+        var mostrarBuscadorCodigoBarra = @ViewBag.mostrarBuscadorCodigoBarra.ToString().ToLower();
+        var modoSeleccionConcepto = @ViewBag.modoDeSeleccionDeConcepto;
+        var modoSeleccionTipoFamilia = @ViewBag.modoSeleccionTipoFamilia;
+        var numeroDecimalesEnCantidad = @ViewBag.numeroDecimalesEnCantidad;
+        var minimoCaracteresBuscarConcepto = @ViewBag.minimoCaracteresBuscarConcepto;
+        var tiempoEsperaBusquedaSelector = @ViewBag.tiempoEsperaBusquedaSelector;
+        var salidaBienesSujetasADisponibilidadStock = @ViewBag.salidaBienesSujetasADisponibilidadStock.ToString().ToLower();
+        var informacionSelectorConcepto = @ViewBag.informacionSelectorConcepto;
+
+    </script>
+    @Html.Raw(ViewBag.WCPScript);
+}
+
+<div class="col-md-12" ng-controller="trasladoInternoController" ng-init="inicializar()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="color-palette-set">
+                <div class="bg-green color-palette">TRASLADOS INTERNOS DE MERCADERÍA</div>
+            </div>
+        </div>
+        <div class="col-md-12 form-horizontal">
+            <div class="row">
+                <div class="col-sx-12 col-sm-6 col-md-2">
+                    <label for="dateStart">Fecha Inicial</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input id="dateStar" ng-model="fechaInicio" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-start" />
+                    </div>
+                </div>
+                <div class="col-sx-12 col-sm-6 col-md-2 no-padding-left">
+                    <label for="dateEnd">Fecha Final</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input id="dateEnd" ng-model="fechaFin" placeholder="dd/mm/aaaa" class="form-control pull-right datepicker-end" />
+                    </div>
+                </div>
+                <div class="col-md-1 no-padding">
+                    <button title="CONSULTAR" ng-disabled="!fechaInicio || !fechaFin" style="margin-top:25px" class="btn btn-primary" ng-click="listarBandejaTraslados()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button title="DESCARGAR" style="margin-top:25px" ng-click="export('tabla-traslado-interno-mercaderia')" class="btn btn-primary"><span class="fa fa-file-excel-o"></span></button>
+                </div>
+                <div class="col-md-7">
+                    <button title="NUEVO TRASLADO DE MERCADERÍA" style="margin-top:25px" class="btn btn-primary pull-right" ng-click="nuevoRegistro()" data-toggle="modal" data-target="#modal-registro-traslado-interno-mercaderia"><span class="glyphicon glyphicon-plus"></span> NUEVO TRASLADO</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="margin-top:10px;">
+            <table id="tabla-traslado-interno-mercaderia" datatable="ng" dt-options="dtOptions" dt-column-defs="movimientos.dtColumnDefs" class="row-border hover table table-stripped table-bordered ">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Fecha</th>
+                        <th>Tipo Doc.</th>
+                        <th>Documento</th>
+                        <th>Destino</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in trasladosInternos" ng-cloak>
+                        <td>{{$index+1}}</td>
+                        <td>{{item.Fecha}}</td>
+                        <td>{{item.TipoDocumento}}</td>
+                        <td>{{item.Numero}}</td>
+                        <td>{{item.AlmacenOrigenDestino}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td>
+                            <a title="VER DOCUMENTO DE TRASLADO" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-ver-traslado-mercaderia" ng-click="inicializarVerTraslado(item)"><span class="glyphicon glyphicon-search"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_ModalRegistroMovimientoInternoMercaderia")
+    @Html.Partial("_ModalVerMovimientoInternoMercaderia")
+</div>

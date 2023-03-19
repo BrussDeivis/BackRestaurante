@@ -1,0 +1,61 @@
+﻿<div id="modal-envio-documento" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">ENVIO DE DOCUMENTO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row formulario form-horizontal">
+                    <div class="col-md-12 flex-center">
+                        <div class="radio-toolbar-btn">
+                            <input ng-show="permitirEnvioPorWhatsApp" type="radio" id="modoenvio-1" name="modoenvio" value="1" ng-click="envio.ModoEnvio = 1; SeleccionarEnvioPorWhatsApp()">
+                            <label ng-show="permitirEnvioPorWhatsApp" id="labelmodoenvio-1" for="modoenvio-1" title="Enviar por WhatsApp"><span class="fa fa-whatsapp"></span> WhatsApp</label>
+                            <input type="radio" id="modoenvio-2" name="modoenvio" value="2" ng-click="envio.ModoEnvio = 2; SeleccionarEnvioPorCorreo()">
+                            <label id="labelmodoenvio-2" for="modoenvio-2" title="Enviar por Correo"><span class="fa fa-envelope-o"></span> Correo</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="modoenvio-nombre-precio" ng-show="envio.ModoEnvio == 1">
+                            <div class="col-md-6">
+                                <label class="control-label">Código pais</label>
+                                <input id="codigoPais" class="form-control" ng-model="envio.CodigoPais" ng-change="ActualizarEnvioPorWhatsApp()" ng-pattern-restrict="^[+0-9]*$"  required />
+                                <div class="info-textbox">Código país Perú: +51</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Número de celular</label>
+                                <input id="numeroCelular" class="form-control" ng-model="envio.NumeroCelular" ng-change="ActualizarEnvioPorWhatsApp()" ng-pattern-restrict="^[0-9]*$"  required />
+                            </div>
+                        </div>
+                        <div id="modoenvio-codigo-barra" ng-show="envio.ModoEnvio == 2">
+                            <table id="table-e-mail" class="table table-stripped table-height-small table-bordered">
+                                <tr>
+                                    <th class="col-md-10" style="font-size:14px">Correo</th>
+                                    <th class="col-md-2"></th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input id="correoImput" class="form-control" style="height:30px" ng-model="envio.CorreoElectronico" />
+                                    </td>
+                                    <td>
+                                        <a ng-click="agregarCorreoElectronico()" ng-disabled="envio.CorreoElectronico == ''" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in envio.CorreosElectronicos">
+                                    <td>{{item}}</td>
+                                    <td>
+                                        <a ng-click="eliminarCorreoElectronico($index)" class="btn btn-danger btn-sm"> <span class="glyphicon glyphicon-remove"></span> </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a title="ENVIAR" class="btn btn-sm btn-primary" ng-disabled="envio.CodigoPais == '' || envio.NumeroCelular == ''" href="{{envio.UrlWhatsApp}}" ng-click="enviarWhatsApp()" target="_blank" ng-show="envio.ModoEnvio == 1"><span class="glyphicon glyphicon-check"></span> ENVIAR</a>
+                <button data-dismiss="modal" title="ENVIAR" class="btn btn-sm btn-primary" ng-disabled="envio.CorreosElectronicos.length < 1" ng-click="enviarCorreoElectronico()" ng-show="envio.ModoEnvio == 2"><span class="glyphicon glyphicon-check"></span> ENVIAR</button>
+                <button data-dismiss="modal" title="CERRAR" class="btn btn-sm btn-danger" ng-click="limpiarEnvioDocumento()"><span class="glyphicon glyphicon-remove"></span> CERRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

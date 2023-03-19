@@ -1,0 +1,76 @@
+﻿<div class="row">
+    <div class="col-sm-5" ng-if="$ctrl.puedeModificarHuesped">
+        <div class="row no-padding">
+            <selector-actor-comercial ng-if="$ctrl.inicializacionRealizada" name="SelectorHuesped" id="SelectorHuesped" actor-comercial="$ctrl.huesped" rol="$ctrl.rolHuesped" etiqueta-rol="'HUÉSPED'" api="$ctrl.selectorHuespedAPI" changed="$ctrl.cambioHuesped(actorComercial)" minimo-caracteres-buscar-actor-comercial="$ctrl.parametros.MinimoCaracteresBuscarActorComercial" tiempo-espera-busqueda-selector="$ctrl.parametros.TiempoEsperaBusquedaSelector" external-id="$ctrl.externalId" mascara-visualizacion-validacion="$ctrl.parametros.MascaraDeVisualizacionValidacionRegistroHuesped"></selector-actor-comercial>
+        </div>
+    </div>
+    <div class="col-sm-7" style="border-left: 2px solid grey" ng-if="$ctrl.puedeModificarHuesped">
+        <div class="row">
+            <div class="col-sm-7 col-xs-12">
+                <div class="col-sm-12 no-padding">
+                    <label class="col-md-5 label-info-huesped">Nacionalidad</label>
+                    <label class="col-md-7 label-data-huesped">{{$ctrl.huesped.Nacionalidad.Nombre}}</label>
+                </div>
+                <div class="col-sm-12 no-padding">
+                    <label class="col-md-5 label-info-huesped">Residencia</label>
+                    <label class="col-md-7 label-data-huesped">{{$ctrl.huesped.DomicilioFiscal.Residencia}}</label>
+                </div>
+            </div>
+            <div class="col-sm-5 col-xs-12">
+                <div class="col-sm-12 no-padding">
+                    <label class="col-md-6 label-info-huesped">Sexo</label>
+                    <label class="col-md-6 label-data-huesped">{{$ctrl.huesped.ClaseActor.Nombre}}</label>
+                </div>
+                <div class="col-sm-12 no-padding">
+                    <label class="col-md-6 label-info-huesped">Fecha Nac.</label>
+                    <label class="col-md-6 label-data-huesped">{{$ctrl.huesped.FechaNacimientoString}}</label>
+                </div>
+            </div>
+            <div class="col-sm-11 col-xs-12">
+                <label class="col-sm-3 label-info-huesped">Motivo de viaje</label>
+                <div class="col-sm-9" style="padding-left:5px">
+                    <select class="select2 form-control motivoDeViaje" ng-model="$ctrl.motivoDeViaje" ng-options="item as item.Nombre for item in $ctrl.motivosDeViaje track by item.Id"></select>
+                </div>
+            </div>
+            <div class="col-sm-1 col-xs-12" style="display: flex;justify-content: center;align-items: center;">
+                <button class="btn btn-primary btn-sm pull-right" ng-click="$ctrl.agregarHuespedHabitacion()" ng-disabled="$ctrl.huesped.Id == $ctrl.parametros.IdClienteGenerico || $ctrl.huesped.TipoPersona.Id != $ctrl.parametros.IdTipoPersonaNatural || $ctrl.huesped.Nacionalidad.Nombre == undefined || $ctrl.huesped.DomicilioFiscal.Residencia == undefined || $ctrl.huesped.ClaseActor.Nombre == undefined || $ctrl.huesped.FechaNacimientoString == undefined || $ctrl.exiteHuespedRegistrado()"><span class="fa fa-plus"></span></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 pad-top-10">
+        <div class="table-responsive">
+            <table class="table tablamini-habitacion table-bordered table-striped tabla-sm">
+                <thead>
+                    <tr>
+                        <th>Doc.Ide</th>
+                        <th>Nombre</th>
+                        <th>Nacionalidad</th>
+                        <th>Residencia</th>
+                        <th>Sexo</th>
+                        <th>Fecha Nac.</th>
+                        <th>Motivo</th>
+                        <th>Titular</th>
+                        <th ng-if="$ctrl.puedeModificarHuesped">Opción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="huesped in $ctrl.atencion.Huespedes" style="height: 25px">
+                        <td>{{huesped.NumeroDocumentoIdentidad}}</td>
+                        <td>{{huesped.NombreORazonSocial}}</td>
+                        <td>{{huesped.Nacionalidad.Nombre}}</td>
+                        <td>{{huesped.DomicilioFiscal.Residencia}}</td>
+                        <td>{{huesped.ClaseActor.Nombre}}</td>
+                        <td>{{huesped.FechaNacimientoString}}</td>
+                        <td>{{huesped.MotivoDeViaje.Nombre}}</td>
+                        <td>
+                            <input ng-disabled="!$ctrl.puedeModificarHuesped" type="radio" name="radioHuespedTitular{{$ctrl.externalId}}" ng-model="huesped.EsTitular" ng-click="$ctrl.cambiarTitularHuesped($ctrl.atencion.Huespedes,$index)" ng-value="true"/>
+                        </td>
+                        <td ng-if="$ctrl.puedeModificarHuesped && (!$ctrl.puedeGuardarHuesped || ($ctrl.puedeGuardarHuesped && !huesped.EsTitular))">
+                            <button title="Quitar Huesped" class="btn btn-xs btn-danger" ng-click="$ctrl.quitarHuespedHabitacion($index)"><span class="fa fa-trash"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

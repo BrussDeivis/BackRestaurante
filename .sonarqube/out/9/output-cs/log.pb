@@ -1,0 +1,1 @@
+Roslyn version: 2.0.0.0Language version: CSharp7!Concurrent execution: enabledzvFile 'D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.WebApplication\Properties\Settings.Designer.cs' was recognized as generated–‘File 'D:\Tsp.Sigescom2.3-Back\Tsp.Sigescom.WebApplication\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs' was recognized as generated
